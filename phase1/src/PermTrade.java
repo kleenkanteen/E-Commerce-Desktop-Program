@@ -9,7 +9,7 @@ public class PermTrade extends Trade {
      * @param buyer       takes in a User that wants to borrow the item based on the trade.
      * @param itemToTrade takes in an item that both the buyer and seller want.
      * @param date        is a string that follows a specific date format.
-     * @param time        is a string tha follows a time.
+     * @param time        is a string that follows a time.
      */
     public PermTrade(User seller, User buyer, Item itemToTrade, String date, String time) {
         super(seller, buyer, itemToTrade, date, time);
