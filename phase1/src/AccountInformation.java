@@ -70,4 +70,15 @@ public abstract class AccountInformation {
     protected void setPassword(String newPassword){
         password = newPassword;
     }
+
+    /**
+     * Indicates whether two AccountInformation are "equal".
+     * @param accInfo is the AccountInformation that is being compared with
+     * @return Whether the two AccountInformation equal. Two AccountInformation are equal iff
+     * both have the same username and password
+     */
+    public boolean equals(AccountInformation accInfo) {
+        return accInfo.getPassword().equals(password) && accInfo.getUsername().equals(username);
+    }
+
 }
