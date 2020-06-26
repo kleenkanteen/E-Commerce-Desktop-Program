@@ -8,7 +8,11 @@ public class GlobalInventory {
     public void removeItem(Item item){
         itemList.remove(item);
     }
-    //public void returnTenItems(){} I am thinking if we should put it into UserManager
+    public boolean contains(Item item){
+        return itemList.contains(item);
+    }
+
+
 
 
 
