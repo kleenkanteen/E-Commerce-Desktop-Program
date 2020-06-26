@@ -10,8 +10,11 @@ public class FreezeRequestMessage extends DecisionMessage{
         super(content, options);
     }
 
-    @Override
-    public void MakingDecision(String option) {
-        //TODO
+    /**
+     * Getter for the user that might need to be frozen
+     * @return the user
+     */
+    protected User getUser(){
+        return user;
     }
 }

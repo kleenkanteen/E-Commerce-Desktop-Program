@@ -14,10 +14,12 @@ public abstract class DecisionMessage extends Message{
     }
 
     /**
-     * Recieves a option and makes changes according to the option
-     * @param option a option in the options of this message
+     * Getter for the options of this decision message
+     * @return the options of this decision message
      */
-    public abstract void MakingDecision(String option);
+    protected String[] getOptions(){
+        return options;
+    }
 
     /**
      * Returns a string representation of the message

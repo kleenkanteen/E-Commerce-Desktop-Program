@@ -10,8 +10,11 @@ public class NewItemMessage extends DecisionMessage {
         super(content, options);
     }
 
-    @Override
-    public void MakingDecision(String option) {
-        //TODO
+    /**
+     * Getter for the new item that request looking at
+     * @return the new item
+     */
+    protected Item getNewItem(){
+        return newItem;
     }
 }

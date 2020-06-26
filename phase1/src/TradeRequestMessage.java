@@ -10,8 +10,11 @@ public class TradeRequestMessage extends DecisionMessage {
         super(content, options);
     }
 
-    @Override
-    public void MakingDecision(String option) {
-        //TODO
+    /**
+     * Getter for the trade request being sent
+     * @return the trade request being sent
+     */
+    protected TradeRequest getTradeContent(){
+        return tradeContent;
     }
 }
