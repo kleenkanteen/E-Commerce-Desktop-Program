@@ -4,7 +4,7 @@ public class Item {
     String ownerName; // The UserName of owner, "and change when trade is made?"
     // Question, should we track the ownerName?
     String description = null; //This can be modified later by the owner
-    boolean permanent = true; // Permanent - true, temporary - False, default is true
+    boolean permanent = true; // Permanent - true, temporary - False, default value is true
     boolean approval = false;
 
 
@@ -19,9 +19,6 @@ public class Item {
         this.name = name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public void setApproval(boolean approval) {
         this.approval = approval;
@@ -67,6 +64,7 @@ public class Item {
     public boolean isEqual(Item item){
         return item.description.equals(description) && item.name.equals(name) && item.ownerName.equals(ownerName);
     }
+
 }
 
 
