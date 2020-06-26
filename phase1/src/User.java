@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
 public class User extends AccountInformation {
-    ArrayList<Item> personalInventory;
-    ArrayList<Item> wishlist;
-    ArrayList<Trade> tradeHistory;
-    boolean frozen;
-    int tradePerWeek;
+    private ArrayList<Item> personalInventory;
+    private ArrayList<Item> wishlist;
+    private ArrayList<Trade> tradeHistory;
+    private boolean frozen;
+    private final int tradePerWeek;
 
 
     /**
@@ -21,6 +21,77 @@ public class User extends AccountInformation {
         personalInventory = new ArrayList<Item>();
         wishlist = new ArrayList<Item>();
         this.tradePerWeek = tradePerWeek;
+    }
 
+    /**
+     * Getter of the personal inventory of this account
+     * @return the personal inventory of this account
+     */
+    protected ArrayList<Item> getPersonalInventory(){
+        return personalInventory;
+    }
+
+    /**
+     * Getter of the wishlist of this account
+     * @return the wishlist of this account
+     */
+    protected ArrayList<Item> getWishlist(){
+        return wishlist;
+    }
+
+    /**
+     * Getter of the trade history of this account
+     * @return the history of this account
+     */
+    protected ArrayList<Trade> getTradeHistory() {
+        return tradeHistory;
+    }
+
+    /**
+     * Getter of the limited of times the user can trade in a week of this account
+     * @return the limited of times the user can trade of this account
+     */
+    protected int getTradePerWeek(){
+        return tradePerWeek;
+    }
+
+    /**
+     * Getter of the frozen status of this account
+     * @return the frozen status of this account
+     */
+    protected boolean isFrozen(){
+        return frozen;
+    }
+
+    /**
+     * Setting a new personal inventory to this account
+     * @param personalInventory the new personal inventory
+     */
+    protected void setPersonalInventory(ArrayList<Item> personalInventory){
+        this.personalInventory = personalInventory;
+    }
+
+    /**
+     * Setting a new wishlist to this account
+     * @param wishlist the new wishlist
+     */
+    protected void setWishlist(ArrayList<Item> wishlist){
+        this.wishlist = wishlist;
+    }
+
+    /**
+     * Adding the most recent trade of this User to the User's trade history
+     * @param trade the most recent trade of this User
+     */
+    protected void addTradeHistory(Trade trade){
+        tradeHistory.add(trade);
+    }
+
+    /**
+     * Setting the frozen status to this account
+     * @param frozen the new frozen status to this account
+     */
+    protected void setFrozen(boolean frozen){
+        this.frozen = frozen;
     }
 }
