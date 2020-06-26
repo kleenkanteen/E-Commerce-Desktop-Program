@@ -7,8 +7,10 @@ public class TradeRequest {
     private boolean tempOrPerm;
     private Date date; // Date(int year, int month, int date, int hrs, int min)
     private String place;
-    private int NumberOfEditA = 3;
-    private int NumberOfEditB = 3;
+    private int numberOfEditA = 3;
+    private boolean canEditA = true;
+    private boolean canEditB = true;
+    private int numberOfEditB = 3;
     private boolean confirmation = false;
 
     // one way trade request
@@ -65,55 +67,64 @@ public class TradeRequest {
     }
 
     public int getNumberOfEditA() {
-        return NumberOfEditA;
+        return numberOfEditA;
     }
 
     public int getNumberOfEditB() {
-        return NumberOfEditB;
+        return numberOfEditB;
     }
 
 
     //user can set data, place and confirm
     public void setDate(User user, Date date) {
-        if (user == userA && NumberOfEditA > 0){
+        canEdit(user, this);
+        if (user == userA && canEditA){
             this.date = date;
-            NumberOfEditA -= 1;
+            numberOfEditA -= 1;
         }
-        else if (user == userB && NumberOfEditB > 0){
+        else if (user == userB && canEditB){
             this.date = date;
-            NumberOfEditA -= 1;
+            numberOfEditA -= 1;
         }
-        else System.out.println("Excess edit limit, This trade request has been cancelled");
+
     }
 
     public void setPlace(User user, String place) {
-        if (user == userA && NumberOfEditA > 0){
+        canEdit(user, this);
+        if (user == userA && canEditA){
             this.place = place;
-            NumberOfEditA -= 1;
+            numberOfEditA -= 1;
         }
-        else if (user == userB && NumberOfEditB > 0){
+        else if (user == userB && canEditB){
             this.place = place;
-            NumberOfEditA -= 1;
+            numberOfEditA -= 1;
         }
-        else System.out.println("Excess edit limit, This trade request has been cancelled");
     }
 
     public void setDateAndPlace(User user, Date date, String place){
-
-        if (user == userA && NumberOfEditA > 0){
+        canEdit(user, this);
+        if (user == userA && canEditA){
             this.date = date;
             this.place = place;
-            NumberOfEditA -= 1;
+            numberOfEditA -= 1;
         }
-        else if (user == userB && NumberOfEditB > 0){
+        else if (user == userB && canEditB){
             this.date = date;
             this.place = place;
-            NumberOfEditA -= 1;
+            numberOfEditA -= 1;
         }
-        else System.out.println("Excess edit limit, This trade request has been cancelled");
     }
 
     public void setConfirmation(boolean confirmation) {
         this.confirmation = confirmation;
+    }
+
+    public void canEdit (User user, TradeRequest t){
+        if (user==t.userA && t.numberOfEditA ==0){
+            canEditA = false;
+        }
+        if (user == t.userB && t.numberOfEditB==0){
+            canEditB = false;
+        }
     }
 }
