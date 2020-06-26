@@ -1,15 +1,18 @@
 public class Item {
     String name;
-    boolean wantToTrade = false;
-    String ownerName;
-    String description = null;
+    boolean wantToTrade = false; // set to true if the User wants others to see that item
+    String ownerName; // The UserName of owner, "and change when trade is made?"
+    // Question, should we track the ownerName?
+    String description = null; //This can be modified later by the owner
     boolean permanent = true; // Permanent - true, temporary - False, default is true
     boolean approval = false;
 
 
-    Item(String name, String ownerName){
+    Item(String name, String ownerName, String description){
         this.name = name;
         this.ownerName = ownerName;
+        this.description = description;
+
     }
 
     public void setName(String name) {
@@ -61,8 +64,8 @@ public class Item {
     public String getOwnerName() {
         return ownerName;
     }
-    public boolean isEqual(Item banana){
-        return banana.description.equals(description) && banana.name.equals(name) && banana.ownerName.equals(ownerName);
+    public boolean isEqual(Item item){
+        return item.description.equals(description) && item.name.equals(name) && item.ownerName.equals(ownerName);
     }
 }
 
