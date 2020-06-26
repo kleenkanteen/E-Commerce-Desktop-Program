@@ -1,12 +1,35 @@
 import java.util.ArrayList;
 
 public abstract class DecisionMessage extends Message{
-    ArrayList<String> options;
-    public DecisionMessage(String content, ArrayList<String> options){
+    private ArrayList<String> options;
+
+    /**
+     * A message sent to a User with a content and a decision that can be made
+     * @param content is the content of the message
+     * @param options the options that can be made in the decision
+     */
+    protected DecisionMessage(String content, ArrayList<String> options){
         super(content);
         this.options = options;
     }
+
+    /**
+     * Recieves a option and makes changes according to the option
+     * @param option a option in the options of this message
+     */
     public abstract void MakingDecision(String option);
 
-
+    /**
+     * Returns a string representation of the message
+     * @return the content and decisions of the message in a string representation
+     */
+    @Override
+    public String toString() {
+        String optionsToString = "";
+        for(int i=0; i<options.size(); i++){
+            if(i != 0) optionsToString = optionsToString+"\n";
+            optionsToString = optionsToString+Integer.toString(i+1)+": "+options.get(i);
+        }
+        return super.toString() + "\n" + optionsToString;
+    }
 }
