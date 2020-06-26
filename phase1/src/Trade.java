@@ -1,3 +1,5 @@
+// Written by Thanusun
+
 public abstract class Trade {
     private final User seller;
     private final User buyer;
