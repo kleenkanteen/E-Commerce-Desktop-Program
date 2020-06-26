@@ -4,7 +4,6 @@ public class User extends AccountInformation {
     ArrayList<Item> personalInventory;
     ArrayList<Item> wishlist;
     ArrayList<Trade> tradeHistory;
-    ArrayList<Message> messages;
     boolean frozen;
     int tradePerWeek;
 
@@ -21,7 +20,6 @@ public class User extends AccountInformation {
         tradeHistory = new ArrayList<Trade>();
         personalInventory = new ArrayList<Item>();
         wishlist = new ArrayList<Item>();
-        messages = new ArrayList<Message>();
         this.tradePerWeek = tradePerWeek;
 
     }
