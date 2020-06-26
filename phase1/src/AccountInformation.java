@@ -1,17 +1,29 @@
 public abstract class AccountInformation {
     private String username, password;
 
-
-    public AccountInformation(String username, String password){
+    /**
+     * Creates an AccountInformation with the given username and password
+     * @param username is the username of this account
+     * @param password is the password of this account
+     */
+    protected AccountInformation(String username, String password){
         this.username = username;
         this.password = password;
     }
 
-    public String getUsername() {
+    /**
+     * Getter of the username of this account
+     * @return the username of this account
+     */
+    protected String getUsername() {
         return username;
     }
 
-    public String getPassword() {
+    /**
+     * Getter of the password of this account
+     * @return the password of this account
+     */
+    protected String getPassword() {
         return password;
     }
 }
