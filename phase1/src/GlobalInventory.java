@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class GlobalInventory {
-    ArrayList<Item> itemList;
+    ArrayList<Item> itemList = new ArrayList<Item>();
 
     //use default constructor in main method
 
