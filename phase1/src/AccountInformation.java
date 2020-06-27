@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public abstract class AccountInformation {
     private String username, password;
-    private ArrayList<Message> messages;
 
     /**
      * Creates an AccountInformation with the given username and password
@@ -12,7 +11,6 @@ public abstract class AccountInformation {
     protected AccountInformation(String username, String password){
         this.username = username;
         this.password = password;
-        messages = new ArrayList<Message>();
     }
 
     /**
@@ -29,30 +27,6 @@ public abstract class AccountInformation {
      */
     protected String getPassword() {
         return password;
-    }
-
-    /**
-     * Getter of the messages of this account
-     * @return the messages of this account
-     */
-    protected ArrayList<Message> getMessages(){
-        return messages;
-    }
-
-    /**
-     * Add a new message to messages
-     * @param newMessage the message being added to messages
-     */
-    protected void addMessage(Message newMessage){
-        messages.add(newMessage);
-    }
-
-    /**
-     * Deleting a message from messages, if the message is not in messages, nothing happens
-     * @param message the message being deleted from messages
-     */
-    protected void removeMessage(Message message){
-        messages.remove(message);
     }
 
     /**

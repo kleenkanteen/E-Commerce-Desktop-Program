@@ -4,8 +4,10 @@ public class User extends AccountInformation {
     private ArrayList<Item> personalInventory;
     private ArrayList<Item> wishlist;
     private ArrayList<Trade> tradeHistory;
+    private ArrayList<Message> messages;
     private boolean frozen;
     private final int tradePerWeek;
+    private int theshold;
 
 
     /**
@@ -21,6 +23,8 @@ public class User extends AccountInformation {
         personalInventory = new ArrayList<Item>();
         wishlist = new ArrayList<Item>();
         this.tradePerWeek = tradePerWeek;
+        theshold = 1;
+        messages = new ArrayList<Message>();
     }
 
     /**
@@ -64,6 +68,14 @@ public class User extends AccountInformation {
     }
 
     /**
+     * Getter of the messages of this account
+     * @return the messages of this account
+     */
+    protected ArrayList<Message> getMessages(){
+        return messages;
+    }
+
+    /**
      * Setting a new personal inventory to this account
      * @param personalInventory the new personal inventory
      */
@@ -94,4 +106,22 @@ public class User extends AccountInformation {
     protected void setFrozen(boolean frozen){
         this.frozen = frozen;
     }
+
+
+    /**
+     * Add a new message to messages
+     * @param newMessage the message being added to messages
+     */
+    protected void addMessage(Message newMessage){
+        messages.add(newMessage);
+    }
+
+    /**
+     * Deleting a message from messages, if the message is not in messages, nothing happens
+     * @param message the message being deleted from messages
+     */
+    protected void removeMessage(Message message){
+        messages.remove(message);
+    }
+
 }
