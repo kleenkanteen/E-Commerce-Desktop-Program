@@ -15,10 +15,10 @@ public class TradeRequest {
 
     // one way trade request
 
-    public TradeRequest(User userA, User userB, Item itemA, boolean tempOrPerm, Date date, String place) {
+    public TradeRequest(User userA, User userB, Item itemB, boolean tempOrPerm, Date date, String place) {
         this.userA = userA;
         this.userB = userB;
-        this.itemA = itemA;
+        this.itemB = itemB;
         this.tempOrPerm = tempOrPerm;
         this.date = date;
         this.place = place;
