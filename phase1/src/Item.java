@@ -1,7 +1,7 @@
 public class Item {
     private final String description;
     private final String name;
-    String ownerName; // The UserName of owner
+    private String ownerName; // The UserName of owner
 
     Item(String name, String ownerName, String description, boolean permanent){
         this.name = name;
