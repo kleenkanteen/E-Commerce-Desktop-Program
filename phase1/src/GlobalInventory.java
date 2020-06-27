@@ -5,6 +5,10 @@ public class GlobalInventory {
 
     //use default constructor in main method
 
+    public Item getItem(int index){
+        return itemList.get(index);
+    }
+
     public void addItem(Item item){
         itemList.add(item);
     }
