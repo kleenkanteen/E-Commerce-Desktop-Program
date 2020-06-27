@@ -17,7 +17,7 @@ public class GlobalInventory {
     public ArrayList<Item> searchByOwner(String owner){
         ArrayList<Item> banana = new ArrayList<Item>(); //😀
         for (Item item : itemList){
-            if (item.ownerName.equals(owner)){
+            if (item.getOwnerName().equals(owner)){
                 banana.add(item);
             }
         }
@@ -26,7 +26,7 @@ public class GlobalInventory {
     public ArrayList<Item> searchByItemName(String itemName){
         ArrayList<Item> banana = new ArrayList<Item>(); //😂
         for (Item item : itemList){
-            if (item.name.equals(itemName)){
+            if (item.getName().equals(itemName)){
                 banana.add(item);
             }
         }
