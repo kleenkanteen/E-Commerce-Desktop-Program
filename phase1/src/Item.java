@@ -26,7 +26,8 @@ public class Item {
         return ownerName;
     }
     public boolean isEqual(Item item){
-        return item.description.equals(description) && item.name.equals(name) && item.ownerName.equals(ownerName);
+        return item.getDescription().equals(description) &&
+                item.getName().equals(name) && item.getOwnerName().equals(ownerName);
     }
 
 }
