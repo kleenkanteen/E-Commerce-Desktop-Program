@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class User extends AccountInformation {
@@ -49,6 +50,54 @@ public class User extends AccountInformation {
      */
     protected ArrayList<Trade> getTradeHistory() {
         return tradeHistory;
+    }
+
+    /**
+     * Getter of all the temporary trade history of this account
+     * @return all the temporary trade history of this account
+     */
+    protected ArrayList<Trade> getTempTradeHistory() {
+        ArrayList <Trade> tempTradeHistory = new ArrayList<Trade>();
+        for (Trade t: tradeHistory){
+            if(t instanceof TempTrade) tempTradeHistory.add(t);
+        }
+        return tempTradeHistory;
+    }
+
+    /**
+     * Getter of how much times this user has borrowed
+     * @return the amount of times this user has borrowed
+     */
+    protected int getBorrowedTimes() {
+        //TODO
+        return 0;
+    }
+
+    /**
+     * Getter of how much times this user has lend
+     * @return the amount of times this user has lend
+     */
+    protected int getLendTimes() {
+        //TODO
+        return 0;
+    }
+
+    /**
+     * Getter of the 3 most frequent trading partners
+     * @return the 3 most frequent trading partners
+     */
+    protected User[] getFrequentTradingPartners() {
+        //TODO
+        User [] tradingPartners= new User[3];
+        return tradingPartners;
+    }
+
+    /**
+     * Getter of the theshold (how many more times must you lend items before you can borrow) value of this user
+     * @return the theshold value
+     */
+    protected int getTheshold() {
+        return theshold;
     }
 
     /**
@@ -109,19 +158,19 @@ public class User extends AccountInformation {
 
 
     /**
-     * Add a new message to messages
-     * @param newMessage the message being added to messages
+     * Setting a new list of messages to this account
+     * @param messages the new messages of this account
      */
-    protected void addMessage(Message newMessage){
-        messages.add(newMessage);
+    protected void setMessages(ArrayList<Message> messages){
+        this.messages = messages;
     }
 
     /**
-     * Deleting a message from messages, if the message is not in messages, nothing happens
-     * @param message the message being deleted from messages
+     * Changing the theshold (how many more times must you lend items before you can borrow) that this user has
+     * @param newTheshold the new theshold value
      */
-    protected void removeMessage(Message message){
-        messages.remove(message);
+    protected void setTheshold(int newTheshold){
+        theshold = newTheshold;
     }
 
 }

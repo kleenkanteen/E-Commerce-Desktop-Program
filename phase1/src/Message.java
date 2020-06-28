@@ -1,6 +1,5 @@
 public abstract class Message {
     private String content;
-
     /**
      * A message sent to a User with a content
      * @param content is the content of the message
