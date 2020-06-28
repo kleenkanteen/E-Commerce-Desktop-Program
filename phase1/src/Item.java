@@ -15,6 +15,10 @@ public class Item {
         this.ownerName = ownerName;
     }
 
+    public void setID(int i){
+        ID = i;
+    }
+
     public int getID(){
         return ID;
     }
