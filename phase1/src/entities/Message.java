@@ -1,7 +1,9 @@
+package entities;
+
 public class Message {
     private String content;
     /**
-     * A message sent to a User with a content
+     * A message sent to a entities.User with a content
      * @param content is the content of the message
      */
     protected Message(String content){

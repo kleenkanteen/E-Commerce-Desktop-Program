@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+package entities;
 
 public abstract class AccountInformation {
     private String username, password;
 
     /**
-     * Creates an AccountInformation with the given username and password
+     * Creates an entities.AccountInformation with the given username and password
      * @param username is the username of this account
      * @param password is the password of this account
      */
@@ -46,9 +46,9 @@ public abstract class AccountInformation {
     }
 
     /**
-     * Indicates whether two AccountInformation are "equal".
-     * @param accInfo is the AccountInformation that is being compared with
-     * @return Whether the two AccountInformation equal. Two AccountInformation are equal iff
+     * Indicates whether two entities.AccountInformation are "equal".
+     * @param accInfo is the entities.AccountInformation that is being compared with
+     * @return Whether the two entities.AccountInformation equal. Two entities.AccountInformation are equal iff
      * both have the same username and password
      */
     public boolean equals(AccountInformation accInfo) {

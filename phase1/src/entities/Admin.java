@@ -1,4 +1,6 @@
-public class Admin extends AccountInformation{
+package entities;
+
+public class Admin extends AccountInformation {
     /**
      * Creates an admin with the given username and password
      *

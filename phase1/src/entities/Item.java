@@ -1,3 +1,5 @@
+package entities;
+
 public class Item {
     private String ID = null;
     private final String description;
@@ -13,7 +15,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" +
+        return "entities.Item{" +
                 "ID='" + ID + '\'' +
                 ", description='" + description + '\'' +
                 ", name='" + name + '\'' +

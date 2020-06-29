@@ -1,5 +1,8 @@
-import java.lang.reflect.Array;
+package entities;
+
 import java.util.ArrayList;
+
+// Moved to entities folder, update getpersonalinventory() with a import so it works
 
 public class User extends AccountInformation {
     private ArrayList<Item> personalInventory;
@@ -12,9 +15,9 @@ public class User extends AccountInformation {
 
 
     /**
-     * Creates an User with the given username and password and the account of times they can trade in a week
-     * @param username is the username of this User
-     * @param password is the password of this User
+     * Creates an entities.User with the given username and password and the account of times they can trade in a week
+     * @param username is the username of this entities.User
+     * @param password is the password of this entities.User
      */
     protected User(String username, String password) {
         super(username, password);
@@ -140,8 +143,8 @@ public class User extends AccountInformation {
     }
 
     /**
-     * Adding the most recent trade of this User to the User's trade history
-     * @param trade the most recent trade of this User
+     * Adding the most recent trade of this entities.User to the entities.User's trade history
+     * @param trade the most recent trade of this entities.User
      */
     protected void addTradeHistory(Trade trade){
         tradeHistory.add(trade);

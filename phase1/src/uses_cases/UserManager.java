@@ -1,16 +1,20 @@
+package uses_cases;
+
+import entities.User;
+
 import java.util.ArrayList;
 
 public class UserManager implements Serializable{
     private ArrayList<User> allUsers;
 
     /**
-     * Creates a UserManager object. Final implementation will vary later (how to serialize? deserialize?)
+     * Creates a uses_cases.UserManager object. Final implementation will vary later (how to serialize? deserialize?)
      */
     public UserManager() { }
 
     /**
      * Deserializes the arraylist of user objects into the program.
-     * @param filepath Filepath to the .ser file storing the User objects.
+     * @param filepath Filepath to the .ser file storing the entities.User objects.
      */
     public void readFromFile(String filepath) throws ClassNotFoundException {
         try {
@@ -49,35 +53,35 @@ public class UserManager implements Serializable{
 
     /**
      * Takes in username, password, finds the right user name and returns it.
-     * If the username does not match up with password, throw InvalidLoginException.
+     * If the username does not match up with password, throw exceptions.InvalidLoginException.
      * Put this method in a try-catch!!!
      * @param username String username
      * @param password String password
-     * @return the relevant User object
+     * @return the relevant entities.User object
      * @throws InvalidLoginException an invalid login
      */
     public User login(String username, String password) throws InvalidLoginException {}
 
     /**
-     * Takes in a newly created User object and adds it to the list of users.
+     * Takes in a newly created entities.User object and adds it to the list of users.
      * All usernames are unique.
      * Returns true if the user successfully created, false if there's another user with the same username.
-     * @param newUser a User object
+     * @param newUser a entities.User object
      * @throws InvalidUsernameException username is already taken
      */
-    public void createNewUser(User newUser) throws InvalidUsernameException{
+    public void createNewUser(User newUser) throws InvalidUsernameException {
         /*
         // get the newUser's username
-        for(User user : this.allUsers) {
+        for(entities.User user : this.allUsers) {
             //check to see if this username already exists, if yes then:
-            throw new InvalidUsernameException;
+            throw new exceptions.InvalidUsernameException;
         }
         this.allUsers.add(newUser);
         */
     }
 
     /**
-     * Admin functionality?
+     * entities.Admin functionality?
      * Removes the selected user.
      * Returns true if the user successfully removed, false if the user is not in the list of users.
      * @return True if user removed, False if user is not in list of users.
@@ -98,7 +102,7 @@ public class UserManager implements Serializable{
      * @param user String username
      * @return Arraylist of user's items
      */
-    // public ArrayList<Item> getUserInventory (String user) { }
+    // public ArrayList<entities.Item> getUserInventory (String user) { }
 
     /**
      * ARGUMENTS ARE NOT FINAL, JUST PLACEHOLDERS.
@@ -115,11 +119,11 @@ public class UserManager implements Serializable{
     /**
      * ADMIN ONLY
      * Allows an admin to either freeze an unfrozen user account or unfreeze a frozen user account.
-     * @param userName the User object in question.
+     * @param userName the entities.User object in question.
      */
     public void freezeUserAccount(String userName) {
         /*
-        User selectedUser; //get index of user object with the username
+        entities.User selectedUser; //get index of user object with the username
         if (selectedUser.isFrozen()) {
             selectedUser.setFrozen(false);
         }

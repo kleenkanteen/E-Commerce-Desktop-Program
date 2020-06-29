@@ -1,4 +1,7 @@
-// Written by Thanusun
+package entities;// Written by Thanusun
+
+import entities.Item;
+import entities.User;
 
 import java.util.ArrayList;
 
@@ -14,8 +17,8 @@ public abstract class Trade {
      * Creates a trade with an item that both the seller wants to sell
      * and the buyer wants to buy.
      * The buyer creates the trade with the item that they want to sell.
-     * @param traderA takes in a User that wants to create the Trade.
-     * @param traderB takes in a User that wants to borrow the item based on the trade.
+     * @param traderA takes in a entities.User that wants to create the entities.Trade.
+     * @param traderB takes in a entities.User that wants to borrow the item based on the trade.
      * @param userAItemsToTrade takes in items that want to be traded to userB.
      * @param userBItemsToTrade takes in items that want to be traded to userA.
      * @param date is a string that follows a specific date format.
