@@ -19,7 +19,7 @@ public class User extends AccountInformation {
      * @param username is the username of this entities.User
      * @param password is the password of this entities.User
      */
-    protected User(String username, String password) {
+    public User(String username, String password) {
         super(username, password);
         frozen = true;
         tradeHistory = new ArrayList<Trade>();
@@ -34,7 +34,7 @@ public class User extends AccountInformation {
      * Getter of the personal inventory of this account
      * @return the personal inventory of this account
      */
-    protected ArrayList<Item> getPersonalInventory(){
+    public ArrayList<Item> getPersonalInventory(){
         return personalInventory;
     }
 
@@ -42,7 +42,7 @@ public class User extends AccountInformation {
      * Getter of the wishlist of this account
      * @return the wishlist of this account
      */
-    protected ArrayList<Item> getWishlist(){
+    public ArrayList<Item> getWishlist(){
         return wishlist;
     }
 
@@ -50,7 +50,7 @@ public class User extends AccountInformation {
      * Getter of the trade history of this account
      * @return the history of this account
      */
-    protected ArrayList<Trade> getTradeHistory() {
+    public ArrayList<Trade> getTradeHistory() {
         return tradeHistory;
     }
 
@@ -58,7 +58,7 @@ public class User extends AccountInformation {
      * Getter of all the temporary trade history of this account
      * @return all the temporary trade history of this account
      */
-    protected ArrayList<Trade> getTempTradeHistory() {
+    public ArrayList<Trade> getTempTradeHistory() {
         ArrayList <Trade> tempTradeHistory = new ArrayList<Trade>();
         for (Trade t: tradeHistory){
             if(t instanceof TempTrade) tempTradeHistory.add(t);
@@ -70,7 +70,7 @@ public class User extends AccountInformation {
      * Getter of how much times this user has borrowed
      * @return the amount of times this user has borrowed
      */
-    protected int getBorrowedTimes() {
+    public int getBorrowedTimes() {
         //TODO
         return 0;
     }
@@ -79,7 +79,7 @@ public class User extends AccountInformation {
      * Getter of how much times this user has lend
      * @return the amount of times this user has lend
      */
-    protected int getLendTimes() {
+    public int getLendTimes() {
         //TODO
         return 0;
     }
@@ -88,7 +88,7 @@ public class User extends AccountInformation {
      * Getter of the 3 most frequent trading partners
      * @return the 3 most frequent trading partners
      */
-    protected User[] getFrequentTradingPartners() {
+    public User[] getFrequentTradingPartners() {
         //TODO
         User [] tradingPartners= new User[3];
         return tradingPartners;
@@ -98,7 +98,7 @@ public class User extends AccountInformation {
      * Getter of the theshold (how many more times must you lend items before you can borrow) value of this user
      * @return the theshold value
      */
-    protected int getTheshold() {
+    public int getTheshold() {
         return theshold;
     }
 
@@ -106,7 +106,7 @@ public class User extends AccountInformation {
      * Getter of the limited of times the user can trade in a week of this account
      * @return the limited of times the user can trade of this account
      */
-    protected int getTradePerWeek(){
+    public int getTradePerWeek(){
         return tradePerWeek;
     }
 
@@ -114,7 +114,7 @@ public class User extends AccountInformation {
      * Getter of the frozen status of this account
      * @return the frozen status of this account
      */
-    protected boolean isFrozen(){
+    public boolean isFrozen(){
         return frozen;
     }
 
@@ -122,7 +122,7 @@ public class User extends AccountInformation {
      * Getter of the messages of this account
      * @return the messages of this account
      */
-    protected ArrayList<Message> getMessages(){
+    public ArrayList<Message> getMessages(){
         return messages;
     }
 
@@ -130,7 +130,7 @@ public class User extends AccountInformation {
      * Setting a new personal inventory to this account
      * @param personalInventory the new personal inventory
      */
-    protected void setPersonalInventory(ArrayList<Item> personalInventory){
+    public void setPersonalInventory(ArrayList<Item> personalInventory){
         this.personalInventory = personalInventory;
     }
 
@@ -138,7 +138,7 @@ public class User extends AccountInformation {
      * Setting a new wishlist to this account
      * @param wishlist the new wishlist
      */
-    protected void setWishlist(ArrayList<Item> wishlist){
+    public void setWishlist(ArrayList<Item> wishlist){
         this.wishlist = wishlist;
     }
 
@@ -146,7 +146,7 @@ public class User extends AccountInformation {
      * Adding the most recent trade of this entities.User to the entities.User's trade history
      * @param trade the most recent trade of this entities.User
      */
-    protected void addTradeHistory(Trade trade){
+    public void addTradeHistory(Trade trade){
         tradeHistory.add(trade);
     }
 
@@ -154,7 +154,7 @@ public class User extends AccountInformation {
      * Setting the frozen status to this account
      * @param frozen the new frozen status to this account
      */
-    protected void setFrozen(boolean frozen){
+    public void setFrozen(boolean frozen){
         this.frozen = frozen;
     }
 
@@ -163,7 +163,7 @@ public class User extends AccountInformation {
      * Setting a new list of messages to this account
      * @param messages the new messages of this account
      */
-    protected void setMessages(ArrayList<Message> messages){
+    public void setMessages(ArrayList<Message> messages){
         this.messages = messages;
     }
 
@@ -171,7 +171,7 @@ public class User extends AccountInformation {
      * Changing the theshold (how many more times must you lend items before you can borrow) that this user has
      * @param newTheshold the new theshold value
      */
-    protected void setTheshold(int newTheshold){
+    public void setTheshold(int newTheshold){
         theshold = newTheshold;
     }
 
@@ -179,7 +179,7 @@ public class User extends AccountInformation {
      * Changing the limited of times that this user can trade in a week
      * @param tradePerWeek the new trade per week value
      */
-    protected void setTradePerWeek(int tradePerWeek){
+    public void setTradePerWeek(int tradePerWeek){
         this.tradePerWeek = tradePerWeek;
     }
 

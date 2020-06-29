@@ -8,7 +8,7 @@ public abstract class AccountInformation {
      * @param username is the username of this account
      * @param password is the password of this account
      */
-    protected AccountInformation(String username, String password){
+    public AccountInformation(String username, String password){
         this.username = username;
         this.password = password;
     }
@@ -17,7 +17,7 @@ public abstract class AccountInformation {
      * Getter of the username of this account
      * @return the username of this account
      */
-    protected String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -25,7 +25,7 @@ public abstract class AccountInformation {
      * Getter of the password of this account
      * @return the password of this account
      */
-    protected String getPassword() {
+    public String getPassword() {
         return password;
     }
 
@@ -33,7 +33,7 @@ public abstract class AccountInformation {
      * Setting a new username to this account
      * @param newUsername the new username for the account
      */
-    protected void setUsername(String newUsername){
+    public void setUsername(String newUsername){
         username = newUsername;
     }
 
@@ -41,7 +41,7 @@ public abstract class AccountInformation {
      * Setting a new password to this account
      * @param newPassword the new password for the account
      */
-    protected void setPassword(String newPassword){
+    public void setPassword(String newPassword){
         password = newPassword;
     }
 

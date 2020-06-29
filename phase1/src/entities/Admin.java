@@ -7,7 +7,7 @@ public class Admin extends AccountInformation {
      * @param username is the username of this account
      * @param password is the password of this account
      */
-    protected Admin(String username, String password) {
+    public Admin(String username, String password) {
         super(username, password);
     }
 }
