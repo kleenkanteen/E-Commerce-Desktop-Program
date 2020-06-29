@@ -32,25 +32,25 @@ public class AdminManagerTest {
             System.out.println(am2.toString());
 
             //adds a new admin to AdminManager am's records
-            //am.add(new Admin("very cool ", "dude123"));
+            //am.add(new entities.Admin("very cool ", "dude123"));
             am.add(new Admin("bonehead", "chickennugget"));
             am.add(new Admin("very cool ", "dude123"));
 
             //am.login("Macleord", "superpass");
 
             //adds a new student to AdminManager am2's records
-            //am2.add(new Message("ok moo"));
-            //am2.add(new Message("cow head"));
-            //am2.remove(new Message("ok moo"));
-            //am2.remove(new Message("great work son"));
+            //am2.add(new entities.Message("ok moo"));
+            //am2.add(new entities.Message("cow head"));
+            //am2.remove(new entities.Message("ok moo"));
+            //am2.remove(new entities.Message("great work son"));
 
 
-            System.out.println("Admin Accounts after:");
+            System.out.println("entities.Admin Accounts after:");
             System.out.println(am);
-            System.out.println("Admin Messages after");
+            System.out.println("entities.Admin Messages after");
             System.out.println(am2);
 
-            // Writes the existing Admin objects to file.
+            // Writes the existing entities.Admin objects to file.
             // This data is serialized and written to file as a sequence of bytes.
             am.saveToFile(serializedAdminManagerAccountInfo);
             am2.saveToFile(serializedAdminManagerMessageInfo);

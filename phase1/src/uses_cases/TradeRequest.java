@@ -1,3 +1,8 @@
+package uses_cases;
+
+import entities.Item;
+import entities.User;
+
 import java.util.Date;
 
 

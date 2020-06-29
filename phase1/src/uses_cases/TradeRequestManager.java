@@ -1,3 +1,7 @@
+package uses_cases;
+
+import entities.User;
+
 import java.util.Date;
 
 public class TradeRequestManager {
@@ -70,7 +74,7 @@ public class TradeRequestManager {
         else t.setConfirmationB(confirmation);
 
         if (t.isConfirmationA() && t.isConfirmationB()) {
-            // Once both user confirms, create a TemTrade, or PermTrade based on t.isPerm
+            // Once both user confirms, create a TemTrade, or entities.PermTrade based on t.isPerm
         }
     }
 

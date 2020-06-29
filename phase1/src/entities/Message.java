@@ -1,10 +1,12 @@
+package entities;
+
 public class Message {
     private String content;
     /**
-     * A message sent to a User with a content
+     * A message sent to a entities.User with a content
      * @param content is the content of the message
      */
-    protected Message(String content){
+    public Message(String content){
         this.content = content;
     }
 
@@ -12,7 +14,7 @@ public class Message {
      * Getter of the content of the message
      * @return the content of the message
      */
-    protected String getContent() {
+    public String getContent() {
         return content;
     }
 

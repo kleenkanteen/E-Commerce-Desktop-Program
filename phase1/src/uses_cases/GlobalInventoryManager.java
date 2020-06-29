@@ -1,3 +1,8 @@
+package uses_cases;
+
+import entities.Item;
+import entities.GlobalInventory;
+
 import java.util.ArrayList;
 
 public class GlobalInventoryManager {

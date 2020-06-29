@@ -1,14 +1,16 @@
-import java.util.ArrayList;
+package entities;
 
-public abstract class DecisionMessage extends Message{
+import entities.Message;
+
+public abstract class DecisionMessage extends Message {
     private String[] options;
 
     /**
-     * A message sent to a User with a content and a decision that can be made
+     * A message sent to a entities.User with a content and a decision that can be made
      * @param content is the content of the message
      * @param options the options that can be made in the decision
      */
-    protected DecisionMessage(String content, String[] options){
+    public DecisionMessage(String content, String[] options){
         super(content);
         this.options = options;
     }
@@ -17,7 +19,7 @@ public abstract class DecisionMessage extends Message{
      * Getter for the options of this decision message
      * @return the options of this decision message
      */
-    protected String[] getOptions(){
+    public String[] getOptions(){
         return options;
     }
 
