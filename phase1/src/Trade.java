@@ -35,13 +35,12 @@ public abstract class Trade {
      * If not, the method returns false.
      *
      * Note: Useful for admins, especially if they want to freeze accounts!
-     * @param sellerAccepts takes a boolean and tells us that the seller accepts all details
-     * @param buyerAccepts takes a boolean and tells us that the buyer accepts all the details.
-     * @return
+     *
+     * @return a boolean that tells the user if the trade is completed.
      */
-    public boolean tradeCompleted(boolean sellerAccepts, boolean buyerAccepts) {
+    public boolean tradeCompleted() {
         boolean completed = false;
-        if (sellerAccepts == buyerAccepts) {
+        if (userAItemstoTrade.isEmpty() && userBItemsToTrade.isEmpty()) {
             completed = true;
         }
         return completed;
