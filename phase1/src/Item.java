@@ -11,6 +11,16 @@ public class Item {
 
     }
 
+    @Override
+    public String toString() {
+        return "Item{" +
+                "ID='" + ID + '\'' +
+                ", description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", ownerName='" + ownerName + '\'' +
+                '}';
+    }
+
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }

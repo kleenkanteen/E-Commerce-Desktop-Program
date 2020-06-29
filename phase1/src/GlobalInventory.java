@@ -29,9 +29,11 @@ public class GlobalInventory {
     public void addItem(String itemID, Item item){
         itemMap.put(itemID, item);
     }
+
     public void removeItem(String itemID){
         itemMap.remove(itemID);
     }
+
     public boolean containsKey(String itemID){
         return itemMap.containsKey(itemID);
     }
