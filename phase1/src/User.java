@@ -7,7 +7,7 @@ public class User extends AccountInformation {
     private ArrayList<Trade> tradeHistory;
     private ArrayList<Message> messages;
     private boolean frozen;
-    private final int tradePerWeek;
+    private int tradePerWeek;
     private int theshold;
 
 
@@ -15,15 +15,14 @@ public class User extends AccountInformation {
      * Creates an User with the given username and password and the account of times they can trade in a week
      * @param username is the username of this User
      * @param password is the password of this User
-     * @param tradePerWeek is the limit amount of times this User can trade in a week
      */
-    protected User(String username, String password, int tradePerWeek) {
+    protected User(String username, String password) {
         super(username, password);
         frozen = true;
         tradeHistory = new ArrayList<Trade>();
         personalInventory = new ArrayList<Item>();
         wishlist = new ArrayList<Item>();
-        this.tradePerWeek = tradePerWeek;
+        tradePerWeek = 5;
         theshold = 1;
         messages = new ArrayList<Message>();
     }
@@ -171,6 +170,14 @@ public class User extends AccountInformation {
      */
     protected void setTheshold(int newTheshold){
         theshold = newTheshold;
+    }
+
+    /**
+     * Changing the limited of times that this user can trade in a week
+     * @param tradePerWeek the new trade per week value
+     */
+    protected void setTradePerWeek(int tradePerWeek){
+        this.tradePerWeek = tradePerWeek;
     }
 
 }
