@@ -161,6 +161,8 @@ public class UserManager implements Serializable{
      */
     // public boolean removeItemFromUserInventory (String user, String itemName, String itemID) { }
 
+
+
     // Below functions are ADMIN ONLY, used by AdminManager.
 
     /**
@@ -172,4 +174,13 @@ public class UserManager implements Serializable{
         User selectedUser = this.allUsers.get(userName);
         selectedUser.setFrozen(!selectedUser.isFrozen());
     }
+
+    /**
+     * User method setPersonalInventory should be changed to something like addItemtoPersonalInventory.
+     * Add an item to a user's inventory.
+     * @param item item to be added to inventory
+     * @param username String username
+     * @return True if successfully added to account, false if name does not exist in list of users.
+     */
+    // public boolean addItemToUserInventory(Item item, String username) { }
 }
