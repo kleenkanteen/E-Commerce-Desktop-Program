@@ -1,4 +1,5 @@
 public class Item {
+    private String ID = null;
     private final String description;
     private final String name;
     private String ownerName; // The UserName of owner
@@ -12,6 +13,14 @@ public class Item {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public void setID(String i){
+        ID = i ;
+    }
+
+    public String getID(){
+        return ID;
     }
 
     public String getDescription() {
