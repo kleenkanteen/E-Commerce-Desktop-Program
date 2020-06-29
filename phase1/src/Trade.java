@@ -1,28 +1,33 @@
 // Written by Thanusun
 
+import java.util.ArrayList;
+
 public abstract class Trade {
-    private final User seller;
-    private final User buyer;
-    private final Item itemToTrade;
     private final String time;
     private final String date;
+    private final ArrayList<Item> userBItemsToTrade;
+    private final ArrayList<Item> userAItemstoTrade;
+    private final User traderA;
+    private final User traderB;
 
     /**
      * Creates a trade with an item that both the seller wants to sell
      * and the buyer wants to buy.
      * The buyer creates the trade with the item that they want to sell.
-     * @param seller takes in a User that wants to create the Trade.
-     * @param buyer takes in a User that wants to borrow the item based on the trade.
-     * @param itemToTrade takes in an item that both the buyer and seller want.
+     * @param traderA takes in a User that wants to create the Trade.
+     * @param traderB takes in a User that wants to borrow the item based on the trade.
+     * @param userAItemsToTrade takes in items that want to be traded to userB.
+     * @param userBItemsToTrade takes in items that want to be traded to userA.
      * @param date is a string that follows a specific date format.
-     * @param time is a string tha follows a time.
+     * @param time is a string that follows a time.
      */
-    public Trade(User seller, User buyer, Item itemToTrade, String date, String time) {
-        this.seller = seller;
-        this.buyer = buyer;
+    public Trade(User traderA, User traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, String date, String time) {
+        this.traderA = traderA;
+        this.traderB = traderB;
         this.date = date;
         this.time = time;
-        this.itemToTrade = itemToTrade;
+        this.userAItemstoTrade = userAItemsToTrade;
+        this.userBItemsToTrade = userBItemsToTrade;
     }
 
     /**
@@ -50,7 +55,12 @@ public abstract class Trade {
         return date;
     }
 
-    public Item getItemToTrade() {
-        return itemToTrade;
+    public ArrayList<Item> getUserAItemstoTrade() {
+        return userAItemstoTrade;
     }
+
+    public ArrayList<Item> getUserBItemsToTrade() {
+        return userBItemsToTrade;
+    }
+
 }
