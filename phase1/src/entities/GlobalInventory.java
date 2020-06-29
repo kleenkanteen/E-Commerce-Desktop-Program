@@ -1,6 +1,7 @@
 package entities;
 
 import entities.Item;
+import exceptions.InvalidItemException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,12 +15,12 @@ public class GlobalInventory {
 
     }
 
-    public Object getItem(String itemID){
+    public Object getItem(String itemID) throws InvalidItemException {
         if (itemMap.containsKey(itemID)){
             return itemMap.get(itemID);
         }
         else {
-            return "There is no record matched with your itemID";
+            throw new InvalidItemException();
         }
 
     }
