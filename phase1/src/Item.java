@@ -1,5 +1,5 @@
 public class Item {
-    private int ID = -1;
+    private String ID = null;
     private final String description;
     private final String name;
     private String ownerName; // The UserName of owner
@@ -15,11 +15,11 @@ public class Item {
         this.ownerName = ownerName;
     }
 
-    public void setID(int i){
-        ID = i;
+    public void setID(String i){
+        ID = i ;
     }
 
-    public int getID(){
+    public String getID(){
         return ID;
     }
 
