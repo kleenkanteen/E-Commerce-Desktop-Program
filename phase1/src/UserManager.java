@@ -1,18 +1,24 @@
 import java.util.ArrayList;
+import java.lang.System;
+import java.util.Scanner;
+import java.util.HashMap;
+import java.io.*;
 
 public class UserManager implements Serializable{
-    private ArrayList<User> allUsers;
+    private Hashmap<String, User> allUsers;
 
     /**
      * Creates a UserManager object. Final implementation will vary later (how to serialize? deserialize?)
      */
-    public UserManager() { }
+    public UserManager() {
+        this.allUsers = new Hashmap<String, User>();
+    }
 
     /**
      * Deserializes the arraylist of user objects into the program.
      * @param filepath Filepath to the .ser file storing the User objects.
      */
-    public void readFromFile(String filepath) throws ClassNotFoundException {
+    public void readFromFile(String filepath) {
         try {
             // load in the objects
             InputStream file = new FileInputStream(filepath);
@@ -20,7 +26,7 @@ public class UserManager implements Serializable{
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the arraylist of user objects
-            allUsers = (ArrayList<User>) input.readObject();
+            allUsers = (Hashmap<String, User>) input.readObject();
             input.close();
         }
         catch(IOException ex) {
@@ -56,18 +62,27 @@ public class UserManager implements Serializable{
      * @return the relevant User object
      * @throws InvalidLoginException an invalid login
      */
-    public User login(String username, String password) throws InvalidLoginException {}
+    public User login(String username, String password) throws InvalidLoginException {
+        // check username
+        if(this.allUsers.containsKey(username)) {
+            // check password
+            if(password == this.allUsers.get(username).getPassword()) {
+                return this.allUsers.get(username);
+            }
+        }
+        throw new InvalidLoginException;
+    }
 
     /**
      * Takes in a newly created User object and adds it to the list of users.
      * All usernames are unique.
      * Returns true if the user successfully created, false if there's another user with the same username.
-     * @param newUser a User object
+     * @param userName the new user's username
+     * @param password new user's chosen password
      * @throws InvalidUsernameException username is already taken
      */
-    public void createNewUser(User newUser) throws InvalidUsernameException{
+    public void createNewUser(String userName, String password) throws InvalidUsernameException{
         /*
-        // get the newUser's username
         for(User user : this.allUsers) {
             //check to see if this username already exists, if yes then:
             throw new InvalidUsernameException;
@@ -118,7 +133,6 @@ public class UserManager implements Serializable{
      * @param userName the User object in question.
      */
     public void freezeUserAccount(String userName) {
-        /*
         User selectedUser; //get index of user object with the username
         if (selectedUser.isFrozen()) {
             selectedUser.setFrozen(false);
@@ -126,6 +140,5 @@ public class UserManager implements Serializable{
         else {
             selecteduser.setFrozen(true);
         }
-        */
     }
 }
