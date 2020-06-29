@@ -1,3 +1,9 @@
+package uses_cases;
+
+import entities.User;
+import entities.Item;
+import exceptions.InvalidLoginException;
+import exceptions.InvalidUsernameException;
 import java.util.ArrayList;
 import java.lang.System;
 import java.util.Scanner;
@@ -9,7 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserManager implements Serializable{
-    private static final Logger logger = Logger.getLogger(AdminAccountManager.class.getName());
+    private static final Logger logger = Logger.getLogger(UserManager.class.getName());
     private static final Handler consoleHandler = new ConsoleHandler();
     private HashMap<String, User> allUsers;
 
