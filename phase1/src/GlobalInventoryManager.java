@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class GlobalInventoryManager {
     GlobalInventory gI;
@@ -7,31 +6,32 @@ public class GlobalInventoryManager {
         this.gI = gI;
     }
 
-    public void addItem(Item item){
-        gI.addItem(item);
+    public void addItem(String itemID, Item item){
+        gI.addItem(itemID, item);
     }
 
-    public void removeItem(Item item){
-        gI.removeItem(item);
+    public void removeItem(String itemID){
+        gI.removeItem(itemID);
     }
 
-    public ArrayList<Item> searchItem(String itemName){
-        return gI.searchByItemName(itemName);
-    }
+
 
     public ArrayList<Item> generatePage(int pageNumber){
         ArrayList<Item> itemList = new ArrayList<Item>();
         for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 ; i++){
-            itemList.add(gI.getItem(i));
+            itemList.add(gI.getItemByIndex(i));
 
         }
         return itemList;
 
     }
 
-    public ArrayList<Item> searchUser(String UserName){
-        return gI.searchByOwner(UserName);
+    public ArrayList<Item> searchWithItemName(String itemName){
+        return gI.searchByItemName(itemName);
     }
-
-
+    public ArrayList<Item> searchWithItemOwner(String ownerName){
+        return gI.searchByOwnerName(ownerName);
+    }
 }
+
+
