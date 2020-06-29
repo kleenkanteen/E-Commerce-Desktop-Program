@@ -1,42 +1,66 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.*;
 
 public class GlobalInventory {
-    ArrayList<Item> itemList = new ArrayList<Item>();
+    HashMap<String, Item> itemMap = new HashMap<String, Item>();
 
-    //use default constructor in main method
 
-    public Item getItem(int index){
-        return itemList.get(index);
+    GlobalInventory(){
+
     }
 
-    public void addItem(Item item){
-        itemList.add(item);
-    }
-    public void removeItem(Item item){
-        itemList.remove(item);
-    }
-    public boolean contains(Item item){
-        return itemList.contains(item);
-    }
-    public ArrayList<Item> searchByOwner(String owner){
-        ArrayList<Item> banana = new ArrayList<Item>(); //😀
-        for (Item item : itemList){
-            if (item.getOwnerName().equals(owner)){
-                banana.add(item);
-            }
+    public Object getItem(String itemID){
+        if (itemMap.containsKey(itemID)){
+            return itemMap.get(itemID);
         }
-        return banana;
+        else {
+            return "There is no record matched with your itemID";
+        }
+
     }
+
+    public Item getItemByIndex(int index){
+        Set<String> keys = itemMap.keySet();
+        String i = new ArrayList<>(keys).get(index);
+        return itemMap.get(i);
+    }
+
+    public void addItem(String itemID, Item item){
+        itemMap.put(itemID, item);
+    }
+    public void removeItem(String itemID){
+        itemMap.remove(itemID);
+    }
+    public boolean containsKey(String itemID){
+        return itemMap.containsKey(itemID);
+    }
+
     public ArrayList<Item> searchByItemName(String itemName){
-        ArrayList<Item> banana = new ArrayList<Item>(); //😂
-        for (Item item : itemList){
-            if (item.getName().equals(itemName)){
-                banana.add(item);
+        ArrayList<Item> banana = new ArrayList<Item>();
+        for (int i = 0; i < itemMap.size(); i++){
+            Set<String> keys = itemMap.keySet();
+            String f = new ArrayList<>(keys).get(i);
+            if (itemMap.get(f).getName().equals(itemName)){
+                banana.add(itemMap.get(f));
             }
         }
         return banana;
+    }
+
+    public ArrayList<Item> searchByOwnerName(String ownerName){
+        ArrayList<Item> banana = new ArrayList<Item>();
+        for (int i = 0; i < itemMap.size(); i++){
+            Set<String> keys = itemMap.keySet();
+            String f = new ArrayList<>(keys).get(i);
+            if (itemMap.get(f).getOwnerName().equals(ownerName)){
+                banana.add(itemMap.get(f));
+            }
+        }
+        return banana;
+    }
 
 
 
-}
+
 }
