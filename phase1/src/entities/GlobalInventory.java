@@ -39,6 +39,10 @@ public class GlobalInventory {
         itemMap.remove(itemID);
     }
 
+    public int getNumOfItem(){
+        return itemMap.size();
+    }
+
     public boolean containsKey(String itemID){
         return itemMap.containsKey(itemID);
     }
@@ -66,6 +70,8 @@ public class GlobalInventory {
         }
         return banana;
     }
+
+
 
 
 

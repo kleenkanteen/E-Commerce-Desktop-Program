@@ -23,7 +23,7 @@ public class GlobalInventoryManager {
 
     public ArrayList<Item> generatePage(int pageNumber){
         ArrayList<Item> itemList = new ArrayList<Item>();
-        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 ; i++){
+        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < gI.getNumOfItem(); i++){
             itemList.add(gI.getItemByIndex(i));
 
         }
