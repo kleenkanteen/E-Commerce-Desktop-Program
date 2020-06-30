@@ -54,8 +54,14 @@ public class UserManager implements Serializable{
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the hashmap of user objects
-            allUsers = (HashMap<String, User>) input.readObject();
-            input.close();
+            try {
+                allUsers = (HashMap<String, User>) input.readObject();
+                input.close();
+            }
+            catch(ClassCastException ex) {
+                logger.log(Level.SEVERE, "Casting a weird object as the hashmap in UserManager.", ex);
+                // System.out.println("Casting a weird object as the hashmap in UserManager.");
+            }
         }
         catch(IOException ex) {
             logger.log(Level.SEVERE, "Cannot read from input during deserialization.", ex);
@@ -114,6 +120,7 @@ public class UserManager implements Serializable{
      * Takes in a newly created User object and adds it to the list of users.
      * All usernames are unique.
      * Returns true if the user successfully created, false if there's another user with the same username.
+     * PUt this method in a try-catch!!!
      * @param userName the new user's username
      * @param password new user's chosen password
      * @throws InvalidUsernameException username is already taken
@@ -128,7 +135,6 @@ public class UserManager implements Serializable{
     }
 
     /**
-     * Admin functionality?
      * Removes the selected user.
      * Returns true if the user successfully removed, false if the user is not in the list of users.
      * @return True if user removed, False if user is not in list of users.
@@ -152,16 +158,69 @@ public class UserManager implements Serializable{
     }
 
     /**
-     * ARGUMENTS ARE NOT FINAL, JUST PLACEHOLDERS.
+     * Return a user's personal wishlist.
+     * @param user String username
+     * @return the user's wishlist
+     */
+    public ArrayList<Item> getUserWishlist (String user) {return this.allUsers.get(user).getWishlist(); }
+
+    /**
+     * METHOD IS NOT FINAL, JUST PLACEHOLDER.
      * Removes an item from a user's personal inventory.
      * @param user String username
-     * @param itemName String item name
      * @param itemID String item ID
      * @return True if item removed, False if item not in inventory or some other error comes up.
      */
-    // public boolean removeItemFromUserInventory (String user, String itemName, String itemID) { }
+    public boolean removeItemFromUserInventory (String user, String itemID) {
+        ArrayList<Item> userInventory = getUserInventory(user);
+        for(Item item : userInventory) {
+            if(item.getID().equals(itemID)) {
+                userInventory.remove(item);
+                return true;
+            }
+        }
+        return false;
+    }
 
+    /**
+     * Remove an item from a user's wishlist.
+     * @param user String username
+     * @param itemID String itemID
+     * @return Return true if item successfully removed, false if item not in wishlist
+     */
+    public boolean removeItemFromUserWishlist(String user, String itemID) {
+        ArrayList<Item> userWishlist = getUserWishlist(user);
+        for(Item item : userWishlist) {
+            if(item.getID().equals(itemID)) {
+                userWishlist.remove(item);
+                return true;
+            }
+        }
+        return false;
+    }
 
+    /**
+     * User method setPersonalInventory should be changed to something like addItemtoPersonalInventory.
+     * Add an item to a user's inventory.
+     * @param item item to be added to inventory
+     * @param username String username
+     */
+    public void addItemToUserInventory(Item item, String username) {
+        ArrayList<Item> userInventory = getUserInventory(username);
+        userInventory.add(item);
+        this.allUsers.get(username).setPersonalInventory(userInventory);
+    }
+
+    /**
+     * Add an item to a user's wishlist
+     * @param username String username
+     * @param item Item object to be added
+     */
+    public void addItemToWishlist(String username, Item item) {
+        ArrayList<Item> userWishlist = getUserWishlist(username);
+        userWishlist.add(item);
+        this.allUsers.get(username).setWishlist(userWishlist);
+    }
 
     // Below functions are ADMIN ONLY, used by AdminManager.
 
@@ -174,13 +233,4 @@ public class UserManager implements Serializable{
         User selectedUser = this.allUsers.get(userName);
         selectedUser.setFrozen(!selectedUser.isFrozen());
     }
-
-    /**
-     * User method setPersonalInventory should be changed to something like addItemtoPersonalInventory.
-     * Add an item to a user's inventory.
-     * @param item item to be added to inventory
-     * @param username String username
-     * @return True if successfully added to account, false if name does not exist in list of users.
-     */
-    // public boolean addItemToUserInventory(Item item, String username) { }
 }
