@@ -1,17 +1,16 @@
 package entities;// Written by Thanusun
 
-import entities.Item;
-import entities.User;
-
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public abstract class Trade {
-    private final String time;
-    private final String date;
+    private final Calendar time;
+    private final Calendar date;
     private final ArrayList<Item> userBItemsToTrade;
     private final ArrayList<Item> userAItemstoTrade;
     private final User traderA;
     private final User traderB;
+    private boolean borrowed, lent = false;
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -24,7 +23,7 @@ public abstract class Trade {
      * @param date is a string that follows a specific date format.
      * @param time is a string that follows a time.
      */
-    public Trade(User traderA, User traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, String date, String time) {
+    public Trade(User traderA, User traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date, Calendar time) {
         this.traderA = traderA;
         this.traderB = traderB;
         this.date = date;
@@ -49,11 +48,11 @@ public abstract class Trade {
         return completed;
     }
 
-    public String getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public String getDate() {
+    public Calendar getDate() {
         return date;
     }
 
@@ -65,4 +64,29 @@ public abstract class Trade {
         return userBItemsToTrade;
     }
 
+    public boolean isBorrowed(User trader) {
+        if (trader == traderA) {
+            if (userAItemstoTrade.isEmpty()) {
+                borrowed = true;
+            }
+        } else if (trader == traderB) {
+            if (userAItemstoTrade.isEmpty()) {
+                borrowed = true;
+            }
+        }
+        return borrowed;
+    }
+
+    public boolean isLent(User trader) {
+        if (trader == traderA) {
+            if (!userAItemstoTrade.isEmpty()) {
+                lent = true;
+            }
+        } else if (trader == traderB) {
+            if (!userBItemsToTrade.isEmpty()) {
+                lent = true;
+            }
+        }
+        return lent;
+    }
 }
