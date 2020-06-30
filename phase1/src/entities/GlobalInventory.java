@@ -70,7 +70,7 @@ public class GlobalInventory {
     }
 
     /**
-     * return the number of Item that exists in itemMap
+     * @return the number of Item that exists in itemMap
      */
 
     public int getNumOfItem(){
@@ -79,7 +79,7 @@ public class GlobalInventory {
 
     /**
      * @param itemID is the itemID that needed to be checked about its existence in itemMap
-     * return true if the itemID exists in the itemMap.
+     * @return true if the itemID exists in the itemMap.
      */
 
     public boolean containsKey(String itemID){
@@ -89,7 +89,7 @@ public class GlobalInventory {
 
     /**
      * @param itemName is the item name the user wants to search in GlobalInventory
-     * return an arraylist of Item with the Name the User searches
+     * @return an arraylist of Item with the Name the User searches
      */
 
     public ArrayList<Item> searchByItemName(String itemName){
@@ -106,7 +106,7 @@ public class GlobalInventory {
 
     /**
      * @param ownerName is the owner name the user wants to search in GlobalInventory
-     * return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
+     * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
      */
 
     public ArrayList<Item> searchByOwnerName(String ownerName){
