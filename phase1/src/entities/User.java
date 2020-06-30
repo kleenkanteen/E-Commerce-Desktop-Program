@@ -5,13 +5,13 @@ import java.util.ArrayList;
 // Moved to entities folder, update getpersonalinventory() with a import so it works
 
 public class User extends AccountInformation {
-    private ArrayList<Item> personalInventory;
-    private ArrayList<Item> wishlist;
-    private ArrayList<Trade> tradeHistory;
-    private ArrayList<Message> messages;
-    private boolean frozen;
-    private int tradePerWeek;
-    private int theshold;
+    private ArrayList<Item> personalInventory = new ArrayList<>();
+    private ArrayList<Item> wishlist = new ArrayList<>();
+    private ArrayList<Trade> tradeHistory = new ArrayList<>();
+    private ArrayList<Message> messages = new ArrayList<>();
+    private boolean frozen = true;
+    private int tradePerWeek = 5;
+    private int theshold = 1;
 
 
     /**
@@ -21,13 +21,6 @@ public class User extends AccountInformation {
      */
     public User(String username, String password) {
         super(username, password);
-        frozen = true;
-        tradeHistory = new ArrayList<Trade>();
-        personalInventory = new ArrayList<Item>();
-        wishlist = new ArrayList<Item>();
-        tradePerWeek = 5;
-        theshold = 1;
-        messages = new ArrayList<Message>();
     }
 
     /**
