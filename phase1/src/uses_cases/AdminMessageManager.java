@@ -1,10 +1,14 @@
 package uses_cases;
 
+import entities.Admin;
 import entities.Message;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -64,7 +68,7 @@ public class AdminMessageManager {
     public void remove(Message newMessage) {
         List<Message> toRemove = new ArrayList();
         for (Message r : adminMessages) {
-            if (r.getMessage().equals(newMessage.getMessage())){
+            if (r.getContent().equals(newMessage.getContent())){
                 toRemove.add(r);
                 break;
             }
@@ -90,7 +94,7 @@ public class AdminMessageManager {
     public String toString() {
         String result = "";
         for (Message r : adminMessages) {
-            System.out.println(r.getMessage());
+            System.out.println(r.getContent());
         }
         return result;
     }

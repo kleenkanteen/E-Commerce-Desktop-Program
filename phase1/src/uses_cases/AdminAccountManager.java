@@ -1,5 +1,5 @@
 package uses_cases;
-
+import entities.User;
 import entities.Admin;
 
 import java.io.*;

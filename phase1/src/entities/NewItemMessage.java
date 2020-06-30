@@ -1,15 +1,15 @@
 package entities;
 
 public class NewItemMessage extends DecisionMessage {
-    private static final String[] options = new String[]{"confirm", "deny"};
     private Item newItem;
 
     /**
      * A message sent to a entities.User that request in making a change to
      * @param content is the content of the message
      */
-    public NewItemMessage(String content) {
-        super(content, options);
+    public NewItemMessage(String content, Item item) {
+        super(content, new String[]{"confirm", "deny"});
+        this.newItem = item;
     }
 
     /**
