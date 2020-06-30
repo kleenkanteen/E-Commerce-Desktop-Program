@@ -4,6 +4,7 @@ import entities.User;
 import entities.Item;
 import exceptions.InvalidLoginException;
 import exceptions.InvalidUsernameException;
+import entities.Message;
 import java.util.ArrayList;
 import java.lang.System;
 import java.util.Scanner;
@@ -18,6 +19,7 @@ public class UserManager implements Serializable{
     private static final Logger logger = Logger.getLogger(UserManager.class.getName());
     private static final Handler consoleHandler = new ConsoleHandler();
     private HashMap<String, User> allUsers;
+    private UserMessageManager userMessageManager;
 
     /**
      * Creates a UserManager object.
@@ -41,8 +43,10 @@ public class UserManager implements Serializable{
         }
     }
 
+    // TODO
+    // SERIALIZATION/DESERIALIZATION
+
     /**
-     * Necessary?
      * Deserializes the arraylist of user objects into the program.
      * @param filepath Filepath to the .ser file storing the User objects.
      */
@@ -94,22 +98,26 @@ public class UserManager implements Serializable{
         }
     }
 
+    // TODO
+    // USER ACCOUNT METHODS
+
     /**
      * Takes in username, password, finds the right user name and returns it.
      * If the username does not match up with password, throw InvalidLoginException.
      * Put this method in a try-catch!!!
      * @param username String username
      * @param password String password
-     * @return the relevant User object
+     * @return the relevant username of the user account
      * @throws InvalidLoginException an invalid login
      */
-    public User login(String username, String password) throws InvalidLoginException {
+    public String login(String username, String password) throws InvalidLoginException {
         // check username
         if(this.allUsers.containsKey(username)) {
             // check password
             if(password.equals(this.allUsers.get(username).getPassword())) {
                 logger.log(Level.INFO, "successful login, user object returned");
-                return this.allUsers.get(username);
+                this.userMessageManager = new UserMessageManager(this.allUsers.get(username).getMessages());
+                return this.allUsers.get(username).getUsername();
             }
         }
         logger.log(Level.INFO, "Invalid login exception.");
@@ -149,23 +157,46 @@ public class UserManager implements Serializable{
     }
 
     /**
+     * Allows a user to change their username as long as
+     * @param username String username (the old one)
+     * @param newUsername The new username
+     * @return True if username successfully changed, false if new username already exists
+     */
+    public boolean changeUsername(String username, String newUsername) {
+        if(!this.allUsers.containsKey(newUsername)) {
+            this.allUsers.get(username).setUsername(newUsername);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Changes the password of a user
+     * @param username String username
+     * @param newPassword the new password
+     */
+    public void changePassword(String username, String newPassword) {
+        this.allUsers.get(username).setPassword(newPassword);
+    }
+
+    // TODO
+    // INVENTORY AND WISHLIST
+
+    /**
      * Return a user's personal inventory.
      * @param user String username
      * @return Arraylist of user's items
      */
-    public ArrayList<Item> getUserInventory (String user) {
-        return this.allUsers.get(user).getPersonalInventory();
-    }
+    public ArrayList<Item> getUserInventory (String user) { return this.allUsers.get(user).getPersonalInventory(); }
 
     /**
      * Return a user's personal wishlist.
      * @param user String username
      * @return the user's wishlist
      */
-    public ArrayList<Item> getUserWishlist (String user) {return this.allUsers.get(user).getWishlist(); }
+    public ArrayList<Item> getUserWishlist (String user) { return this.allUsers.get(user).getWishlist(); }
 
     /**
-     * METHOD IS NOT FINAL, JUST PLACEHOLDER.
      * Removes an item from a user's personal inventory.
      * @param user String username
      * @param itemID String item ID
@@ -174,7 +205,7 @@ public class UserManager implements Serializable{
     public boolean removeItemFromUserInventory (String user, String itemID) {
         ArrayList<Item> userInventory = getUserInventory(user);
         for(Item item : userInventory) {
-            if(item.getID().equals(itemID)) {
+            if(item.getItemID().equals(itemID)) {
                 userInventory.remove(item);
                 return true;
             }
@@ -191,7 +222,7 @@ public class UserManager implements Serializable{
     public boolean removeItemFromUserWishlist(String user, String itemID) {
         ArrayList<Item> userWishlist = getUserWishlist(user);
         for(Item item : userWishlist) {
-            if(item.getID().equals(itemID)) {
+            if(item.getItemID().equals(itemID)) {
                 userWishlist.remove(item);
                 return true;
             }
@@ -222,7 +253,12 @@ public class UserManager implements Serializable{
         this.allUsers.get(username).setWishlist(userWishlist);
     }
 
-    // Below functions are ADMIN ONLY, used by AdminManager.
+    // TODO
+    // Possible messages section?
+    // public Object sendAdminSomeMessageOrWhatever() {}
+
+    // TODO
+    // ADMIN METHODS
 
     /**
      * ADMIN ONLY
@@ -232,5 +268,18 @@ public class UserManager implements Serializable{
     public void freezeUserAccount(String userName) {
         User selectedUser = this.allUsers.get(userName);
         selectedUser.setFrozen(!selectedUser.isFrozen());
+    }
+
+    /**
+     * Iterator code taken from:
+     * https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
+     * ADMIN ONLY
+     * Allows an admin to set a new trades per week for all users.
+     * @param newTradesPerWeek the new trades per week
+     */
+    public void setWeeklyTrades(int newTradesPerWeek) {
+        for (User user: this.allUsers.values()) {
+            user.setTradePerWeek(newTradesPerWeek);
+        }
     }
 }
