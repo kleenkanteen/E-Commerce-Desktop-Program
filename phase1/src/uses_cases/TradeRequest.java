@@ -1,14 +1,13 @@
 package uses_cases;
 
 import entities.Item;
-import entities.User;
 
 import java.util.Date;
 
 
 public class TradeRequest {
-    private User userA; // user who initiate the trade request (borrower in one way trade)
-    private User userB; // user who gets the trade request (lander in one way trade)
+    private String userA; // username of user who initiate the trade request (borrower in one way trade)
+    private String userB; // username of user who gets the trade request (lander in one way trade)
     private Item itemA; // userA's items
     private Item itemB;  // userB's items
     private boolean Perm;
@@ -20,7 +19,7 @@ public class TradeRequest {
 
     // one way trade request
 
-    public TradeRequest(User userA, User userB, Item itemB, boolean tempOrPerm, Date date, String place) {
+    public TradeRequest(String userA, String userB, Item itemB, boolean tempOrPerm, Date date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemB = itemB;
@@ -33,7 +32,7 @@ public class TradeRequest {
     // two way trade request
 
 
-    public TradeRequest(User userA, User userB, Item itemA, Item itemB, boolean tempOrPerm,
+    public TradeRequest(String userA, String userB, Item itemA, Item itemB, boolean tempOrPerm,
                         Date date, String place) {
         this.userA = userA;
         this.userB = userB;
@@ -44,11 +43,11 @@ public class TradeRequest {
         this.place = place;
     }
 
-    public User getUserA() {
+    public String getUserA() {
         return userA;
     }
 
-    public User getUserB() {
+    public String getUserB() {
         return userB;
     }
 
