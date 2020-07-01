@@ -8,7 +8,7 @@ public class FreezeRequestMessage extends DecisionMessage {
      * @param content is the content of the message
      */
     public FreezeRequestMessage(String content, User user) {
-        super(content, new String[]{"freeze", "not freeze"});
+        super(content, new String[]{"Freeze", "Ignore"});
         this.user = user;
     }
 
@@ -16,7 +16,5 @@ public class FreezeRequestMessage extends DecisionMessage {
      * Getter for the user that might need to be frozen
      * @return the user
      */
-    public User getUser(){
-        return user;
-    }
+    public User getUser(){ return user; }
 }
