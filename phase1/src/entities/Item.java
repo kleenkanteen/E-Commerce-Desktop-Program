@@ -42,32 +42,58 @@ public class Item {
                 '}';
     }
 
+    /**
+     * Set the ownerName of the item that can be called when the trade is made
+     * @param ownerName is the new owner Name of this Item
+     */
+
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
     }
+
+    /**
+     * Set the ItemID to the Item when the admin approve the Item.
+     * @param i is the unique itemID can be generated for the item
+     */
 
     public void setItemID(String i){
         itemID = i ;
     }
 
+    /**
+     * getter to get the itemID from the Item
+     * @return itemID of the Item
+     */
+
     public String getItemID(){
         return itemID;
     }
+
+    /**
+     * Getter to get the description of the Item
+     * @return the description of the Item
+     */
 
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Getter to get the name of the Item
+     * @return the name of the Item
+     */
+
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter to get the owner's name of the Item
+     * @return the ownerName of the Item
+     */
+
     public String getOwnerName() {
         return ownerName;
-    }
-    public boolean isEqual(Item item){
-        return item.getDescription().equals(description) &&
-                item.getName().equals(name) && item.getOwnerName().equals(ownerName);
     }
 
 }
