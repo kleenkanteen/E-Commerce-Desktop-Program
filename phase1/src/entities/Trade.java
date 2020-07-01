@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public abstract class Trade {
-    private final Calendar time;
     private final Calendar date;
     private final ArrayList<Item> userBItemsToTrade;
     private final ArrayList<Item> userAItemstoTrade;
@@ -20,14 +19,13 @@ public abstract class Trade {
      * @param traderB takes in a entities.User that wants to borrow the item based on the trade.
      * @param userAItemsToTrade takes in items that want to be traded to userB.
      * @param userBItemsToTrade takes in items that want to be traded to userA.
-     * @param date is a string that follows a specific date format.
-     * @param time is a string that follows a time.
+     * @param date is a Calendar type that indicates the date of the trade.
+     *             Note: this is also used to identify the rental process if the trade is temporary.
      */
-    public Trade(User traderA, User traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date, Calendar time) {
+    public Trade(User traderA, User traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date) {
         this.traderA = traderA;
         this.traderB = traderB;
         this.date = date;
-        this.time = time;
         this.userAItemstoTrade = userAItemsToTrade;
         this.userBItemsToTrade = userBItemsToTrade;
     }
@@ -46,10 +44,6 @@ public abstract class Trade {
             completed = true;
         }
         return completed;
-    }
-
-    public Calendar getTime() {
-        return time;
     }
 
     public Calendar getDate() {
