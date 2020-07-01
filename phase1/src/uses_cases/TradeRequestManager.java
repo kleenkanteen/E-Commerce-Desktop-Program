@@ -1,5 +1,7 @@
 package uses_cases;
 
+import entities.Trade;
+
 import java.util.Date;
 
 public class TradeRequestManager {
@@ -8,6 +10,7 @@ public class TradeRequestManager {
     private boolean canEditA = true;
     private boolean canEditB = true;
     private int numberOfEditB = 3;
+    private Trade trade;
 
     public TradeRequestManager(TradeRequest t) {
         this.t = t;
@@ -89,4 +92,7 @@ public class TradeRequestManager {
         }
     }
 
+    public Trade getTrade() {
+        return trade;
+    }
 }
