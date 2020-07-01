@@ -58,6 +58,12 @@ public abstract class Trade {
         return userBItemsToTrade;
     }
 
+    /**
+     * Returns a boolean that determines whether the user is the borrower of
+     * the current trade.
+     * @param trader takes in a user to determine if its part of trade
+     * @return a boolean that determines if the user is part of the trade and is a borrower.
+     */
     public boolean isBorrowed(User trader) {
         if (trader == traderA) {
             if (userAItemstoTrade.isEmpty()) {
@@ -71,6 +77,12 @@ public abstract class Trade {
         return borrowed;
     }
 
+    /**
+     * Returns a boolean that determines whether the user is the lender of
+     * the current trade.
+     * @param trader takes in a user to determine if its part of trade
+     * @return a boolean that determines if the user is part of the trade and is a lender.
+     */
     public boolean isLent(User trader) {
         if (trader == traderA) {
             if (!userAItemstoTrade.isEmpty()) {
@@ -82,5 +94,20 @@ public abstract class Trade {
             }
         }
         return lent;
+    }
+
+    /**
+     * Returns the trading partner if there exists one in the Trade.
+     * @param trader takes in a user to find the other trader.
+     * @return a user if there exists one. Otherwise, it returns a null.
+     */
+    public User tradingPartner(User trader) {
+        User otherTrader = null;
+        if (trader == traderA) {
+            otherTrader = traderB;
+        } else if (trader == traderB) {
+            otherTrader = traderA;
+        }
+        return otherTrader;
     }
 }
