@@ -9,9 +9,10 @@ public class User extends AccountInformation {
     private ArrayList<Item> wishlist = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
     private ArrayList<Message> messages = new ArrayList<>();
-    private boolean frozen = true;
+    private boolean frozenStatus = true;
     private int tradePerWeek = 5;
     private int theshold = 1;
+    private int limitOfImcompleteTrade = 5;
 
 
     /**
@@ -64,8 +65,11 @@ public class User extends AccountInformation {
      * @return the amount of times this user has borrowed
      */
     public int getBorrowedTimes() {
-        //TODO
-        return 0;
+        int total = 0;
+        for(Trade t: tradeHistory){
+            if(t.isBorrowed(this))total++;
+        }
+        return total;
     }
 
     /**
@@ -73,8 +77,11 @@ public class User extends AccountInformation {
      * @return the amount of times this user has lend
      */
     public int getLendTimes() {
-        //TODO
-        return 0;
+        int total = 0;
+        for(Trade t: tradeHistory){
+            if(t.isLent(this))total++;
+        }
+        return total;
     }
 
     /**
@@ -96,6 +103,14 @@ public class User extends AccountInformation {
     }
 
     /**
+     * Getter of the limit of imcomplete trades this user can have
+     * @return the value of the limit of imcomplete trades
+     */
+    public int getLimitOfImcompleteTrade() {
+        return limitOfImcompleteTrade;
+    }
+
+    /**
      * Getter of the limited of times the user can trade in a week of this account
      * @return the limited of times the user can trade of this account
      */
@@ -107,8 +122,8 @@ public class User extends AccountInformation {
      * Getter of the frozen status of this account
      * @return the frozen status of this account
      */
-    public boolean isFrozen(){
-        return frozen;
+    public boolean getFrozenStatus(){
+        return frozenStatus;
     }
 
     /**
@@ -145,10 +160,10 @@ public class User extends AccountInformation {
 
     /**
      * Setting the frozen status to this account
-     * @param frozen the new frozen status to this account
+     * @param status the new frozen status to this account
      */
-    public void setFrozen(boolean frozen){
-        this.frozen = frozen;
+    public void setFrozenStatus(boolean status){
+        this.frozenStatus = status;
     }
 
 
@@ -166,6 +181,14 @@ public class User extends AccountInformation {
      */
     public void setTheshold(int newTheshold){
         theshold = newTheshold;
+    }
+
+    /**
+     * Changing the limit of imcomplete trades this user can have
+     * @param newLimit the new limit
+     */
+    public void setLimitOfImcompleteTrade(int newLimit){
+        limitOfImcompleteTrade = newLimit;
     }
 
     /**
