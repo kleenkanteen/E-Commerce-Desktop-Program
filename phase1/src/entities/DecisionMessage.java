@@ -6,12 +6,23 @@ public abstract class DecisionMessage extends Message {
     private String[] options;
 
     /**
-     * A message sent to a entities.User with a content and a decision that can be made
+     * A message sent to a User with a content and a decision sent by the system
      * @param content is the content of the message
      * @param options the options that can be made in the decision
      */
     public DecisionMessage(String content, String[] options){
         super(content);
+        this.options = options;
+    }
+
+    /**
+     * A message sent to a User with a content and a decision that can be made
+     * @param content is the content of the message
+     * @param options the options that can be made in the decision
+     * @param username is the sender's username of the message
+     */
+    public DecisionMessage(String content, String[] options, String username){
+        super(content, username);
         this.options = options;
     }
 

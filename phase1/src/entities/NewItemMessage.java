@@ -4,11 +4,11 @@ public class NewItemMessage extends DecisionMessage {
     private Item newItem;
 
     /**
-     * A message sent to a entities.User that request in making a change to
+     * A message sent to a User that request in making a change to
      * @param content is the content of the message
      */
-    public NewItemMessage(String content, Item item) {
-        super(content, new String[]{"confirm", "deny"});
+    public NewItemMessage(String content, Item item, String username) {
+        super(content, new String[]{"confirm", "deny"}, username);
         this.newItem = item;
     }
 
