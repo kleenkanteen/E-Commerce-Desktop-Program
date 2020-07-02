@@ -9,13 +9,33 @@ import java.util.*;
 
 public class GlobalInventory {
     HashMap<String, Item> itemMap = new HashMap<String, Item>();
+    ArrayList<String> itemIdCollection = new ArrayList<>();
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
+     * Crease an ArrayList to store all the ID that has been assigned to Item.
      * The constructor will be called with no parameter and automatically construct an empty HashMap
+     * and an empty ArrayList.
      */
 
     GlobalInventory(){}
 
+    /**
+     * Add ItemID to ItemIdCollection
+     * @param itemIdCollection
+     */
+
+    public void setItemIdCollection(ArrayList<String> itemIdCollection) {
+        this.itemIdCollection = itemIdCollection;
+    }
+
+    /**
+     * @return the ArrayList of all ID that has ever been assigned to Item
+     */
+
+
+    public ArrayList<String> getItemIdCollection() {
+        return itemIdCollection;
+    }
 
     /**
      * Getter of Item in GlobalInventory with ItemID been called
