@@ -4,7 +4,7 @@ public class Message {
     private String content;
     private String senderUsername;
     /**
-     * A message sent to a User with a content sent by the system
+     * A message sent to a AccountInformation with a content sent by the system
      * @param content is the content of the message
      */
     public Message(String content){
@@ -13,7 +13,7 @@ public class Message {
     }
 
     /**
-     * A message sent to a User with a content
+     * A message sent to a AccountInformation with a content by another AccountInformation
      * @param content is the content of the message
      * @param username is the sender of this message's username
      */
