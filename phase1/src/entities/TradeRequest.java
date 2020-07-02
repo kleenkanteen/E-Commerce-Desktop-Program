@@ -1,4 +1,4 @@
-package uses_cases;
+package entities;
 
 import entities.Item;
 

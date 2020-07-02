@@ -1,12 +1,10 @@
 package entities;
 
-import uses_cases.TradeRequest;
-
 public class TradeRequestMessage extends DecisionMessage {
     private TradeRequest tradeContent;
 
     /**
-     * A message sent to a User that
+     * A message to a User from another user that asks them to make a decision on a trade request
      * @param content is the content of the message
      */
     public TradeRequestMessage(String content, TradeRequest tradeRequest) {

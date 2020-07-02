@@ -16,7 +16,8 @@ public abstract class DecisionMessage extends Message {
     }
 
     /**
-     * A message sent to a AccountInformation with a content and a decision that can be made by an AccountInformation
+     * A message sent to a AccountInformation with a content and a decision that can be made from another
+     * AccountInformation
      * @param content is the content of the message
      * @param options the options that can be made in the decision
      * @param username is the sender's username of the message

@@ -4,7 +4,7 @@ public class UnfreezeRequestMessage extends DecisionMessage {
     private User user;
 
     /**
-     * A message sent to a Admin from this User that request to unfreeze themselves
+     * A message sent to a Admin from a User that request to be unfreezed
      * @param content is the content of the message
      * @param user is the user wanted to be unfreezed
      */

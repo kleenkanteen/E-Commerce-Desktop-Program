@@ -1,6 +1,7 @@
 package uses_cases;
 
 import entities.Trade;
+import entities.TradeRequest;
 
 import java.util.Date;
 
