@@ -68,9 +68,9 @@ public class AdminMessageSystem {
                             break;
                         }
                         if(input.equals("1")){
-                            //TODO Tell the UserManager to freeze the User from this message
                             //TODO Maybe add a function that sents a message to the User
                             User u = ((FreezeRequestMessage) m).getUser();
+                            um.freezeUserAccount(u.getUsername());
                             messages.remove(m);
                             break;
                         }
