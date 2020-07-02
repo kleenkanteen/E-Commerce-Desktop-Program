@@ -25,7 +25,7 @@ public class Item {
      * @param ownerName refers who this Item belongs to.
      */
 
-    Item(String name, String ownerName, String description){
+    public Item(String name, String ownerName, String description){
         this.name = name;
         this.ownerName = ownerName;
         this.description = description;

@@ -6,11 +6,23 @@ import java.util.Date;
 
 
 public class TradeRequest {
+    /**
+     * Creates a one-way trade request that sends to the lander, or creates a two-way trade request to another user
+     * @param userA the username of user who initiate the trade request (borrower in one-way trade)
+     * @param userB the user who gets the trade request (lander in one-way trade)
+     * @param itemA userA's item
+     * @param itemB userB's item
+     * @param perm true if this user is requesting a perm trade, false if requesting a temp trade
+     * @param date the date of this trade request meeting date
+     * @param place the place for the meeting
+     * @param confirmationA true if userA has confirmed the trade request, false if userA does not confirm
+     * @param confirmationB true if userB has confirmed the trade request, false if userB does not confirm
+     */
     private String userA; // username of user who initiate the trade request (borrower in one way trade)
     private String userB; // username of user who gets the trade request (lander in one way trade)
     private Item itemA; // userA's items
     private Item itemB;  // userB's items
-    private boolean Perm;
+    private boolean perm;
     private Date date; // Date(int year, int month, int date, int hrs, int min)
     private String place;
 
@@ -19,11 +31,20 @@ public class TradeRequest {
 
     // one way trade request
 
-    public TradeRequest(String userA, String userB, Item itemB, boolean tempOrPerm, Date date, String place) {
+    /**
+     * Generate a one-way trade request
+     * @param userA the username of user who initiate the trade request (borrower in one-way trade)
+     * @param userB the user who gets the trade request (lander in one-way trade)
+     * @param itemB userB's item
+     * @param perm true if this user is requesting a perm trade, false if requesting a temp trade
+     * @param date the date of this trade request meeting date
+     * @param place the place for the meeting
+     */
+    public TradeRequest(String userA, String userB, Item itemB, boolean perm, Date date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemB = itemB;
-        this.Perm = tempOrPerm;
+        this.perm = perm;
         this.date = date;
         this.place = place;
     }
@@ -31,14 +52,25 @@ public class TradeRequest {
 
     // two way trade request
 
+    /**
+     * Generate two-way trade request
+     * @param userA the username of user who initiate the trade request (borrower in one-way trade)
+     * @param userB the user who gets the trade request (lander in one-way trade)
+     * @param itemA userA's item
+     * @param itemB userB's item
+     * @param perm true if this user is requesting a perm trade, false if requesting a temp trade
+     * @param date the date of this trade request meeting date
+     * @param place the place for the meeting
+     */
 
-    public TradeRequest(String userA, String userB, Item itemA, Item itemB, boolean tempOrPerm,
+
+    public TradeRequest(String userA, String userB, Item itemA, Item itemB, boolean perm,
                         Date date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemA = itemA;
         this.itemB = itemB;
-        this.Perm = tempOrPerm;
+        this.perm = perm;
         this.date = date;
         this.place = place;
     }
@@ -60,7 +92,7 @@ public class TradeRequest {
     }
 
     public boolean isPerm() {
-        return Perm;
+        return perm;
     }
 
     public Date getDate() {

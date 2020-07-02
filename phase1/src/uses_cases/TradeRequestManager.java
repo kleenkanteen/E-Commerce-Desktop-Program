@@ -27,7 +27,7 @@ public class TradeRequestManager {
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setDate(date);
-            numberOfEditA -= 1;
+            numberOfEditB -= 1;
             t.setConfirmationA(false);
             t.setConfirmationB(true);
         }
@@ -44,7 +44,7 @@ public class TradeRequestManager {
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setPlace(place);
-            numberOfEditA -= 1;
+            numberOfEditB -= 1;
             t.setConfirmationA(false);
             t.setConfirmationB(true);
         }
@@ -62,7 +62,7 @@ public class TradeRequestManager {
         else if (user.equals(t.getUserB()) && canEditB){
             t.setDate(date);
             t.setPlace(place);
-            numberOfEditA -= 1;
+            numberOfEditB -= 1;
             t.setConfirmationA(false);
             t.setConfirmationB(true);
         }
@@ -94,5 +94,13 @@ public class TradeRequestManager {
 
     public Trade getTrade() {
         return trade;
+    }
+
+    public int getNumberOfEditA() {
+        return numberOfEditA;
+    }
+
+    public int getNumberOfEditB() {
+        return numberOfEditB;
     }
 }
