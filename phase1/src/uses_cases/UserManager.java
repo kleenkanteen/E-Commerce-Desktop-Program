@@ -4,6 +4,7 @@ import entities.User;
 import entities.Item;
 import exceptions.InvalidLoginException;
 import exceptions.InvalidUsernameException;
+import exceptions.UserFrozenException;
 import entities.PermTrade;
 import entities.TempTrade;
 import entities.Message;
@@ -144,31 +145,16 @@ public class UserManager implements Serializable{
     }
 
     /**
-     * Removes the selected user.
-     * Returns true if the user successfully removed, false if the user is not in the list of users.
-     * @return True if user removed, False if user is not in list of users.
-     * @param userName String of username
-     */
-    public boolean removeUser(String userName) {
-        if(this.allUsers.containsKey(userName)) {
-            this.allUsers.remove(userName);
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Allows a user to change their username as long as
      * @param username String username (the old one)
      * @param newUsername The new username
-     * @return True if username successfully changed, false if new username already exists
+     * @throws InvalidUsernameException if username already taken
      */
-    public boolean changeUsername(String username, String newUsername) {
+    public void changeUsername(String username, String newUsername) throws InvalidUsernameException {
         if(!this.allUsers.containsKey(newUsername)) {
             this.allUsers.get(username).setUsername(newUsername);
-            return true;
         }
-        return false;
+        throw new InvalidUsernameException();
     }
 
     /**
@@ -179,6 +165,42 @@ public class UserManager implements Serializable{
     public void changePassword(String username, String newPassword) {
         this.allUsers.get(username).setPassword(newPassword);
     }
+
+    /**
+     * Return all usernames in this system.
+     * @return String of all usernames
+     */
+    @Override
+    public String toString() {
+        String allUsers = "";
+        for (String user: this.allUsers.keySet()) {
+            allUsers += user + " ";
+        }
+        return allUsers;
+    }
+
+    // TODO
+    // TRADE METHODS
+
+    /**
+     * Return user ability to trade status.
+     * @param user user to be checked
+     * @return true if user can trade, false if not
+     * @throws UserFrozenException if the User is frozen (make note of this for the user!!!)
+     */
+    public boolean canTrade(String user) throws UserFrozenException {
+        User chosenUser = this.allUsers.get(user);
+        if (chosenUser.getFrozenStatus()) {
+            throw new UserFrozenException();
+        }
+        return chosenUser.getBorrowedTimes() <= chosenUser.getLendTimes();
+    }
+
+    /*
+    public void confirmTrade(Trade trade) {
+
+    }
+    */
 
     // TODO
     // USER INVENTORY AND WISHLIST
@@ -271,7 +293,7 @@ public class UserManager implements Serializable{
      */
     public void freezeUserAccount(String userName) {
         User selectedUser = this.allUsers.get(userName);
-        selectedUser.setFrozen(!selectedUser.isFrozen());
+        selectedUser.setFrozenStatus(!selectedUser.getFrozenStatus());
     }
 
     /**
@@ -285,5 +307,19 @@ public class UserManager implements Serializable{
         for (User user: this.allUsers.values()) {
             user.setTradePerWeek(newTradesPerWeek);
         }
+    }
+
+    /**
+     * ADMIN ONLY
+     * Removes the selected user.
+     * Returns true if the user successfully removed, false if the user is not in the list of users.
+     * @param userName String of username
+     * @throws InvalidUsernameException if username not in list of users (checks for typos)
+     */
+    public void removeUser(String userName) throws InvalidUsernameException {
+        if(!this.allUsers.containsKey(userName)) {
+            throw new InvalidUsernameException();
+        }
+        this.allUsers.remove(userName);
     }
 }

@@ -51,12 +51,12 @@ public class UserMessageManager {
     // public ArrayList<Message> getUserMessages(String username) {this.allUsers.get(username).getMessages()}
 
     /**
-     * Allows a user to request an admin to unfreeze their account. WIP
-     * @param username the user that wants to be unfrozen
-     * @return the unfreeze request, passes to controller, passes to admin inbox.
+     * Allows a user to send another user (admin or user) a message.
+     * @param username the user sending the message.
+     * @return the message object
      */
-    public Message sendAdminUnfreezeMessage(String username) {
-        return new Message("Please unfreeze " + username + ", they are very sorry! :)");
+    public Message sendMessage(String username, String messageContent) {
+        return new Message("From user: " + username + "\n" + messageContent);
     }
 
     /**
@@ -72,19 +72,24 @@ public class UserMessageManager {
         String exitInput = "";
         while(!exitInput.equals("back")) {
             System.out.println(message);
-            System.out.println("Enter 'back' to go back to the messages menu.");
+            System.out.println("Enter 'new trade' to offer a counter-trade. \n " +
+                    "Enter 'back' to go back to the messages menu.");
             exitInput = input.nextLine();
             // confirm
-            if (exitInput.equals("confirm")) {
+            if (exitInput.toLowerCase().equals("confirm")) {
 
             }
             // deny
-            else if (exitInput.equals("deny")) {
+            else if (exitInput.toLowerCase().equals("deny")) {
 
             }
             // edit
-            else if (exitInput.equals("edit")) {
+            else if (exitInput.toLowerCase().equals("edit")) {
 
+            }
+            // if none of the above and not "back"
+            else if(!exitInput.toLowerCase().equals("back")) {
+                System.out.println("Could not understand input.");
             }
         }
     }
