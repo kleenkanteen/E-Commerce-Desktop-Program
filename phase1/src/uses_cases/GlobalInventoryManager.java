@@ -1,24 +1,76 @@
 package uses_cases;
 
+import entities.Admin;
 import entities.Item;
 import entities.GlobalInventory;
 import exceptions.InvalidItemException;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
 
-public class GlobalInventoryManager {
+public class GlobalInventoryManager implements Serializable {
 
     /**
      * @param gI is the GlobalInventory we want to modify.
      */
     GlobalInventory gI;
+    HashMap<String, Item> mapItem = new HashMap<>();
 
     /**
      * construct the Use Case class to do some changes on gI.
-     * @param gI is the GlobalInventory we are about to modify.
+     * @param filePath is the GlobalInventory we are about to modify.
      */
-    GlobalInventoryManager(GlobalInventory gI){
-        this.gI = gI;
+    GlobalInventoryManager(String filePath){
+        gI = new GlobalInventory();
+        try {
+            File file = new File(filePath);
+            if (file.exists()) {
+                readFromFile(filePath);
+            } else {
+                file.createNewFile();
+            }
+        }
+        catch(IOException ex) {
+            System.out.println("Failed to read");
+        }
+    }
+
+    private void readFromFile(String filePath){
+        try {
+            InputStream file = new FileInputStream(filePath);
+            InputStream buffer = new BufferedInputStream(file);
+            ObjectInput input = new ObjectInputStream(buffer);
+
+            // deserialize the Map
+            gI = (GlobalInventory) input.readObject();
+            input.close();
+        } catch (IOException ex) {
+            System.out.println("Failed to read");
+        }
+        catch (ClassNotFoundException ex){
+            System.out.println("Failed");
+        }
+    }
+
+    private void writeToFile(GlobalInventory gi, String filePath) throws IOException{
+        try{
+            OutputStream file = new FileOutputStream(filePath);
+
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+        output.writeObject(gi);
+        output.close();}
+        catch (FileNotFoundException ex){
+            System.out.println("No file is found");
+
+        }
+        catch (IOException ex){
+            System.out.println("Filed to write the Object");
+        }
+
+
     }
 
 
@@ -28,8 +80,12 @@ public class GlobalInventoryManager {
      * @param item set what the key refers to in globalInventory
      */
 
-    public void addItem(String itemID, Item item){
-        gI.addItem(itemID, item);
+    public void addItemToHashMap(String itemID, Item item, String filePath) throws IOException {
+
+        HashMap<String, Item> gi = gI.getItemMap();
+        gi.put(itemID, item);
+        gI.setItemMap(gi);
+        writeToFile(gI, filePath);
     }
 
     /**
@@ -38,13 +94,23 @@ public class GlobalInventoryManager {
      * @throws InvalidItemException if itemID does not exist in gI
      */
 
-    public void removeItem(String itemID) throws InvalidItemException {
+    public void removeItem(String itemID, String filePath) throws InvalidItemException, IOException {
         if (gI.containsKey(itemID)) {
-            gI.removeItem(itemID);
+            HashMap<String, Item> gi = gI.getItemMap();
+            gi.remove(itemID);
+            gI.setItemMap(gi);
+            writeToFile(gI, filePath);
         }
         else {
             throw new InvalidItemException();
         }
+    }
+
+    public void addItemIdToCollection(String itemID, String filePath) throws IOException {
+        ArrayList<String> idList = gI.getItemIdCollection();
+        idList.add(itemID);
+        gI.setItemIdCollection(idList);
+        writeToFile(gI, filePath);
     }
 
     /**

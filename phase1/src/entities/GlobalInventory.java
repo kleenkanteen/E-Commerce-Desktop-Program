@@ -3,11 +3,12 @@ package entities;
 import entities.Item;
 import exceptions.InvalidItemException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.*;
 
-public class GlobalInventory {
+public class GlobalInventory implements Serializable {
     HashMap<String, Item> itemMap = new HashMap<String, Item>();
     ArrayList<String> itemIdCollection = new ArrayList<>();
     /**
@@ -17,7 +18,15 @@ public class GlobalInventory {
      * and an empty ArrayList.
      */
 
-    GlobalInventory(){}
+    public GlobalInventory(){}
+
+    public HashMap<String, Item> getItemMap() {
+        return itemMap;
+    }
+
+    public void setItemMap(HashMap<String, Item> itemMap) {
+        this.itemMap = itemMap;
+    }
 
     /**
      * Add ItemID to ItemIdCollection
