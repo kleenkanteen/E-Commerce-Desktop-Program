@@ -1,10 +1,14 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.Set;
+import java.io.Serializable;
 
 // Moved to entities folder, update getpersonalinventory() with a import so it works
 
-public class User extends AccountInformation {
+public class User extends AccountInformation implements Serializable{
     private ArrayList<Item> personalInventory = new ArrayList<>();
     private ArrayList<Item> wishlist = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
@@ -89,11 +93,49 @@ public class User extends AccountInformation {
      * @return the 3 most frequent trading partners
      */
     public User[] getFrequentTradingPartners() {
-        //TODO
-        User [] tradingPartners= new User[3];
-        return tradingPartners;
-    }
+        TreeMap<Integer, ArrayList<User>> counter = new TreeMap<Integer, ArrayList<User>>();
+        ArrayList<User> partners = new ArrayList<User>();
+        User[] tradingPartners = new User[3];
+        for(Trade t: tradeHistory){
+            User partner = t.tradingPartner(this);
+            if(partner.equals(null))continue;
+            partners.add(partner);
+        }
+        for(User u: partners) {
+            int n = count(partners, u);
+            if (counter.containsKey(n)) {
+                ArrayList<User> list = counter.get(n);
+                if (list.contains(partners)) continue;
+                else list.add(u);
+            } else {
+                ArrayList<User> temp = new ArrayList<User>();
+                temp.add(u);
+                counter.put(n, temp);
+            }
+        }
+        Set<Integer> keys = counter.descendingKeySet();
+        for(Integer key: keys){
+           ArrayList<User> p = counter.get(key);
+           for(int i = 0; i< p.size(); i++){
+               for(int j=0; j<3; j++){
+                   if(tradingPartners[j].equals(null))tradingPartners[j] = p.get(i);
+                   if(!tradingPartners[2].equals(null))break;
+               }
+               if(!tradingPartners[2].equals(null))break;
+           }
+           if(!tradingPartners[2].equals(null))break;
+        }
 
+        return tradingPartners;
+
+    }
+    private int count(ArrayList<User> list, User item){
+        int sum = 0;
+        for(User u: list){
+            if(u.equals(item))sum++;
+        }
+        return sum;
+    }
     /**
      * Getter of the theshold (how many more times must you lend items before you can borrow) value of this user
      * @return the theshold value
@@ -200,3 +242,4 @@ public class User extends AccountInformation {
     }
 
 }
+
