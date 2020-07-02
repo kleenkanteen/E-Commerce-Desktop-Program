@@ -14,8 +14,8 @@ public class PermTrade extends Trade {
             // add it to their inventory.
             trader.getPersonalInventory().add(tradeItem);
             tradeItem.setOwnerName(trader.getUsername());
-            itemsToTrade.remove(tradeItem);
         }
+        itemsToTrade.clear();
     }
 
     /**
