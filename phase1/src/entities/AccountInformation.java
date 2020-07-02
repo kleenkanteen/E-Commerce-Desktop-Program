@@ -55,4 +55,8 @@ public abstract class AccountInformation {
         return accInfo.getPassword().equals(password) && accInfo.getUsername().equals(username);
     }
 
+    @Override
+    public String toString() {
+        return username;
+    }
 }
