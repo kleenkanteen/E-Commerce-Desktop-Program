@@ -65,15 +65,15 @@ public class User extends AccountInformation implements Serializable{
     }
 
     /**
-     * Getter of all the imcomplete trade history of this account
-     * @return all the imcomplete trade history of this account
+     * Getter of all the incomplete trade history of this account
+     * @return all the incomplete trade history of this account
      */
-    public ArrayList<Trade> getImcompleteTradeHistory() {
-        ArrayList <Trade> imcompleteTradeHistory = new ArrayList<Trade>();
+    public ArrayList<Trade> getIncompleteTradeHistory() {
+        ArrayList <Trade> incompleteTradeHistory = new ArrayList<Trade>();
         for (Trade t: tradeHistory){
-            if(!t.tradeCompleted())imcompleteTradeHistory.add(t);
+            if(!t.tradeCompleted())incompleteTradeHistory.add(t);
         }
-        return imcompleteTradeHistory;
+        return incompleteTradeHistory;
     }
 
     /**
