@@ -1,6 +1,8 @@
 package entities;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
     /**
      * Creates a trade with an item that both the seller wants to sell
      * and the buyer wants to buy.
@@ -56,7 +58,7 @@ public class Item {
      * @param i is the unique itemID can be generated for the item
      */
 
-    public void setItemID(String i){
+    public void setItemID(String i) {
         itemID = i ;
     }
 

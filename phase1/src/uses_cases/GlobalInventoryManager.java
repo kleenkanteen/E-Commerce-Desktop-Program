@@ -24,7 +24,7 @@ public class GlobalInventoryManager implements Serializable {
      * construct the Use Case class to do some changes on gI.
      * @param filePath is the GlobalInventory we are about to modify.
      */
-    GlobalInventoryManager(String filePath){
+    public GlobalInventoryManager(String filePath){
         this.filePath = filePath;
         gI = new GlobalInventory();
         try {
@@ -38,6 +38,10 @@ public class GlobalInventoryManager implements Serializable {
         catch(IOException ex) {
             System.out.println("Failed to read");
         }
+    }
+
+    public GlobalInventory getGI() {
+        return gI;
     }
 
     private void readFromFile(){
