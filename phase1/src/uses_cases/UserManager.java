@@ -7,6 +7,7 @@ import exceptions.InvalidUsernameException;
 import exceptions.UserFrozenException;
 import entities.PermTrade;
 import entities.TempTrade;
+import entities.Trade;
 import entities.Message;
 import java.util.ArrayList;
 import java.lang.System;
@@ -198,7 +199,7 @@ public class UserManager implements Serializable{
 
     /*
     public void confirmTrade(Trade trade) {
-
+        call on some method in Trade that would return either a precompleted trade object or whatever
     }
     */
 
@@ -279,6 +280,24 @@ public class UserManager implements Serializable{
         this.allUsers.get(username).setWishlist(userWishlist);
     }
 
+    /**
+     * Return a certain user's messages.
+     * @param username the user you want
+     * @return arraylist of this user's messages
+     */
+    public ArrayList<Message> getUserMessages(String username) {
+        return this.allUsers.get(username).getMessages();
+    }
+
+    /**
+     * Set a user's messages to a different arraylist
+     * @param username String username
+     * @param userMessages The arraylist of messages to set
+     */
+    public void setUserMessages(String username, ArrayList<Message> userMessages) {
+        this.allUsers.get(username).setMessages(userMessages);
+    }
+
     // TODO
     // Possible messages section?
     // public Object sendAdminSomeMessageOrWhatever() {}
@@ -291,9 +310,8 @@ public class UserManager implements Serializable{
      * Allows an admin to either freeze an unfrozen user account or unfreeze a frozen user account.
      * @param userName the User object in question.
      */
-    public void freezeUserAccount(String userName) {
-        User selectedUser = this.allUsers.get(userName);
-        selectedUser.setFrozenStatus(!selectedUser.getFrozenStatus());
+    public void freezeUserAccount(String userName, boolean freezeStatus) {
+        this.allUsers.get(userName).setFrozenStatus(freezeStatus);
     }
 
     /**
