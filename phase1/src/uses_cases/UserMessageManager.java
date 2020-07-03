@@ -2,6 +2,7 @@ package uses_cases;
 
 import entities.Message;
 import entities.TradeRequestMessage;
+import entities.TradeRequest;
 import entities.PermTrade;
 import entities.TempTrade;
 import java.util.Date;
@@ -27,7 +28,6 @@ public class UserMessageManager {
     public void addMessage(String username, Message message) {
         ArrayList<Message> userMessages = this.allUsers.get(username).getMessages();
         userMessages.add(message);
-        // NEED A SET MESSAGES FUNCTION IN USER
         this.allUsers.get(username).setMessages(userMessages);
      }
     */
@@ -42,7 +42,6 @@ public class UserMessageManager {
     public void removeMessage(String username, Message message) {
         ArrayList<Message> userMessages = this.allUsers.get(username).getMessages();
         userMessages.remove(message);
-        // NEED A SET MESSAGES FUNCTION IN USER
         this.allUsers.get(username).setMessages(userMessages);
     }
      */
@@ -57,7 +56,7 @@ public class UserMessageManager {
      * @return the message object
      */
     public Message sendMessage(String username, String messageContent) {
-        return new Message("From user: " + username + "\n" + messageContent);
+        return new Message("From user: " + username + "\n" + messageContent, username);
     }
 
     /**
@@ -69,7 +68,7 @@ public class UserMessageManager {
     public void manageTradeRequest(String username, TradeRequestMessage message) {
         // read in Scanner inputs, set up tradeRequestManager
         Scanner input = new Scanner(System.in);
-        TradeRequestManager tradeRequestManager = new TradeRequestManager(message.getTradeContent());
+        TradeRequest tradeRequest = message.getTradeContent();
         String exitInput = "";
         while(!exitInput.equals("back")) {
             System.out.println(message);
@@ -79,17 +78,21 @@ public class UserMessageManager {
             if (exitInput.toLowerCase().equals("confirm")) {
                 exitInput = "back";
                 System.out.println("Trade confirmed.");
+                // create a trade object from the TradeRequest
                 // confirmTrade(trade whatever);
             }
             // deny
             else if (exitInput.toLowerCase().equals("deny")) {
-                exitInput = "back";
+                String tradePartner = tradeRequest.getTradePartner(username);
+                Message deniedRequest = new Message("Your message to + " + username + " has been rejected.");
+                // this.allUsers.get(tradePartner).addMessage(tradePartner, deniedRequest);
+                // this.allUsers.get(username).removeMessage(message);
                 System.out.println("Trade denied.");
-                // send message to user who proposed trade that trade request has been declined
+                exitInput = "back";
             }
             // edit
             else if (exitInput.toLowerCase().equals("edit")) {
-                // if(trade request # edits is still valid (able to edit) ) then this stuff happens
+                // if(
                     // editTradeRequest(message.getTradeContent());
                 // else {System.out.println("Sorry, you have run out of the maximum number of edits. Confirm or deny this trade."}
             }
