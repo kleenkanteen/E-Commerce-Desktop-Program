@@ -53,11 +53,11 @@ public class GlobalInventoryManager implements Serializable {
             System.out.println("Failed to read");
         }
         catch (ClassNotFoundException ex){
-            System.out.println("Failed");
+            System.out.println("failed to find the class to read");
         }
     }
 
-    private void writeToFile(GlobalInventory gi) throws IOException{
+    private void writeToFile(GlobalInventory gi){
         try{
             OutputStream file = new FileOutputStream(filePath);
 
@@ -95,14 +95,17 @@ public class GlobalInventoryManager implements Serializable {
      * @param item set what the key refers to in globalInventory
      */
 
-    public void addItemToHashMap(Item item) throws IOException {
-        String itemID = IdGenerator();
+    public void addItemToHashMap(Item item)  {
+
+            String itemID = IdGenerator();
+
         item.setItemID(itemID);
         addItemIdToCollection(itemID);
         HashMap<String, Item> gi = gI.getItemMap();
         gi.put(itemID, item);
         gI.setItemMap(gi);
         writeToFile(gI);
+
     }
 
     /**
@@ -111,7 +114,7 @@ public class GlobalInventoryManager implements Serializable {
      * @throws InvalidItemException if itemID does not exist in gI
      */
 
-    public void removeItem(String itemID) throws InvalidItemException, IOException {
+    public void removeItem(String itemID) throws InvalidItemException {
         if (gI.containsKey(itemID)) {
             HashMap<String, Item> gi = gI.getItemMap();
             gi.remove(itemID);
@@ -120,10 +123,10 @@ public class GlobalInventoryManager implements Serializable {
         }
         else {
             throw new InvalidItemException();
-        }
-    }
+        }}
 
-    private void addItemIdToCollection(String itemID) throws IOException {
+
+    private void addItemIdToCollection(String itemID) {
         ArrayList<String> idList = gI.getItemIdCollection();
         idList.add(itemID);
         gI.setItemIdCollection(idList);
