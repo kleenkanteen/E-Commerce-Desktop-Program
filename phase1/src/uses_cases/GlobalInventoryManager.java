@@ -8,6 +8,7 @@ import exceptions.InvalidItemException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.logging.Level;
 
 public class GlobalInventoryManager implements Serializable {
@@ -71,6 +72,17 @@ public class GlobalInventoryManager implements Serializable {
         }
 
 
+    }
+
+    public String IdGenerator(){
+        Random rand = new Random();
+        int id =  rand.nextInt(900000000) + 100000000;
+        String ID = Integer.toString(id);
+        while (gI.getItemIdCollection().contains(ID)){
+            id =  rand.nextInt(900000000) + 100000000;
+            ID = Integer.toString(id);
+        }
+        return ID;
     }
 
 
