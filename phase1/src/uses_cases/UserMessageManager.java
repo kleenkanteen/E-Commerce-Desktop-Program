@@ -4,6 +4,7 @@ import entities.Message;
 import entities.TradeRequestMessage;
 import entities.PermTrade;
 import entities.TempTrade;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.System;
@@ -72,25 +73,43 @@ public class UserMessageManager {
         String exitInput = "";
         while(!exitInput.equals("back")) {
             System.out.println(message);
-            System.out.println("Enter 'new trade' to offer a counter-trade. \n " +
-                    "Enter 'back' to go back to the messages menu.");
+            System.out.println("Enter 'back' to go back to the messages menu.");
             exitInput = input.nextLine();
             // confirm
             if (exitInput.toLowerCase().equals("confirm")) {
-
+                exitInput = "back";
+                System.out.println("Trade confirmed.");
+                // confirmTrade(trade whatever);
             }
             // deny
             else if (exitInput.toLowerCase().equals("deny")) {
-
+                exitInput = "back";
+                System.out.println("Trade denied.");
+                // send message to user who proposed trade that trade request has been declined
             }
             // edit
             else if (exitInput.toLowerCase().equals("edit")) {
-
+                // if(trade request # edits is still valid (able to edit) ) then this stuff happens
+                    // editTradeRequest(message.getTradeContent());
+                // else {System.out.println("Sorry, you have run out of the maximum number of edits. Confirm or deny this trade."}
             }
             // if none of the above and not "back"
             else if(!exitInput.toLowerCase().equals("back")) {
-                System.out.println("Could not understand input.");
+                System.out.println("Could not understand input. Please try again.");
             }
         }
     }
+
+    /*
+    private TradeRequestMessage editTradeRequest(TradeRequest tradeRequest) {
+        // System.out.println("Current time of trade: " + get the time of trade + "\n" +
+        // "Enter in a new time of trade.");
+        // figure out how to format user input into java date object
+        // System.out.println("Current location of trade: " + get location of trade + "\n" +
+        // "Enter in a new location to meet at.");
+        // String newLocation = input.nextLine();
+        // set new location/date in traderequest, change the # of edits, put into (old/new) trade request message
+        // send to other use with "edits made" notification somewhere
+    }
+     */
 }
