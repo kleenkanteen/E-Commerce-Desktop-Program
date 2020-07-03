@@ -9,7 +9,7 @@ public class NewItemMessage extends DecisionMessage {
      * @param item is the new item created
      */
     public NewItemMessage(String content, Item item) {
-        super(content, new String[]{"confirm", "deny"}, item.getOwnerName());
+        super(content, new String[]{"Confirm", "Deny"}, item.getOwnerName());
         this.newItem = item;
     }
 
