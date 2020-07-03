@@ -100,6 +100,13 @@ public class GlobalInventoryManager implements Serializable {
      */
 
     public void addItemToHashMap(Item item)  {
+        if (item.getItemID() != null){
+            HashMap<String, Item> gi = gI.getItemMap();
+            gi.put(item.getItemID(), item);
+            gI.setItemMap(gi);
+
+        }
+        else{
 
             String itemID = IdGenerator();
 
@@ -108,7 +115,8 @@ public class GlobalInventoryManager implements Serializable {
         HashMap<String, Item> gi = gI.getItemMap();
         gi.put(itemID, item);
         gI.setItemMap(gi);
-        writeToFile(gI);
+
+        writeToFile(gI);}
 
     }
 
