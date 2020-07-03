@@ -65,6 +65,18 @@ public class User extends AccountInformation implements Serializable{
     }
 
     /**
+     * Getter of all the imcomplete trade history of this account
+     * @return all the imcomplete trade history of this account
+     */
+    public ArrayList<Trade> getImcompleteTradeHistory() {
+        ArrayList <Trade> imcompleteTradeHistory = new ArrayList<Trade>();
+        for (Trade t: tradeHistory){
+            if(!t.tradeCompleted())imcompleteTradeHistory.add(t);
+        }
+        return imcompleteTradeHistory;
+    }
+
+    /**
      * Getter of how much times this user has borrowed
      * @return the amount of times this user has borrowed
      */
