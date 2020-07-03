@@ -89,13 +89,16 @@ public class GlobalInventoryManager implements Serializable {
 
 
     /**
-     * add the item to globalInventory with an unique Id
+     * add the item to globalInventory with an unique Id generated automatically
+     * The ID generated will be assigned to the Item
+     * and then the that ItemID will be sent to IdCollection to record
      * @param item set what the key refers to in globalInventory
      */
 
     public void addItemToHashMap(Item item) throws IOException {
         String itemID = IdGenerator();
-
+        item.setItemID(itemID);
+        addItemIdToCollection(itemID);
         HashMap<String, Item> gi = gI.getItemMap();
         gi.put(itemID, item);
         gI.setItemMap(gi);
@@ -120,7 +123,7 @@ public class GlobalInventoryManager implements Serializable {
         }
     }
 
-    public void addItemIdToCollection(String itemID) throws IOException {
+    private void addItemIdToCollection(String itemID) throws IOException {
         ArrayList<String> idList = gI.getItemIdCollection();
         idList.add(itemID);
         gI.setItemIdCollection(idList);

@@ -96,6 +96,12 @@ public class Item {
         return ownerName;
     }
 
+    public boolean isEqual(Item item){
+        return item.getDescription().equals(description) &&
+                item.getName().equals(name) && item.getOwnerName().equals(ownerName)
+                && (item.getItemID().equals(itemID));
+    }
+
 }
 
 
