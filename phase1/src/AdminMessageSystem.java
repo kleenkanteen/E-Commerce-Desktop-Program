@@ -3,15 +3,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import entities.*;
 import uses_cases.*;
 
 public class AdminMessageSystem {
-    ArrayList<Message> messages;
-    GlobalInventoryManager gi;
-    UserManager um;
-    Admin account;
+    private ArrayList<Message> messages;
+    private GlobalInventoryManager gi;
+    private UserManager um;
+    private Admin account;
 
     public AdminMessageSystem(ArrayList<Message> messages, GlobalInventoryManager gi, UserManager um,
                               Admin acount){
@@ -80,7 +79,7 @@ public class AdminMessageSystem {
                 um.freezeUserAccount(u.getUsername(), false);
                 messages.remove(m);
 
-                Message reply = new Message("Your account is unfrozen");
+                Message reply = new Message("Your account is unfrozen by the Admin "+account.getUsername());
                 ArrayList<Message> temp = um.getUserMessages(u.getUsername());
                 temp.add(reply);
                 um.setUserMessages(u.getUsername(), temp);
@@ -90,7 +89,7 @@ public class AdminMessageSystem {
                 User u = m.getUser();
                 messages.remove(m);
 
-                Message reply = new Message("Your request is rejected");
+                Message reply = new Message("Your request is rejected by the Admin "+account.getUsername());
                 ArrayList<Message> temp = um.getUserMessages(u.getUsername());
                 temp.add(reply);
                 um.setUserMessages(u.getUsername(), temp);
@@ -113,7 +112,7 @@ public class AdminMessageSystem {
                 um.freezeUserAccount(u.getUsername(), true);
                 messages.remove(m);
 
-                Message reply = new Message("Your account is frozen");
+                Message reply = new Message("Your account is frozen by the Admin "+account.getUsername());
                 ArrayList<Message> temp = um.getUserMessages(u.getUsername());
                 temp.add(reply);
                 um.setUserMessages(u.getUsername(), temp);
