@@ -18,17 +18,19 @@ public class GlobalInventoryManager implements Serializable {
      */
     GlobalInventory gI;
     HashMap<String, Item> mapItem = new HashMap<>();
+    String filePath;
 
     /**
      * construct the Use Case class to do some changes on gI.
      * @param filePath is the GlobalInventory we are about to modify.
      */
     GlobalInventoryManager(String filePath){
+        this.filePath = filePath;
         gI = new GlobalInventory();
         try {
             File file = new File(filePath);
             if (file.exists()) {
-                readFromFile(filePath);
+                readFromFile();
             } else {
                 file.createNewFile();
             }
@@ -38,7 +40,7 @@ public class GlobalInventoryManager implements Serializable {
         }
     }
 
-    private void readFromFile(String filePath){
+    private void readFromFile(){
         try {
             InputStream file = new FileInputStream(filePath);
             InputStream buffer = new BufferedInputStream(file);
@@ -55,7 +57,7 @@ public class GlobalInventoryManager implements Serializable {
         }
     }
 
-    private void writeToFile(GlobalInventory gi, String filePath) throws IOException{
+    private void writeToFile(GlobalInventory gi) throws IOException{
         try{
             OutputStream file = new FileOutputStream(filePath);
 
@@ -74,7 +76,7 @@ public class GlobalInventoryManager implements Serializable {
 
     }
 
-    public String IdGenerator(){
+    private String IdGenerator(){
         Random rand = new Random();
         int id =  rand.nextInt(900000000) + 100000000;
         String ID = Integer.toString(id);
@@ -87,17 +89,17 @@ public class GlobalInventoryManager implements Serializable {
 
 
     /**
-     * add the item to globalInventory
-     * @param itemID set the key in globalInventory
+     * add the item to globalInventory with an unique Id
      * @param item set what the key refers to in globalInventory
      */
 
-    public void addItemToHashMap(String itemID, Item item, String filePath) throws IOException {
+    public void addItemToHashMap(Item item) throws IOException {
+        String itemID = IdGenerator();
 
         HashMap<String, Item> gi = gI.getItemMap();
         gi.put(itemID, item);
         gI.setItemMap(gi);
-        writeToFile(gI, filePath);
+        writeToFile(gI);
     }
 
     /**
@@ -106,23 +108,23 @@ public class GlobalInventoryManager implements Serializable {
      * @throws InvalidItemException if itemID does not exist in gI
      */
 
-    public void removeItem(String itemID, String filePath) throws InvalidItemException, IOException {
+    public void removeItem(String itemID) throws InvalidItemException, IOException {
         if (gI.containsKey(itemID)) {
             HashMap<String, Item> gi = gI.getItemMap();
             gi.remove(itemID);
             gI.setItemMap(gi);
-            writeToFile(gI, filePath);
+            writeToFile(gI);
         }
         else {
             throw new InvalidItemException();
         }
     }
 
-    public void addItemIdToCollection(String itemID, String filePath) throws IOException {
+    public void addItemIdToCollection(String itemID) throws IOException {
         ArrayList<String> idList = gI.getItemIdCollection();
         idList.add(itemID);
         gI.setItemIdCollection(idList);
-        writeToFile(gI, filePath);
+        writeToFile(gI);
     }
 
     /**
