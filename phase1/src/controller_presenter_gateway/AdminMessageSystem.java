@@ -1,3 +1,5 @@
+package controller_presenter_gateway;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,20 +13,21 @@ public class AdminMessageSystem {
     private GlobalInventoryManager gi;
     private UserManager um;
     private Admin account;
+    private AdminMessageMenu amm;
 
     public AdminMessageSystem(ArrayList<Message> messages, GlobalInventoryManager gi, UserManager um,
-                              Admin acount){
+                              Admin account){
         this.messages = messages;
         this.gi = gi;
         this.um = um;
-        this.account = acount;
+        this.account = account;
+        amm = new AdminMessageMenu(messages);
     }
 
     public void run() {
         //TODO split the controller and presenter
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("You have "+messages.size()+" messages");
-        System.out.println("Type 'exit' to quit or 'view' to look through the messages.");
+        amm.printMenu();
         try {
             String input = null;
             while(true) {
@@ -35,7 +38,7 @@ public class AdminMessageSystem {
 
             for(int i = 0; i < messages.size(); i++){
                 Message m = messages.get(i);
-                System.out.println("Message "+Integer.toString(i+1)+": "+m);
+                amm.printMessage(i);
                 if(m instanceof NewItemMessage){
                     if(!NewItemMessageResponse((NewItemMessage) m, br))return;
                 }
@@ -55,8 +58,7 @@ public class AdminMessageSystem {
         }
     }
     private boolean ContentMessageResponse(Message m, BufferedReader br) throws IOException {
-        System.out.println("Enter 'delete' to delete this message or 'next' to skip this " +
-                "message and view the next message or 'exit' to exit");
+        amm.printContentMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit")) return false;
@@ -68,8 +70,7 @@ public class AdminMessageSystem {
         }
     }
     private boolean UnfreezeRequestMessageResponse(UnfreezeRequestMessage m, BufferedReader br) throws IOException{
-        System.out.println("Enter an option number or 'next' to skip this message " +
-                "and view the next message or 'exit' to exit");
+        amm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit")) return false;
@@ -99,8 +100,7 @@ public class AdminMessageSystem {
         return true;
     }
     private boolean FreezeRequestMessageResponse(FreezeRequestMessage m, BufferedReader br) throws IOException{
-        System.out.println("Enter an option number or 'next' to skip this message " +
-                "and view the next message or 'exit' to exit");
+        amm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit"))return false;
@@ -127,8 +127,7 @@ public class AdminMessageSystem {
     }
 
     private boolean NewItemMessageResponse(NewItemMessage m, BufferedReader br) throws IOException{
-        System.out.println("Enter an option number or 'next' to skip this message " +
-                    "and view the next message or 'exit' to exit");
+        amm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit"))return false;
