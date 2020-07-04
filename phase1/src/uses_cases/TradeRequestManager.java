@@ -72,10 +72,12 @@ public class TradeRequestManager {
         else t.setConfirmationB(confirmation);
 
         if (t.isPerm()){
-            return new PermTrade(t.getUserA(), t.getUserB(), t.getItemA() , t.getItemB(), t.getDate());
+            this.trade = new PermTrade(t.getUserA(), t.getUserB(), t.getItemA() , t.getItemB(), t.getDate());
+            return this.trade;
         }
         else
-            return new TempTrade(t.getUserA(), t.getUserB(), t.getItemA(), t.getItemB(), t.getDate());
+            trade = new TempTrade(t.getUserA(), t.getUserB(), t.getItemA(), t.getItemB(), t.getDate());
+            return trade;
         // Once both user confirms, create a TemTrade, or entities.PermTrade based on t.isPerm
     }
 
