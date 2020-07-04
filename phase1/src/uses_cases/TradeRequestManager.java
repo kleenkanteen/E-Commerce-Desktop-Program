@@ -1,9 +1,8 @@
 package uses_cases;
 
-import entities.Trade;
-import entities.TradeRequest;
+import entities.*;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class TradeRequestManager {
     private TradeRequest t;
@@ -18,7 +17,7 @@ public class TradeRequestManager {
     }
 
     //user can set data, place and confirm
-    public void setDate(String user, Date date) {
+    public void setDate(String user, Calendar date) {
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
@@ -49,7 +48,7 @@ public class TradeRequestManager {
         }
     }
 
-    public void setDateAndPlace(String user, Date date, String place){
+    public void setDateAndPlace(String user, Calendar date, String place){
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setPlace(place);
@@ -66,15 +65,18 @@ public class TradeRequestManager {
         }
     }
 
-    public void setConfirmation(String user, boolean confirmation) {
+    public Trade setConfirmation(String user, boolean confirmation) {
         if (user.equals(t.getUserA())){
             t.setConfirmationA(confirmation);
         }
         else t.setConfirmationB(confirmation);
 
-        if (t.isConfirmationA() && t.isConfirmationB()) {
-            // Once both user confirms, create a TemTrade, or entities.PermTrade based on t.isPerm
+        if (t.isPerm()){
+            return new PermTrade(t.getUserA(), t.getUserB(), t.getItemA() , t.getItemB(), t.getDate());
         }
+        else
+            return new TempTrade(t.getUserA(), t.getUserB(), t.getItemA(), t.getItemB(), t.getDate());
+        // Once both user confirms, create a TemTrade, or entities.PermTrade based on t.isPerm
     }
 
     public TradeRequest getTradeRequest() {

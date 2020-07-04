@@ -1,6 +1,7 @@
 package entities;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class TradeRequest {
@@ -18,10 +19,10 @@ public class TradeRequest {
      */
     private String userA; // username of user who initiate the trade request (borrower in one way trade)
     private String userB; // username of user who gets the trade request (lander in one way trade)
-    private Item itemA; // userA's items
-    private Item itemB;  // userB's items
+    private ArrayList<Item> itemA; // userA's items
+    private ArrayList<Item> itemB;  // userB's items
     private boolean perm;
-    private Date date; // Date(int year, int month, int date, int hrs, int min)
+    private Calendar date;
     private String place;
 
     private boolean confirmationA = true;
@@ -40,7 +41,7 @@ public class TradeRequest {
      * @param date the date of this trade request meeting date
      * @param place the place for the meeting
      */
-    public TradeRequest(String userA, String userB, Item itemB, boolean perm, Date date, String place) {
+    public TradeRequest(String userA, String userB, ArrayList<Item> itemB, boolean perm, Calendar date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemB = itemB;
@@ -64,8 +65,8 @@ public class TradeRequest {
      */
 
 
-    public TradeRequest(String userA, String userB, Item itemA, Item itemB, boolean perm,
-                        Date date, String place) {
+    public TradeRequest(String userA, String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm,
+                        Calendar date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemA = itemA;
@@ -83,11 +84,11 @@ public class TradeRequest {
         return userB;
     }
 
-    public Item getItemA() {
+    public ArrayList<Item> getItemA() {
         return itemA;
     }
 
-    public Item getItemB() {
+    public ArrayList<Item> getItemB() {
         return itemB;
     }
 
@@ -95,7 +96,7 @@ public class TradeRequest {
         return perm;
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
 
@@ -119,7 +120,7 @@ public class TradeRequest {
         return confirmationB;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -150,5 +151,9 @@ public class TradeRequest {
         else{
             return this.userA;
         }
+    }
+
+    public String ToString(){
+        return this.getUserA() + " is requesting a trade with " + this.getUserB() +".";
     }
 }
