@@ -1,7 +1,5 @@
 package entities;
 
-import exceptions.TradeNotProcessedException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -9,7 +7,6 @@ public class TempTrade extends PermTrade {
 
     private int startDate;
     private Calendar returnDate;
-    private boolean trade_active = false; // will help us determining whether the transaction is still active.
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -27,12 +24,8 @@ public class TempTrade extends PermTrade {
     /**
      * This method provides you with the number of days left after a trade has been processed.
      * @return an integer that indicates the number of days left in the trade.
-     * @throws TradeNotProcessedException only when trade is not processed/not active.
      */
-    public int daysLeft() throws TradeNotProcessedException {
-        if (!trade_active) {
-            throw new TradeNotProcessedException();
-        }
+    public int daysLeft() {
         int finishDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
         return finishDate - startDate;
     }
