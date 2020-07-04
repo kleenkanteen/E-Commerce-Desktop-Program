@@ -1,15 +1,16 @@
 package entities;// Written by Thanusun
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public abstract class Trade {
+public abstract class Trade implements Serializable {
     private final Calendar date;
     private final ArrayList<Item> userBItemsToTrade;
     private final ArrayList<Item> userAItemstoTrade;
-    private final User traderA;
-    private final User traderB;
-    private boolean borrowed, lent = false;
+    private final String traderA;
+    private final String traderB;
+    private boolean completed = false;
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -22,7 +23,7 @@ public abstract class Trade {
      * @param date is a Calendar type that indicates the date of the trade.
      *             Note: this is also used to identify the rental process if the trade is temporary.
      */
-    public Trade(User traderA, User traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date) {
+    public Trade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date) {
         this.traderA = traderA;
         this.traderB = traderB;
         this.date = date;
@@ -30,20 +31,12 @@ public abstract class Trade {
         this.userBItemsToTrade = userBItemsToTrade;
     }
 
-    /**
-     * Returns a boolean that determines whether the trade has been completed.
-     * If not, the method returns false.
-     *
-     * Note: Useful for admins, especially if they want to freeze accounts!
-     *
-     * @return a boolean that tells the user if the trade is completed.
-     */
-    public boolean tradeCompleted() {
-        boolean completed = false;
-        if (userAItemstoTrade.isEmpty() && userBItemsToTrade.isEmpty()) {
-            completed = true;
-        }
+    public boolean getCompleted() {
         return completed;
+    }
+
+    public void setCompleted(boolean isCompleted) {
+        completed = isCompleted;
     }
 
     public Calendar getDate() {
@@ -65,11 +58,12 @@ public abstract class Trade {
      * @return a boolean that determines if the user is part of the trade and is a borrower.
      */
     public boolean isBorrowed(User trader) {
-        if (trader == traderA) {
+        boolean borrowed = false;
+        if (trader.getUsername().equals(traderA)) {
             if (userAItemstoTrade.isEmpty()) {
                 borrowed = true;
             }
-        } else if (trader == traderB) {
+        } else if (trader.getUsername().equals(traderB)) {
             if (userAItemstoTrade.isEmpty()) {
                 borrowed = true;
             }
@@ -84,11 +78,12 @@ public abstract class Trade {
      * @return a boolean that determines if the user is part of the trade and is a lender.
      */
     public boolean isLent(User trader) {
-        if (trader == traderA) {
+        boolean lent = false;
+        if (trader.getUsername().equals(traderA)) {
             if (!userAItemstoTrade.isEmpty()) {
                 lent = true;
             }
-        } else if (trader == traderB) {
+        } else if (trader.getUsername().equals(traderB)) {
             if (!userBItemsToTrade.isEmpty()) {
                 lent = true;
             }
@@ -99,13 +94,15 @@ public abstract class Trade {
     /**
      * Returns the trading partner if there exists one in the Trade.
      * @param trader takes in a user to find the other trader.
-     * @return a user if there exists one. Otherwise, it returns a null.
+     * @return a string if there exists one. Otherwise, it returns a null.
      */
-    public User tradingPartner(User trader) {
-        User otherTrader = null;
-        if (trader == traderA) {
+    public String tradingPartner(User trader) {
+        String otherTrader = null;
+        // if TraderA, then return its partner: traderB
+        if (trader.getUsername().equals(traderA)) {
             otherTrader = traderB;
-        } else if (trader == traderB) {
+        // if traderB, return its partner: traderA.
+        } else if (trader.getUsername().equals(traderB)) {
             otherTrader = traderA;
         }
         return otherTrader;
