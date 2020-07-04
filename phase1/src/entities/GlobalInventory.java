@@ -33,12 +33,13 @@ public class GlobalInventory implements Serializable {
 
     /**
      * Add ItemID to ItemIdCollection
-     * @param itemIdCollection - The collection of all itemid's
+
      */
 
-    public void setItemIdCollection(ArrayList<String> itemIdCollection) {
-        this.itemIdCollection = itemIdCollection;
+    public void addItemIdToCollection(String itemID){
+        itemIdCollection.add(itemID);
     }
+
 
     /**
      * @return the ArrayList of all ID that has ever been assigned to Item
