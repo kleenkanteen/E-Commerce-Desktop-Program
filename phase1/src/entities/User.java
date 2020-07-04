@@ -71,7 +71,7 @@ public class User extends AccountInformation implements Serializable{
     public ArrayList<Trade> getIncompleteTradeHistory() {
         ArrayList <Trade> incompleteTradeHistory = new ArrayList<Trade>();
         for (Trade t: tradeHistory){
-            if(!t.tradeCompleted())incompleteTradeHistory.add(t);
+            if(!t.getCompleted())incompleteTradeHistory.add(t);
         }
         return incompleteTradeHistory;
     }
@@ -102,39 +102,38 @@ public class User extends AccountInformation implements Serializable{
 
     /**
      * Getter of the 3 most frequent trading partners
-     * @return the 3 most frequent trading partners
+     * @return the 3 most frequent trading partners username
      */
-    public User[] getFrequentTradingPartners() {
-        TreeMap<Integer, ArrayList<User>> counter = new TreeMap<Integer, ArrayList<User>>();
-        ArrayList<User> partners = new ArrayList<User>();
-        User[] tradingPartners = new User[3];
+    public String[] getFrequentTradingPartners() {
+        TreeMap<Integer, ArrayList<String>> counter = new TreeMap<Integer, ArrayList<String>>();
+        ArrayList<String> partners = new ArrayList<String>();
+        String[] tradingPartners = new String[3];
         for(Trade t: tradeHistory){
-            User partner = t.tradingPartner(this);
+            String partner = t.tradingPartner(this);
             if(partner == null)continue;
             partners.add(partner);
         }
-        for(User u: partners) {
+        for(String u: partners) {
             int n = count(partners, u);
             if (counter.containsKey(n)) {
-                ArrayList<User> list = counter.get(n);
-                if (list.contains(partners)) continue;
-                else list.add(u);
+                ArrayList<String> list = counter.get(n);
+                if (!list.contains(u)) list.add(u);
             } else {
-                ArrayList<User> temp = new ArrayList<User>();
+                ArrayList<String> temp = new ArrayList<String>();
                 temp.add(u);
                 counter.put(n, temp);
             }
         }
         Set<Integer> keys = counter.descendingKeySet();
         for(Integer key: keys){
-           ArrayList<User> p = counter.get(key);
+           ArrayList<String> p = counter.get(key);
            for(int i = 0; i< p.size(); i++){
                for(int j=0; j<3; j++){
-                   if(tradingPartners[j] == (p.get(i)))break;
                    if(tradingPartners[j] == (null)){
                        tradingPartners[j] = p.get(i);
                        break;
                    }
+                   if(tradingPartners[j].equals(p.get(i)))break;
                }
                if(tradingPartners[2] != (null))break;
            }
@@ -144,9 +143,9 @@ public class User extends AccountInformation implements Serializable{
         return tradingPartners;
 
     }
-    private int count(ArrayList<User> list, User item){
+    private int count(ArrayList<String> list, String item){
         int sum = 0;
-        for(User u: list){
+        for(String u: list){
             if(u.equals(item))sum++;
         }
         return sum;
@@ -255,6 +254,5 @@ public class User extends AccountInformation implements Serializable{
     public void setTradePerWeek(int tradePerWeek){
         this.tradePerWeek = tradePerWeek;
     }
-
 }
 

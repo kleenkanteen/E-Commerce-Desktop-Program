@@ -20,4 +20,9 @@ public class NewItemMessage extends DecisionMessage {
     public Item getNewItem(){
         return newItem;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nThe item: "+newItem;
+    }
 }

@@ -18,4 +18,9 @@ public class FreezeRequestMessage extends DecisionMessage {
      * @return the user
      */
     public User getUser(){ return user; }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nThe User: "+user;
+    }
 }

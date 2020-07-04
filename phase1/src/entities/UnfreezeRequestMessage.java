@@ -19,4 +19,8 @@ public class UnfreezeRequestMessage extends DecisionMessage {
      */
     public User getUser(){ return user; }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\nThe User: "+user;
+    }
 }
