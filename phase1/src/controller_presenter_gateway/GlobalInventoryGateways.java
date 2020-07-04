@@ -11,8 +11,7 @@ public class GlobalInventoryGateways implements Serializable{
     String filePath;
     GlobalInventoryManager gIManager;
     GlobalInventory gI;
-    GlobalInventoryGateways(String filePath)
-            throws IOException {
+    GlobalInventoryGateways(String filePath) throws IOException {
         this.filePath = filePath;
 
     try {
@@ -64,10 +63,23 @@ public class GlobalInventoryGateways implements Serializable{
 
     }
 
+    /**
+     * Add Item to GlobalInventory and record it to .ser file.
+     * No need to worry about the ID, the ID will be automatically generated to Item
+     * and sent to ID collection in globalInventory.
+     * @param item the item will become available in GlobalInventory.
+     */
+
     public void addItemToGlobalInventory(Item item){
         gIManager.addItemToHashMap(item);
         writeToFile(gI);
     }
+
+    /**
+     * Remove Item from GI and record it
+     * @param itemID remove the Item with that itemID
+     * @throws InvalidItemException if itemID is not in the GlobalInventory
+     */
 
     public void removeItemFromGlobalInventory(String itemID) throws InvalidItemException {
         try{gIManager.removeItem(itemID);
