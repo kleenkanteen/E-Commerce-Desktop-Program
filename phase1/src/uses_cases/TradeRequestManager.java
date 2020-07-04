@@ -19,7 +19,6 @@ public class TradeRequestManager {
 
     //user can set data, place and confirm
     public void setDate(String user, Date date) {
-        canEdit(user, t);
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
@@ -36,7 +35,6 @@ public class TradeRequestManager {
     }
 
     public void setPlace(String user, String place) {
-        canEdit(user, t);
         if (user.equals(t.getUserA()) && canEditA){
             t.setPlace(place);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
@@ -52,7 +50,6 @@ public class TradeRequestManager {
     }
 
     public void setDateAndPlace(String user, Date date, String place){
-        canEdit(user, t);
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setPlace(place);
@@ -84,13 +81,15 @@ public class TradeRequestManager {
         return t;
     }
 
-    public void canEdit (String user, TradeRequest t){
+    public boolean canEdit (String user, TradeRequest t){
         if (user.equals(t.getUserA()) && t.getNumberOfEditA() ==0){
             canEditA = false;
+            return false;
         }
-        if (user.equals(t.getUserB()) && t.getNumberOfEditB()==0){
+        else if (user.equals(t.getUserB()) && t.getNumberOfEditB()==0){
             canEditB = false;
-        }
+            return false;
+        } else return true;
     }
 
     public Trade getTrade() {
