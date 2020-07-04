@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GlobalWishlist implements Serializable {
-    HashMap<String, ArrayList<String>> wishMap;
+    private HashMap<String, ArrayList<String>> wishMap;
 
     /*
     * Constructor just creates a new empty hashmap.

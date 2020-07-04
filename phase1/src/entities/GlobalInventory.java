@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.*;
 
 public class GlobalInventory implements Serializable {
-    HashMap<String, Item> itemMap;
-    ArrayList<String> itemIdCollection;
+    private HashMap<String, Item> itemMap;
+    private ArrayList<String> itemIdCollection;
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
      * Crease an ArrayList to store all the ID that has been assigned to Item.
