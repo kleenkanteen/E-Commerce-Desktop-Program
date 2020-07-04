@@ -4,9 +4,9 @@ import entities.Message;
 
 import java.util.ArrayList;
 
-public class AdminMessageMenu {
+public class MessageReplyMenu {
     private ArrayList<Message> messages;
-    public AdminMessageMenu(ArrayList<Message> messages){
+    public MessageReplyMenu(ArrayList<Message> messages){
         this.messages = messages;
 
     }

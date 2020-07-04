@@ -8,26 +8,25 @@ import java.util.ArrayList;
 import entities.*;
 import uses_cases.*;
 
-public class AdminMessageSystem {
+public class AdminMessageReplySystem {
     private ArrayList<Message> messages;
     private GlobalInventoryManager gi;
     private UserManager um;
     private Admin account;
-    private AdminMessageMenu amm;
+    private MessageReplyMenu mm;
 
-    public AdminMessageSystem(ArrayList<Message> messages, GlobalInventoryManager gi, UserManager um,
+    public AdminMessageReplySystem(ArrayList<Message> messages, GlobalInventoryManager gi, UserManager um,
                               Admin account){
         this.messages = messages;
         this.gi = gi;
         this.um = um;
         this.account = account;
-        amm = new AdminMessageMenu(messages);
+        mm = new MessageReplyMenu(messages);
     }
 
     public void run() {
-        //TODO split the controller and presenter
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        amm.printMenu();
+        mm.printMenu();
         try {
             String input = null;
             while(true) {
@@ -38,7 +37,7 @@ public class AdminMessageSystem {
 
             for(int i = 0; i < messages.size(); i++){
                 Message m = messages.get(i);
-                amm.printMessage(i);
+                mm.printMessage(i);
                 if(m instanceof NewItemMessage){
                     if(!NewItemMessageResponse((NewItemMessage) m, br))return;
                 }
@@ -58,7 +57,7 @@ public class AdminMessageSystem {
         }
     }
     private boolean ContentMessageResponse(Message m, BufferedReader br) throws IOException {
-        amm.printContentMessagePrompt();
+        mm.printContentMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit")) return false;
@@ -70,7 +69,7 @@ public class AdminMessageSystem {
         }
     }
     private boolean UnfreezeRequestMessageResponse(UnfreezeRequestMessage m, BufferedReader br) throws IOException{
-        amm.printDecisionMessagePrompt();
+        mm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit")) return false;
@@ -100,7 +99,7 @@ public class AdminMessageSystem {
         return true;
     }
     private boolean FreezeRequestMessageResponse(FreezeRequestMessage m, BufferedReader br) throws IOException{
-        amm.printDecisionMessagePrompt();
+        mm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit"))return false;
@@ -127,7 +126,7 @@ public class AdminMessageSystem {
     }
 
     private boolean NewItemMessageResponse(NewItemMessage m, BufferedReader br) throws IOException{
-        amm.printDecisionMessagePrompt();
+        mm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
             if(input.equals("exit"))return false;
