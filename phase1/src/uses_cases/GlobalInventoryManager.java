@@ -8,6 +8,7 @@ import exceptions.InvalidItemException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.logging.Level;
 
 public class GlobalInventoryManager implements Serializable {
@@ -17,17 +18,19 @@ public class GlobalInventoryManager implements Serializable {
      */
     GlobalInventory gI;
     HashMap<String, Item> mapItem = new HashMap<>();
+    String filePath;
 
     /**
      * construct the Use Case class to do some changes on gI.
      * @param filePath is the GlobalInventory we are about to modify.
      */
-    GlobalInventoryManager(String filePath){
+    public GlobalInventoryManager(String filePath){
+        this.filePath = filePath;
         gI = new GlobalInventory();
         try {
             File file = new File(filePath);
             if (file.exists()) {
-                readFromFile(filePath);
+                readFromFile();
             } else {
                 file.createNewFile();
             }
@@ -37,7 +40,11 @@ public class GlobalInventoryManager implements Serializable {
         }
     }
 
-    private void readFromFile(String filePath){
+    public GlobalInventory getGI() {
+        return gI;
+    }
+
+    private void readFromFile(){
         try {
             InputStream file = new FileInputStream(filePath);
             InputStream buffer = new BufferedInputStream(file);
@@ -50,11 +57,11 @@ public class GlobalInventoryManager implements Serializable {
             System.out.println("Failed to read");
         }
         catch (ClassNotFoundException ex){
-            System.out.println("Failed");
+            System.out.println("failed to find the class to read");
         }
     }
 
-    private void writeToFile(GlobalInventory gi, String filePath) throws IOException{
+    private void writeToFile(GlobalInventory gi){
         try{
             OutputStream file = new FileOutputStream(filePath);
 
@@ -73,19 +80,44 @@ public class GlobalInventoryManager implements Serializable {
 
     }
 
+    private String IdGenerator(){
+        Random rand = new Random();
+        int id =  rand.nextInt(900000000) + 100000000;
+        String ID = Integer.toString(id);
+        while (gI.getItemIdCollection().contains(ID)){
+            id =  rand.nextInt(900000000) + 100000000;
+            ID = Integer.toString(id);
+        }
+        return ID;
+    }
+
 
     /**
-     * add the item to globalInventory
-     * @param itemID set the key in globalInventory
+     * add the item to globalInventory with an unique Id generated automatically
+     * The ID generated will be assigned to the Item
+     * and then the that ItemID will be sent to IdCollection to record
      * @param item set what the key refers to in globalInventory
      */
 
-    public void addItemToHashMap(String itemID, Item item, String filePath) throws IOException {
+    public void addItemToHashMap(Item item)  {
+        if (item.getItemID() != null){
+            HashMap<String, Item> gi = gI.getItemMap();
+            gi.put(item.getItemID(), item);
+            gI.setItemMap(gi);
 
+        }
+        else{
+
+            String itemID = IdGenerator();
+
+        item.setItemID(itemID);
+        addItemIdToCollection(itemID);
         HashMap<String, Item> gi = gI.getItemMap();
         gi.put(itemID, item);
         gI.setItemMap(gi);
-        writeToFile(gI, filePath);
+
+        writeToFile(gI);}
+
     }
 
     /**
@@ -94,23 +126,23 @@ public class GlobalInventoryManager implements Serializable {
      * @throws InvalidItemException if itemID does not exist in gI
      */
 
-    public void removeItem(String itemID, String filePath) throws InvalidItemException, IOException {
+    public void removeItem(String itemID) throws InvalidItemException {
         if (gI.containsKey(itemID)) {
             HashMap<String, Item> gi = gI.getItemMap();
             gi.remove(itemID);
             gI.setItemMap(gi);
-            writeToFile(gI, filePath);
+            writeToFile(gI);
         }
         else {
             throw new InvalidItemException();
-        }
-    }
+        }}
 
-    public void addItemIdToCollection(String itemID, String filePath) throws IOException {
+
+    private void addItemIdToCollection(String itemID) {
         ArrayList<String> idList = gI.getItemIdCollection();
         idList.add(itemID);
         gI.setItemIdCollection(idList);
-        writeToFile(gI, filePath);
+        writeToFile(gI);
     }
 
     /**

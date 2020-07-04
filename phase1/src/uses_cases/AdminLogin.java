@@ -1,7 +1,6 @@
 package uses_cases;
 
 import entities.Admin;
-import uses_cases.AdminAccountManager;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,15 +9,20 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class AdminLoginVerification {
-    // TODO: explain logger
-    private static final Logger logger = Logger.getLogger(AdminAccountManager.class.getName());
+public class AdminLogin {
+    private static final Logger logger = Logger.getLogger(AdminLogin.class.getName());
     private static final Handler consoleHandler = new ConsoleHandler();
 
-    /** An arraylist of all admin objects. */
+    /** An arraylist to store all admin objects. **/
     private ArrayList<Admin> adminAccountInformation;
 
-    public AdminLoginVerification(String serializedAdminManagerAccountInfo) throws ClassNotFoundException, IOException {
+
+    String serializedAdminData = "src/ser_file_infos/serializeAdminData.ser";
+
+    public AdminLogin() throws IOException, ClassNotFoundException {
+        run();
+    }
+    public void run() throws IOException, ClassNotFoundException {
         adminAccountInformation = new ArrayList<>();
 
         // Associate the handler with the logger.
@@ -28,24 +32,40 @@ public class AdminLoginVerification {
 
         // Reads serializable objects from file.
         // Populates the record list using stored data, if it exists.
-        File file = new File(serializedAdminManagerAccountInfo);
+        File file = new File(serializedAdminData);
         if (file.exists()) {
-            readFromFile(serializedAdminManagerAccountInfo);
+            readFromFile(serializedAdminData);
         } else {
             file.createNewFile();
         }
+        loginPrompt();
+    }
+
+    public Admin loginPrompt() throws IOException, ClassNotFoundException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter username:");
+        String user = br.readLine();
+        System.out.println("Enter password");
+        String pass = br.readLine();
+        // see if valid username and password. if login(user, pass) returns null, invalid login)
+        // if valid login, run demoAdminManager()
+
+        Admin temp = login(user, pass);
+        if (temp != null)
+            new AdminMenuOptions(serializedAdminData);
+        return temp;
     }
 
     public Admin login(String usernameEntry, String passwordEntry) {
         for (Admin r : adminAccountInformation) {
             if ((r.getUsername().equals(usernameEntry)) && r.getPassword().equals(passwordEntry)) {
-                System.out.println("successful login");
+                System.out.println("Successful login.");
                 return r;
             }
         }
-        System.out.println("wrong login");
-        Admin lol = null;
-        return lol;
+        System.out.println("Invalid login");
+        Admin loginAttempt = null;
+        return loginAttempt;
     }
 
     public void readFromFile(String path) throws ClassNotFoundException {

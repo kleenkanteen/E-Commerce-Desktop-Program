@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.*;
 
 public class GlobalInventory implements Serializable {
-    HashMap<String, Item> itemMap = new HashMap<String, Item>();
-    ArrayList<String> itemIdCollection = new ArrayList<>();
+    private HashMap<String, Item> itemMap;
+    private ArrayList<String> itemIdCollection;
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
      * Crease an ArrayList to store all the ID that has been assigned to Item.
@@ -18,7 +18,10 @@ public class GlobalInventory implements Serializable {
      * and an empty ArrayList.
      */
 
-    public GlobalInventory(){}
+    public GlobalInventory(){
+        itemMap = new HashMap<String, Item>();
+        itemIdCollection = new ArrayList<>();
+    }
 
     public HashMap<String, Item> getItemMap() {
         return itemMap;
@@ -30,7 +33,7 @@ public class GlobalInventory implements Serializable {
 
     /**
      * Add ItemID to ItemIdCollection
-     * @param itemIdCollection
+     * @param itemIdCollection - The collection of all itemid's
      */
 
     public void setItemIdCollection(ArrayList<String> itemIdCollection) {

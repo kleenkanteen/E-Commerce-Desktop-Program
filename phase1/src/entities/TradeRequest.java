@@ -1,6 +1,4 @@
-package uses_cases;
-
-import entities.Item;
+package entities;
 
 import java.util.Date;
 
@@ -28,6 +26,8 @@ public class TradeRequest {
 
     private boolean confirmationA = true;
     private boolean confirmationB = false;
+    private int numberOfEditA = 3;
+    private int numberOfEditB = 3;
 
     // one way trade request
 
@@ -103,6 +103,14 @@ public class TradeRequest {
         return place;
     }
 
+    public int getNumberOfEditA() {
+        return numberOfEditA;
+    }
+
+    public int getNumberOfEditB() {
+        return numberOfEditB;
+    }
+
     public boolean isConfirmationA() {
         return confirmationA;
     }
@@ -125,5 +133,22 @@ public class TradeRequest {
 
     public void setConfirmationB(boolean confirmationB) {
         this.confirmationB = confirmationB;
+    }
+
+    public void setNumberOfEditA(int numberOfEditA) {
+        this.numberOfEditA = numberOfEditA;
+    }
+
+    public void setNumberOfEditB(int numberOfEditB) {
+        this.numberOfEditB = numberOfEditB;
+    }
+
+    public String getTradePartner (String user){
+        if (user.equals(userA)){
+            return this.userB;
+        }
+        else{
+            return this.userA;
+        }
     }
 }

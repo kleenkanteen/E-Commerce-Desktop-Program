@@ -4,8 +4,9 @@ public class FreezeRequestMessage extends DecisionMessage {
     private User user;
 
     /**
-     * A message sent to a entities.User that request in making a change to
+     * A message sent to a Admin from the system that request to freeze a User
      * @param content is the content of the message
+     * @param user the user that might be frozen
      */
     public FreezeRequestMessage(String content, User user) {
         super(content, new String[]{"Freeze", "Ignore"});

@@ -52,7 +52,13 @@ public abstract class AccountInformation {
      * both have the same username and password
      */
     public boolean equals(AccountInformation accInfo) {
-        return accInfo.getPassword().equals(password) && accInfo.getUsername().equals(username);
+        return  accInfo.getUsername().equals(username);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
     }
 
     @Override

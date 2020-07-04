@@ -1,15 +1,16 @@
 package uses_cases;
 
 import entities.Trade;
+import entities.TradeRequest;
 
 import java.util.Date;
 
 public class TradeRequestManager {
     private TradeRequest t;
-    private int numberOfEditA = 3;
+
     private boolean canEditA = true;
     private boolean canEditB = true;
-    private int numberOfEditB = 3;
+
     private Trade trade;
 
     public TradeRequestManager(TradeRequest t) {
@@ -18,16 +19,15 @@ public class TradeRequestManager {
 
     //user can set data, place and confirm
     public void setDate(String user, Date date) {
-        canEdit(user, t);
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
-            numberOfEditA -= 1;
+            t.setNumberOfEditA(t.getNumberOfEditA() - 1);
             t.setConfirmationB(false);
             t.setConfirmationA(true);
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setDate(date);
-            numberOfEditB -= 1;
+            t.setNumberOfEditB(t.getNumberOfEditB() - 1);
             t.setConfirmationA(false);
             t.setConfirmationB(true);
         }
@@ -35,34 +35,32 @@ public class TradeRequestManager {
     }
 
     public void setPlace(String user, String place) {
-        canEdit(user, t);
         if (user.equals(t.getUserA()) && canEditA){
             t.setPlace(place);
-            numberOfEditA -= 1;
+            t.setNumberOfEditA(t.getNumberOfEditA() - 1);
             t.setConfirmationB(false);
             t.setConfirmationA(true);
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setPlace(place);
-            numberOfEditB -= 1;
+            t.setNumberOfEditB(t.getNumberOfEditB() - 1);
             t.setConfirmationA(false);
             t.setConfirmationB(true);
         }
     }
 
     public void setDateAndPlace(String user, Date date, String place){
-        canEdit(user, t);
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setPlace(place);
-            numberOfEditA -= 1;
+            t.setNumberOfEditA(t.getNumberOfEditA() - 1);
             t.setConfirmationB(false);
             t.setConfirmationA(true);
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setDate(date);
             t.setPlace(place);
-            numberOfEditB -= 1;
+            t.setNumberOfEditB(t.getNumberOfEditB() - 1);
             t.setConfirmationA(false);
             t.setConfirmationB(true);
         }
@@ -83,24 +81,18 @@ public class TradeRequestManager {
         return t;
     }
 
-    public void canEdit (String user, TradeRequest t){
-        if (user.equals(t.getUserA()) && this.numberOfEditA ==0){
+    public boolean canEdit (String user, TradeRequest t){
+        if (user.equals(t.getUserA()) && t.getNumberOfEditA() ==0){
             canEditA = false;
+            return false;
         }
-        if (user.equals(t.getUserB()) && this.numberOfEditB==0){
+        else if (user.equals(t.getUserB()) && t.getNumberOfEditB()==0){
             canEditB = false;
-        }
+            return false;
+        } else return true;
     }
 
     public Trade getTrade() {
         return trade;
-    }
-
-    public int getNumberOfEditA() {
-        return numberOfEditA;
-    }
-
-    public int getNumberOfEditB() {
-        return numberOfEditB;
     }
 }

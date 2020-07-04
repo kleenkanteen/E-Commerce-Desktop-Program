@@ -1,15 +1,14 @@
 package entities;
 
-import uses_cases.TradeRequest;
-
 public class TradeRequestMessage extends DecisionMessage {
     private TradeRequest tradeContent;
 
     /**
-     * A message sent to a entities.User that request in making a change to
+     * A message to a User from another user that asks them to make a decision on a trade request
      * @param content is the content of the message
      */
     public TradeRequestMessage(String content, TradeRequest tradeRequest) {
+        //TODO add a sender
         super(content, new String[]{"confirm", "deny", "edit"});
         this.tradeContent = tradeRequest;
     }
