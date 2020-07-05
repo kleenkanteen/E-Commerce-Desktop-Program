@@ -12,15 +12,15 @@ public class AdminMessageReplySystem {
     private ArrayList<Message> messages;
     private GlobalInventoryManager gi;
     private UserManager um;
-    private Admin account;
+    private String accountUsername;
     private MessageReplyMenu mm;
 
     public AdminMessageReplySystem(ArrayList<Message> messages, GlobalInventoryManager gi, UserManager um,
-                              Admin account){
+                              String accountUsername){
         this.messages = messages;
         this.gi = gi;
         this.um = um;
-        this.account = account;
+        this.accountUsername = accountUsername;
         mm = new MessageReplyMenu(messages);
     }
 
@@ -79,7 +79,7 @@ public class AdminMessageReplySystem {
                 um.freezeUserAccount(u.getUsername(), false);
                 messages.remove(m);
 
-                Message reply = new Message("Your account is unfrozen by the Admin "+account.getUsername());
+                Message reply = new Message("Your account is unfrozen by the Admin "+accountUsername);
                 ArrayList<Message> temp = um.getUserMessages(u.getUsername());
                 temp.add(reply);
                 um.setUserMessages(u.getUsername(), temp);
@@ -89,7 +89,7 @@ public class AdminMessageReplySystem {
                 User u = m.getUser();
                 messages.remove(m);
 
-                Message reply = new Message("Your request is rejected by the Admin "+account.getUsername());
+                Message reply = new Message("Your request is rejected by the Admin "+accountUsername);
                 ArrayList<Message> temp = um.getUserMessages(u.getUsername());
                 temp.add(reply);
                 um.setUserMessages(u.getUsername(), temp);
@@ -111,7 +111,7 @@ public class AdminMessageReplySystem {
                 um.freezeUserAccount(u.getUsername(), true);
                 messages.remove(m);
 
-                Message reply = new Message("Your account is frozen by the Admin "+account.getUsername());
+                Message reply = new Message("Your account is frozen by the Admin "+accountUsername);
                 ArrayList<Message> temp = um.getUserMessages(u.getUsername());
                 temp.add(reply);
                 um.setUserMessages(u.getUsername(), temp);
@@ -151,7 +151,7 @@ public class AdminMessageReplySystem {
 
                 Item item = ((NewItemMessage) m).getNewItem();
                 Message reply = new Message("Your Item: "+item+
-                            "\n has been rejected by the Admin "+account.getUsername());
+                            "\n has been rejected by the Admin "+accountUsername);
                 ArrayList<Message> temp = um.getUserMessages(item.getOwnerName());
                 temp.add(reply);
                 um.setUserMessages(item.getOwnerName(), temp);
