@@ -9,12 +9,12 @@ public class AdminMenu {
         System.out.println("Type 1 if you want to check your message inbox");
         System.out.println("Type 2 if you want to make an User the new Admin");
         System.out.println("Type 3 if you want to access the information of Users");
-        System.out.println("Type 4 if you want to exit");
+        System.out.println("Type 4 if you want to exit to login page");
     }
 
     public void exitPresenter(){
         System.out.println("Bye, have a good day!");
-        System.out.println("Back to Login now");
+        System.out.println("Back to Login menu now");
     }
 
     public void goIntoMessageInbox(){
