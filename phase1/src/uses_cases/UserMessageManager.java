@@ -3,15 +3,17 @@ package uses_cases;
 import entities.Message;
 import entities.TradeRequestMessage;
 import entities.TradeRequest;
-import entities.PermTrade;
-import entities.TempTrade;
 import entities.Trade;
 import entities.User;
+
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.System;
@@ -45,7 +47,6 @@ public class UserMessageManager {
      * Remove a specified message.
      * @param message the message object to remove
      * @param username the user from which the message is removed
-     *
      */
     public void removeMessage(Message message, String username) {
         ArrayList<Message> currMessages = this.mapOfUsers.get(username).getMessages();
@@ -99,7 +100,7 @@ public class UserMessageManager {
             // edit
             else if (exitInput.toLowerCase().equals("edit")) {
                 // if this user can edit
-                if(tradeRequestManager.canEdit(this.nameOfCurrentUser, tradeRequest)) {
+                if(tradeRequestManager.canEdit(this.nameOfCurrentUser)) {
                     try {
                         TradeRequestMessage requestMessage = editTradeRequest(this.nameOfCurrentUser,
                                 tradeRequest, tradeRequestManager);
@@ -136,10 +137,10 @@ public class UserMessageManager {
         // edit time
         if(choice.toLowerCase().equals("time")) {
             System.out.println("Old time: " + tradeRequest.getDate() + "\n" +
-                    "Enter in new time to meet up in 'DD/MM/YYYY format.");
+                    "Enter in new time to meet up in 'DD/MM/YYYY HH:MM' format.");
             String newDateInput = input.nextLine();
-            Date newDate = new SimpleDateFormat("dd/MM/yyyy").parse(newDateInput);
-            // tradeRequestManager.setDate(username, newDate);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+            // tradeRequestManager.setDate(username, LocalDateTime.parse(newDateInput, formatter));
             return new TradeRequestMessage("User " + username + " has made an edit to your trade request.",
                     tradeRequestManager.getTradeRequest(), this.nameOfCurrentUser);
         }
@@ -157,8 +158,8 @@ public class UserMessageManager {
             System.out.println("Old time + " + tradeRequest.getDate() + "\n" +
                     "Enter in new time to meet up in 'DD/MM/YYYY format.");
             String newDateInput = input.nextLine();
-            Date newDate = new SimpleDateFormat("dd/MM/yyyy").parse(newDateInput);
-            // tradeRequestManager.setDate(username, newDate);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+            // tradeRequestManager.setDate(username, LocalDateTime.parse(newDateInput, formatter));
             System.out.println("Old location: " + tradeRequest.getPlace() + "\n" +
                     "Enter in new location to meet up. ");
             String newPlace = input.nextLine();
