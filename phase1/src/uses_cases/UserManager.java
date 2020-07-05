@@ -24,6 +24,15 @@ public class UserManager implements Serializable{
     private static final Logger logger = Logger.getLogger(UserManager.class.getName());
     private static final Handler consoleHandler = new ConsoleHandler();
     private HashMap<String, User> allUsers;
+    // String username;
+    // User currentUser;
+
+    /*
+    public UserManager(String username, HashMap<String, User> allUsers) {
+        this.allUsers = allUsers;
+        this.username = username;
+    }
+     */
 
     /**
      * Creates a UserManager object.
@@ -34,6 +43,7 @@ public class UserManager implements Serializable{
         logger.setLevel(Level.ALL);
         consoleHandler.setLevel(Level.ALL);
         logger.addHandler(consoleHandler);
+        this.allUsers = new HashMap<>();
         try {
             File file = new File(filepath);
             if (file.exists()) {
@@ -43,7 +53,8 @@ public class UserManager implements Serializable{
             }
         }
         catch(IOException ex) {
-            System.out.println("Input error!");
+            logger.log(Level.SEVERE, "Input error while creating UserManager!", ex);
+            //System.out.println("Input error!");
         }
     }
 
@@ -228,8 +239,6 @@ public class UserManager implements Serializable{
         this.allUsers.get(username).setMessages(userMessages);
     }
 
-    // TRADE METHODS
-
     /*
     when the newly created trade object is first added to user's inventory
     public void confirmTrade(Trade trade) {
@@ -409,7 +418,7 @@ public class UserManager implements Serializable{
      * @param username the user to be accessed
      * @param newThreshold the new borrow v. loan threshold
      */
-    public void setNewThresholdFOrOneUser(String username, int newThreshold) {
+    public void setNewThresholdForOneUser(String username, int newThreshold) {
         this.allUsers.get(username).setTheshold(newThreshold);
     }
 }

@@ -5,71 +5,77 @@ import entities.TradeRequestMessage;
 import entities.TradeRequest;
 import entities.PermTrade;
 import entities.TempTrade;
+import entities.Trade;
+import entities.User;
+import java.util.HashMap;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.System;
 
-// THESE WILL ALL BE MOVED TO USERMANAGER BEING PUT HERE FOR ORGANIZATION PURPOSES
-
 public class UserMessageManager {
-    ArrayList<Message> userMessages;
+    HashMap<String, User> mapOfUsers;
+    String nameOfCurrentUser;
 
-    public UserMessageManager(ArrayList<Message> message) {
-        this.userMessages = message;
+    /**
+     * Constructs a UserMessageManager
+     * @param mapOfUsers a hashmap of all user objects (HOPEFULLY NOT NEEDED)
+     * @param nameOfCurrentUser the string username of the current user logged in
+     */
+    public UserMessageManager(HashMap<String, User> mapOfUsers, String nameOfCurrentUser) {
+        this.mapOfUsers = mapOfUsers;
+        this.nameOfCurrentUser = nameOfCurrentUser;
     }
 
     /**
      * Add a message to this user's inbox.
      * @param message the message object to be added
+     * @param recipient the user that receives this message
      */
-    // for when I move these methods into UserManager
-    /**
-    public void addMessage(String username, Message message) {
-        ArrayList<Message> userMessages = this.allUsers.get(username).getMessages();
-        userMessages.add(message);
-        this.allUsers.get(username).setMessages(userMessages);
-     }
-    */
-    public void addMessage(Message message) { this.userMessages.add(message); }
+    public void addMessage(Message message, String recipient) {
+        ArrayList<Message> currMessages = this.mapOfUsers.get(recipient).getMessages();
+        currMessages.add(message);
+        this.mapOfUsers.get(recipient).setMessages(currMessages);
+    }
 
     /**
      * Remove a specified message.
      * @param message the message object to remove
+     * @param username the user from which the message is removed
+     *
      */
-    // for when I move these methods into UserManager
-    /**
-    public void removeMessage(String username, Message message) {
-        ArrayList<Message> userMessages = this.allUsers.get(username).getMessages();
-        userMessages.remove(message);
-        this.allUsers.get(username).setMessages(userMessages);
+    public void removeMessage(Message message, String username) {
+        ArrayList<Message> currMessages = this.mapOfUsers.get(username).getMessages();
+        currMessages.remove(message);
+        this.mapOfUsers.get(username).setMessages(currMessages);
     }
-     */
-    public void removeMessage(Message message) { this.userMessages.remove(message); }
-
-    // this should be in UserManager
-    // public ArrayList<Message> getUserMessages(String username) {this.allUsers.get(username).getMessages()}
 
     /**
      * Allows a user to send another user (admin or user) a message.
      * @param username the user sending the message.
-     * @return the message object
      */
-    public Message sendMessage(String username, String messageContent) {
-        return new Message("From user: " + username + "\n" + messageContent, username);
+    public void sendMessage(String username, String recipient, String messageContent) {
+        Message newMessage =  new Message("From user: " + username + "\n" + messageContent, username);
+        addMessage(newMessage, recipient);
     }
+
+    // probably won't be needed, but would return the hashmap of users in this Manager to presumably
+    // reset the controller's version of users? idk how the aliasing would work but something like that
+    // public HashMap<String, User> setUserObjects() {  return this.mapOfUsers; }
 
     /**
      * Allows a user to respond to a TradeRequestMessage
-     * @param username the username of the user responding (PersonB) to this message
      * @param message the TradeRequestMessage object
      */
-    public void manageTradeRequest(String username, TradeRequestMessage message) {
+    public void manageTradeRequest(TradeRequestMessage message) {
         // read in Scanner inputs
         Scanner input = new Scanner(System.in);
         TradeRequest tradeRequest = message.getTradeContent();
+        String tradePartner = tradeRequest.getTradePartner(this.nameOfCurrentUser);
+        TradeRequestManager tradeRequestManager = new TradeRequestManager(tradeRequest);
         String exitInput = "";
         while(!exitInput.equals("back")) {
             System.out.println(message.toString());
@@ -77,30 +83,28 @@ public class UserMessageManager {
             exitInput = input.nextLine();
             // confirm
             if (exitInput.toLowerCase().equals("confirm")) {
-                // create a trade object from the TradeRequest
-                // confirmTrade(trade whatever);
+                confirmTrade(tradeRequestManager.setConfirmation(this.nameOfCurrentUser, true), tradePartner);
                 System.out.println("Trade confirmed.");
                 exitInput = "back";
             }
             // deny
             else if (exitInput.toLowerCase().equals("deny")) {
-                String tradePartner = tradeRequest.getTradePartner(username);
-                Message deniedRequest = new Message("Your message to + " + username + " has been rejected.");
-                // this.allUsers.get(tradePartner).addMessage(tradePartner, deniedRequest);
-                // this.allUsers.get(username).removeMessage(message);
+                Message deniedRequest = new Message("Your message to " +
+                        this.nameOfCurrentUser + " has been rejected.");
+                addMessage(deniedRequest, tradePartner);
+                removeMessage(message, this.nameOfCurrentUser);
                 System.out.println("Trade denied.");
                 exitInput = "back";
             }
             // edit
             else if (exitInput.toLowerCase().equals("edit")) {
-                TradeRequestManager tradeRequestManager = new TradeRequestManager(tradeRequest);
-                if(tradeRequestManager.canEdit(username, tradeRequest)) {
+                // if this user can edit
+                if(tradeRequestManager.canEdit(this.nameOfCurrentUser, tradeRequest)) {
                     try {
-                        TradeRequestMessage requestMessage = editTradeRequest(username,
-                                message.getTradeContent(), tradeRequestManager);
-                        String tradePartner = tradeRequest.getTradePartner(username);
-                        // this.allUsers.get(username).removeMessage(message);
-                        // this.allUsers.get(tradePartner).addMessage(requestMessage);
+                        TradeRequestMessage requestMessage = editTradeRequest(this.nameOfCurrentUser,
+                                tradeRequest, tradeRequestManager);
+                        removeMessage(message, this.nameOfCurrentUser);
+                        addMessage(requestMessage, tradePartner);
                         System.out.println("Edit to this trade request successful! Returning from menu.");
                         exitInput = "back";
                     }
@@ -131,22 +135,22 @@ public class UserMessageManager {
         String choice = input.nextLine();
         // edit time
         if(choice.toLowerCase().equals("time")) {
-            System.out.println("Old time + " + tradeRequest.getDate() + "\n" +
+            System.out.println("Old time: " + tradeRequest.getDate() + "\n" +
                     "Enter in new time to meet up in 'DD/MM/YYYY format.");
             String newDateInput = input.nextLine();
             Date newDate = new SimpleDateFormat("dd/MM/yyyy").parse(newDateInput);
-            tradeRequestManager.setDate(username, newDate);
+            // tradeRequestManager.setDate(username, newDate);
             return new TradeRequestMessage("User " + username + " has made an edit to your trade request.",
-                    tradeRequestManager.getTradeRequest());
+                    tradeRequestManager.getTradeRequest(), this.nameOfCurrentUser);
         }
         // edit location
         else if(choice.toLowerCase().equals("location")) {
-            System.out.println("Old location: " + tradeRequest.getPlace() + "\n" +
-                    "Enter in new location to meet up. ");
-            String newPlace = input.nextLine();
-            tradeRequestManager.setPlace(username, newPlace);
-            return new TradeRequestMessage("User " + username + " has made an edit to your trade request.",
-                    tradeRequestManager.getTradeRequest());
+                System.out.println("Old location: " + tradeRequest.getPlace() + "\n" +
+                        "Enter in new location to meet up. ");
+                String newPlace = input.nextLine();
+                tradeRequestManager.setPlace(username, newPlace);
+                return new TradeRequestMessage("User " + username + " has made an edit to your trade request.",
+                        tradeRequestManager.getTradeRequest(), this.nameOfCurrentUser);
         }
         // edit both
         else {
@@ -154,13 +158,23 @@ public class UserMessageManager {
                     "Enter in new time to meet up in 'DD/MM/YYYY format.");
             String newDateInput = input.nextLine();
             Date newDate = new SimpleDateFormat("dd/MM/yyyy").parse(newDateInput);
-            tradeRequestManager.setDate(username, newDate);
+            // tradeRequestManager.setDate(username, newDate);
             System.out.println("Old location: " + tradeRequest.getPlace() + "\n" +
                     "Enter in new location to meet up. ");
             String newPlace = input.nextLine();
             tradeRequestManager.setPlace(username, newPlace);
             return new TradeRequestMessage("User " + username + " has made an edit to your trade request.",
-                    tradeRequestManager.getTradeRequest());
+                    tradeRequestManager.getTradeRequest(), this.nameOfCurrentUser);
         }
+    }
+
+    /**
+     * Helper function to add the trade to both users involved in said trade.
+     * @param trade the trade object to be stored in both user's Trade Histories
+     * @param tradePartner the name of the currently logged in user's trade partner
+     */
+    private void confirmTrade(Trade trade, String tradePartner) {
+        this.mapOfUsers.get(tradePartner).addTradeHistory(trade);
+        this.mapOfUsers.get(this.nameOfCurrentUser).addTradeHistory(trade);
     }
 }
