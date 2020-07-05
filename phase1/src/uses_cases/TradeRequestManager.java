@@ -85,12 +85,12 @@ public class TradeRequestManager {
         return t;
     }
 
-    public boolean canEdit (String user, TradeRequest t){
-        if (user.equals(t.getUserA()) && t.getNumberOfEditA() ==0){
+    public boolean canEdit (String user){
+        if (user.equals(t.getUserA()) && this.t.getNumberOfEditA() ==0){
             canEditA = false;
             return false;
         }
-        else if (user.equals(t.getUserB()) && t.getNumberOfEditB()==0){
+        else if (user.equals(t.getUserB()) && this.t.getNumberOfEditB()==0){
             canEditB = false;
             return false;
         } else return true;
