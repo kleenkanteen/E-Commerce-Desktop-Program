@@ -58,4 +58,10 @@ public class GlobalWishlist implements Serializable {
     public String interestedUser(String userid){
         return wishMap.get(userid).get(0);
     }
+
+    //TODO add java doc
+    public ArrayList<String> getAllInterestedUser(String itemid){
+        //TODO do stuff
+        return new ArrayList<String>();
+    }
 }
