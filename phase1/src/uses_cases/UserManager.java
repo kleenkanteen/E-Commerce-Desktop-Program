@@ -172,6 +172,17 @@ public class UserManager implements Serializable{
     }
 
     /**
+     * Removes an item from multiple user's wishlists.
+     * @param users The users to be accessed
+     * @param itemID the itemID of the item to be removed
+     */
+    public void removeFromMultipleUsersWishlists(ArrayList<String> users, String itemID) {
+        for (String user : users) {
+            removeItemFromUserWishlist(user, itemID);
+        }
+    }
+
+    /**
      * Add an item to a user's inventory.
      * @param item item to be added to inventory
      * @param username String username
