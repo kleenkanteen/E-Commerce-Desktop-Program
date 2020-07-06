@@ -1,12 +1,11 @@
 package entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class TempTrade extends PermTrade {
 
-    private int startDate;
-    private Calendar returnDate;
+    private final LocalDateTime startDate;
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -16,17 +15,18 @@ public class TempTrade extends PermTrade {
      * @param traderB           takes in a entities.User that wants to borrow the item based on the trade.
      * @param userAItemsToTrade takes in items that want to be traded to userB.
      * @param userBItemsToTrade takes in items that want to be traded to userA.
-     * @param date              is a string that follows a specific date format.
+     * @param date              is a LocalDateTime that follows a specific date format.
      */
-    public TempTrade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date) {
+    public TempTrade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, LocalDateTime date) {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, date);
+        startDate = date;
     }
     /**
      * This method provides you with the number of days left after a trade has been processed.
      * @return an integer that indicates the number of days left in the trade.
      */
     public int daysLeft() {
-        int finishDate = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
-        return finishDate - startDate;
+        LocalDateTime finishDate = LocalDateTime.now();
+        return finishDate.getDayOfMonth() - startDate.getDayOfMonth();
     }
 }
