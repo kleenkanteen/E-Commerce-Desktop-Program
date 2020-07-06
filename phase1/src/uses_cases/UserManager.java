@@ -15,10 +15,6 @@ import java.lang.System;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.io.*;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class UserManager implements Serializable{
     private HashMap<String, User> allUsers;
@@ -110,13 +106,11 @@ public class UserManager implements Serializable{
         this.allUsers.get(username).setMessages(userMessages);
     }
 
-    /*
-    when the newly created trade object is first added to user's inventory
-    public void confirmTrade(Trade trade) {
-        call on some method in Trade that would return either a precompleted trade object or whatever
-    }
-    */
-
+    /**
+     * Check if a user has too many incomplete trades.
+     * @param username the username
+     * @return True if the user has not exceeded max incompletes, false if there are too many incompletes
+     */
     public boolean checkIfTooManyIncompleteTrades(String username) {
         return this.allUsers.get(username).getIncompleteTradeHistory().size() <
                 this.allUsers.get(username).getLimitOfImcompleteTrade();
@@ -127,6 +121,15 @@ public class UserManager implements Serializable{
     //    use some method in trade that would check to see if the trade meeting time has already passed
     //    prompt user to confirm each trade
     // }
+
+    /**
+     * Add a trade to a user's trade history.
+     * @param username the username of the user to be accessed
+     * @param trade the trade to be added to this user's trade history
+     */
+    public void addToTradeHistory(String username, Trade trade) {
+        this.allUsers.get(username).addTradeHistory(trade);
+    }
 
     // USER INVENTORY AND WISHLIST
 
@@ -169,6 +172,17 @@ public class UserManager implements Serializable{
     }
 
     /**
+     * Removes an item from multiple user's wishlists.
+     * @param users The users to be accessed
+     * @param itemID the itemID of the item to be removed
+     */
+    public void removeFromMultipleUsersWishlists(ArrayList<String> users, String itemID) {
+        for (String user : users) {
+            removeItemFromUserWishlist(user, itemID);
+        }
+    }
+
+    /**
      * Add an item to a user's inventory.
      * @param item item to be added to inventory
      * @param username String username
@@ -190,19 +204,17 @@ public class UserManager implements Serializable{
         this.allUsers.get(username).setWishlist(userWishlist);
     }
 
-    public NewItemMessage createNewItem(String username) {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the name of your item");
-        String name = input.nextLine();
-        System.out.println("Enter a short description of your item");
-        String description = input.nextLine();
-        Item newItem = new Item(name, username, description);
+    /**
+     * Allows a user to request an admin approve of a new item.
+     * @param username the name of the user requesting approval
+     * @param itemName the name of the new object
+     * @param description description of this object
+     * @return the NewItemMessage to be approved by an admin
+     */
+    public NewItemMessage createNewItem(String username, String itemName, String description) {
+        Item newItem = new Item(itemName, username, description);
         return new NewItemMessage("User " + username + " has created a new item, requires approval", newItem);
     }
-
-    // TODO
-    // Possible messages section?
-    // public Object sendAdminSomeMessageOrWhatever() {}
 
     // ADMIN METHODS
 
