@@ -1,6 +1,8 @@
 package entities;
 
-public class Admin extends AccountInformation {
+import java.io.Serializable;
+
+public class Admin extends AccountInformation implements Serializable {
     /**
      * Creates an admin with the given username and password
      *

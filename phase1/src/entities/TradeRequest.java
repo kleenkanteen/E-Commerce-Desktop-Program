@@ -1,10 +1,11 @@
 package entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 
-public class TradeRequest {
+public class TradeRequest implements Serializable {
     /**
      * Creates a one-way trade request that sends to the lander, or creates a two-way trade request to another user
      * @param userA the username of user who initiate the trade request (borrower in one-way trade)

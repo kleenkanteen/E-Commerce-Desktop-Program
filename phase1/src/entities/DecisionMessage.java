@@ -2,7 +2,9 @@ package entities;
 
 import entities.Message;
 
-public abstract class DecisionMessage extends Message {
+import java.io.Serializable;
+
+public abstract class DecisionMessage extends Message implements Serializable {
     private String[] options;
 
     /**

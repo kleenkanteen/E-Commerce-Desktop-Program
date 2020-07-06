@@ -1,9 +1,10 @@
 package entities;// Written by Thanusun
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class PermTrade extends Trade {
+public class PermTrade extends Trade implements Serializable {
 
     /**
      * Creates a trade with an item that both the seller wants to sell

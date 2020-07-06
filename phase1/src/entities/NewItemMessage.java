@@ -1,6 +1,8 @@
 package entities;
 
-public class NewItemMessage extends DecisionMessage {
+import java.io.Serializable;
+
+public class NewItemMessage extends DecisionMessage implements Serializable {
     private Item newItem;
 
     /**
