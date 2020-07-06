@@ -1,7 +1,7 @@
 package entities;// Written by Thanusun
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class PermTrade extends Trade {
 
@@ -16,9 +16,9 @@ public class PermTrade extends Trade {
      * @param traderB takes in a entities.User that wants to borrow the item based on the trade.
      * @param userAItemsToTrade takes in items that want to be traded to userB.
      * @param userBItemsToTrade takes in items that want to be traded to userA.
-     * @param date is a Calendar that follows a specific date format.
+     * @param date is a LocalDateTime that follows a specific date format.
      */
-    public PermTrade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, Calendar date) {
+    public PermTrade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, LocalDateTime date) {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, date);
     }
 }
