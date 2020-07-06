@@ -1,6 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.*;
+import exceptions.InvalidItemException;
 import uses_cases.GlobalInventoryManager;
 import uses_cases.TradeRequestManager;
 import uses_cases.UserManager;
@@ -61,7 +62,7 @@ public class UserMessageReplySystem {
         messages.remove(m);
 
         TradeRequestManager temp = new TradeRequestManager(t);
-        if(!temp.canEdit(accountUsername, t)&&!temp.canEdit(username, t)){
+        if(!temp.canEdit(accountUsername)&&!temp.canEdit(username)){
             System.out.println("Trade request cancelled");
 
             Message reply = new Message("Your trade request:"+t+"\n is cancelled due to too much edits");
@@ -111,29 +112,55 @@ public class UserMessageReplySystem {
     }
     private boolean TradeRequestMessageResponse(TradeRequestMessage m, BufferedReader br) throws IOException{
         mm.printDecisionMessagePrompt();
+        TradeRequest t = m.getTradeContent();
+        String username = m.getSender();
+
+        TradeRequestManager temp = new TradeRequestManager(t);
+
+        if(!temp.canEdit(accountUsername)&&!temp.canEdit(username))System.out.println("Warning, if the max number " +
+                "of edits for both traders are reach, selecting edit means " +
+                    "you will cancel this trade request");
+        System.out.println("");
         while (true) {
             String input = br.readLine();
             if(input.equals("exit")) return false;
             if(input.equals("next")) break;
             if(input.equals("1")){
-                TradeRequest t = m.getTradeContent();
-                String username = m.getSender();
                 messages.remove(m);
-
-                TradeRequestManager temp = new TradeRequestManager(t);
                 Trade trade = temp.setConfirmation(accountUsername, true);
-
+                //TODO maybe check if the users can trade
+                //TODO add trade to both user's trade history
+                //Removing the items from the GI and personal inventory
+                for(Item i:trade.getUserAItemstoTrade()) {
+                    //TODO remove item from user a
+                    try{
+                        gi.removeItem(i.getItemID());
+                    }catch(InvalidItemException e){
+                        System.out.println("An error has occurred with your trade, it will be cancelled");
+                        //TODO remove the trade from both user's trade history
+                    }
+                }
+                for(Item i:trade.getUserBItemsToTrade()) {
+                    //TODO remove item from user a
+                    try{
+                        gi.removeItem(i.getItemID());
+                    }catch(InvalidItemException e){
+                        System.out.println("An error has occurred with your trade, it will be cancelled");
+                        //TODO remove the trade from both user's trade history
+                    }
+                }
+                //TODO use GW to remove item from all user's wishlist
                 break;
             }
             else if(input.equals("2")){
-                TradeRequest t = m.getTradeContent();
-                String username = m.getSender();
+                t = m.getTradeContent();
+                username = m.getSender();
                 messages.remove(m);
 
                 Message reply = new Message("Your trade request:"+t+"\n is rejected by "+accountUsername);
-                ArrayList<Message> temp = um.getUserMessages(username);
-                temp.add(reply);
-                um.setUserMessages(username, temp);
+                ArrayList<Message> tempMessage = um.getUserMessages(username);
+                tempMessage.add(reply);
+                um.setUserMessages(username, tempMessage);
                 break;
             }
             else if(input.equals("3")){
