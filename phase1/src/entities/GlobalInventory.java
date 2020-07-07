@@ -1,8 +1,5 @@
 package entities;
 
-import entities.Item;
-import exceptions.InvalidItemException;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,16 +50,17 @@ public class GlobalInventory implements Serializable {
     /**
      * Getter of Item in GlobalInventory with ItemID been called
      * @param itemID is the unique ID of each Item.
-     * @throws  InvalidItemException if itemID is not existed in 'itemMap'
+
      * @return Item with itemID been called
      */
 
-    public Object getItem(String itemID) throws InvalidItemException {
+    public Object getItem(String itemID) {
         if (itemMap.containsKey(itemID)){
             return itemMap.get(itemID);
         }
         else {
-            throw new InvalidItemException();
+            System.out.println("itemID not found");
+            return null;
         }
 
     }
@@ -92,14 +90,15 @@ public class GlobalInventory implements Serializable {
     /**
      * Remove item with specific itemID
      * @param itemID is the key for itemMap.
-     * @throws InvalidItemException if the key doesn't not exist in itemMap
+
      */
 
-    public void removeItem(String itemID) throws InvalidItemException{
+    public boolean removeItem(String itemID){
         if (! itemMap.containsKey(itemID)){
-            throw new InvalidItemException();
+            return false;
         }
         itemMap.remove(itemID);
+        return true;
     }
 
     /**

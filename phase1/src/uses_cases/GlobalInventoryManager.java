@@ -1,15 +1,12 @@
 package uses_cases;
 
-import entities.Admin;
 import entities.Item;
 import entities.GlobalInventory;
-import exceptions.InvalidItemException;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.logging.Level;
 
 public class GlobalInventoryManager implements Serializable {
 
@@ -72,18 +69,11 @@ public class GlobalInventoryManager implements Serializable {
         /**
          * remove the item with specific itemID
          * @param itemID is the itemID of the item we want to remove
-         * @throws InvalidItemException if itemID does not exist in gI
+
          */
 
-        public void removeItem (String itemID) throws InvalidItemException {
-            if (gI.containsKey(itemID)) {
-                HashMap<String, Item> gi = gI.getItemMap();
-                gi.remove(itemID);
-                gI.setItemMap(gi);
-
-            } else {
-                throw new InvalidItemException();
-            }
+        public boolean removeItem (String itemID){
+            return gI.removeItem(itemID);
         }
 
 

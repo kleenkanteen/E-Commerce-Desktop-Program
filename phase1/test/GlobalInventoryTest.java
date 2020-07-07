@@ -1,7 +1,6 @@
 package test;
 import entities.GlobalInventory;
 import entities.Item;
-import exceptions.InvalidItemException;
 import uses_cases.GlobalInventoryManager;
 
 import java.io.BufferedReader;
