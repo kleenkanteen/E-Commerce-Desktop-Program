@@ -56,10 +56,10 @@ public class User extends AccountInformation implements Serializable{
      * Getter of all the temporary trade history of this account
      * @return all the temporary trade history of this account
      */
-    public ArrayList<Trade> getTempTradeHistory() {
-        ArrayList <Trade> tempTradeHistory = new ArrayList<Trade>();
+    public ArrayList<TempTrade> getTempTradeHistory() {
+        ArrayList <TempTrade> tempTradeHistory = new ArrayList<TempTrade>();
         for (Trade t: tradeHistory){
-            if(t instanceof TempTrade) tempTradeHistory.add(t);
+            if(t instanceof TempTrade) tempTradeHistory.add((TempTrade) t);
         }
         return tempTradeHistory;
     }
@@ -83,7 +83,7 @@ public class User extends AccountInformation implements Serializable{
     public int getBorrowedTimes() {
         int total = 0;
         for(Trade t: tradeHistory){
-            if(t.isBorrowed(this))total++;
+            if(t.isBorrowed(getUsername()))total++;
         }
         return total;
     }
@@ -95,7 +95,7 @@ public class User extends AccountInformation implements Serializable{
     public int getLendTimes() {
         int total = 0;
         for(Trade t: tradeHistory){
-            if(t.isLent(this))total++;
+            if(t.isLent(getUsername()))total++;
         }
         return total;
     }
@@ -109,7 +109,7 @@ public class User extends AccountInformation implements Serializable{
         ArrayList<String> partners = new ArrayList<String>();
         String[] tradingPartners = new String[3];
         for(Trade t: tradeHistory){
-            String partner = t.tradingPartner(this);
+            String partner = t.tradingPartner(getUsername());
             if(partner == null)continue;
             partners.add(partner);
         }

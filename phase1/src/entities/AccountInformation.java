@@ -1,6 +1,5 @@
 package entities;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 public abstract class AccountInformation implements Serializable {
