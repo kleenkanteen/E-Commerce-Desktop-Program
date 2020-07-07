@@ -9,12 +9,15 @@ import java.io.InputStreamReader;
 
 public class AdminSystem {
     Admin admin;
+    AdminMenu am;
 
     AdminSystem(Admin admin) {
         this.admin = admin;
+        am = new AdminMenu(admin);
     }
 
     public void run() {
+        am.printMainOption();
         AdminMenu menu = new AdminMenu(admin);
         menu.printMainOption();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -23,22 +26,24 @@ public class AdminSystem {
             try {
                 input = br.readLine();
                 if (input.equals("1")) {
+                    am.goIntoMessageInbox();
                     // AdminMessageReplySystem(admin.,);
                 } else if (input.equals("2")) {
-                    AdminAccountManagement ac = new AdminAccountManagement();
-                    //ac.run()
+                    AdminAccountSystem aas = new AdminAccountSystem(admin);
+                    aas.run();
+
                 } else if (input.equals("3")) {
-                    //TODO
+                    //TODO hello Sabih, How are you
 
                 } else if (input.equals("4")) {
+                    am.exitPresenter();
 
                     return;
                 }
 
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException e) {
                 System.out.println("Something went wrong");
             }
         }
-
     }
 }

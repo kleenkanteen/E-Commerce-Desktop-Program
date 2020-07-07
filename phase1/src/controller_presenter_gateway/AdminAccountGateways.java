@@ -45,9 +45,9 @@ public class AdminAccountGateways {
         }
     }
 
-    public void saveToFile(String serializedManagerInfo) throws IOException {
+    public void saveToFile(HashMap<String, Admin> adminMap) throws IOException {
 
-        OutputStream file = new FileOutputStream(serializedManagerInfo);
+        OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
