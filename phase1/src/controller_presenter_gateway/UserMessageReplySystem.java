@@ -1,7 +1,6 @@
 package controller_presenter_gateway;
 
 import entities.*;
-import exceptions.InvalidItemException;
 import uses_cases.GlobalInventoryManager;
 import uses_cases.TradeRequestManager;
 import uses_cases.UserManager;
