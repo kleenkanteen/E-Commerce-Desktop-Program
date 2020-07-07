@@ -1,6 +1,8 @@
 package entities;
 
-public class UnfreezeRequestMessage extends DecisionMessage {
+import java.io.Serializable;
+
+public class UnfreezeRequestMessage extends DecisionMessage implements Serializable {
     private User user;
 
     /**

@@ -1,9 +1,10 @@
 package entities;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class TempTrade extends PermTrade {
+public class TempTrade extends PermTrade implements Serializable {
 
     private final LocalDateTime startDate;
 

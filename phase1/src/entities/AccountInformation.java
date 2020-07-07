@@ -1,6 +1,9 @@
 package entities;
 
-public abstract class AccountInformation {
+import java.io.Serial;
+import java.io.Serializable;
+
+public abstract class AccountInformation implements Serializable {
     private String username, password;
 
     /**

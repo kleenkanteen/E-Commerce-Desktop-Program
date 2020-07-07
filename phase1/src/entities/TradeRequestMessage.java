@@ -1,6 +1,8 @@
 package entities;
 
-public class TradeRequestMessage extends DecisionMessage {
+import java.io.Serializable;
+
+public class TradeRequestMessage extends DecisionMessage implements Serializable {
     private TradeRequest tradeContent;
 
     /**
