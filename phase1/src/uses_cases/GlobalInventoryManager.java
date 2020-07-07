@@ -66,6 +66,7 @@ public class GlobalInventoryManager implements Serializable {
 
         }}
 
+
         /**
          * remove the item with specific itemID
          * @param itemID is the itemID of the item we want to remove
