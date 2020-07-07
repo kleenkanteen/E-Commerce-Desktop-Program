@@ -128,11 +128,17 @@ public class UserMessageReplySystem {
             if(input.equals("1")){
                 messages.remove(m);
                 Trade trade = temp.setConfirmation(accountUsername, true);
-                //TODO maybe check if the users can trade
-                //TODO add trade to both user's trade history
-                //Removing the items from the GI and personal inventory
-                for(Item i:trade.getUserAItemstoTrade()) {
-                    //TODO remove item from user a
+                //TODO maybe check if the users can trade N/A
+                //Add trade to both user's trade history
+                um.addToTradeHistory(trade.getTraderA(), trade);
+                um.addToTradeHistory(trade.getTraderB(), trade);
+
+                //Removing the items from the GI and personal inventory and wishlist
+                for(Item i:trade.getTraderAItemstoTrade()) {
+                    um.removeItemFromUserInventory(trade.getTraderA(), i.getItemID());
+
+                    ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
+                    um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
                     try{
                         gi.removeItem(i.getItemID());
                     }catch(InvalidItemException e){
@@ -140,8 +146,11 @@ public class UserMessageReplySystem {
                         //TODO remove the trade from both user's trade history
                     }
                 }
-                for(Item i:trade.getUserBItemsToTrade()) {
-                    //TODO remove item from user a
+                for(Item i:trade.getTraderBItemsToTrade()) {
+                    um.removeItemFromUserInventory(trade.getTraderB(), i.getItemID());
+
+                    ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
+                    um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
                     try{
                         gi.removeItem(i.getItemID());
                     }catch(InvalidItemException e){
@@ -149,7 +158,6 @@ public class UserMessageReplySystem {
                         //TODO remove the trade from both user's trade history
                     }
                 }
-                //TODO use GW to remove item from all user's wishlist
                 break;
             }
             else if(input.equals("2")){
