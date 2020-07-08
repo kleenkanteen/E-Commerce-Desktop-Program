@@ -5,7 +5,7 @@ import java.util.TreeMap;
 import java.util.Set;
 import java.io.Serializable;
 
-public class User extends AccountInformation implements Serializable{
+public class User extends Account implements Serializable{
     private ArrayList<Item> personalInventory = new ArrayList<>();
     private ArrayList<Item> wishlist = new ArrayList<>();
     private ArrayList<Trade> tradeHistory = new ArrayList<>();
