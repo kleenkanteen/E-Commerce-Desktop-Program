@@ -1,14 +1,11 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.TreeMap;
-import java.util.Set;
 import java.io.Serializable;
 
 public class User extends Account implements Serializable{
     private ArrayList<Item> personalInventory = new ArrayList<>();
     private ArrayList<Item> wishlist = new ArrayList<>();
-    private ArrayList<Trade> tradeHistory = new ArrayList<>();
     private ArrayList<Message> messages = new ArrayList<>();
     private boolean frozenStatus = true;
     private int tradePerWeek = 5;
@@ -45,112 +42,6 @@ public class User extends Account implements Serializable{
         return wishlist;
     }
 
-    /**
-     * Getter of the trade history of this account
-     * @return the trade history of this account
-     */
-    public ArrayList<Trade> getTradeHistory() {
-        return tradeHistory;
-    }
-
-    /**
-     * Getter of all the temporary trade history of this account
-     * @return all the temporary trade history of this account
-     */
-    public ArrayList<TempTrade> getTempTradeHistory() {
-        ArrayList <TempTrade> tempTradeHistory = new ArrayList<TempTrade>();
-        for (Trade t: tradeHistory){
-            if(t instanceof TempTrade) tempTradeHistory.add((TempTrade) t);
-        }
-        return tempTradeHistory;
-    }
-
-    /**
-     * Getter of all the incomplete trade history of this account
-     * @return all the incomplete trade history of this account
-     */
-    public ArrayList<Trade> getIncompleteTradeHistory() {
-        ArrayList <Trade> incompleteTradeHistory = new ArrayList<Trade>();
-        for (Trade t: tradeHistory){
-            if(!t.getCompleted())incompleteTradeHistory.add(t);
-        }
-        return incompleteTradeHistory;
-    }
-
-    /**
-     * Getter of the number of times this user has borrowed
-     * @return the number of times this user has borrowed
-     */
-    public int getBorrowedTimes() {
-        int total = 0;
-        for(Trade t: tradeHistory){
-            if(t.isBorrowed(getUsername()))total++;
-        }
-        return total;
-    }
-
-    /**
-     * Getter of the number of times this user has lend
-     * @return the number of times this user has lend
-     */
-    public int getLendTimes() {
-        int total = 0;
-        for(Trade t: tradeHistory){
-            if(t.isLent(getUsername()))total++;
-        }
-        return total;
-    }
-
-    /**
-     * Getter of the 3 most frequent trading partners of this user's username
-     * @return the 3 most frequent trading partners username
-     */
-    public String[] getFrequentTradingPartners() {
-        TreeMap<Integer, ArrayList<String>> counter = new TreeMap<Integer, ArrayList<String>>();
-        ArrayList<String> partners = new ArrayList<String>();
-        String[] tradingPartners = new String[3];
-        for(Trade t: tradeHistory){
-            String partner = t.tradingPartner(getUsername());
-            if(partner == null)continue;
-            partners.add(partner);
-        }
-        for(String u: partners) {
-            int n = count(partners, u);
-            if (counter.containsKey(n)) {
-                ArrayList<String> list = counter.get(n);
-                if (!list.contains(u)) list.add(u);
-            } else {
-                ArrayList<String> temp = new ArrayList<String>();
-                temp.add(u);
-                counter.put(n, temp);
-            }
-        }
-        Set<Integer> keys = counter.descendingKeySet();
-        for(Integer key: keys){
-           ArrayList<String> p = counter.get(key);
-           for(int i = 0; i< p.size(); i++){
-               for(int j=0; j<3; j++){
-                   if(tradingPartners[j] == (null)){
-                       tradingPartners[j] = p.get(i);
-                       break;
-                   }
-                   if(tradingPartners[j].equals(p.get(i)))break;
-               }
-               if(tradingPartners[2] != (null))break;
-           }
-           if(tradingPartners[2]!=(null))break;
-        }
-
-        return tradingPartners;
-
-    }
-    private int count(ArrayList<String> list, String item){
-        int sum = 0;
-        for(String u: list){
-            if(u.equals(item))sum++;
-        }
-        return sum;
-    }
     /**
      * Getter of the theshold (how many more times must you lend items before you can borrow) value of this user
      * @return the theshold value
@@ -205,14 +96,6 @@ public class User extends Account implements Serializable{
      */
     public void setWishlist(ArrayList<Item> wishlist){
         this.wishlist = wishlist;
-    }
-
-    /**
-     * Adding the most recent trade of this entities.User to the entities.User's trade history
-     * @param trade the most recent trade of this entities.User
-     */
-    public void addTradeHistory(Trade trade){
-        tradeHistory.add(trade);
     }
 
     /**

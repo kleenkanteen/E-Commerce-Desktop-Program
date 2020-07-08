@@ -75,24 +75,24 @@ public class AdminMessageReplySystem {
             if(input.equals("exit")) return false;
             if(input.equals("next")) break;
             if(input.equals("1")){
-                User u = m.getUser();
-                um.freezeUserAccount(u.getUsername(), false);
+                String u = m.getUser();
+                um.freezeUserAccount(u, false);
                 messages.remove(m);
 
                 Message reply = new Message("Your account is unfrozen by the Admin "+accountUsername);
-                ArrayList<Message> temp = um.getUserMessages(u.getUsername());
+                ArrayList<Message> temp = um.getUserMessages(u);
                 temp.add(reply);
-                um.setUserMessages(u.getUsername(), temp);
+                um.setUserMessages(u, temp);
                 break;
             }
             else if(input.equals("2")){
-                User u = m.getUser();
+                String u = m.getUser();
                 messages.remove(m);
 
                 Message reply = new Message("Your request is rejected by the Admin "+accountUsername);
-                ArrayList<Message> temp = um.getUserMessages(u.getUsername());
+                ArrayList<Message> temp = um.getUserMessages(u);
                 temp.add(reply);
-                um.setUserMessages(u.getUsername(), temp);
+                um.setUserMessages(u, temp);
                 break;
             }
         }
@@ -107,14 +107,14 @@ public class AdminMessageReplySystem {
                 break;
             }
             if(input.equals("1")){
-                User u = m.getUser();
-                um.freezeUserAccount(u.getUsername(), true);
+                String u = m.getUser();
+                um.freezeUserAccount(u, true);
                 messages.remove(m);
 
                 Message reply = new Message("Your account is frozen by the Admin "+accountUsername);
-                ArrayList<Message> temp = um.getUserMessages(u.getUsername());
+                ArrayList<Message> temp = um.getUserMessages(u);
                 temp.add(reply);
-                um.setUserMessages(u.getUsername(), temp);
+                um.setUserMessages(u, temp);
                 break;
             }
             else if(input.equals("2")){

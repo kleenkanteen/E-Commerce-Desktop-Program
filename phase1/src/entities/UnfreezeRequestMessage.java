@@ -3,26 +3,26 @@ package entities;
 import java.io.Serializable;
 
 public class UnfreezeRequestMessage extends DecisionMessage implements Serializable {
-    private User user;
+    private String username;
 
     /**
      * A message sent to a Admin from a User that request to be unfreezed
      * @param content is the content of the message
-     * @param user is the user wanted to be unfreezed
+     * @param username is the user wanted to be unfreezed
      */
-    public UnfreezeRequestMessage(String content, User user) {
-        super(content, new String[]{"Unfreeze", "Ignore"}, user.getUsername());
-        this.user = user;
+    public UnfreezeRequestMessage(String content, String username) {
+        super(content, new String[]{"Unfreeze", "Ignore"}, username);
+        this.username = username;
     }
 
     /**
      * Getter for the user that might need to be frozen
      * @return the user
      */
-    public User getUser(){ return user; }
+    public String getUser(){ return username; }
 
     @Override
     public String toString() {
-        return super.toString() + "\nThe User: "+user;
+        return super.toString() + "\nThe User's username: "+username;
     }
 }

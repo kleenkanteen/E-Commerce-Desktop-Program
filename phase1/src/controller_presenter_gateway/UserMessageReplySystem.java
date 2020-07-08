@@ -2,6 +2,7 @@ package controller_presenter_gateway;
 
 import entities.*;
 import uses_cases.GlobalInventoryManager;
+import uses_cases.GlobalWishlistManager;
 import uses_cases.TradeRequestManager;
 import uses_cases.UserManager;
 
@@ -16,11 +17,11 @@ public class UserMessageReplySystem {
     private ArrayList<Message> messages;
     private UserManager um;
     private GlobalInventoryManager gi;
-    private GlobalWishlist gw;
+    private GlobalWishlistManager gw;
     private String accountUsername;
     private MessageReplyMenu mm;
 
-    public UserMessageReplySystem(UserManager um, GlobalInventoryManager gi, GlobalWishlist gw,
+    public UserMessageReplySystem(UserManager um, GlobalInventoryManager gi, GlobalWishlistManager gw,
                                   String accountUsername){
         this.um = um;
         this.gi = gi;
@@ -138,7 +139,7 @@ public class UserMessageReplySystem {
 
                     ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
                     um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
-
+                    //TODO delete item from gw
                     gi.removeItem(i.getItemID());
                 }
                 for(Item i:trade.getTraderBItemsToTrade()) {
@@ -146,7 +147,7 @@ public class UserMessageReplySystem {
 
                     ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
                     um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
-
+                    //TODO delete item from gw
                     gi.removeItem(i.getItemID());
                 }
                 break;
