@@ -8,9 +8,7 @@ import java.util.Random;
 
 public class GlobalInventoryManager implements Serializable {
 
-    /**
-     * @param gI is the GlobalInventory we want to modify.
-     */
+    // gI is the GlobalInventory we want to modify.
     GlobalInventory gI;
 
     /**
