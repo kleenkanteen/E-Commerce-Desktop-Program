@@ -2,10 +2,8 @@ package uses_cases;
 
 import entities.Item;
 import entities.GlobalInventory;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class GlobalInventoryManager implements Serializable {
@@ -14,13 +12,10 @@ public class GlobalInventoryManager implements Serializable {
      * @param gI is the GlobalInventory we want to modify.
      */
     GlobalInventory gI;
-    HashMap<String, Item> mapItem = new HashMap<>();
-
 
     /**
      * construct the Use Case class to do some changes on gI.
-     *
-
+     * @param gI - the globalinventory it takes in
      */
     public GlobalInventoryManager(GlobalInventory gI) {
         this.gI = gI;
