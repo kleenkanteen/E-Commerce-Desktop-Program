@@ -1,29 +1,20 @@
 package entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 
 public class TradeRequest implements Serializable {
     /**
      * Creates a one-way trade request that sends to the lander, or creates a two-way trade request to another user
-     * @param userA the username of user who initiate the trade request (borrower in one-way trade)
-     * @param userB the user who gets the trade request (lander in one-way trade)
-     * @param itemA userA's item
-     * @param itemB userB's item
-     * @param perm true if this user is requesting a perm trade, false if requesting a temp trade
-     * @param date the date of this trade request meeting date
-     * @param place the place for the meeting
-     * @param confirmationA true if userA has confirmed the trade request, false if userA does not confirm
-     * @param confirmationB true if userB has confirmed the trade request, false if userB does not confirm
      */
     private String userA; // username of user who initiate the trade request (borrower in one way trade)
     private String userB; // username of user who gets the trade request (lander in one way trade)
     private ArrayList<Item> itemA; // userA's items
     private ArrayList<Item> itemB;  // userB's items
     private boolean perm;
-    private Calendar date;
+    private LocalDateTime date;
     private String place;
 
     private boolean confirmationA = true;
@@ -42,7 +33,7 @@ public class TradeRequest implements Serializable {
      * @param date the date of this trade request meeting date
      * @param place the place for the meeting
      */
-    public TradeRequest(String userA, String userB, ArrayList<Item> itemB, boolean perm, Calendar date, String place) {
+    public TradeRequest(String userA, String userB, ArrayList<Item> itemB, boolean perm, LocalDateTime date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemB = itemB;
@@ -67,7 +58,7 @@ public class TradeRequest implements Serializable {
 
 
     public TradeRequest(String userA, String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm,
-                        Calendar date, String place) {
+                        LocalDateTime date, String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemA = itemA;
@@ -97,7 +88,7 @@ public class TradeRequest implements Serializable {
         return perm;
     }
 
-    public Calendar getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -121,7 +112,7 @@ public class TradeRequest implements Serializable {
         return confirmationB;
     }
 
-    public void setDate(Calendar date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
