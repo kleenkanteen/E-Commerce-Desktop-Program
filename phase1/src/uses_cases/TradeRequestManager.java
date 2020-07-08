@@ -1,8 +1,11 @@
 package uses_cases;
 
-import entities.*;
+import entities.PermTrade;
+import entities.TempTrade;
+import entities.Trade;
+import entities.TradeRequest;
 
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 public class TradeRequestManager {
     private TradeRequest t;
@@ -17,7 +20,7 @@ public class TradeRequestManager {
     }
 
     //user can set data, place and confirm
-    public void setDate(String user, Calendar date) {
+    public void setDate(String user, LocalDateTime date) {
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
@@ -48,7 +51,7 @@ public class TradeRequestManager {
         }
     }
 
-    public void setDateAndPlace(String user, Calendar date, String place){
+    public void setDateAndPlace(String user, LocalDateTime date, String place){
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setPlace(place);
