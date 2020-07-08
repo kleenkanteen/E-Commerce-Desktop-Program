@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class GlobalWishlistManager implements Serializable {
 
      // gW is the GlobalWishlist we want to modify.
-    GlobalWishlist gW;
+    protected GlobalWishlist gW;
 
     /**
      * constructor for the class

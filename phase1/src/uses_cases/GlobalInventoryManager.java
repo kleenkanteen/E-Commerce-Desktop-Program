@@ -9,7 +9,7 @@ import java.util.Random;
 public class GlobalInventoryManager implements Serializable {
 
     // gI is the GlobalInventory we want to modify.
-    GlobalInventory gI;
+    protected GlobalInventory gI;
 
     /**
      * construct the Use Case class to do some changes on gI.
