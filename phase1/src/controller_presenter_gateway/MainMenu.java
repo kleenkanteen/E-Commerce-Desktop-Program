@@ -55,9 +55,13 @@ public class MainMenu {
                     }
                     else {
                         AdminLogin y = new AdminLogin(username, pass, adminHashMap);
+                        if (y.login().equals(username)) {
+                            Admin loggedInAdmin = y.getAdminObject();
+                            AdminMenu am = new AdminMenu(loggedInAdmin);
+                        }
                     }
                 }
-            } catch (IOException | InvalidLoginException | ClassNotFoundException e) {
+            } catch (IOException | InvalidLoginException e) {
                 System.out.println("Something went wrong");
             }
             ug.writeToFile(serializedUsers, userHashMap);
