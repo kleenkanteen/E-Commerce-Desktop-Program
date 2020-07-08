@@ -97,6 +97,11 @@ public class GlobalInventoryManager implements Serializable {
 
         }
 
+        public int generatePageNumber(){
+           int num =  gI.getNumOfItem();
+           return (int) Math.ceil((double)num/10);
+        }
+
         /**
          * generate an arraylist of Item which has itemName
          * @param itemName is the name of item the user want to search

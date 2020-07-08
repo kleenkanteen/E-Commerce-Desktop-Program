@@ -26,7 +26,7 @@ public class GlobalInventoryGateways implements Serializable{
     }
     gIManager = new GlobalInventoryManager(gI);
     }
-    private void readFromFile() {
+    public void readFromFile() {
         try {
             InputStream file = new FileInputStream(filePath);
             InputStream buffer = new BufferedInputStream(file);
@@ -43,7 +43,7 @@ public class GlobalInventoryGateways implements Serializable{
 
     }
 
-    private void writeToFile(GlobalInventory gi) {
+    public void writeToFile(GlobalInventory gi) {
         try {
             OutputStream file = new FileOutputStream(filePath);
 
