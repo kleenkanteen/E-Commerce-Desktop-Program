@@ -14,11 +14,13 @@ public class GlobalWishlist implements Serializable {
         wishMap = new HashMap<String, ArrayList<String>>();
     }
 
+
      /**
      * Add an user to list of users wanting an item. If no users want it yet, create item key and add user.
      * @param itemid - id of item that is wanted
      * @param userid - id of user that wants the item
      */
+
     public void addWish(String itemid, String userid){
         if (wishMap.get(itemid) == null) {
             wishMap.put(itemid, new ArrayList<String>());
@@ -26,11 +28,13 @@ public class GlobalWishlist implements Serializable {
         wishMap.get(itemid).add(userid);
     }
 
+
      /**
      * Remove an user from wanting an item. If after removing, no users want the item, delete item key.
      * @param itemid - id of item that is wanted
      * @param userid - id of user that wants the item
      */
+
     public void removeWish(String itemid, String userid){
         if (wishMap.get(itemid) == null) {
             wishMap.put(itemid, new ArrayList<String>());
@@ -41,27 +45,41 @@ public class GlobalWishlist implements Serializable {
         }
     }
 
+
      /**
      * Return if an item is wanted by anyone
      * @param itemid - id of item that is wanted
       * @return Whether or not anyone wants the item
      */
-    public boolean isitemWanted(String itemid){
+    public boolean isItemWanted(String itemid){
         return wishMap.get(itemid) != null;
     }
 
+
     /**
-     * Return first userid that wants an item
-     * @param userid - id of first user that wants the item
-     * @return first userid whoever wants the item
+     * Return first userid who wants the item
+     * @param itemid - id of item that is of interest
+     * @return first userid of whoever wants the item
      */
-    public String interestedUser(String userid){
-        return wishMap.get(userid).get(0);
+    public String getFirstInterestedUser(String itemid){
+        return wishMap.get(itemid).get(0);
     }
 
-    //TODO add java doc
-    public ArrayList<String> getAllInterestedUser(String itemid){
-        //TODO do stuff
-        return new ArrayList<String>();
+
+    /**
+     * Delete first userid who wants the item
+     * @param itemid - id of item that is of interest
+     */
+
+    public void deleteFirstInterestedUser(String itemid) { wishMap.get(itemid).remove(0); }
+
+
+    /**
+     * Return all userids that wants the item
+     * @param itemid - id of first user that wants the item
+     * @return - arraylist of all users who want this item
+     */
+    public ArrayList<String> getAllInterestedUsers(String itemid){
+        return wishMap.get(itemid);
     }
 }
