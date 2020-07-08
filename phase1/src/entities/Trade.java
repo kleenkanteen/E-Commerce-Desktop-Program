@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public abstract class Trade implements Serializable {
-    private final LocalDateTime date;
+    private final LocalDateTime startDate;
     private final ArrayList<Item> traderBItemsToTrade;
     private final ArrayList<Item> traderAItemstoTrade;
     private final String traderA;
@@ -20,13 +20,13 @@ public abstract class Trade implements Serializable {
      * @param traderB takes in a entities.trader that wants to borrow the item based on the trade.
      * @param traderAItemsToTrade takes in items that want to be traded to traderB.
      * @param traderBItemsToTrade takes in items that want to be traded to traderA.
-     * @param date is a LocalDateTime type that indicates the date of the trade.
+     * @param startDate is a LocalDateTime type that indicates the start date of a Trade.
      *             Note: this is also used to identify the rental process if the trade is temporary.
      */
-    public Trade(String traderA, String traderB, ArrayList<Item> traderAItemsToTrade, ArrayList<Item> traderBItemsToTrade, LocalDateTime date) {
+    public Trade(String traderA, String traderB, ArrayList<Item> traderAItemsToTrade, ArrayList<Item> traderBItemsToTrade, LocalDateTime startDate) {
         this.traderA = traderA;
         this.traderB = traderB;
-        this.date = date;
+        this.startDate = startDate;
         this.traderAItemstoTrade = traderAItemsToTrade;
         this.traderBItemsToTrade = traderBItemsToTrade;
     }
@@ -39,11 +39,11 @@ public abstract class Trade implements Serializable {
         completed = isCompleted;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public LocalDateTime getStartDate() {
+        return startDate;
     }
 
-    public ArrayList<Item> getTraderAItemstoTrade() {
+    public ArrayList<Item> getTraderAItemsToTrade() {
         return traderAItemstoTrade;
     }
 
