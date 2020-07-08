@@ -42,6 +42,16 @@ public class GlobalWishlistManager implements Serializable {
 
 
     /**
+     * Return all userids that wants the item
+     * @param itemid - id of first user that wants the item
+     * @return - arraylist of all users who want this item
+     */
+    public ArrayList<String> getAllInterestedUsers(String itemid){
+        return gW.getAllInterestedUsers(itemid);
+    }
+
+
+    /**
      * Returns the itemid and userid if anyone wants a item in the given arraylist. else empty arraylist.
      * @param allItems - all the items a user has
      * @return an arraylist of 2 strings, the first string is the interested itemid, the second string is the first user
@@ -60,7 +70,6 @@ public class GlobalWishlistManager implements Serializable {
         }
         return interested;
     }
-
 }
 
 
