@@ -44,11 +44,9 @@ public class MainMenu {
                     String pass = br.readLine();
                     if (input.equals("1") || input.equals("2")){
                         UserLogin ul = new UserLogin(username, pass);
-                        if (input.equals("1")){
-                            if ((ul.login(userHashMap)).equals(username)) {
+                        if (input.equals("1") && (ul.login(userHashMap)).equals(username)){
                                 UserMenu um = new UserMenu(username, userHashMap);
                                 um.run();
-                            }
                         }
                         else {
                             System.out.println("avoiding error");

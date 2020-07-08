@@ -16,8 +16,7 @@ public class AdminLogin {
 
     /** An arraylist to store all admin objects. **/
     private ArrayList<Admin> adminAccountInformation;
-
-
+    
     String serializedAdminData = "src/ser_file_infos/serializeAdminData.ser";
 
     public AdminLogin(String username, String password, HashMap<String, Admin> adminHashMap) throws IOException, ClassNotFoundException {
