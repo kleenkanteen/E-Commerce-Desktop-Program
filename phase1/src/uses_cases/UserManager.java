@@ -16,24 +16,15 @@ import java.util.Scanner;
 import java.util.HashMap;
 import java.io.*;
 
-public class UserManager implements Serializable{
+public class UserManager {
     private HashMap<String, User> allUsers;
 
-    public UserManager(String username, HashMap<String, User> allUsers) {
-        this.allUsers = allUsers;
-    }
-
     /**
-     * Allows a user to change their username as long as
-     * @param username String username (the old one)
-     * @param newUsername The new username
-     * @throws InvalidUsernameException if username already taken
+     * Constructs a UserManager object
+     * @param allUsers the hashmap of all user objects
      */
-    public void changeUsername(String username, String newUsername) throws InvalidUsernameException {
-        if(!this.allUsers.containsKey(newUsername)) {
-            this.allUsers.get(username).setUsername(newUsername);
-        }
-        throw new InvalidUsernameException();
+    public UserManager(HashMap<String, User> allUsers) {
+        this.allUsers = allUsers;
     }
 
     /**
@@ -121,6 +112,22 @@ public class UserManager implements Serializable{
     //    use some method in trade that would check to see if the trade meeting time has already passed
     //    prompt user to confirm each trade
     // }
+
+    /**
+     * Find all temp trades that have passed their completion date and have not been marked confirmed yet.
+     * @param username String username
+     * @return list of unconfirmed/incomplete TempTrades
+     */
+    public ArrayList<TempTrade> tempTradesToConfirm(String username) {
+        ArrayList<TempTrade> tempTrades = new ArrayList<>();
+        ArrayList<TempTrade> allTempTrades = this.allUsers.get(username).getTempTradeHistory();
+        for (TempTrade trade : allTempTrades) {
+            if (trade.daysLeft() <= 0 && !trade.getCompleted()) {
+                tempTrades.add(trade);
+            }
+        }
+        return tempTrades;
+    }
 
     /**
      * Add a trade to a user's trade history.

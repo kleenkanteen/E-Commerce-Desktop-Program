@@ -2,15 +2,15 @@ package entities;
 
 import java.io.Serializable;
 
-public abstract class AccountInformation implements Serializable {
+public abstract class Account implements Serializable {
     private String username, password;
 
     /**
-     * Creates an entities.AccountInformation with the given username and password
+     * Creates an Account with the given username and password
      * @param username is the username of this account
      * @param password is the password of this account
      */
-    public AccountInformation(String username, String password){
+    public Account(String username, String password){
         this.username = username;
         this.password = password;
     }
@@ -32,14 +32,6 @@ public abstract class AccountInformation implements Serializable {
     }
 
     /**
-     * Setting a new username to this account
-     * @param newUsername the new username for the account
-     */
-    public void setUsername(String newUsername){
-        username = newUsername;
-    }
-
-    /**
      * Setting a new password to this account
      * @param newPassword the new password for the account
      */
@@ -48,21 +40,28 @@ public abstract class AccountInformation implements Serializable {
     }
 
     /**
-     * Indicates whether two entities.AccountInformation are "equal".
-     * @param accInfo is the entities.AccountInformation that is being compared with
-     * @return Whether the two entities.AccountInformation equal. Two entities.AccountInformation are equal iff
-     * both have the same username and password
+     * Indicates whether two Account are "equal". Two Account are equal iff
+     *      * both have the same username
+     * @param accInfo is the Account that is being compared with
+     * @return Whether the two Account are equal.
      */
-    public boolean equals(AccountInformation accInfo) {
+    public boolean equals(Account accInfo) {
         return  accInfo.getUsername().equals(username);
     }
 
-
+    /**
+     * Returns a hash code value for the account.
+     * @return A hash code value for this account.
+     */
     @Override
     public int hashCode() {
         return username.hashCode();
     }
 
+    /**
+     * Returns a string representation of the account. Which is just the username of this Account
+     * @return a string representation of the account.
+     */
     @Override
     public String toString() {
         return username;
