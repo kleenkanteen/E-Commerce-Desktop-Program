@@ -1,21 +1,18 @@
 package controller_presenter_gateway;
 
 import entities.Item;
-import entities.User;
 import uses_cases.GlobalInventoryManager;
 import uses_cases.UserManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 
 public class GlobalInventoryController {
-    public void run(GlobalInventoryManager gim, HashMap<String, User> userHashMap, String user) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
-        UserManager UM = new UserManager(userHashMap);
 
 
         int pageNumber = 1;
