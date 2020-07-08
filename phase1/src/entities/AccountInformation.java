@@ -6,7 +6,7 @@ public abstract class AccountInformation implements Serializable {
     private String username, password;
 
     /**
-     * Creates an entities.AccountInformation with the given username and password
+     * Creates an AccountInformation with the given username and password
      * @param username is the username of this account
      * @param password is the password of this account
      */
@@ -32,14 +32,6 @@ public abstract class AccountInformation implements Serializable {
     }
 
     /**
-     * Setting a new username to this account
-     * @param newUsername the new username for the account
-     */
-    public void setUsername(String newUsername){
-        username = newUsername;
-    }
-
-    /**
      * Setting a new password to this account
      * @param newPassword the new password for the account
      */
@@ -48,21 +40,28 @@ public abstract class AccountInformation implements Serializable {
     }
 
     /**
-     * Indicates whether two entities.AccountInformation are "equal".
-     * @param accInfo is the entities.AccountInformation that is being compared with
-     * @return Whether the two entities.AccountInformation equal. Two entities.AccountInformation are equal iff
-     * both have the same username and password
+     * Indicates whether two Account Information are "equal". Two Account Information are equal iff
+     *      * both have the same username
+     * @param accInfo is the Account Information that is being compared with
+     * @return Whether the two Account Information are equal.
      */
     public boolean equals(AccountInformation accInfo) {
         return  accInfo.getUsername().equals(username);
     }
 
-
+    /**
+     * Returns a hash code value for the object.
+     * @return A hash code value for this object.
+     */
     @Override
     public int hashCode() {
         return username.hashCode();
     }
 
+    /**
+     * Returns a string representation of the object. Which is just the username of this Account Information
+     * @return a string representation of the object.
+     */
     @Override
     public String toString() {
         return username;

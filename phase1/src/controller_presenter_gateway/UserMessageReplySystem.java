@@ -138,24 +138,16 @@ public class UserMessageReplySystem {
 
                     ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
                     um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
-                    try{
-                        gi.removeItem(i.getItemID());
-                    }catch(InvalidItemException e){
-                        System.out.println("An error has occurred with your trade, it will be cancelled");
-                        //TODO remove the trade from both user's trade history
-                    }
+
+                    gi.removeItem(i.getItemID());
                 }
                 for(Item i:trade.getTraderBItemsToTrade()) {
                     um.removeItemFromUserInventory(trade.getTraderB(), i.getItemID());
 
                     ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
                     um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
-                    try{
-                        gi.removeItem(i.getItemID());
-                    }catch(InvalidItemException e){
-                        System.out.println("An error has occurred with your trade, it will be cancelled");
-                        //TODO remove the trade from both user's trade history
-                    }
+
+                    gi.removeItem(i.getItemID());
                 }
                 break;
             }

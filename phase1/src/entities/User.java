@@ -1,12 +1,9 @@
 package entities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.Set;
 import java.io.Serializable;
-
-// Moved to entities folder, update getpersonalinventory() with a import so it works
 
 public class User extends AccountInformation implements Serializable{
     private ArrayList<Item> personalInventory = new ArrayList<>();
@@ -20,9 +17,13 @@ public class User extends AccountInformation implements Serializable{
 
 
     /**
-     * Creates an entities.User with the given username and password and the account of times they can trade in a week
-     * @param username is the username of this entities.User
-     * @param password is the password of this entities.User
+     * Creates an User with the given username and password.
+     * This User has the default values:
+     * - Limit of 5 trades per week
+     * - Must have 1 more lent than borrow in their trade history
+     * - Limit of 5 imcomplete trades at once
+     * @param username is the username of this User
+     * @param password is the password of this User
      */
     public User(String username, String password) {
         super(username, password);
@@ -46,7 +47,7 @@ public class User extends AccountInformation implements Serializable{
 
     /**
      * Getter of the trade history of this account
-     * @return the history of this account
+     * @return the trade history of this account
      */
     public ArrayList<Trade> getTradeHistory() {
         return tradeHistory;
@@ -77,8 +78,8 @@ public class User extends AccountInformation implements Serializable{
     }
 
     /**
-     * Getter of how much times this user has borrowed
-     * @return the amount of times this user has borrowed
+     * Getter of the number of times this user has borrowed
+     * @return the number of times this user has borrowed
      */
     public int getBorrowedTimes() {
         int total = 0;
@@ -89,8 +90,8 @@ public class User extends AccountInformation implements Serializable{
     }
 
     /**
-     * Getter of how much times this user has lend
-     * @return the amount of times this user has lend
+     * Getter of the number of times this user has lend
+     * @return the number of times this user has lend
      */
     public int getLendTimes() {
         int total = 0;
@@ -101,7 +102,7 @@ public class User extends AccountInformation implements Serializable{
     }
 
     /**
-     * Getter of the 3 most frequent trading partners
+     * Getter of the 3 most frequent trading partners of this user's username
      * @return the 3 most frequent trading partners username
      */
     public String[] getFrequentTradingPartners() {
