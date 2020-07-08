@@ -12,7 +12,6 @@ import java.util.HashMap;
 
 public class MainMenu {
     public void run() throws IOException {
-        System.out.println("run!");
 
         String serializedAdmins = "src/managers/serializedAdmins.ser";
         String serializedUsers = "src/managers/serializedUsers.ser";
@@ -48,6 +47,7 @@ public class MainMenu {
                         if (input.equals("1")){
                             if ((ul.login(userHashMap)).equals(username)) {
                                 UserMenu um = new UserMenu(username, userHashMap);
+                                um.run();
                             }
                         }
                         else {
