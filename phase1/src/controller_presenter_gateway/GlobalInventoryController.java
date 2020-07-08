@@ -1,3 +1,5 @@
+package controller_presenter_gateway;
+
 import entities.Item;
 import entities.User;
 import uses_cases.GlobalInventoryManager;
