@@ -79,7 +79,7 @@ public class UserMenu {
             // messages
             else if (userInput.equals("5")) {
                 UserMessageReplySystem messageSystem = new UserMessageReplySystem(userManager, globalInventoryManager,
-                        globalWishlistManager, this.currUser);
+                        globalWishlistManager, tradeManager, this.currUser);
                 messageSystem.run();
 
             }
@@ -131,7 +131,7 @@ public class UserMenu {
      */
     private void checkUserStatus(UserManager userManager, TradeManager tradeManager) {
         if(tradeManager.getTempTradeHistory(this.currUser).size() >=
-                this.allUsers.get(this.currUser).getLimitOfImcompleteTrade()) {
+                this.allUsers.get(this.currUser).getLimitOfIncompleteTrade()) {
             try {
                 if(!userManager.getCanTrade(this.currUser,
                         tradeManager.getBorrowedTimes(this.currUser), tradeManager.getLendTimes(this.currUser))) {
