@@ -17,8 +17,7 @@ public class GlobalInventoryController {
 
         int pageNumber = 1;
         Item item;
-
-        System.out.println("Type 'exit' to quit or ok to continue.");
+        prompts.enter();
         try {
             String input = br.readLine();
             while (!input.equals("exit")) { // != compares memory addresses.
@@ -31,6 +30,10 @@ public class GlobalInventoryController {
                     pageNumber += 1;
                     prompts.printpage(pageNumber);
                 }
+                if (pageNumber != 1 && input.equals("previous")){
+                    pageNumber -= 1;
+                    prompts.printpage(pageNumber);
+                }
                 if (Integer.parseInt(input) <= 10 && Integer.parseInt(input) >= 1){
                     item = gim.generatePage(pageNumber).get(Integer.parseInt(input)-1);
                     prompts.wishlishOrTradeRequest(item);
@@ -39,16 +42,13 @@ public class GlobalInventoryController {
                         UM.getUserWishlist(user).add(item);
                     }
                     if (input.equals("traderequest")){
-                        // calls the trade menu
+                       new TradeMenu().run();
                     }
-
                 }
             }
         } catch (IOException e) {
             System.out.println("Something went wrong");
         }
 
-        //user selected item in page and temp.get(0) item
-        // get selected item and give it to tradereqeustx
     }
 }

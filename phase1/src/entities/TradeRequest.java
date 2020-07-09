@@ -151,13 +151,18 @@ public class TradeRequest implements Serializable {
     }
 
     public String ToString(){
-        if (this.itemB.isEmpty()){
-            return this.getUserA() + " is requesting a trade with " + this.getUserB() + " for " +
-                    this.getItemA().get(0) + " and want to meet at " + this.getPlace() + " on " +
-                    this.getDate().toString() +  ".";
+        if (itemA.isEmpty()){
+            return getUserA() + " is requesting a trade with " + getUserB() + " for " +
+                    getItemA().get(0).getName() + " and want to meet at " + getPlace() + " on " +
+                    getDate().toString() +  ".";
         }
-        else return this.getUserA() + " is requesting a two-way trade " + this.getUserB() + " trading " +
-                this.getItemA().get(0) + " for " +  this.getItemB().get(0) + " and want to meet at " + this.getPlace() +
-            " on " + this.getDate().toString() + ".";
+        else if (itemB.isEmpty()){
+            return getUserB() + " is requesting a trade with " + getUserB() + " for " +
+                    getItemB().get(0).getName() + " and want to meet at " + getPlace() + " on " +
+                    getDate().toString() +  ".";
+        }
+        else return getUserA() + " is requesting a two-way trade " + getUserB() + " trading " +
+                getItemA().get(0).getName() + " for " +  getItemB().get(0).getName() + " and want to meet at " + getPlace() +
+            " on " + getDate().toString() + ".";
     }
 }
