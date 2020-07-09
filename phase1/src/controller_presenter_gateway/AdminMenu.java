@@ -11,10 +11,10 @@ public class AdminMenu {
     public void printMainOption(){
         //TODO need adminManager ASAP
         System.out.println("Hi," + admin.getUsername() + ", welcome back. Choose your option below:");
-        System.out.println("1: check your message inbox");
-        System.out.println("2: manage Admin account");
-        System.out.println("3: access the information of Users");
-        System.out.println("4: exit to login page");
+        System.out.println("[1] Check your message inbox");
+        System.out.println("[2] Manage Admin account");
+        System.out.println("[3] Access the information of Users");
+        System.out.println("[4] Logout");
     }
 
     public void exitPresenter(){
