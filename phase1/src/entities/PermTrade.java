@@ -30,6 +30,13 @@ public class PermTrade extends Trade implements Serializable {
         this.startDate = startDate;
     }
 
+    /**
+     * Confirms a meeting for the user if they are part of a trade.
+     * If they are not part of a trade then an exception is thrown!
+     *
+     * @param traderName takes in a String that determines if they are part of the trade.
+     * @param confirmation takes a boolean that determines if they confirmed the meeting.
+     */
     @Override
     public void setConfirm(String traderName, boolean confirmation) {
         if (traderName.equals(getTraderA())) {
@@ -48,8 +55,6 @@ public class PermTrade extends Trade implements Serializable {
             }
         }
     }
-
-
 
     /**
      * This method provides you with the number of days left after a trade has been processed.
