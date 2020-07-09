@@ -1,4 +1,4 @@
-package uses_cases;
+package use_cases;
 
 import entities.Message;
 import entities.TradeRequestMessage;
@@ -9,11 +9,6 @@ import entities.User;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Calendar;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.lang.System;
