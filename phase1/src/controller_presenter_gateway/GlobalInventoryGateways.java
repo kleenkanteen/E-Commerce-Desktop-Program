@@ -57,11 +57,10 @@ public class GlobalInventoryGateways implements Serializable{
         } catch (IOException ex) {
             System.out.println("Filed to write the Object");
         }
-
-
     }
 
-
-
+    public GlobalInventory getgI() {
+        return gI;
+    }
 }
 

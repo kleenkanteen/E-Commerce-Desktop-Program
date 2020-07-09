@@ -38,16 +38,17 @@ public class UserLogin {
     }
 
     /**
-     * Takes in a newly created User object and adds it to the list of users.
+     * Attempts to add a new user to the HashMap of all users
      * All usernames are unique.
-     * Returns true if the user successfully created, false if there's another user with the same username.
+     * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
      * PUt this method in a try-catch!!!
-     * @return the newly created User object
+     * @return the new HashMap containing the new User
      * @throws InvalidUsernameException username is already taken
      */
-    public User createNewUser(HashMap<String, User> allUsers) throws InvalidUsernameException{
+    public HashMap<String, User> createNewUser(HashMap<String, User> allUsers) throws InvalidUsernameException{
         if(!allUsers.containsKey(this.usernameInput)) {
-            return new User(this.usernameInput, passwordInput);
+            allUsers.put(usernameInput, new User(usernameInput, passwordInput));
+            return allUsers;
         }
         throw new InvalidUsernameException();
     }
