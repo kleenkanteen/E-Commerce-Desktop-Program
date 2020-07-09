@@ -1,9 +1,7 @@
-package uses_cases;
+package use_cases;
 
 import entities.TempTrade;
 import entities.Trade;
-import entities.User;
-import exceptions.UserFrozenException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +9,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class TradeManager {
+public class    TradeManager {
     private HashMap<String, ArrayList<Trade>> tradeHistory;
 
     public TradeManager( HashMap<String, ArrayList<Trade>> tradeHistory) {

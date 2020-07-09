@@ -1,4 +1,4 @@
-package uses_cases;
+package use_cases;
 
 import entities.Item;
 import entities.GlobalInventory;

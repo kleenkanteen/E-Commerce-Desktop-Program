@@ -1,10 +1,7 @@
-package uses_cases;
+package use_cases;
 
 import entities.Admin;
-import entities.GlobalInventory;
 import entities.Message;
-import entities.User;
-import exceptions.InvalidLoginException;
 import exceptions.InvalidUsernameException;
 
 import java.util.ArrayList;
