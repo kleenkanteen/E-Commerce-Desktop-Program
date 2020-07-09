@@ -9,23 +9,23 @@ import entities.*;
 import uses_cases.*;
 
 public class AdminMessageReplySystem {
-    private ArrayList<Message> messages;
+    private AdminManager am;
     private GlobalInventoryManager gi;
     private UserManager um;
     private String accountUsername;
     private MessageReplyMenu mm;
 
-    public AdminMessageReplySystem(ArrayList<Message> messages, GlobalInventoryManager gi, UserManager um,
-                              String accountUsername){
-        this.messages = messages;
+    public AdminMessageReplySystem(AdminManager am, GlobalInventoryManager gi, UserManager um, String accountUsername){
+        this.am = am;
         this.gi = gi;
         this.um = um;
         this.accountUsername = accountUsername;
-        mm = new MessageReplyMenu(messages);
+        mm = new MessageReplyMenu(am.getAdminMessagesArrayList());
     }
 
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        ArrayList<Message> messages = am.getAdminMessagesArrayList();
         mm.printMenu();
         try {
             String input = null;
@@ -39,24 +39,26 @@ public class AdminMessageReplySystem {
                 Message m = messages.get(i);
                 mm.printMessage(i);
                 if(m instanceof NewItemMessage){
-                    if(!NewItemMessageResponse((NewItemMessage) m, br))return;
+                    if(!NewItemMessageResponse((NewItemMessage) m, messages, br))return;
                 }
                 else if(m instanceof FreezeRequestMessage){
-                    if(!FreezeRequestMessageResponse((FreezeRequestMessage) m, br))return;
+                    if(!FreezeRequestMessageResponse((FreezeRequestMessage) m, messages, br))return;
                 }
                 else if(m instanceof UnfreezeRequestMessage){
-                    if(!UnfreezeRequestMessageResponse((UnfreezeRequestMessage) m, br))return;
+                    if(!UnfreezeRequestMessageResponse((UnfreezeRequestMessage) m, messages, br))return;
                 }
                 else {
-                    if (!ContentMessageResponse(m, br)) return;
+                    if (!ContentMessageResponse(m, messages, br)) return;
                 }
             }
             br.close();
         }catch(IOException e){
             System.out.println("Something went wrong");
         }
+        am.setAdminMessagesArrayList(messages);
     }
-    private boolean ContentMessageResponse(Message m, BufferedReader br) throws IOException {
+    private boolean ContentMessageResponse(Message m, ArrayList<Message> messages,
+                                           BufferedReader br) throws IOException {
         mm.printContentMessagePrompt();
         while (true) {
             String input = br.readLine();
@@ -68,7 +70,8 @@ public class AdminMessageReplySystem {
             if(input.equals("next"))return true;
         }
     }
-    private boolean UnfreezeRequestMessageResponse(UnfreezeRequestMessage m, BufferedReader br) throws IOException{
+    private boolean UnfreezeRequestMessageResponse(UnfreezeRequestMessage m, ArrayList<Message> messages,
+                                                   BufferedReader br) throws IOException{
         mm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
@@ -98,7 +101,8 @@ public class AdminMessageReplySystem {
         }
         return true;
     }
-    private boolean FreezeRequestMessageResponse(FreezeRequestMessage m, BufferedReader br) throws IOException{
+    private boolean FreezeRequestMessageResponse(FreezeRequestMessage m, ArrayList<Message> messages,
+                                                 BufferedReader br) throws IOException{
         mm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
@@ -125,7 +129,8 @@ public class AdminMessageReplySystem {
         return true;
     }
 
-    private boolean NewItemMessageResponse(NewItemMessage m, BufferedReader br) throws IOException{
+    private boolean NewItemMessageResponse(NewItemMessage m, ArrayList<Message> messages,
+                                           BufferedReader br) throws IOException{
         mm.printDecisionMessagePrompt();
         while (true) {
             String input = br.readLine();
