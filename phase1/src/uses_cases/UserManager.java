@@ -1,4 +1,4 @@
-package use_cases;
+package uses_cases;
 
 import exceptions.*;
 import entities.*;
