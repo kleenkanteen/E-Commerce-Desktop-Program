@@ -1,11 +1,9 @@
 package controller_presenter_gateway;
 
 import entities.Admin;
-import uses_cases.AdminManager;
-import uses_cases.GlobalInventoryManager;
-import uses_cases.UserManager;
-;
-
+import use_cases.AdminManager;
+import use_cases.GlobalInventoryManager;
+import use_cases.UserManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,13 +20,13 @@ public class AdminSystem {
     UserGateway ug;
     GlobalInventoryGateways gig;
     GlobalInventoryManager gim;
-    AdminSystem(Admin admin) {
+    AdminSystem(Admin admin, AdminAccountGateways aag, AdminMessageGateway amg, UserGateway ug, GlobalInventoryGateways gig) {
         this.admin = admin;
         am = new AdminMenu(admin);
-        aag = new AdminAccountGateways("src/ser_file_infos/serializedAdmins.ser");
-        amg = new AdminMessageGateway("src/ser_file_infos/serializedAdminMessages.ser");
-        ug = new UserGateway("src/ser_file_infos/serializedUsers.ser");
-        gig = new GlobalInventoryGateways("src/ser_file_infos/serializedGlobalInventory.ser");
+        this.aag = aag;
+        this.amg = amg;
+        this.ug = ug;
+        this.gig = gig;
         gim = new GlobalInventoryManager(gig.getgI());
         um = new UserManager(ug.getMapOfUsers());
         adminHashMap = aag.getAdminMap();
@@ -51,7 +49,7 @@ public class AdminSystem {
                             um, admin.getUsername());
                     amr.run();
                 } else if (input.equals("2")) {
-                    AdminAccountSystem aas = new AdminAccountSystem(admin);
+                    AdminAccountSystem aas = new AdminAccountSystem(admin, aag, amg);
                     aas.run();
 
                 } else if (input.equals("3")) {

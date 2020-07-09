@@ -1,7 +1,7 @@
 package controller_presenter_gateway;
 import entities.Admin;
 import exceptions.InvalidUsernameException;
-import uses_cases.AdminManager;
+import use_cases.AdminManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,11 +17,11 @@ public class AdminAccountSystem {
     AdminManager am;
 
 
-    AdminAccountSystem(Admin admin){
+    AdminAccountSystem(Admin admin, AdminAccountGateways aag, AdminMessageGateway amg){
         this.admin = admin;
         aap = new AdminAccountPresenter(admin);
-        aag = new AdminAccountGateways("src/ser_file_infos/serializedAdmins.ser");
-        amg = new AdminMessageGateway("src/ser_file_infos/serializedAdmins.ser");
+        this.aag = aag;
+        this.amg = amg;
         adminHashMap = aag.getAdminMap();
         am = new AdminManager(adminHashMap, amg.getMessages());
         adminHashMap = aag.getAdminMap();

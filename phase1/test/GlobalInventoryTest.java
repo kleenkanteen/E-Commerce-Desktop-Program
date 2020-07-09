@@ -1,13 +1,7 @@
 package test;
-import entities.GlobalInventory;
 import entities.Item;
-import uses_cases.GlobalInventoryManager;
+import use_cases.GlobalInventoryManager;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
 public class GlobalInventoryTest {
 
 

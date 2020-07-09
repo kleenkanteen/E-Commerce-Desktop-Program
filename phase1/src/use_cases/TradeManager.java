@@ -3,6 +3,7 @@ package use_cases;
 import entities.TempTrade;
 import entities.Trade;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -157,4 +158,22 @@ public class    TradeManager {
         return trades;
     }
 
+    public ArrayList<Trade> tradesCreatedThisWeek(String username) {
+        ArrayList<Trade> temp = tradeHistory.get(username);
+        ArrayList <Trade> trades = new ArrayList<Trade>();
+        LocalDateTime now = LocalDateTime.now();
+        int n = (now.getDayOfWeek()).getValue();
+
+        LocalDateTime start = now.minusDays(n - 1);
+        start = start.withHour(0);
+        start = start.withMinute(0);
+        start = start.withSecond(0);
+        LocalDateTime end = now.plusDays(7 - n);
+        end = end.withHour(23);
+        end = end.withMinute(59);
+        end = end.withSecond(59);
+
+        if(start.compareTo(now) <= 0 && end.compareTo(now) >= 0);//TODO Add to trades
+        return trades;
+    }
 }
