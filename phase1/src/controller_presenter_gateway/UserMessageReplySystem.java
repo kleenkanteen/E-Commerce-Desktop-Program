@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 //import java.util.ArrayList;
 import java.util.*;
-import java.text.*;
+import java.time.*;
+import java.time.format.*;
 
 public class UserMessageReplySystem {
     private ArrayList<Message> messages;
@@ -74,18 +75,15 @@ public class UserMessageReplySystem {
             String input = "";
             while(true){
                 try {
-                    System.out.println("Enter the new date in the format yyyy-MM-dd");
-                    Calendar cal = Calendar.getInstance();
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+                    System.out.println("Enter the new date in the format yyyy-MM-dd HH:mm");
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     input = br.readLine();
-                    if(input.length()!=10)System.out.println("wrong format");
-                    else {
-                        cal.setTime(sdf.parse(input));
-                        temp.setDate(accountUsername, cal);
-                        break;
-                    }
+                    LocalDateTime time = LocalDateTime.parse(input, dtf);
+                    System.out.println(time);
+                    break;
+
                 }
-                catch (ParseException e){
+                catch (DateTimeParseException e){
                     System.out.println("wrong format");
                 }
                 catch (IOException e){
