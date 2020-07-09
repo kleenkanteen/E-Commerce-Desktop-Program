@@ -9,7 +9,7 @@ public class GlobalInventoryGateways implements Serializable{
     String filePath;
     GlobalInventoryManager gIManager;
     GlobalInventory gI;
-    GlobalInventoryGateways(String filePath) throws IOException {
+    GlobalInventoryGateways(String filePath){
         this.filePath = filePath;
 
     try {
