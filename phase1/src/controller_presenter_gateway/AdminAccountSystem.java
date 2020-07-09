@@ -1,5 +1,7 @@
 package controller_presenter_gateway;
 import entities.Admin;
+import exceptions.InvalidUsernameException;
+import uses_cases.AdminManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,11 +13,17 @@ public class AdminAccountSystem {
     HashMap<String, Admin> adminHashMap;
     AdminAccountPresenter aap;
     AdminAccountGateways aag;
+    AdminMessageGateway amg;
+    AdminManager am;
+
 
     AdminAccountSystem(Admin admin){
         this.admin = admin;
         aap = new AdminAccountPresenter(admin);
-        aag = new AdminAccountGateways("/group_0147/phase1/src/ser_file_infos");
+        aag = new AdminAccountGateways("src/ser_file_infos/serializedAdmins.ser");
+        amg = new AdminMessageGateway("src/ser_file_infos/serializedAdmins.ser");
+        adminHashMap = aag.getAdminMap();
+        am = new AdminManager(adminHashMap, amg.getMessages());
         adminHashMap = aag.getAdminMap();
     }
     public void run(){
@@ -31,9 +39,8 @@ public class AdminAccountSystem {
                     String password1 = br.readLine();
                     aap.askToConfirmPassword();
                     String password2 = br.readLine();
-                    if (password1.equals(password2)){
-                        adminHashMap.get(admin.getUsername()).setPassword(password1);
-                        aag.saveToFile(adminHashMap);
+                    if (am.addNewPassWord(password1,password2, admin)){
+                        aap.passwordChanged();
                     }
                     else {
                         aap.failToChangePassword();
@@ -43,12 +50,12 @@ public class AdminAccountSystem {
                     String newUsername = br.readLine();
                     aap.newAdminPassword();
                     String newPassword = br.readLine();
-                    if (!adminHashMap.containsKey(newUsername)){
-                        adminHashMap.put(newUsername, new Admin(newUsername, newPassword));
+                    try {adminHashMap = am.addAdmin(newUsername, newPassword);
                     aag.saveToFile(adminHashMap);}
-                    else {
+                    catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();
                     }
+
                 }
             } catch (IOException e) {
                 System.out.println("Something went wrong");

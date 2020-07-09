@@ -14,7 +14,7 @@ public class AdminManager{
     private HashMap<String, Admin> adminHashMap;
     private ArrayList<Message> adminMessagesArrayList;
 
-    AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList) {
+    public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList) {
         this.adminHashMap = adminHashMap;
         this.adminMessagesArrayList = adminMessagesArrayList;
     }
@@ -51,5 +51,15 @@ public class AdminManager{
 
     public void setAdminMessagesArrayList(ArrayList<Message> adminMessagesArrayList) {
         this.adminMessagesArrayList = adminMessagesArrayList;
+    }
+
+    public boolean addNewPassWord(String password1, String password2, Admin admin){
+        if (password1.equals(password2)){
+            admin.setPassword(password1);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

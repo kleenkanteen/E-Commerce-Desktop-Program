@@ -1,6 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.Admin;
+import uses_cases.AdminManager;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ public class AdminAccountGateways {
     String filePath;
     HashMap<String, Admin> adminMap = new HashMap<>();
 
-    Admin admin;
     AdminAccountGateways(String filePath) {
         this.filePath = filePath;
+
         try {
             File file = new File(filePath);
             if (file.exists()) {
@@ -37,6 +38,7 @@ public class AdminAccountGateways {
             // deserialize the Map
             adminMap = (HashMap<String, Admin>) input.readObject();
             input.close();
+
         } catch (IOException ex) {
             System.out.println("Failed to read");
         } catch (ClassNotFoundException ex) {
