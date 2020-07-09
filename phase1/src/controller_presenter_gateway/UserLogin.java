@@ -1,13 +1,9 @@
 package controller_presenter_gateway;
 
-// import controller_presenter_gateway.UserGateway;
-
 import exceptions.InvalidLoginException;
 import java.util.HashMap;
 import entities.User;
 import exceptions.InvalidUsernameException;
-
-import java.util.logging.Level;
 
 public class UserLogin {
     private String usernameInput;

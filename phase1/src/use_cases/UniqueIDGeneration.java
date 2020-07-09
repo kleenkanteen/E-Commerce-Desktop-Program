@@ -1,4 +1,4 @@
-package uses_cases;
+package use_cases;
 
 import java.io.*;
 import java.util.ArrayList;

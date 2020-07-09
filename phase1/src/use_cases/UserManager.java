@@ -1,11 +1,9 @@
-package uses_cases;
+package use_cases;
 
 import exceptions.*;
 import entities.*;
 import java.util.ArrayList;
-import java.lang.System;
 import java.util.HashMap;
-import java.io.*;
 
 public class UserManager {
     private HashMap<String, User> allUsers;
@@ -53,7 +51,7 @@ public class UserManager {
         if (chosenUser.getFrozenStatus()) {
             throw new UserFrozenException();
         }
-        return (borrowedTimes - lendTimes) <= chosenUser.getTheshold();
+        return (borrowedTimes - lendTimes) <= chosenUser.getThreshold();
     }
 
     /**
@@ -86,6 +84,15 @@ public class UserManager {
      */
     public void setUserMessages(String username, ArrayList<Message> userMessages) {
         this.allUsers.get(username).setMessages(userMessages);
+    }
+
+    /**
+     * Returns the max trades per week that a specified user can make.
+     * @param username the String username
+     * @return the number of trades this user can make
+     */
+    public int getTradesPerWeekForUser(String username) {
+        return this.allUsers.get(username).getTradePerWeek();
     }
 
     /**
@@ -202,8 +209,6 @@ public class UserManager {
 
     /**
      * ADMIN ONLY
-     * Iterator code taken from:
-     * https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
      * Allows an admin to set a new trades per week value for all users.
      * @param newTradesPerWeek the new trades per week
      */
@@ -244,7 +249,7 @@ public class UserManager {
      */
     public void setLimitOfIncompleteTrades(int newLimit) {
         for (User user : this.allUsers.values()) {
-            user.setLimitOfImcompleteTrade(newLimit);
+            user.setLimitOfIncompleteTrade(newLimit);
         }
     }
 
@@ -254,7 +259,7 @@ public class UserManager {
      * @param newLimit the new incomplete trades limit that one user will be set to
      */
     public void setLimitOfIncompleteTradesForOneUser(String username, int newLimit) {
-        this.allUsers.get(username).setLimitOfImcompleteTrade(newLimit);
+        this.allUsers.get(username).setLimitOfIncompleteTrade(newLimit);
     }
 
     /**
@@ -264,7 +269,7 @@ public class UserManager {
      */
     public void setNewThreshold(int newThreshold) {
         for(User user : this.allUsers.values()) {
-            user.setTheshold(newThreshold);
+            user.setThreshold(newThreshold);
         }
     }
 
@@ -275,6 +280,6 @@ public class UserManager {
      * @param newThreshold the new borrow v. loan threshold
      */
     public void setNewThresholdForOneUser(String username, int newThreshold) {
-        this.allUsers.get(username).setTheshold(newThreshold);
+        this.allUsers.get(username).setThreshold(newThreshold);
     }
 }
