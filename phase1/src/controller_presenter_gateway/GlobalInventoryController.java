@@ -42,7 +42,7 @@ public class GlobalInventoryController {
                         UM.getUserWishlist(user).add(item);
                     }
                     if (input.equals("traderequest")){
-                       new TradeMenu().run();
+                       //call trade menu
                     }
                 }
             }
