@@ -136,6 +136,11 @@ public class TradeRequest implements Serializable {
         this.numberOfEditB = numberOfEditB;
     }
 
+    /**
+     * Get the trading partner of the input user
+     * @param user a user
+     * @return the other user involved in the traderequest
+     */
     public String getTradePartner (String user){
         if (user.equals(userA)){
             return this.userB;
@@ -146,6 +151,13 @@ public class TradeRequest implements Serializable {
     }
 
     public String ToString(){
-        return this.getUserA() + " is requesting a trade with " + this.getUserB() +".";
+        if (this.itemB.isEmpty()){
+            return this.getUserA() + " is requesting a trade with " + this.getUserB() + " for " +
+                    this.getItemA().get(0) + " and want to meet at " + this.getPlace() + " on " +
+                    this.getDate().toString() +  ".";
+        }
+        else return this.getUserA() + " is requesting a two-way trade " + this.getUserB() + " trading " +
+                this.getItemA().get(0) + " for " +  this.getItemB().get(0) + " and want to meet at " + this.getPlace() +
+            " on " + this.getDate().toString() + ".";
     }
 }
