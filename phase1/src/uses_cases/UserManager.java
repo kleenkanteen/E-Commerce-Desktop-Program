@@ -1,18 +1,9 @@
 package uses_cases;
 
-import entities.User;
-import entities.Item;
-import exceptions.InvalidLoginException;
-import exceptions.InvalidUsernameException;
-import exceptions.UserFrozenException;
-import entities.PermTrade;
-import entities.TempTrade;
-import entities.Trade;
-import entities.Message;
-import entities.NewItemMessage;
+import exceptions.*;
+import entities.*;
 import java.util.ArrayList;
 import java.lang.System;
-import java.util.Scanner;
 import java.util.HashMap;
 import java.io.*;
 
@@ -55,14 +46,14 @@ public class UserManager {
      * Return user ability to trade status.
      * @param user user to be checked
      * @return true if user can trade, false if not
-     * @throws UserFrozenException if the User is frozen (make note of this for the user!!!)
+     * @throws UserFrozenException if the User is frozen
      */
-    public boolean getCanTrade(String user) throws UserFrozenException {
+    public boolean getCanTrade(String user, int borrowedTimes, int lendTimes) throws UserFrozenException {
         User chosenUser = this.allUsers.get(user);
         if (chosenUser.getFrozenStatus()) {
             throw new UserFrozenException();
         }
-        return chosenUser.getBorrowedTimes() <= chosenUser.getLendTimes();
+        return (borrowedTimes - lendTimes) <= chosenUser.getTheshold();
     }
 
     /**
@@ -98,22 +89,6 @@ public class UserManager {
     }
 
     /**
-     * Check if a user has too many incomplete trades.
-     * @param username the username
-     * @return True if the user has not exceeded max incompletes, false if there are too many incompletes
-     */
-    public boolean checkIfTooManyIncompleteTrades(String username) {
-        return this.allUsers.get(username).getIncompleteTradeHistory().size() <
-                this.allUsers.get(username).getLimitOfImcompleteTrade();
-    }
-
-    // public ArrayList<Trade> tradesToConfirm(String username) {
-    //    call all trades that have yet to be confirmed to be over (incomplete trades?)
-    //    use some method in trade that would check to see if the trade meeting time has already passed
-    //    prompt user to confirm each trade
-    // }
-
-    /**
      * Find all temp trades that have passed their completion date and have not been marked confirmed yet.
      * @param username String username
      * @return list of unconfirmed/incomplete TempTrades
@@ -127,15 +102,6 @@ public class UserManager {
             }
         }
         return tempTrades;
-    }
-
-    /**
-     * Add a trade to a user's trade history.
-     * @param username the username of the user to be accessed
-     * @param trade the trade to be added to this user's trade history
-     */
-    public void addToTradeHistory(String username, Trade trade) {
-        this.allUsers.get(username).addTradeHistory(trade);
     }
 
     // USER INVENTORY AND WISHLIST

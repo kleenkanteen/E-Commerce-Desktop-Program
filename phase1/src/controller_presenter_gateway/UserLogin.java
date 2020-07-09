@@ -46,7 +46,7 @@ public class UserLogin {
      * @throws InvalidUsernameException username is already taken
      */
     public User createNewUser(HashMap<String, User> allUsers) throws InvalidUsernameException{
-        if(allUsers.containsKey(this.usernameInput)) {
+        if(!allUsers.containsKey(this.usernameInput)) {
             return new User(this.usernameInput, passwordInput);
         }
         throw new InvalidUsernameException();
