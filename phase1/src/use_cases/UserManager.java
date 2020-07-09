@@ -1,11 +1,9 @@
-package uses_cases;
+package use_cases;
 
 import exceptions.*;
 import entities.*;
 import java.util.ArrayList;
-import java.lang.System;
 import java.util.HashMap;
-import java.io.*;
 
 public class UserManager {
     private HashMap<String, User> allUsers;
@@ -53,7 +51,7 @@ public class UserManager {
         if (chosenUser.getFrozenStatus()) {
             throw new UserFrozenException();
         }
-        return (borrowedTimes - lendTimes) <= chosenUser.getTheshold();
+        return (borrowedTimes - lendTimes) <= chosenUser.getThreshold();
     }
 
     /**
@@ -95,6 +93,7 @@ public class UserManager {
      */
     public ArrayList<TempTrade> tempTradesToConfirm(String username) {
         ArrayList<TempTrade> tempTrades = new ArrayList<>();
+        // TODO fix the method since it's been moved
         ArrayList<TempTrade> allTempTrades = this.allUsers.get(username).getTempTradeHistory();
         for (TempTrade trade : allTempTrades) {
             if (trade.daysLeft() <= 0 && !trade.getCompleted()) {
@@ -244,7 +243,7 @@ public class UserManager {
      */
     public void setLimitOfIncompleteTrades(int newLimit) {
         for (User user : this.allUsers.values()) {
-            user.setLimitOfImcompleteTrade(newLimit);
+            user.setLimitOfIncompleteTrade(newLimit);
         }
     }
 
@@ -254,7 +253,7 @@ public class UserManager {
      * @param newLimit the new incomplete trades limit that one user will be set to
      */
     public void setLimitOfIncompleteTradesForOneUser(String username, int newLimit) {
-        this.allUsers.get(username).setLimitOfImcompleteTrade(newLimit);
+        this.allUsers.get(username).setLimitOfIncompleteTrade(newLimit);
     }
 
     /**
@@ -264,7 +263,7 @@ public class UserManager {
      */
     public void setNewThreshold(int newThreshold) {
         for(User user : this.allUsers.values()) {
-            user.setTheshold(newThreshold);
+            user.setThreshold(newThreshold);
         }
     }
 
@@ -275,6 +274,6 @@ public class UserManager {
      * @param newThreshold the new borrow v. loan threshold
      */
     public void setNewThresholdForOneUser(String username, int newThreshold) {
-        this.allUsers.get(username).setTheshold(newThreshold);
+        this.allUsers.get(username).setThreshold(newThreshold);
     }
 }
