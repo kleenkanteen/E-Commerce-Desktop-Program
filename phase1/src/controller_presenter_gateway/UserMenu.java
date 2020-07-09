@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import entities.*;
 import exceptions.*;
-import use_cases.*;
+import uses_cases.*;
 
 
 public class UserMenu {
