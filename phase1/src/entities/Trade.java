@@ -12,7 +12,7 @@ public abstract class Trade implements Serializable {
     private final String traderB;
     private boolean completed = false, failed = false;
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean creationDate = false;
+    private LocalDateTime creationDate = LocalDateTime.now();
 
 
     /**
@@ -35,7 +35,7 @@ public abstract class Trade implements Serializable {
         this.traderBItemsToTrade = traderBItemsToTrade;
     }
 
-    public boolean getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
