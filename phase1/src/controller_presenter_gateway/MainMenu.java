@@ -64,7 +64,7 @@ public class MainMenu {
                         AdminLogin y = new AdminLogin(username, pass, adminHashMap);
                         if (y.login().equals(username)) {
                             Admin loggedInAdmin = y.getAdminObject();
-                            AdminMenu am = new AdminMenu(loggedInAdmin);
+                            AdminSystem am = new AdminSystem(loggedInAdmin,ag, amg, ug, gig);
                         }
                     }
                 }
