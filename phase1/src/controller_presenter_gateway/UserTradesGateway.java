@@ -1,15 +1,10 @@
 package controller_presenter_gateway;
 
 import entities.Trade;
-import entities.User;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import java.util.HashMap;
-import entities.User;
-import uses_cases.UserManager;
 
 public class UserTradesGateway {
 

@@ -1,7 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.Item;
-import uses_cases.GlobalInventoryManager;
+import use_cases.GlobalInventoryManager;
 
 import java.util.ArrayList;
 import java.util.Iterator;
