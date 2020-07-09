@@ -1,7 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.*;
-import uses_cases.*;
+import use_cases.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,17 +15,13 @@ public class UserMessageReplySystem {
     private ArrayList<Message> messages;
     private UserManager um;
     private GlobalInventoryManager gi;
-    private GlobalWishlistManager gw;
     private TradeManager tm;
     private String accountUsername;
     private MessageReplyMenu mm;
 
-    public UserMessageReplySystem(UserManager um, GlobalInventoryManager gi, GlobalWishlistManager gw,
-                                  TradeManager tm,
-                                  String accountUsername){
+    public UserMessageReplySystem(UserManager um, GlobalInventoryManager gi, TradeManager tm, String accountUsername){
         this.um = um;
         this.gi = gi;
-        this.gw = gw;
         this.tm = tm;
         this.accountUsername = accountUsername;
         this.messages = um.getUserMessages(accountUsername);

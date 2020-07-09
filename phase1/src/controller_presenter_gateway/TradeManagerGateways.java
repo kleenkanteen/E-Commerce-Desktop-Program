@@ -1,7 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.*;
-import uses_cases.*;
+import use_cases.*;
 
 import java.io.*;
 import java.util.HashMap;
