@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class TempTrade extends Trade implements Serializable {
 
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean failed = false;
+    private boolean failed = getFailed();
 
     private final LocalDateTime finishDate, startDate;
     private final int daysInYear = 365;
@@ -59,6 +59,11 @@ public class TempTrade extends Trade implements Serializable {
             }
         }
         return meetingCompleted;
+    }
+
+    @Override
+    public boolean getCompleted() {
+        return traderBConfirmTimes == 1 && traderAConfirmTimes == 1 && !failed;
     }
 
     /**
