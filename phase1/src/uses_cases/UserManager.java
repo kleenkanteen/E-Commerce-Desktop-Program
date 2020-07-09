@@ -87,13 +87,21 @@ public class UserManager {
     }
 
     /**
+     * Returns the max trades per week that a specified user can make.
+     * @param username the String username
+     * @return the number of trades this user can make
+     */
+    public int getTradesPerWeekForUser(String username) {
+        return this.allUsers.get(username).getTradePerWeek();
+    }
+
+    /**
      * Find all temp trades that have passed their completion date and have not been marked confirmed yet.
      * @param username String username
      * @return list of unconfirmed/incomplete TempTrades
      */
     public ArrayList<TempTrade> tempTradesToConfirm(String username) {
         ArrayList<TempTrade> tempTrades = new ArrayList<>();
-        // TODO fix the method since it's been moved
         ArrayList<TempTrade> allTempTrades = this.allUsers.get(username).getTempTradeHistory();
         for (TempTrade trade : allTempTrades) {
             if (trade.daysLeft() <= 0 && !trade.getCompleted()) {
@@ -201,8 +209,6 @@ public class UserManager {
 
     /**
      * ADMIN ONLY
-     * Iterator code taken from:
-     * https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
      * Allows an admin to set a new trades per week value for all users.
      * @param newTradesPerWeek the new trades per week
      */

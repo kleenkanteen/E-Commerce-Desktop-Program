@@ -4,8 +4,6 @@ import entities.User;
 
 import java.io.*;
 import java.util.HashMap;
-import entities.User;
-import uses_cases.UserManager;
 
 public class UserGateway {
     HashMap<String, User> mapOfUsers;
@@ -51,10 +49,10 @@ public class UserGateway {
             }
         }
         catch(IOException ex) {
-            System.out.println("Input error during deserialization!");
+            System.out.println("Input error during User deserialization!");
         }
         catch(ClassNotFoundException ex) {
-            System.out.println("Class not found exception!");
+            System.out.println("Class not found exception in UserGateway!");
         }
         return userObjects;
     }
@@ -79,5 +77,9 @@ public class UserGateway {
         }
     }
 
+    /**
+     * Returns the now deserialized map of user objects
+     * @return the HashMap of user objects
+     */
     public HashMap<String, User> getMapOfUsers() {return this.mapOfUsers; }
 }

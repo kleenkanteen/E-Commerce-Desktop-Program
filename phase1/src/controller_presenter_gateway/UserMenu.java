@@ -3,7 +3,6 @@ package controller_presenter_gateway;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
-
 import entities.*;
 import exceptions.*;
 import uses_cases.*;
@@ -57,11 +56,11 @@ public class UserMenu {
 
         while(!userInput.equals("exit")) {
             System.out.println("Enter in blah blah blah idk I'll work on this later");
-            System.out.println("Enter 'exit' to exit.");
+            System.out.println("\n" + "Enter 'exit' to exit.");
             userInput = input.nextLine();
             // look at/change user information
             if (userInput.equals("1")) {
-                browseThroughUserInfo(userManager);
+                browseThroughUserInfo(userManager, tradeManager);
             }
             // look at global inventory
             else if (userInput.equals("2")) {
@@ -81,7 +80,6 @@ public class UserMenu {
                 UserMessageReplySystem messageSystem = new UserMessageReplySystem(userManager, globalInventoryManager,
                         globalWishlistManager, tradeManager, this.currUser);
                 messageSystem.run();
-
             }
             // create a new item for admin approval
             else if (userInput.equals("6")) {
@@ -101,7 +99,7 @@ public class UserMenu {
      * Helper method for run() that allows a user to access their personal information
      * @param userManager the UserManager object that the info will be accessed from
      */
-    private void browseThroughUserInfo(UserManager userManager) {
+    private void browseThroughUserInfo(UserManager userManager, TradeManager tradeManager) {
         Scanner input = new Scanner(System.in);
         String userInput = "";
         while(!userInput.equals("exit")) {
@@ -113,9 +111,9 @@ public class UserMenu {
                 String newPass = input.nextLine();
                 userManager.changePassword(this.currUser, newPass);
             }
-            //
+            // view frequent trading partners
             else if (userInput.equals("2")) {
-
+                System.out.println(tradeManager.getFrequentTradingPartners(this.currUser));
             }
             //
             else if(userInput.equals("3")) {
