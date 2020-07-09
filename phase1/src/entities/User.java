@@ -9,8 +9,8 @@ public class User extends Account implements Serializable{
     private ArrayList<Message> messages = new ArrayList<>();
     private boolean frozenStatus = true;
     private int tradePerWeek = 5;
-    private int theshold = 1;
-    private int limitOfImcompleteTrade = 5;
+    private int threshold = 1;
+    private int limitOfIncompleteTrade = 5;
 
 
     /**
@@ -18,7 +18,7 @@ public class User extends Account implements Serializable{
      * This User has the default values:
      * - Limit of 5 trades per week
      * - Must have 1 more lent than borrow in their trade history
-     * - Limit of 5 imcomplete trades at once
+     * - Limit of 5 incomplete trades at once
      * @param username is the username of this User
      * @param password is the password of this User
      */
@@ -43,19 +43,19 @@ public class User extends Account implements Serializable{
     }
 
     /**
-     * Getter of the theshold (how many more times must you lend items before you can borrow) value of this user
-     * @return the theshold value
+     * Getter of the threshold (how many more times must you lend items before you can borrow) value of this user
+     * @return the threshold value
      */
-    public int getTheshold() {
-        return theshold;
+    public int getThreshold() {
+        return threshold;
     }
 
     /**
      * Getter of the limit of imcomplete trades this user can have
      * @return the value of the limit of imcomplete trades
      */
-    public int getLimitOfImcompleteTrade() {
-        return limitOfImcompleteTrade;
+    public int getLimitOfIncompleteTrade() {
+        return limitOfIncompleteTrade;
     }
 
     /**
@@ -116,19 +116,19 @@ public class User extends Account implements Serializable{
     }
 
     /**
-     * Changing the theshold (how many more times must you lend items before you can borrow) that this user has
-     * @param newTheshold the new theshold value
+     * Changing the threshold (how many more times must you lend items before you can borrow) that this user has
+     * @param newThreshold the new theshold value
      */
-    public void setTheshold(int newTheshold){
-        theshold = newTheshold;
+    public void setThreshold(int newThreshold){
+        threshold = newThreshold;
     }
 
     /**
-     * Changing the limit of imcomplete trades this user can have
+     * Changing the limit of incomplete trades this user can have
      * @param newLimit the new limit
      */
-    public void setLimitOfImcompleteTrade(int newLimit){
-        limitOfImcompleteTrade = newLimit;
+    public void setLimitOfIncompleteTrade(int newLimit){
+        limitOfIncompleteTrade = newLimit;
     }
 
     /**
