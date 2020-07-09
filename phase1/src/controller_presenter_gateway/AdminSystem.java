@@ -1,6 +1,9 @@
 package controller_presenter_gateway;
 
 import entities.Admin;
+import entities.GlobalInventory;
+import entities.Message;
+import entities.User;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
@@ -9,30 +12,34 @@ import use_cases.UserManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminSystem {
     Admin admin;
     AdminMenu am;
-    AdminAccountGateways aag;
-    AdminMessageGateway amg;
+
+
     AdminManager adminManager;
     HashMap<String, Admin> adminHashMap;
+    ArrayList<Message> adminMessageList;
+    HashMap<String, User> userHashMap;
+    GlobalInventory gi;
     UserManager um;
-    UserGateway ug;
+
     GlobalInventoryGateways gig;
     GlobalInventoryManager gim;
-    AdminSystem(Admin admin, AdminAccountGateways aag, AdminMessageGateway amg, UserGateway ug, GlobalInventoryGateways gig) {
+    AdminSystem(Admin admin, HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessageList,
+                HashMap<String,User> userHashMap, GlobalInventory gi) {
         this.admin = admin;
         am = new AdminMenu(admin);
-        this.aag = aag;
-        this.amg = amg;
-        this.ug = ug;
-        this.gig = gig;
-        gim = new GlobalInventoryManager(gig.getgI());
-        um = new UserManager(ug.getMapOfUsers());
-        adminHashMap = aag.getAdminMap();
-        adminManager = new AdminManager(adminHashMap, amg.getMessages());
+        this.adminHashMap = adminHashMap;
+        this.adminMessageList = adminMessageList;
+        this.userHashMap = userHashMap;
+        this.gi = gi;
+        gim = new GlobalInventoryManager(gi);
+        um = new UserManager(userHashMap);
+        adminManager = new AdminManager(adminHashMap, adminMessageList);
 
     }
 
@@ -51,7 +58,7 @@ public class AdminSystem {
                             um, admin.getUsername());
                     amr.run();
                 } else if (input.equals("2")) {
-                    AdminAccountSystem aas = new AdminAccountSystem(admin, aag, amg);
+                    AdminAccountSystem aas = new AdminAccountSystem(admin, adminHashMap, adminMessageList);
                     aas.run();
 
                 } else if (input.equals("3")) {

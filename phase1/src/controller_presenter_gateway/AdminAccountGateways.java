@@ -1,7 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.Admin;
-import uses_cases.AdminManager;
+import use_cases.AdminManager;
 
 import java.io.*;
 import java.util.ArrayList;
