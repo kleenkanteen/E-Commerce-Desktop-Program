@@ -52,6 +52,15 @@ public class GlobalWishlistManager implements Serializable {
 
 
     /**
+     * Remove itemid key from globalwishlist
+     * @param itemid - id of item that you want removed
+     */
+
+    public void removeItem(String itemid) {
+        gW.removeItem(itemid);
+    }
+
+    /**
      * Returns the itemid and userid if anyone wants a item in the given arraylist. else empty arraylist.
      * @param allItems - all the items a user has
      * @return an arraylist of 2 strings, the first string is the interested itemid, the second string is the first user

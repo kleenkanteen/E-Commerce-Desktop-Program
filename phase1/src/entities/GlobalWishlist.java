@@ -45,6 +45,17 @@ public class GlobalWishlist implements Serializable {
         }
     }
 
+    /**
+     * Remove itemid key from globalwishlist
+     * @param itemid - id of item that you want removed
+     */
+
+    public void removeItem(String itemid) {
+        if (wishMap.get(itemid) != null) {
+            wishMap.remove(itemid);
+        }
+    }
+
 
      /**
      * Return if an item is wanted by anyone
