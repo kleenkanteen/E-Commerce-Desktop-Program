@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import entities.*;
-import uses_cases.*;
+import use_cases.*;
 
 public class AdminMessageReplySystem {
     private AdminManager am;

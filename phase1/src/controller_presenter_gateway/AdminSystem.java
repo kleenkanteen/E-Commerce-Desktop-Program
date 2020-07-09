@@ -1,11 +1,9 @@
 package controller_presenter_gateway;
 
 import entities.Admin;
-import uses_cases.AdminManager;
-import uses_cases.GlobalInventoryManager;
-import uses_cases.UserManager;
-;
-
+import use_cases.AdminManager;
+import use_cases.GlobalInventoryManager;
+import use_cases.UserManager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

@@ -3,19 +3,6 @@ package controller_presenter_gateway;
 import entities.*;
 
 import java.io.*;
-import java.util.ArrayList;
-
-import entities.Message;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import entities.User;
-
-import java.io.*;
-import java.util.HashMap;
-import entities.User;
-import uses_cases.UserManager;
 
 public class GlobalWishlistGateway implements Serializable{
 
