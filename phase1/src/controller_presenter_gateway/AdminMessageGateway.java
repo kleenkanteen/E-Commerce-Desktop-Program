@@ -1,17 +1,9 @@
 package controller_presenter_gateway;
 
 import entities.Message;
-import entities.User;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import entities.User;
-
-import java.io.*;
-import java.util.HashMap;
-import entities.User;
-import uses_cases.UserManager;
 
 public class AdminMessageGateway {
     ArrayList<Message> messages;

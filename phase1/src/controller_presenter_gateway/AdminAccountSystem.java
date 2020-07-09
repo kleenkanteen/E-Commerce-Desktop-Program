@@ -1,7 +1,7 @@
 package controller_presenter_gateway;
 import entities.Admin;
 import exceptions.InvalidUsernameException;
-import uses_cases.AdminManager;
+import use_cases.AdminManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
