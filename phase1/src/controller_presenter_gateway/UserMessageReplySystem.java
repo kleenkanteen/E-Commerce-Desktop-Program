@@ -1,10 +1,7 @@
 package controller_presenter_gateway;
 
 import entities.*;
-import uses_cases.GlobalInventoryManager;
-import uses_cases.GlobalWishlistManager;
-import uses_cases.TradeRequestManager;
-import uses_cases.UserManager;
+import uses_cases.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,14 +15,17 @@ public class UserMessageReplySystem {
     private UserManager um;
     private GlobalInventoryManager gi;
     private GlobalWishlistManager gw;
+    private TradeManager tm;
     private String accountUsername;
     private MessageReplyMenu mm;
 
     public UserMessageReplySystem(UserManager um, GlobalInventoryManager gi, GlobalWishlistManager gw,
+                                  TradeManager tm,
                                   String accountUsername){
         this.um = um;
         this.gi = gi;
         this.gw = gw;
+        this.tm = tm;
         this.accountUsername = accountUsername;
         this.messages = um.getUserMessages(accountUsername);
         mm = new MessageReplyMenu(messages);
@@ -127,27 +127,20 @@ public class UserMessageReplySystem {
             if(input.equals("next")) break;
             if(input.equals("1")){
                 messages.remove(m);
-                Trade trade = temp.setConfirmation(accountUsername, true);
+                Trade trade = temp.setConfirmation(accountUsername);
                 //TODO maybe check if the users can trade N/A
                 //Add trade to both user's trade history
-                um.addToTradeHistory(trade.getTraderA(), trade);
-                um.addToTradeHistory(trade.getTraderB(), trade);
+                tm.addTrade(trade);
 
                 //Removing the items from the GI and personal inventory and wishlist
-                for(Item i:trade.getTraderAItemstoTrade()) {
+                for(Item i:trade.getTraderAItemsToTrade()) {
                     um.removeItemFromUserInventory(trade.getTraderA(), i.getItemID());
 
-                    ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
-                    um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
-                    //TODO delete item from gw
                     gi.removeItem(i.getItemID());
                 }
                 for(Item i:trade.getTraderBItemsToTrade()) {
                     um.removeItemFromUserInventory(trade.getTraderB(), i.getItemID());
 
-                    ArrayList<String> interestedUsers = gw.getAllInterestedUser(i.getItemID());
-                    um.removeFromMultipleUsersWishlists(interestedUsers, i.getItemID());
-                    //TODO delete item from gw
                     gi.removeItem(i.getItemID());
                 }
                 break;

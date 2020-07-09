@@ -134,7 +134,7 @@ public class AdminMessageReplySystem {
                     break;
             }
             if(input.equals("1")){
-                Item item = ((NewItemMessage) m).getNewItem();
+                Item item = m.getNewItem();
                 gi.addItemToHashMap(item);
                 um.addItemToUserInventory(item, item.getOwnerName());
                 messages.remove(m);
@@ -149,7 +149,7 @@ public class AdminMessageReplySystem {
             else if(input.equals("2")){
                 messages.remove(m);
 
-                Item item = ((NewItemMessage) m).getNewItem();
+                Item item =  m.getNewItem();
                 Message reply = new Message("Your Item: "+item+
                             "\n has been rejected by the Admin "+accountUsername);
                 ArrayList<Message> temp = um.getUserMessages(item.getOwnerName());

@@ -2,6 +2,8 @@ package uses_cases;
 
 import entities.TempTrade;
 import entities.Trade;
+import entities.User;
+import exceptions.UserFrozenException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -145,4 +147,16 @@ public class TradeManager {
             tradeHistory.put(trade.getTraderB(), temp);
         }
     }
+    //TODO
+    /**
+     *
+     * @param username String username
+     * @return
+     */
+    public ArrayList<Trade> tradesToConfirm(String username) {
+        ArrayList<Trade> temp = tradeHistory.get(username);
+        ArrayList <Trade> trades = new ArrayList<Trade>();
+        return trades;
+    }
+
 }
