@@ -11,8 +11,8 @@ public class AdminBrowsingUsers {
     UserManager users;
     AdminBrowsingUsersPresenter browse;
 
-    public AdminBrowsingUsers(UserManager system, AdminBrowsingUsersPresenter browse){
-        this.browse = browse;
+    public AdminBrowsingUsers(UserManager system){
+        this.browse = new AdminBrowsingUsersPresenter();
         this.users = system;
     }
 
