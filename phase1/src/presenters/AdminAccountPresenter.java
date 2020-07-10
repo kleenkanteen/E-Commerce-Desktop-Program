@@ -3,7 +3,7 @@ import entities.Admin;
 
 public class AdminAccountPresenter {
     Admin admin;
-    AdminAccountPresenter(Admin admin){
+    public AdminAccountPresenter(Admin admin){
         this.admin = admin;
     }
     public void printMainMenu(){

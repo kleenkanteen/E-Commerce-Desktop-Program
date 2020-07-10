@@ -47,7 +47,7 @@ public class AdminAccountSystem {
                     }
                     else {
                         aap.failToChangePassword();
-                    };
+                    }
                 } else if (input.equals("2")) {
                     aap.newAdminUserName();
                     String newUsername = br.readLine();
