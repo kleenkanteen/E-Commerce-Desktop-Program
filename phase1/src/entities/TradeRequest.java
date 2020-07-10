@@ -150,7 +150,7 @@ public class TradeRequest implements Serializable {
         }
     }
 
-    public String ToString(){
+    public String toString(){
         if (itemA.isEmpty()){
             return getUserA() + " is requesting a trade with " + getUserB() + " for " +
                     getItemA().get(0).getName() + " and want to meet at " + getPlace() + " on " +
