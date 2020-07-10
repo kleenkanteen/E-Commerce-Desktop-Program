@@ -226,6 +226,10 @@ public class UserManager {
         this.allUsers.get(username).setFrozenStatus(freezeStatus);
     }
 
+    public void freezeUserAccount(String username) {
+        this.allUsers.get(username).setFrozenStatus(!this.allUsers.get(username).getFrozenStatus());
+    }
+
     /**
      * ADMIN ONLY
      * Allows an admin to set a new trades per week value for all users.
