@@ -41,15 +41,11 @@ public class UserManager {
      * All usernames are unique.
      * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
      * PUt this method in a try-catch!!!
-     * @return the new HashMap containing the new User
-     * @throws InvalidUsernameException username is already taken
      */
-    public HashMap<String, User> createNewUser(String username, String password) throws InvalidUsernameException{
+    public void createNewUser(String username, String password) {
         if(!allUsers.containsKey(username)) {
             allUsers.put(username, new User(username, password));
-            return allUsers;
         }
-        throw new InvalidUsernameException();
     }
 
     public HashMap<String, User> returnAllUsers() {
