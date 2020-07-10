@@ -12,7 +12,7 @@ public class AdminAccountGateways {
     String filePath;
     HashMap<String, Admin> adminMap = new HashMap<>();
 
-    AdminAccountGateways(String filePath) {
+    public AdminAccountGateways(String filePath) {
         this.filePath = filePath;
 
         try {
