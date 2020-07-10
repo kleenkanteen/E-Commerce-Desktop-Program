@@ -33,12 +33,21 @@ public class AdminBrowsingUsers {
                     browse.invalid();
                     user = re.readLine();
                 }
-                // TODO add to check if userid is valid or not
-
                 // checks to see if admin wants to leave
                 if (user.equals("1")){ start = false; }
 
-                while (!user.equals("1")){
+                // check if valid user
+                boolean valid = false;
+                boolean validloop = true;
+
+                // keep looping until admin either gives valid user or wants to go back
+                while (!users.isValidUser(user) && validloop){
+                    browse.invalidUser();
+                    user = re.readLine();
+                    if (user.equals("0")){ validloop = false; }
+                }
+
+                while (!user.equals("1") && !user.equals("0") ){
                     String info = users.representUser(user);
                     browse.infoUser(info);
                     String option = re.readLine();
@@ -47,46 +56,52 @@ public class AdminBrowsingUsers {
                         option = re.readLine();
                     }
                     // check if admin wants to go back to userid input menu
-                    if (option.equals("5")) { user = "1"; }
-                    else if (option.equals("1")){
-                        browse.thresholdUser();
-                        option = re.readLine();
-                        while (!option.matches("[0-9]+")){
-                            browse.invalid();
+                    switch (option) {
+                        case "5":
+                            user = "1";
+                            break;
+                        case "1":
+                            browse.thresholdUser();
                             option = re.readLine();
-                        }
-                        users.setNewThresholdForOneUser(user, Integer.parseInt(user));
-                        browse.thresholdsuccessUser();
-                        }
-                    // check if admin wants to change freeze a user
-                    else if (option.equals("2")){
-                        users.freezeUserAccount(user);
-                        browse.freezingUser();
-                    }
-                    // check if admin wants to change limit for
-                    // trades per week for individual user it selected
-                    else if (option.equals("3")){
-                        browse.tradelimitUser();
-                        option = re.readLine();
-                        while (!option.matches("[0-9]+")){
-                            browse.invalid();
+                            while (!option.matches("[0-9]+")) {
+                                browse.invalid();
+                                option = re.readLine();
+                            }
+                            users.setNewThresholdForOneUser(user, Integer.parseInt(user));
+                            browse.thresholdsuccessUser();
+                            break;
+                        // check if admin wants to change freeze a user
+                        case "2":
+                            users.freezeUserAccount(user);
+                            browse.freezingUser();
+                            break;
+                        // check if admin wants to change limit for
+                        // trades per week for individual user it selected
+                        case "3":
+                            browse.tradelimitUser();
                             option = re.readLine();
-                        }
-                        users.setWeeklyTradesForOneUser(user, Integer.parseInt(option));
-                        browse.successUser();
-                    }
-                    // check if admin wants to change limit  incomplete per week
-                    // for individual user it selected
-                    else if (option.equals("4")){
-                        browse.incomptradeUser();
-                        option = re.readLine();
-                        while (!option.matches("[0-9]+")){
-                            browse.invalid();
+                            while (!option.matches("[0-9]+")) {
+                                browse.invalid();
+                                option = re.readLine();
+                            }
+                            users.setWeeklyTradesForOneUser(user, Integer.parseInt(option));
+                            browse.successUser();
+                            break;
+                        // check if admin wants to change limit  incomplete per week
+                        // for individual user it selected
+                        case "4":
+                            browse.incomptradeUser();
                             option = re.readLine();
-                        }
-                        users.setLimitOfIncompleteTradesForOneUser(user, Integer.parseInt(option));
-                        browse.successUser();
-
+                            while (!option.matches("[0-9]+")) {
+                                browse.invalid();
+                                option = re.readLine();
+                            }
+                            users.setLimitOfIncompleteTradesForOneUser(user, Integer.parseInt(option));
+                            browse.successUser();
+                            break;
+                        default:
+                            browse.invalidoption();
+                            break;
                     }
                     }
                 }

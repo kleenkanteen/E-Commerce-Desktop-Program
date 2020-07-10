@@ -8,7 +8,7 @@ public class AdminBrowsingUsersPresenter {
     public void enterUser(){ System.out.println("Enter the userid of the user you want or press [1] to exit"); }
 
     public void invalidUser(){
-        System.out.println("Invalid user, try again");
+        System.out.println("User does not exist, try again or press [0] to exit");
     }
 
     /**
@@ -35,7 +35,7 @@ public class AdminBrowsingUsersPresenter {
     }
 
     public void incomptradeUser(){
-        System.out.println("Print the number you want to set the weekly incomplete trade limit to:");
+        System.out.println("Print the number you want to set the weekECly incomplete trade limit to:");
     }
 
     public void successUser(){
@@ -51,5 +51,7 @@ public class AdminBrowsingUsersPresenter {
     public void error(){ System.out.println("Something went wrong"); }
 
     public void invalid(){ System.out.println("Invalid input try again with only numbers"); }
+
+    public void invalidoption(){ System.out.println("Invalid option, reloading menu"); }
 
 }
