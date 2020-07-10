@@ -1,4 +1,5 @@
-package controller_presenter_gateway;
+package controllers;
+import presenters.AdminBrowsingUsersPresenter;
 import use_cases.UserManager;
 
 import java.io.BufferedReader;

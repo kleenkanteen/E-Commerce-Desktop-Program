@@ -1,5 +1,4 @@
-package controller_presenter_gateway;
-import use_cases.UserManager;
+package presenters;
 
 public class AdminBrowsingUsersPresenter {
 
