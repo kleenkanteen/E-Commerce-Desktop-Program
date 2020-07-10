@@ -3,12 +3,11 @@ package controller_presenter_gateway;
 import entities.*;
 import exceptions.InvalidLoginException;
 import exceptions.InvalidUsernameException;
+import gateways.UserGateway;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 

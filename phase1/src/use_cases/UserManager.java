@@ -26,6 +26,15 @@ public class UserManager {
     }
 
     /**
+     * Checks to see if this username exists in the system of users.
+     * @param username The username to check
+     * @return Returns true if the user does exist in the system, false if otherwise.
+     */
+    public boolean isValidUser(String username) {
+        return this.allUsers.containsKey(username);
+    }
+
+    /**
      * Return all usernames in this system.
      * @return String of all usernames
      */
@@ -91,15 +100,15 @@ public class UserManager {
      * @param username the String username
      * @return the number of trades this user can make
      */
-    public int getTradesPerWeekForUser(String username) {
-        return this.allUsers.get(username).getTradePerWeek();
-    }
+
+    public int getTradesPerWeekForUser(String username) { return this.allUsers.get(username).getTradePerWeek(); }
 
     /**
      * Find all temp trades that have passed their completion date and have not been marked confirmed yet.
      * @param username String username
      * @return list of unconfirmed/incomplete TempTrades
      */
+    /*
     public ArrayList<TempTrade> tempTradesToConfirm(String username) {
         ArrayList<TempTrade> tempTrades = new ArrayList<>();
         ArrayList<TempTrade> allTempTrades = this.allUsers.get(username).getTempTradeHistory();
@@ -110,6 +119,7 @@ public class UserManager {
         }
         return tempTrades;
     }
+    */
 
     // USER INVENTORY AND WISHLIST
 
@@ -201,10 +211,10 @@ public class UserManager {
     /**
      * ADMIN ONLY
      * Allows an admin to either freeze an unfrozen user account or unfreeze a frozen user account.
-     * @param userName the User object in question.
+     * @param username the User object in question.
      */
-    public void freezeUserAccount(String userName, boolean freezeStatus) {
-        this.allUsers.get(userName).setFrozenStatus(freezeStatus);
+    public void freezeUserAccount(String username) {
+        this.allUsers.get(username).setFrozenStatus(!this.allUsers.get(username).getFrozenStatus());
     }
 
     /**
@@ -281,16 +291,5 @@ public class UserManager {
      */
     public void setNewThresholdForOneUser(String username, int newThreshold) {
         this.allUsers.get(username).setThreshold(newThreshold);
-    }
-
-    // TODO add isValidUser() to check if a userid represents a valid user
-
-    /** Added by sabih so adminBrowsingUsers can get info of an user for printing.
-     * Called by a controller
-     * @param userid - the user to be accessed
-     * @return - String of toString representation
-     */
-    public String representUser(String userid){
-        return allUsers.get(userid).accountInfo();
     }
 }
