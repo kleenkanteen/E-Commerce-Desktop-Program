@@ -1,11 +1,10 @@
-package controller_presenter_gateway;
+package presenters;
 
 import entities.DecisionMessage;
 import entities.Message;
 import entities.TradeRequest;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class MessageReplyMenu {
 

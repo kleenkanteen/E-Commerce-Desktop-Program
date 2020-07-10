@@ -1,7 +1,6 @@
 package controllers;
 
 import presenters.AdminMenu;
-import controller_presenter_gateway.AdminMessageReplySystem;
 
 import entities.Admin;
 import entities.GlobalInventory;
