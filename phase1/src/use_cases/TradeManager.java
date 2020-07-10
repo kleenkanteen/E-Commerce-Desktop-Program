@@ -22,13 +22,6 @@ public class    TradeManager {
     }
 
     /**
-     * construct an empty TradeManager
-     */
-    public TradeManager() {
-        tradeHistory = new HashMap<String, ArrayList<Trade>>();
-    }
-
-    /**
      * Getter of the trade history of a user. Trade history is the list of trades that the user is involved in
      * @param username the username of the user
      * @return the trade history of a user
@@ -38,13 +31,34 @@ public class    TradeManager {
     }
 
     /**
+     * Getter of the 3 most recent completed trade from the trade history of a user.
+     * Trade history is the list of trades that the user is involved in
+     * @param username the username of the user
+     * @return the 3 most recent completed trade from the trade history of this user
+     */
+    public Trade[] getRecentCompletedTrade(String username) {
+        ArrayList<Trade> tradeHistory = getTradeHistory(username);
+        ArrayList<Trade> temp = new ArrayList<>();
+        for(Trade t: tradeHistory){
+            if(t.getCompleted())temp.add(t);
+        }
+        int size = temp.size();
+        Trade[] trades = new Trade[3];
+        for(int i = 0; i<3; i++){
+            if(size < i+1) break;
+            trades[i] = temp.get(size - i - 1);
+        }
+        return trades;
+    }
+
+    /**
      * Getter of all the temporary trade history of a user. Trade history is the list of trades that the
      * user is involved in
      * @param username the user's username
      * @return the temporary trade history of a user
      */
     public ArrayList<TempTrade> getTempTradeHistory(String username) {
-        ArrayList<Trade> temp = tradeHistory.get(username);
+        ArrayList<Trade> temp = getTradeHistory(username);
         ArrayList <TempTrade> tempTradeHistory = new ArrayList<TempTrade>();
         for (Trade t: temp){
             if(t instanceof TempTrade) tempTradeHistory.add((TempTrade) t);
@@ -58,7 +72,7 @@ public class    TradeManager {
      * @return the number of times a user has borrowed
      */
     public int getBorrowedTimes(String username) {
-        ArrayList<Trade> temp = tradeHistory.get(username);
+        ArrayList<Trade> temp = getTradeHistory(username);
         int total = 0;
         for(Trade t: temp){
             if(t.isBorrowed(username))total++;
@@ -72,7 +86,7 @@ public class    TradeManager {
      * @return the number of times a user has lend
      */
     public int getLendTimes(String username) {
-        ArrayList<Trade> temp = tradeHistory.get(username);
+        ArrayList<Trade> temp = getTradeHistory(username);
         int total = 0;
         for(Trade t: temp){
             if(t.isLent(username))total++;
@@ -86,7 +100,7 @@ public class    TradeManager {
      * @return the username of the 3 most frequent trading partners
      */
     public String[] getFrequentTradingPartners(String username) {
-        ArrayList<Trade> l = tradeHistory.get(username);
+        ArrayList<Trade> l = getTradeHistory(username);
         TreeMap<Integer, ArrayList<String>> counter = new TreeMap<Integer, ArrayList<String>>();
         ArrayList<String> partners = new ArrayList<String>();
         String[] tradingPartners = new String[3];
@@ -168,7 +182,7 @@ public class    TradeManager {
      * @return a list of trades the user needs to confirm at this time
      */
     public ArrayList<Trade> tradesToConfirm(String username) {
-        ArrayList<Trade> temp = tradeHistory.get(username);
+        ArrayList<Trade> temp = getTradeHistory(username);
         ArrayList <Trade> trades = new ArrayList<Trade>();
         for(Trade t: temp){
             if(t.needToConfirmMeetingOne(username))trades.add(t);
@@ -180,14 +194,29 @@ public class    TradeManager {
     }
 
     /**
-     * Getter for all the trades that are in the user's trade history that are created in this week.
+     * Return the number of incomplete trades that are in the user's trade history.
      * Trade history is the list of trades that the user is involved in
      * @param username The user's username
-     * @return a list of trades the user created in this week
+     * @return the number of incompleted trade
      */
-    public ArrayList<Trade> tradesCreatedThisWeek(String username) {
-        ArrayList<Trade> temp = tradeHistory.get(username);
-        ArrayList <Trade> trades = new ArrayList<Trade>();
+    public int getIncompleteTimes(String username) {
+        ArrayList<Trade> temp = getTradeHistory(username);
+        int sum = 0;
+        for(Trade t: temp){
+            if(!t.getCompleted())sum++;
+        }
+        return sum;
+    }
+
+    /**
+     * Returns the number of trades that are in the user's trade history that are created in this week.
+     * Trade history is the list of trades that the user is involved in
+     * @param username The user's username
+     * @return the number of trades created this week from this user
+     */
+    public int numberOfTradesCreatedThisWeek(String username) {
+        ArrayList<Trade> temp = getTradeHistory(username);
+        int sum = 0;
         LocalDateTime now = LocalDateTime.now();
         int n = (now.getDayOfWeek()).getValue();
 
@@ -201,9 +230,9 @@ public class    TradeManager {
         end = end.withSecond(59);
         for(Trade t: temp) {
             if (start.compareTo(t.getCreationDate()) <= 0 && end.compareTo(t.getCreationDate()) >= 0) {
-                trades.add(t);
+                sum++;
             }
         }
-        return trades;
+        return sum;
     }
 }

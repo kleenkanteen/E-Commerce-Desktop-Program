@@ -19,6 +19,14 @@ public class UserMessageReplySystem {
     private String accountUsername;
     private MessageReplyMenu mm;
 
+    /**
+     * Class constructor.
+     * Create a new UserMessageReplySystem that controls and allows the user to reply to their messages
+     * @param accountUsername the username of the currently logged in User
+     * @param um the user manager of the system
+     * @param tm the trade manager of the system
+     * @param gi the global inventory manager of the system
+     */
     public UserMessageReplySystem(UserManager um, GlobalInventoryManager gi, TradeManager tm, String accountUsername){
         this.um = um;
         this.gi = gi;
@@ -26,6 +34,10 @@ public class UserMessageReplySystem {
         this.accountUsername = accountUsername;
         mm = new MessageReplyMenu();
     }
+
+    /**
+     * Interacts with the user to allow them to respond and reply to their messages
+     */
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Message> messages = um.getUserMessages(accountUsername);
@@ -190,7 +202,8 @@ public class UserMessageReplySystem {
     }
     private boolean cannotTrade(String username, ArrayList<Item> userItem){
         try{
-            if(!um.getCanTrade(username, tm.getBorrowedTimes(username), tm.getLendTimes(username))) return true;
+            if(!um.getCanTrade(username, tm.getBorrowedTimes(username), tm.getLendTimes(username),
+                    tm.getIncompleteTimes(username), tm.numberOfTradesCreatedThisWeek(username))) return true;
         }catch(UserFrozenException e){
             return true;
         }
