@@ -5,7 +5,6 @@ import entities.Admin;
 import entities.GlobalInventory;
 import entities.Message;
 import entities.User;
-import presenters.AdminBrowsingUsersPresenter;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
