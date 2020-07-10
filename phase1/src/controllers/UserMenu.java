@@ -1,9 +1,8 @@
-package controller_presenter_gateway;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
-import controllers.*;
 import entities.*;
 import exceptions.*;
 import use_cases.*;
@@ -179,7 +178,7 @@ public class UserMenu {
             tooManyBorrowVLoan = true;
         }
         // check num of trades
-        if(tradeManager.tradesCreatedThisWeek(this.currUser).size() >=
+        if(tradeManager.numberOfTradesCreatedThisWeek(this.currUser) >=
                 userManager.getTradesPerWeekForUser(this.currUser)) {
             this.userPresenter.tooManyTradesThisWeek();
         }
