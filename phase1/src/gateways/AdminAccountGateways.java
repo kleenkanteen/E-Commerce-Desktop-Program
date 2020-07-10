@@ -1,4 +1,4 @@
-package controller_presenter_gateway;
+package gateways;
 
 import entities.Admin;
 import use_cases.AdminManager;
