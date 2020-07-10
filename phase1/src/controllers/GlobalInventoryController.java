@@ -37,13 +37,20 @@ public class GlobalInventoryController {
                 }
                 if (Integer.parseInt(input) <= 10 && Integer.parseInt(input) >= 1){
                     item = gim.generatePage(pageNumber).get(Integer.parseInt(input)-1);
-                    prompts.wishlishOrTradeRequest(item);
-                    input = br.readLine();
-                    if (input.equals("wishlist")){
-                        UM.getUserWishlist(user).add(item);
+                    if (UM.getUserFrozenStatus(user)) {
+                        prompts.addToWishlishandTradeRequest(item);
+                        input = br.readLine();
+                        if (input.equals("1")) {
+                            UM.getUserWishlist(user).add(item);
+                        }
+                        if (input.equals("2")) {
+                            // call trademenu
+                        }
                     }
-                    if (input.equals("traderequest")){
-                       //call trade menu
+                    else
+                    prompts.addToWishlist(item);
+                    if (input.equals("1")){
+                        UM.getUserWishlist(user).add(item);
                     }
                 }
             }

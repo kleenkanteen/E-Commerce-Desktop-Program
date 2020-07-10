@@ -36,24 +36,26 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     }
 
     public void printpage(int page){
-        String items = "";
+        String items = "Choose your option below: \n";
         if (!gim.generatePage(page).isEmpty()){
             for (int k = 0; k < gim.generatePage(page).size(); k++) {
-                items += k + ": " + gim.generatePage(page).get(k).getName() + "\n" ;
-                properties.add(items + " Please type the corresponding number to select the item or go to next page by " +
-                        "typing 'next' or go to previous page by typing 'previous");
+                items += "[" + k + "]" + gim.generatePage(page).get(k).getName() + "\n" ;
             }
+            properties.add(items + "go to next page by typing 'next' or go to previous page by typing 'previous");
         }
         else properties.add("this page is empty");
+
     }
 
-    public void wishlishOrTradeRequest(Item item){
-        System.out.println("Type 'wishlist' to add this item(" + item.getName() + ") to your wish-list or type " +
-                "'traderequest' to request a trade or 'exit' to exit");
+    public void addToWishlishandTradeRequest(Item item){
+        System.out.println("Choose your option below: \n [1] Add this item (" + item.getName() + ") to your wish-list \n" +
+                "[2] Request a trade");
     }
-
+    public void addToWishlist(Item item){
+        System.out.println("\"Choose your option below: \\n [1] Add this item (\" + item.getName() + \") to your wish-list\"");
+    }
     public void enter(){
-        System.out.println("Type 'exit' to quit or ok to continue.");
+        System.out.println("Choose your option below: \n [1] Continue \n [2] Exit");
     }
 
     public void error(){
