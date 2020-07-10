@@ -20,16 +20,20 @@ public class GlobalInventory implements Serializable {
         itemIdCollection = new ArrayList<>();
     }
 
+    /**
+     * return the hashmap that stores the Items in global inventory
+     * @return hashmap of items stored in global inventory
+     */
+
     public HashMap<String, Item> getItemMap() {
         return itemMap;
     }
 
-    public void setItemMap(HashMap<String, Item> itemMap) {
-        this.itemMap = itemMap;
-    }
+
 
     /**
      * Add ItemID to ItemIdCollection
+     * @param itemID is the unique id each item has.
 
      */
 
@@ -39,6 +43,7 @@ public class GlobalInventory implements Serializable {
 
 
     /**
+     * getter for the Arraylist of itemID that have ever existed in the program.
      * @return the ArrayList of all ID that has ever been assigned to Item
      */
 
@@ -52,6 +57,7 @@ public class GlobalInventory implements Serializable {
      * @param itemID is the unique ID of each Item.
 
      * @return Item with itemID been called
+     * and return null if the itemID is not in the GlobalInventory
      */
 
     public Object getItem(String itemID) {
@@ -102,6 +108,7 @@ public class GlobalInventory implements Serializable {
     }
 
     /**
+     * getter of the number of Item that in the global inventory.
      * @return the number of Item that exists in itemMap
      */
 
@@ -120,6 +127,7 @@ public class GlobalInventory implements Serializable {
 
 
     /**
+     * method for the situation if the user wants to search a specific type of item.
      * @param itemName is the item name the user wants to search in GlobalInventory
      * @return an arraylist of Item with the Name the User searches
      */
@@ -137,6 +145,7 @@ public class GlobalInventory implements Serializable {
     }
 
     /**
+     * method for search engine that if the user want ot search the items that belongs to a specific person.
      * @param ownerName is the owner name the user wants to search in GlobalInventory
      * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
      */

@@ -33,8 +33,8 @@ public class AdminSystem {
 
 
     GlobalInventoryManager gim;
-    AdminSystem(Admin admin, HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessageList,
-                HashMap<String,User> userHashMap, GlobalInventory gi) {
+    public AdminSystem(Admin admin, HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessageList,
+                       HashMap<String, User> userHashMap, GlobalInventory gi) {
         this.admin = admin;
         am = new AdminMenu(admin);
         this.adminHashMap = adminHashMap;
