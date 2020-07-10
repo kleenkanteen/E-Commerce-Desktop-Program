@@ -12,25 +12,35 @@ import java.util.TreeMap;
 public class    TradeManager {
     private HashMap<String, ArrayList<Trade>> tradeHistory;
 
+    /**
+     * construct the TradeManager with a given hashmap of information on the trades in this system.
+     * @param tradeHistory the trade history of all users in the system
+     */
     public TradeManager( HashMap<String, ArrayList<Trade>> tradeHistory) {
         this.tradeHistory = tradeHistory;
     }
+
+    /**
+     * construct an empty TradeManager
+     */
     public TradeManager() {
         tradeHistory = new HashMap<String, ArrayList<Trade>>();
     }
 
     /**
-     * Getter of the trade history of the user
+     * Getter of the trade history of a user. Trade history is the list of trades that the user is involved in
      * @param username the username of the user
-     * @return the trade history of this user
+     * @return the trade history of a user
      */
     public ArrayList<Trade> getTradeHistory(String username) {
         return tradeHistory.get(username);
     }
 
     /**
-     * Getter of all the temporary trade history of this account
-     * @return all the temporary trade history of this account
+     * Getter of all the temporary trade history of a user. Trade history is the list of trades that the
+     * user is involved in
+     * @param username the user's username
+     * @return the temporary trade history of a user
      */
     public ArrayList<TempTrade> getTempTradeHistory(String username) {
         ArrayList<Trade> temp = tradeHistory.get(username);
@@ -42,8 +52,9 @@ public class    TradeManager {
     }
 
     /**
-     * Getter of the number of times this user has borrowed
-     * @return the number of times this user has borrowed
+     * Getter of the number of times a user has borrowed
+     * @param username the user's username
+     * @return the number of times a user has borrowed
      */
     public int getBorrowedTimes(String username) {
         ArrayList<Trade> temp = tradeHistory.get(username);
@@ -55,8 +66,9 @@ public class    TradeManager {
     }
 
     /**
-     * Getter of the number of times this user has lend
-     * @return the number of times this user has lend
+     * Getter of the number of times a user has lend
+     * @param username the user's username
+     * @return the number of times a user has lend
      */
     public int getLendTimes(String username) {
         ArrayList<Trade> temp = tradeHistory.get(username);
@@ -68,8 +80,9 @@ public class    TradeManager {
     }
 
     /**
-     * Getter of the 3 most frequent trading partners of this user's username
-     * @return the 3 most frequent trading partners username
+     * Getter of the usernames of the 3 most frequent trading partners of a user
+     * @param username the user's username
+     * @return the username of the 3 most frequent trading partners
      */
     public String[] getFrequentTradingPartners(String username) {
         ArrayList<Trade> l = tradeHistory.get(username);
@@ -120,8 +133,8 @@ public class    TradeManager {
     }
 
     /**
-     * Adding the most recent trade of a user to their trade history.
-     * @param trade the most recent trade of this user
+     * Adding a trade to the system
+     * @param trade the trade added to the system
      */
     public void addTrade(Trade trade){
         if(tradeHistory.containsKey(trade.getTraderA())) {
@@ -146,18 +159,31 @@ public class    TradeManager {
             tradeHistory.put(trade.getTraderB(), temp);
         }
     }
-    //TODO
+
     /**
-     *
-     * @param username String username
-     * @return
+     * Getter for all the trades that are in the user's trade history that needs to be confirmed at this time.
+     * Trade history is the list of trades that the user is involved in
+     * @param username The user's username
+     * @return a list of trades the user needs to confirm at this time
      */
     public ArrayList<Trade> tradesToConfirm(String username) {
         ArrayList<Trade> temp = tradeHistory.get(username);
         ArrayList <Trade> trades = new ArrayList<Trade>();
+        for(Trade t: temp){
+            if(t.needToConfirmMeetingOne(username))trades.add(t);
+            else if(t instanceof TempTrade){
+                if(((TempTrade)t).needToConfirmMeetingTwo(username))trades.add(t);
+            }
+        }
         return trades;
     }
 
+    /**
+     * Getter for all the trades that are in the user's trade history that are created in this week.
+     * Trade history is the list of trades that the user is involved in
+     * @param username The user's username
+     * @return a list of trades the user created in this week
+     */
     public ArrayList<Trade> tradesCreatedThisWeek(String username) {
         ArrayList<Trade> temp = tradeHistory.get(username);
         ArrayList <Trade> trades = new ArrayList<Trade>();
@@ -172,8 +198,11 @@ public class    TradeManager {
         end = end.withHour(23);
         end = end.withMinute(59);
         end = end.withSecond(59);
-
-        if(start.compareTo(now) <= 0 && end.compareTo(now) >= 0);//TODO Add to trades
+        for(Trade t: temp) {
+            if (start.compareTo(t.getCreationDate()) <= 0 && end.compareTo(t.getCreationDate()) >= 0) {
+                trades.add(t);
+            }
+        }
         return trades;
     }
 }
