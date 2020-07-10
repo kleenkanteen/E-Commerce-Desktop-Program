@@ -1,4 +1,4 @@
-package controller_presenter_gateway;
+package presenters;
 import entities.Admin;
 
 public class AdminAccountPresenter {

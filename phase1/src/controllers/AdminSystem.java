@@ -1,11 +1,12 @@
-package controller_presenter_gateway;
+package controllers;
 
-import controllers.AdminBrowsingUsers;
+import presenters.AdminMenu;
+import controller_presenter_gateway.AdminMessageReplySystem;
+import controller_presenter_gateway.GlobalInventoryGateways;
 import entities.Admin;
 import entities.GlobalInventory;
 import entities.Message;
 import entities.User;
-import presenters.AdminBrowsingUsersPresenter;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
