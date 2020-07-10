@@ -39,7 +39,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
         String items = "";
         if (!gim.generatePage(page).isEmpty()){
             for (int k = 0; k < gim.generatePage(page).size(); k++) {
-                items =items + k + ": " + gim.generatePage(page).get(k).getName() + "\n" ;
+                items += k + ": " + gim.generatePage(page).get(k).getName() + "\n" ;
                 properties.add(items + " Please type the corresponding number to select the item or go to next page by " +
                         "typing 'next' or go to previous page by typing 'previous");
             }
@@ -56,4 +56,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
         System.out.println("Type 'exit' to quit or ok to continue.");
     }
 
+    public void error(){
+        System.out.println("Something went wrong, please try again");
+    }
 }

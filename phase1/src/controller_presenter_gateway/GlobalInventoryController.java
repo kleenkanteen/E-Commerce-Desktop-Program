@@ -47,7 +47,7 @@ public class GlobalInventoryController {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong");
+            prompts.error();
         }
 
     }
