@@ -12,11 +12,22 @@ public class GlobalInventoryManager implements Serializable {
     protected GlobalInventory gI;
 
     /**
-     * construct the Use Case class to do some changes on gI.
-     * @param gI - the globalinventory it takes in
+     * construct the Use Case class to do some changes on globalinventory.
+     * @param gI - the globalInventory it takes in
      */
     public GlobalInventoryManager(GlobalInventory gI) {
         this.gI = gI;
+    }
+
+    /**
+     * getter to get the Item from GlobalInventory with itemID.
+     * @param itemID is the unique id that each item has.
+     * @return the Item with itemID and return nothing if ID doesn't exist in GlobalInventory
+     */
+
+
+    public Item getItemFromGI(String itemID){
+        return (Item) gI.getItem(itemID);
     }
 
 
@@ -37,7 +48,6 @@ public class GlobalInventoryManager implements Serializable {
      * add the item to globalInventory with an unique Id generated automatically
      * The ID generated will be assigned to the Item
      * and then the that ItemID will be sent to IdCollection to record
-     *
      * @param item set what the key refers to in globalInventory
      */
 
@@ -66,8 +76,8 @@ public class GlobalInventoryManager implements Serializable {
 
          */
 
-        public boolean removeItem (String itemID){
-            return gI.removeItem(itemID);
+        public void removeItem (String itemID){
+             gI.removeItem(itemID);
         }
 
 
@@ -81,7 +91,7 @@ public class GlobalInventoryManager implements Serializable {
 
 
         public ArrayList<Item> generatePage ( int pageNumber){
-            ArrayList<Item> itemList = new ArrayList<Item>();
+            ArrayList<Item> itemList = new ArrayList<>();
             for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < gI.getNumOfItem(); i++) {
                 itemList.add(gI.getItemByIndex(i));
 
@@ -90,29 +100,34 @@ public class GlobalInventoryManager implements Serializable {
 
         }
 
-        public int generatePageNumber(){
+    /**
+     * generate the page number of the last page in globalInventory
+     * @return an int to represent the last page in globalInventory.
+     */
+
+    public int generatePageNumber(){
            int num =  gI.getNumOfItem();
            return (int) Math.ceil((double)num/10);
         }
 
-        /**
-         * generate an arraylist of Item which has itemName
-         * @param itemName is the name of item the user want to search
-         * @return an arraylist of Item which the user want to search
-         */
-
-        public ArrayList<Item> searchWithItemName (String itemName){
-            return gI.searchByItemName(itemName);
-        }
-
-        /**
-         * generate an arraylist of Item belongs to the specific owner
-         * @param ownerName is the name of item the user want to search
-         * @return an arraylist of Item belongs to the specific owner
-         */
-        public ArrayList<Item> searchWithItemOwner (String ownerName){
-            return gI.searchByOwnerName(ownerName);
-        }
+//        /**
+//         * generate an arraylist of Item which has itemName
+//         * @param itemName is the name of item the user want to search
+//         * @return an arraylist of Item which the user want to search
+//         */
+//
+//        public ArrayList<Item> searchWithItemName (String itemName){
+//            return gI.searchByItemName(itemName);
+//        }
+//
+//        /**
+//         * generate an arraylist of Item belongs to the specific owner
+//         * @param ownerName is the name of item the user want to search
+//         * @return an arraylist of Item belongs to the specific owner
+//         */
+//        public ArrayList<Item> searchWithItemOwner (String ownerName){
+//            return gI.searchByOwnerName(ownerName);
+//        }
 
     /**
      * returns whether the global inventory contains an item

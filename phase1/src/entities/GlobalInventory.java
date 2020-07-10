@@ -99,12 +99,9 @@ public class GlobalInventory implements Serializable {
 
      */
 
-    public boolean removeItem(String itemID){
-        if (! itemMap.containsKey(itemID)){
-            return false;
-        }
+    public void removeItem(String itemID){
         itemMap.remove(itemID);
-        return true;
+
     }
 
     /**
@@ -126,41 +123,41 @@ public class GlobalInventory implements Serializable {
     }
 
 
-    /**
-     * method for the situation if the user wants to search a specific type of item.
-     * @param itemName is the item name the user wants to search in GlobalInventory
-     * @return an arraylist of Item with the Name the User searches
-     */
+//    /**
+//     * method for the situation if the user wants to search a specific type of item.
+//     * @param itemName is the item name the user wants to search in GlobalInventory
+//     * @return an arraylist of Item with the Name the User searches
+//     */
+//
+//    public ArrayList<Item> searchByItemName(String itemName){
+//        ArrayList<Item> banana = new ArrayList<Item>();
+//        for (int i = 0; i < itemMap.size(); i++){
+//            Set<String> keys = itemMap.keySet();
+//            String f = new ArrayList<>(keys).get(i);
+//            if (itemMap.get(f).getName().equals(itemName)){
+//                banana.add(itemMap.get(f));
+//            }
+//        }
+//        return banana;
+//    }
 
-    public ArrayList<Item> searchByItemName(String itemName){
-        ArrayList<Item> banana = new ArrayList<Item>();
-        for (int i = 0; i < itemMap.size(); i++){
-            Set<String> keys = itemMap.keySet();
-            String f = new ArrayList<>(keys).get(i);
-            if (itemMap.get(f).getName().equals(itemName)){
-                banana.add(itemMap.get(f));
-            }
-        }
-        return banana;
-    }
-
-    /**
-     * method for search engine that if the user want ot search the items that belongs to a specific person.
-     * @param ownerName is the owner name the user wants to search in GlobalInventory
-     * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
-     */
-
-    public ArrayList<Item> searchByOwnerName(String ownerName){
-        ArrayList<Item> banana = new ArrayList<Item>();
-        for (int i = 0; i < itemMap.size(); i++){
-            Set<String> keys = itemMap.keySet();
-            String f = new ArrayList<>(keys).get(i);
-            if (itemMap.get(f).getOwnerName().equals(ownerName)){
-                banana.add(itemMap.get(f));
-            }
-        }
-        return banana;
-    }
+//    /**
+//     * method for search engine that if the user want ot search the items that belongs to a specific person.
+//     * @param ownerName is the owner name the user wants to search in GlobalInventory
+//     * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
+//     */
+//
+//    public ArrayList<Item> searchByOwnerName(String ownerName){
+//        ArrayList<Item> banana = new ArrayList<Item>();
+//        for (int i = 0; i < itemMap.size(); i++){
+//            Set<String> keys = itemMap.keySet();
+//            String f = new ArrayList<>(keys).get(i);
+//            if (itemMap.get(f).getOwnerName().equals(ownerName)){
+//                banana.add(itemMap.get(f));
+//            }
+//        }
+//        return banana;
+//    }
 
 
 
