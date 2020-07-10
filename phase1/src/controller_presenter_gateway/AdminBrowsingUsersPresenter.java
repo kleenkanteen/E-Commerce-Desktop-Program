@@ -15,6 +15,7 @@ public class AdminBrowsingUsersPresenter {
     /**
      * @param info - The string of info passed in
      */
+
     public void infoUser(String info){
         System.out.println("User found, info below, choose your option below: \n " +
                 "[1] Change lending threshold, how many times user must lend before borrowing \n" +

@@ -32,6 +32,8 @@ public class AdminBrowsingUsers {
                     browse.invalid();
                     user = re.readLine();
                 }
+                // TODO add to check if userid is valid or not
+
                 // checks to see if admin wants to leave
                 if (user.equals("1")){ start = false; }
 
