@@ -35,15 +35,6 @@ public class UserManager {
     }
 
     /**
-     * Returns the account information of a selected user.
-     * @param username the user in question
-     * @return The string representation of this user's account
-     */
-    public String getUserInfo(String username) {
-        return this.allUsers.get(username).accountInfo();
-    }
-
-    /**
      * Return all usernames in this system.
      * @return String of all usernames
      */
@@ -59,17 +50,24 @@ public class UserManager {
     // GETTERS/SETTERS
 
     /**
-     * Return user ability to trade status.
-     * @param user user to be checked
-     * @return true if user can trade, false if not
-     * @throws UserFrozenException if the User is frozen
+     * Returns whether or not this user can trade.
+     * @param user the user in question
+     * @param borrowedTimes the num of times this user has borrowed
+     * @param lendTimes the num of times this user has loaned
+     * @param numIncomplete the num of incomplete trades this user has
+     * @param numTradesMadeThisWeek the num of trade this user made this week
+     * @return True if this user can trade, false if not
+     * @throws UserFrozenException Throws if the user is already frozen
      */
-    public boolean getCanTrade(String user, int borrowedTimes, int lendTimes) throws UserFrozenException {
-        User chosenUser = this.allUsers.get(user);
-        if (chosenUser.getFrozenStatus()) {
+    public boolean getCanTrade(String user, int borrowedTimes, int lendTimes,
+                               int numIncomplete, int numTradesMadeThisWeek) throws UserFrozenException{
+        if (this.allUsers.get(user).getFrozenStatus()) {
             throw new UserFrozenException();
         }
-        return (borrowedTimes - lendTimes) <= chosenUser.getThreshold();
+        // check borrows, num of incomplete trades, num of trades made this week
+        return (borrowedTimes - lendTimes) < this.allUsers.get(user).getThreshold() ||
+                numIncomplete < this.allUsers.get(user).getLimitOfIncompleteTrade() ||
+                numTradesMadeThisWeek < this.allUsers.get(user).getTradePerWeek();
     }
 
     /**
@@ -113,22 +111,31 @@ public class UserManager {
     public int getTradesPerWeekForUser(String username) { return this.allUsers.get(username).getTradePerWeek(); }
 
     /**
-     * Find all temp trades that have passed their completion date and have not been marked confirmed yet.
-     * @param username String username
-     * @return list of unconfirmed/incomplete TempTrades
+     * Returns the account information of a selected user.
+     * @param username the user in question
+     * @return The string representation of this user's account
      */
-    /*
-    public ArrayList<TempTrade> tempTradesToConfirm(String username) {
-        ArrayList<TempTrade> tempTrades = new ArrayList<>();
-        ArrayList<TempTrade> allTempTrades = this.allUsers.get(username).getTempTradeHistory();
-        for (TempTrade trade : allTempTrades) {
-            if (trade.daysLeft() <= 0 && !trade.getCompleted()) {
-                tempTrades.add(trade);
-            }
-        }
-        return tempTrades;
+    public String getUserInfo(String username) {
+        return this.allUsers.get(username).accountInfo();
     }
-    */
+
+    /**
+     * Returns a user's frozen status
+     * @param username the user in question
+     * @return True if frozen, false if unfrozen.
+     */
+    public boolean getUserFrozenStatus(String username) {
+        return this.allUsers.get(username).getFrozenStatus();
+    }
+
+    /**
+     * Return's a user's threshold
+     * @param username the user in question
+     * @return the threshold of borrows v. loans
+     */
+    public int getUserBorrowsVLoans(String username) {
+        return this.allUsers.get(username).getThreshold();
+    }
 
     // USER INVENTORY AND WISHLIST
 
@@ -221,11 +228,17 @@ public class UserManager {
      * ADMIN ONLY
      * Allows an admin to either freeze an unfrozen user account or unfreeze a frozen user account.
      * @param username the User object in question.
+     * @param freezeStatus what to set the user's freeze status to
      */
     public void freezeUserAccount(String username, boolean freezeStatus) {
         this.allUsers.get(username).setFrozenStatus(freezeStatus);
     }
 
+    /**
+     * ADMIN ONLY
+     * Overloaded FreezeUserAccount for AdminMenu use
+     * @param username the user to freeze
+     */
     public void freezeUserAccount(String username) {
         this.allUsers.get(username).setFrozenStatus(!this.allUsers.get(username).getFrozenStatus());
     }
