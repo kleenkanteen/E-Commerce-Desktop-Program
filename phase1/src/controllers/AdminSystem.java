@@ -1,15 +1,16 @@
-package controller_presenter_gateway;
+package controllers;
 
-import controllers.AdminBrowsingUsers;
+import presenters.AdminMenu;
+import controller_presenter_gateway.AdminMessageReplySystem;
+
 import entities.Admin;
 import entities.GlobalInventory;
 import entities.Message;
 import entities.User;
-import presenters.AdminBrowsingUsersPresenter;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
-;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class AdminSystem {
     UserManager um;
 
 
-    GlobalInventoryGateways gig;
+
     GlobalInventoryManager gim;
     AdminSystem(Admin admin, HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessageList,
                 HashMap<String,User> userHashMap, GlobalInventory gi) {
@@ -51,27 +52,31 @@ public class AdminSystem {
         AdminMenu menu = new AdminMenu(admin);
         menu.printMainOption();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input = "";
+        String input;
         while (true) {
             try {
                 input = br.readLine();
-                if (input.equals("1")) {
-                    am.goIntoMessageInbox();
-                    AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
-                            um, admin.getUsername());
-                    amr.run();
-                } else if (input.equals("2")) {
-                    AdminAccountSystem aas = new AdminAccountSystem(admin, adminHashMap, adminMessageList);
-                    aas.run();
+                switch (input) {
+                    case "1":
+                        am.goIntoMessageInbox();
+                        AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
+                                um, admin.getUsername());
+                        amr.run();
+                        break;
+                    case "2":
+                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminHashMap, adminMessageList);
+                        aas.run();
 
-                } else if (input.equals("3")) {
-                    AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
-                    abu.start();
+                        break;
+                    case "3":
+                        AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
+                        abu.start();
 
-                } else if (input.equals("4")) {
-                    am.exitPresenter();
+                        break;
+                    case "4":
+                        am.exitPresenter();
 
-                    return;
+                        return;
                 }
 
             } catch (IOException e) {

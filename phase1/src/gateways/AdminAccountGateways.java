@@ -1,4 +1,4 @@
-package controller_presenter_gateway;
+package gateways;
 
 import entities.Admin;
 import use_cases.AdminManager;
@@ -12,7 +12,7 @@ public class AdminAccountGateways {
     String filePath;
     HashMap<String, Admin> adminMap = new HashMap<>();
 
-    AdminAccountGateways(String filePath) {
+    public AdminAccountGateways(String filePath) {
         this.filePath = filePath;
 
         try {

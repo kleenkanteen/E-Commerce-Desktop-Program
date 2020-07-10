@@ -1,9 +1,9 @@
-package controller_presenter_gateway;
+package presenters;
 import entities.Admin;
 
 public class AdminAccountPresenter {
     Admin admin;
-    AdminAccountPresenter(Admin admin){
+    public AdminAccountPresenter(Admin admin){
         this.admin = admin;
     }
     public void printMainMenu(){
