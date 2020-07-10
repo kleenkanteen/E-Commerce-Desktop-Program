@@ -2,7 +2,7 @@ package controllers;
 
 import presenters.AdminMenu;
 import controller_presenter_gateway.AdminMessageReplySystem;
-import controller_presenter_gateway.GlobalInventoryGateways;
+
 import entities.Admin;
 import entities.GlobalInventory;
 import entities.Message;
@@ -10,7 +10,7 @@ import entities.User;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
-;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,7 +31,7 @@ public class AdminSystem {
     UserManager um;
 
 
-    GlobalInventoryGateways gig;
+
     GlobalInventoryManager gim;
     AdminSystem(Admin admin, HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessageList,
                 HashMap<String,User> userHashMap, GlobalInventory gi) {
@@ -52,7 +52,7 @@ public class AdminSystem {
         AdminMenu menu = new AdminMenu(admin);
         menu.printMainOption();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String input = "";
+        String input;
         while (true) {
             try {
                 input = br.readLine();
