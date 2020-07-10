@@ -124,7 +124,7 @@ public class UserMessageReplySystem {
                 case "b":
                     return false;
                 case "1":
-                    if(!canTrade(t.getUserA(),t.getItemA())||!canTrade(t.getUserB(), t.getItemB())){
+                    if(cannotTrade(t.getUserA(),t.getItemA())||cannotTrade(t.getUserB(), t.getItemB())){
                         mm.printCannotTradePrompt();
                         while(true) {
                             input = br.readLine();
@@ -187,17 +187,17 @@ public class UserMessageReplySystem {
             }
         }
     }
-    private boolean canTrade(String username, ArrayList<Item> userItem){
+    private boolean cannotTrade(String username, ArrayList<Item> userItem){
         try{
-            if(!um.getCanTrade(username, tm.getBorrowedTimes(username), tm.getLendTimes(username))) return false;
+            if(!um.getCanTrade(username, tm.getBorrowedTimes(username), tm.getLendTimes(username))) return true;
         }catch(UserFrozenException e){
-            return false;
+            return true;
         }
         for(Item i: userItem){
-            //TODO also check for gi
-            if(!um.getUserInventory(username).contains(i)) return false;
+            if(!gi.contains(i))return true;
+            if(!um.getUserInventory(username).contains(i)) return true;
         }
-        return true;
+        return false;
     }
     private void createMessage(String username, String content){
         Message reply = new Message(content);

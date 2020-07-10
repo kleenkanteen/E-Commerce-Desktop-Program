@@ -113,6 +113,15 @@ public class GlobalInventoryManager implements Serializable {
         public ArrayList<Item> searchWithItemOwner (String ownerName){
             return gI.searchByOwnerName(ownerName);
         }
+
+    /**
+     * returns whether the global inventory contains an item
+     * @param item is the name of item the user want to search
+     * @return whether the item is in the global inventory
+     */
+        public boolean contains(Item item){
+            return gI.containsKey(item.getItemID());
+        }
     }
 
 
