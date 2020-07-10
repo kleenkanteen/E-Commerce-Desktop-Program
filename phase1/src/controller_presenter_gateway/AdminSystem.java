@@ -28,7 +28,7 @@ public class AdminSystem {
     HashMap<String, User> userHashMap;
     GlobalInventory gi;
     UserManager um;
-    AdminBrowsingUsersPresenter abuP;
+
 
     GlobalInventoryGateways gig;
     GlobalInventoryManager gim;
@@ -65,7 +65,7 @@ public class AdminSystem {
                     aas.run();
 
                 } else if (input.equals("3")) {
-                    AdminBrowsingUsers abu = new AdminBrowsingUsers(um, abuP);
+                    AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
                     abu.start();
 
                 } else if (input.equals("4")) {
