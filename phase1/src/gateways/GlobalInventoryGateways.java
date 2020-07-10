@@ -1,4 +1,4 @@
-package controller_presenter_gateway;
+package gateways;
 
 import entities.GlobalInventory;
 import use_cases.GlobalInventoryManager;
@@ -9,7 +9,7 @@ public class GlobalInventoryGateways implements Serializable{
     String filePath;
     GlobalInventoryManager gIManager;
     GlobalInventory gI;
-    GlobalInventoryGateways(String filePath){
+    public GlobalInventoryGateways(String filePath){
         this.filePath = filePath;
 
     try {
