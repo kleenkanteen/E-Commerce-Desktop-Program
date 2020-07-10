@@ -282,4 +282,15 @@ public class UserManager {
     public void setNewThresholdForOneUser(String username, int newThreshold) {
         this.allUsers.get(username).setThreshold(newThreshold);
     }
+
+    // TODO add isValidUser() to check if a userid represents a valid user
+
+    /** Added by sabih so adminBrowsingUsers can get info of an user for printing.
+     * Called by a controller
+     * @param userid - the user to be accessed
+     * @return - String of toString representation
+     */
+    public String representUser(String userid){
+        return allUsers.get(userid).accountInfo();
+    }
 }
