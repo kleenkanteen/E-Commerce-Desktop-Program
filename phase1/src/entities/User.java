@@ -7,7 +7,7 @@ public class User extends Account implements Serializable{
     private ArrayList<Item> personalInventory = new ArrayList<>();
     private ArrayList<Item> wishlist = new ArrayList<>();
     private ArrayList<Message> messages = new ArrayList<>();
-    private boolean frozenStatus = true;
+    private boolean frozenStatus = false;
     private int tradePerWeek = 5;
     private int threshold = 1;
     private int limitOfIncompleteTrade = 5;
@@ -137,6 +137,16 @@ public class User extends Account implements Serializable{
      */
     public void setTradePerWeek(int tradePerWeek){
         this.tradePerWeek = tradePerWeek;
+    }
+
+    public String accountInfo(){
+        String info = "\n Account info for " + this.toString();
+        info = info + "\n Current lend until borrow threshold: " + String.valueOf(this.threshold);
+        if (this.frozenStatus){ info = info + "\n Status: Frozen"; }
+        else { info = info + "\n Status: Unfrozen"; }
+        info = info + "\n Limit for trades per week: " + String.valueOf(this.tradePerWeek);
+        info = info + "\n Limit for incomplete trades per week: " + String.valueOf(this.limitOfIncompleteTrade);
+        return info;
     }
 }
 
