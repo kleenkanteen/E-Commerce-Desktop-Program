@@ -35,6 +35,15 @@ public class UserManager {
     }
 
     /**
+     * Returns the account information of a selected user.
+     * @param username the user in question
+     * @return The string representation of this user's account
+     */
+    public String getUserInfo(String username) {
+        return this.allUsers.get(username).accountInfo();
+    }
+
+    /**
      * Return all usernames in this system.
      * @return String of all usernames
      */
@@ -213,8 +222,8 @@ public class UserManager {
      * Allows an admin to either freeze an unfrozen user account or unfreeze a frozen user account.
      * @param username the User object in question.
      */
-    public void freezeUserAccount(String username) {
-        this.allUsers.get(username).setFrozenStatus(!this.allUsers.get(username).getFrozenStatus());
+    public void freezeUserAccount(String username, boolean freezeStatus) {
+        this.allUsers.get(username).setFrozenStatus(freezeStatus);
     }
 
     /**
