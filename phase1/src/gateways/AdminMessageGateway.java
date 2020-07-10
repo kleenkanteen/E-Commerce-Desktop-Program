@@ -1,22 +1,22 @@
-package controller_presenter_gateway;
+package gateways;
 
-import entities.*;
+import entities.Message;
 
 import java.io.*;
+import java.util.ArrayList;
 
-public class GlobalWishlistGateway implements Serializable{
-
-    GlobalWishlist wishlist;
+public class AdminMessageGateway {
+    ArrayList<Message> messages;
 
     /**
-     * Creates a new gateway that loads in the GlobalWishlist stored in a .ser file
+     * Creates a new gateway that loads in the Arraylist of Message objects in a .ser file
      * @param filepath the directory where the .ser file is stored
      */
-    public GlobalWishlistGateway(String filepath) {
+    public AdminMessageGateway(String filepath) {
         try {
             File file = new File(filepath);
             if (file.exists()) {
-                wishlist = readFromFile(filepath);
+                this.messages = readFromFile(filepath);
             } else {
                 file.createNewFile();
             }
@@ -26,12 +26,12 @@ public class GlobalWishlistGateway implements Serializable{
         }
     }
     /**
-     * Deserializes the contents of the GlobalWishlist that is serialized.
-     * @param filepath Filepath to the .ser file storing the GlobalWishlist
-     * @return the deserialized GlobalWishlist
+     * Deserializes the arraylist of user objects into the program.
+     * @param filepath Filepath to the .ser file storing the User objects.
+     * @return the arraylist of Messages an Admin can respond to.
      */
-    public GlobalWishlist readFromFile(String filepath) {
-        GlobalWishlist wishItems = new GlobalWishlist();
+    public ArrayList<Message> readFromFile(String filepath) {
+        ArrayList<Message> messages2 = new ArrayList<>();
         try {
             // load in the objects
             InputStream file = new FileInputStream(filepath);
@@ -40,12 +40,12 @@ public class GlobalWishlistGateway implements Serializable{
 
             // deserialize the hashmap of user objects
             try {
-                wishItems = (GlobalWishlist) input.readObject();
+                messages2 = (ArrayList<Message>) input.readObject();
                 input.close();
-                return wishItems;
+                return messages2;
             }
             catch(ClassCastException ex) {
-                System.out.println("Casting to improper subclass in GlobalWishlistGateway.");
+                System.out.println("Casting to improper subclass in AdminMessageGateway.");
             }
         }
         catch(IOException ex) {
@@ -54,14 +54,14 @@ public class GlobalWishlistGateway implements Serializable{
         catch(ClassNotFoundException ex) {
             System.out.println("Class could not be found.");
         }
-        return wishItems;
+        return messages2;
     }
 
     /**
      * Serializes the arraylist of Message objects.
      * @param filepath where this file will be stored
      */
-    public void writeToFile(String filepath, GlobalWishlist wishlistItems2) {
+    public void writeToFile(String filepath, ArrayList <Message> adminMessages) {
         try {
             // load allUsers onto the file at designed path
             FileOutputStream file = new FileOutputStream(filepath);
@@ -69,7 +69,7 @@ public class GlobalWishlistGateway implements Serializable{
             ObjectOutputStream output = new ObjectOutputStream(buffer);
 
             // serialize objects
-            output.writeObject(wishlistItems2);
+            output.writeObject(adminMessages);
             output.close();
         }
         catch(IOException ex) {
@@ -77,8 +77,7 @@ public class GlobalWishlistGateway implements Serializable{
         }
     }
 
-    public GlobalWishlist getWishlistItems() {
-        return wishlist;
+    public ArrayList<Message> getMessages() {
+        return this.messages;
     }
-
 }

@@ -4,8 +4,7 @@ import controllers.AdminSystem;
 import entities.*;
 import exceptions.InvalidLoginException;
 import exceptions.InvalidUsernameException;
-import gateways.AdminAccountGateways;
-import gateways.UserGateway;
+import gateways.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
