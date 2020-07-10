@@ -1,9 +1,11 @@
 package controller_presenter_gateway;
 
+import controllers.AdminBrowsingUsers;
 import entities.Admin;
 import entities.GlobalInventory;
 import entities.Message;
 import entities.User;
+import presenters.AdminBrowsingUsersPresenter;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
@@ -26,6 +28,7 @@ public class AdminSystem {
     HashMap<String, User> userHashMap;
     GlobalInventory gi;
     UserManager um;
+    AdminBrowsingUsersPresenter abuP;
 
     GlobalInventoryGateways gig;
     GlobalInventoryManager gim;
@@ -62,7 +65,8 @@ public class AdminSystem {
                     aas.run();
 
                 } else if (input.equals("3")) {
-                    //TODO hello Sabih, How are you
+                    AdminBrowsingUsers abu = new AdminBrowsingUsers(um, abuP);
+                    abu.start();
 
                 } else if (input.equals("4")) {
                     am.exitPresenter();
