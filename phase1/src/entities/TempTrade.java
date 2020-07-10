@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class TempTrade extends Trade implements Serializable {
 
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean failed = false;
+    private boolean failed = getFailed();
 
     private final LocalDateTime finishDate, startDate;
     private final int daysInYear = 365;
@@ -36,6 +36,15 @@ public class TempTrade extends Trade implements Serializable {
         return (daysInYear - startDate.getDayOfYear()) - (finishDate.getDayOfYear());
     }
 
+    /**
+     * Returns a boolean that determines whether the user has confirmed a meeting for the trade or not.
+     * Even after the first meeting has been confirmed already.
+     * If true is returned then the user has confirmed the trade, if false then the user has not
+     * confirmed the meeting.
+     *
+     * @param traderName takes in a String that determines if they are part of the trade.
+     * @return a boolean that determines if the trade has been confirmed by the user.
+     */
     public boolean needToConfirmMeetingTwo(String traderName) {
         boolean meetingCompleted = false;
         boolean confirmTimes = traderAConfirmTimes == 1 && traderBConfirmTimes == 1,
@@ -52,6 +61,18 @@ public class TempTrade extends Trade implements Serializable {
         return meetingCompleted;
     }
 
+    @Override
+    public boolean getCompleted() {
+        return traderBConfirmTimes == 1 && traderAConfirmTimes == 1 && !failed;
+    }
+
+    /**
+     * Confirms a meeting for the user if they are part of a trade.
+     * If they are not part of a trade then an exception is thrown!
+     *
+     * @param traderName takes in a String that determines if they are part of the trade.
+     * @param confirmation takes a boolean that determines if they confirmed the meeting.
+     */
     @Override
     public void setConfirm(String traderName, boolean confirmation) {
         if (traderName.equals(getTraderA())) {

@@ -9,7 +9,7 @@ public class PermTrade extends Trade implements Serializable {
     private final LocalDateTime startDate;
     private final int daysInYear = 365;
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean failed = false;
+    private boolean failed = getFailed();
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -31,6 +31,18 @@ public class PermTrade extends Trade implements Serializable {
     }
 
     @Override
+    public boolean getCompleted() {
+        return traderBConfirmTimes == 2 && traderAConfirmTimes == 2 && !failed;
+    }
+
+    /**
+     * Confirms a meeting for the user if they are part of a trade.
+     * If they are not part of a trade then an exception is thrown!
+     *
+     * @param traderName takes in a String that determines if they are part of the trade.
+     * @param confirmation takes a boolean that determines if they confirmed the meeting.
+     */
+    @Override
     public void setConfirm(String traderName, boolean confirmation) {
         if (traderName.equals(getTraderA())) {
             if (needToConfirmMeetingOne(traderName)) {
@@ -48,8 +60,6 @@ public class PermTrade extends Trade implements Serializable {
             }
         }
     }
-
-
 
     /**
      * This method provides you with the number of days left after a trade has been processed.

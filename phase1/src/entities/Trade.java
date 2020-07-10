@@ -10,9 +10,9 @@ public abstract class Trade implements Serializable {
     private final ArrayList<Item> traderAItemstoTrade;
     private final String traderA;
     private final String traderB;
-    private boolean completed = false, failed = false;
+    private boolean failed = false;
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean creationDate = false;
+    private LocalDateTime creationDate = LocalDateTime.now();
 
 
     /**
@@ -35,18 +35,15 @@ public abstract class Trade implements Serializable {
         this.traderBItemsToTrade = traderBItemsToTrade;
     }
 
-    public boolean getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-
-    public boolean getCompleted() {
-        return completed;
+    public boolean getFailed() {
+        return failed;
     }
 
-    public void setCompleted(boolean isCompleted) {
-        completed = isCompleted;
-    }
+    public abstract boolean getCompleted();
 
     public LocalDateTime getStartDate() {
         return startDate;
@@ -158,5 +155,15 @@ public abstract class Trade implements Serializable {
             }
         }
         return meetingConfirmed;
+    }
+
+    @Override
+    public String toString() {
+        return "entities.Trade{ \n " +
+                "date= " + startDate +
+                "traderA= " + traderA +
+                "traderB= " + traderB +
+                "traderAItemsToTrade= " + traderAItemstoTrade +
+                "traderBItemsToTrade= " + traderBItemsToTrade;
     }
 }

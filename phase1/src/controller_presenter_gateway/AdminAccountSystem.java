@@ -1,30 +1,32 @@
 package controller_presenter_gateway;
 import entities.Admin;
+import entities.Message;
 import exceptions.InvalidUsernameException;
 import use_cases.AdminManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminAccountSystem {
     Admin admin;
     HashMap<String, Admin> adminHashMap;
     AdminAccountPresenter aap;
-    AdminAccountGateways aag;
-    AdminMessageGateway amg;
+    ArrayList<Message> adminMessage;
+
     AdminManager am;
 
 
-    AdminAccountSystem(Admin admin, AdminAccountGateways aag, AdminMessageGateway amg){
+    AdminAccountSystem(Admin admin, HashMap<String, Admin> adminHashMap,
+                       ArrayList<Message> adminMessage){
         this.admin = admin;
         aap = new AdminAccountPresenter(admin);
-        this.aag = aag;
-        this.amg = amg;
-        adminHashMap = aag.getAdminMap();
-        am = new AdminManager(adminHashMap, amg.getMessages());
-        adminHashMap = aag.getAdminMap();
+        this.adminHashMap = adminHashMap;
+        this.adminMessage = adminMessage;
+        am = new AdminManager(adminHashMap, adminMessage);
+
     }
     public void run(){
         aap.printMainMenu();
@@ -51,7 +53,7 @@ public class AdminAccountSystem {
                     aap.newAdminPassword();
                     String newPassword = br.readLine();
                     try {adminHashMap = am.addAdmin(newUsername, newPassword);
-                    aag.saveToFile(adminHashMap);}
+                  }
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();
                     }
