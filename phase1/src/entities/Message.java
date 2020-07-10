@@ -6,7 +6,8 @@ public class Message implements Serializable {
     private String content;
     private String senderUsername;
     /**
-     * A message sent to a AccountInformation with a content sent by the system
+     * Class constructor
+     * A message sent by the system with some content
      * @param content is the content of the message
      */
     public Message(String content){
@@ -15,7 +16,8 @@ public class Message implements Serializable {
     }
 
     /**
-     * A message sent to a AccountInformation with a content by another AccountInformation
+     * Class constructor
+     * A message sent by an account with some content
      * @param content is the content of the message
      * @param username is the sender of this message's username
      */

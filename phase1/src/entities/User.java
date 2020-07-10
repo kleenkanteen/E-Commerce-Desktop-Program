@@ -14,6 +14,7 @@ public class User extends Account implements Serializable{
 
 
     /**
+     * Class constructor.
      * Creates an User with the given username and password.
      * This User has the default values:
      * - Limit of 5 trades per week
@@ -139,8 +140,12 @@ public class User extends Account implements Serializable{
         this.tradePerWeek = tradePerWeek;
     }
 
+    /**
+     * Returns all the information of this account information all at once in a string representation
+     * @return the string representation of all information in this account
+     */
     public String accountInfo(){
-        String info = "\n Account info for " + this.toString();
+        String info = " Account info for " + this.toString();
         info = info + "\n Current lend until borrow threshold: " + String.valueOf(this.threshold);
         if (this.frozenStatus){ info = info + "\n Status: Frozen"; }
         else { info = info + "\n Status: Unfrozen"; }

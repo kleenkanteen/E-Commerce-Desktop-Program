@@ -6,9 +6,10 @@ public class FreezeRequestMessage extends DecisionMessage implements Serializabl
     private String username;
 
     /**
-     * A message sent to a Admin from the system that request to freeze a User
+     * Class constructor.
+     * A message sent to the Admins from the system that request to freeze a User
      * @param content is the content of the message
-     * @param username the user that might be frozen
+     * @param username the user that might be frozen's username
      */
     public FreezeRequestMessage(String content, String username) {
         super(content, new String[]{"Freeze", "Ignore"});
@@ -16,11 +17,15 @@ public class FreezeRequestMessage extends DecisionMessage implements Serializabl
     }
 
     /**
-     * Getter for the user that might need to be frozen
-     * @return the user
+     * Getter for the user that might need to be frozen's username
+     * @return the user's username
      */
     public String getUser(){ return username; }
 
+    /**
+     * Returns a string representation of the message
+     * @return the content, decisions, and user of the message in a string representation
+     */
     @Override
     public String toString() {
         return super.toString() + "\nThe User's username: "+username;

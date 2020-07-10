@@ -6,9 +6,10 @@ public class UnfreezeRequestMessage extends DecisionMessage implements Serializa
     private String username;
 
     /**
-     * A message sent to a Admin from a User that request to be unfreezed
+     * Class constructor.
+     * A message sent to a Admin from a User that request to unfreeze themselves
      * @param content is the content of the message
-     * @param username is the user wanted to be unfreezed
+     * @param username is the user wanted to be unfrozen's username
      */
     public UnfreezeRequestMessage(String content, String username) {
         super(content, new String[]{"Unfreeze", "Ignore"}, username);
@@ -16,11 +17,15 @@ public class UnfreezeRequestMessage extends DecisionMessage implements Serializa
     }
 
     /**
-     * Getter for the user that might need to be frozen
-     * @return the user
+     * Getter for the user that wanted to be unfrozen's usename
+     * @return the user's username
      */
     public String getUser(){ return username; }
 
+    /**
+     * Returns a string representation of the message
+     * @return the content, decisions, and user of the message in a string representation
+     */
     @Override
     public String toString() {
         return super.toString() + "\nThe User's username: "+username;

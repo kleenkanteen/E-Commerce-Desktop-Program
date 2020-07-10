@@ -13,7 +13,8 @@ public class    TradeManager {
     private HashMap<String, ArrayList<Trade>> tradeHistory;
 
     /**
-     * construct the TradeManager with a given hashmap of information on the trades in this system.
+     * Class constructor.
+     * creates a TradeManager with a given HashMap of information on the trades in this system.
      * @param tradeHistory the trade history of all users in the system
      */
     public TradeManager( HashMap<String, ArrayList<Trade>> tradeHistory) {

@@ -8,23 +8,24 @@ public abstract class DecisionMessage extends Message implements Serializable {
     private String[] options;
 
     /**
-     * A message sent to a AccountInformation with a content and a decision sent by the system
+     * Class contructor.
+     * A message sent by the system with a content and some decisions a person can make based on the content
      * @param content is the content of the message
-     * @param options the options that can be made in the decision
+     * @param options the options that can be made
      */
-    public DecisionMessage(String content, String[] options){
+    DecisionMessage(String content, String[] options){
         super(content);
         this.options = options;
     }
 
     /**
-     * A message sent to a AccountInformation with a content and a decision that can be made from another
-     * AccountInformation
+     * Class contructor.
+     * A message sent by an account with a content and some decisions a person can make based on the content
      * @param content is the content of the message
-     * @param options the options that can be made in the decision
-     * @param username is the sender's username of the message
+     * @param options the options that can be made
+     * @param username is the sender's username
      */
-    public DecisionMessage(String content, String[] options, String username){
+    DecisionMessage(String content, String[] options, String username){
         super(content, username);
         this.options = options;
     }
@@ -43,10 +44,10 @@ public abstract class DecisionMessage extends Message implements Serializable {
      */
     @Override
     public String toString() {
-        String optionsToString = "";
+        String optionsToString = "Choose your option below:";
         for(int i=0; i<options.length; i++){
             if(i != 0) optionsToString = optionsToString+"\n";
-            optionsToString = "["+optionsToString+Integer.toString(i+1)+"] "+options[i];
+            optionsToString = optionsToString+"["+Integer.toString(i+1)+"] "+options[i];
         }
         return super.toString() + "\n" + optionsToString;
     }

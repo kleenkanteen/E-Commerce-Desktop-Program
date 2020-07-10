@@ -6,7 +6,8 @@ public abstract class Account implements Serializable {
     private String username, password;
 
     /**
-     * Creates an Account with the given username and password
+     * Class constructor.
+     * Creates an Account with a given username and password
      * @param username is the username of this account
      * @param password is the password of this account
      */
@@ -41,7 +42,7 @@ public abstract class Account implements Serializable {
 
     /**
      * Indicates whether two Account are "equal". Two Account are equal iff
-     *      * both have the same username
+     * both have the same username
      * @param accInfo is the Account that is being compared with
      * @return Whether the two Account are equal.
      */
@@ -50,7 +51,7 @@ public abstract class Account implements Serializable {
     }
 
     /**
-     * Returns a hash code value for the account.
+     * Returns a hash code value for this account.
      * @return A hash code value for this account.
      */
     @Override
