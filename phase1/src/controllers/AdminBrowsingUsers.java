@@ -48,7 +48,7 @@ public class AdminBrowsingUsers {
                 }
 
                 while (!user.equals("1") && !user.equals("0") ){
-                    String info = users.representUser(user);
+                    String info = users.getUserInfo(user);
                     browse.infoUser(info);
                     String option = re.readLine();
                     while (!option.matches("[0-9]+")){
