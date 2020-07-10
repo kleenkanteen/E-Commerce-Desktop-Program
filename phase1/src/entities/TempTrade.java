@@ -63,7 +63,7 @@ public class TempTrade extends Trade implements Serializable {
 
     @Override
     public boolean getCompleted() {
-        return traderBConfirmTimes == 1 && traderAConfirmTimes == 1 && !failed;
+        return traderBConfirmTimes == 2 && traderAConfirmTimes == 2 && !failed;
     }
 
     /**

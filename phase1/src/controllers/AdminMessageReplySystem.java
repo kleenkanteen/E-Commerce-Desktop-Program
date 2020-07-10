@@ -16,6 +16,14 @@ public class AdminMessageReplySystem {
     private String accountUsername;
     private MessageReplyMenu mm;
 
+    /**
+     * Class constructor.
+     * Create a new UserMessageReplySystem that controls and allows the admin to reply to system messages
+     * @param accountUsername the username of the currently logged in User
+     * @param um the user manager of the system
+     * @param am the admin manager of the system
+     * @param gi the global inventory manager of the system
+     */
     public AdminMessageReplySystem(AdminManager am, GlobalInventoryManager gi, UserManager um, String accountUsername){
         this.am = am;
         this.gi = gi;
@@ -24,6 +32,9 @@ public class AdminMessageReplySystem {
         mm = new MessageReplyMenu();
     }
 
+    /**
+     * Interacts with the admin to allow them to respond and reply to system messages
+     */
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Message> messages = am.getAdminMessagesArrayList();

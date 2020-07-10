@@ -3,8 +3,7 @@ package presenters;
 public class UserPresenter {
 
     public void requestFreezeOfUser() {
-        System.out.println("You have too many incomplete trades. " + "\n" +
-                "A request for your account to be frozen has been sent.");
+        System.out.println("A request for your account to be frozen has been sent.");
     }
 
     public void userAccountFrozen() {
@@ -21,7 +20,13 @@ public class UserPresenter {
     }
 
     public void promptUserMenu() {
-        System.out.println("something something");
+        System.out.println("What would you like to do today?" +
+                "\n[1] Access your account information." +
+                "\n[2] Browse through the global inventory." +
+                "\n[3] Browse through the global wishlist (???) " +
+                "\n[4] Look at your message inbox." +
+                "\n[5] Add a new item to the system." +
+                "\n[6] Exit and log out.");
     }
 
     public void createNewItemPrompt(int select) {
@@ -42,8 +47,9 @@ public class UserPresenter {
     }
 
     public void printUserTradePartners(String[] tradingPartners) {
-        System.out.println("[1]"+ tradingPartners[0] +
-                "\n[2] " + tradingPartners[1] + "\n[3] " + tradingPartners[2]);
+        for(String user : tradingPartners) {
+            System.out.println("\n" + user);
+        }
     }
 
     public void userInventoryPrompts() {
@@ -77,5 +83,35 @@ public class UserPresenter {
 
     public void itemRemoved() {
         System.out.println("Item removed.");
+    }
+
+    public void tooManyIncompleteTrades() {
+        System.out.println("You have too many incomplete trades.");
+    }
+
+    public void tooManyBorrowsVLoans(int difference) {
+        System.out.println("You have " + difference +  " more borrows than loans!");
+    }
+
+    public void tooManyTradesThisWeek() {
+        System.out.println("You made too many trade offers this week! You can trade again next week.");
+    }
+
+    public void noTradingPartners() {
+        System.out.println("You don't have any frequent trading partners yet!");
+    }
+
+    public void userMenuUserInfoPrompts() {
+        System.out.println("What would you like to do with your account?" +
+                "\n[1] Set new password." +
+                "\n[2] View your most frequent Trading Partners. " +
+                "\n[3] Your three most recent trades. " +
+                "\n[4] Your inventory. " +
+                "\n[5] Your wishlist. " +
+                "\n[6] Exit.");
+    }
+
+    public void newItemMessageSentToAdmin() {
+        System.out.println("A request for an admin to approve of your item has been sent");
     }
 }

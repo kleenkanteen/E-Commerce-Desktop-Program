@@ -32,7 +32,7 @@ public class PermTrade extends Trade implements Serializable {
 
     @Override
     public boolean getCompleted() {
-        return traderBConfirmTimes == 2 && traderAConfirmTimes == 2 && !failed;
+        return traderBConfirmTimes == 1 && traderAConfirmTimes == 1 && !failed;
     }
 
     /**

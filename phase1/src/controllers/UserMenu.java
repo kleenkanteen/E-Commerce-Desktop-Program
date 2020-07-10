@@ -1,10 +1,8 @@
-package controller_presenter_gateway;
+package controllers;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
-
-import controllers.*;
 import entities.*;
 import exceptions.*;
 import use_cases.*;
@@ -52,20 +50,13 @@ public class UserMenu {
         GlobalWishlistManager globalWishlistManager = new GlobalWishlistManager(this.globalWishlist);
         TradeManager tradeManager = new TradeManager(this.userTrades);
 
-        // check to see if user can trade/is frozen
+        // check to see if user can trade
         checkUserStatus(userManager, tradeManager);
         // check for all incomplete trades to confirm
         confirmIncompleteUserTrades(userManager, tradeManager);
-        // check to make sure that user has not reached max num of trades this week
-        ArrayList<Trade> tradesThisWeek = tradeManager.tradesCreatedThisWeek(this.currUser);
-        if (tradesThisWeek.size() >= this.allUsers.get(this.currUser).getTradePerWeek()) {
-            this.userPresenter.userMaxNumOfTrades();
-        }
-
-        // any additional checks needed as soon as the user successfully logs in?
 
         while(!userInput.equals("exit")) {
-            System.out.println("Enter in blah blah blah idk I'll work on this later");
+            this.userPresenter.promptUserMenu();
             userInput = input.nextLine();
             // look at/change user information
             if (userInput.equals("1")) {
@@ -93,6 +84,7 @@ public class UserMenu {
                 this.userPresenter.createNewItemPrompt(1);
                 String itemDescription = input.nextLine();
                 this.adminMessages.add(userManager.createNewItem(this.currUser, itemName, itemDescription));
+                this.userPresenter.newItemMessageSentToAdmin();
             }
             // exit
             else if (userInput.equals("6")) {
@@ -113,7 +105,7 @@ public class UserMenu {
         Scanner input = new Scanner(System.in);
         String userInput = "";
         while(!userInput.equals("exit")) {
-            System.out.println("blah blah blah");
+            this.userPresenter.userMenuUserInfoPrompts();
             userInput = input.nextLine();
             // change password
             if (userInput.equals("1")) {
@@ -124,15 +116,42 @@ public class UserMenu {
             // view frequent trading partners
             else if (userInput.equals("2")) {
                 String[] tradingPartners = tradeManager.getFrequentTradingPartners(this.currUser);
-                this.userPresenter.printUserTradePartners(tradingPartners);
+                if(tradingPartners.length > 0) {
+                    this.userPresenter.printUserTradePartners(tradingPartners);
+                }
+                else {
+                    this.userPresenter.noTradingPartners();
+                }
+            }
+            // view 3 most recent trades
+            else if(userInput.equals("3")) {
+                ArrayList<Trade> tradeHistory = tradeManager.getTradeHistory(this.currUser);
+                // if user has less than 3 trades
+                if(tradeHistory.size() < 3) {
+                    for(Trade trade : tradeHistory) {
+                        System.out.println(trade.toString() + "\n");
+                    }
+                }
+                // if user has more than 3 trades
+                else {
+                    System.out.println(tradeHistory.get(tradeHistory.size() - 1) + "\n" +
+                            tradeHistory.get(tradeHistory.size() - 2) + "\n" +
+                            tradeHistory.get(tradeHistory.size() - 3));
+                }
             }
             // look at personal inventory
-            else if(userInput.equals("3")) {
+            else if(userInput.equals("4")) {
                 browseThroughUserInventory(userManager);
             }
             // look at personal wishlist
-            else if(userInput.equals("4")) {
+            else if(userInput.equals("5")) {
                 browseThroughUserWishlist(userManager);
+            }
+            else if(userInput.equals("6")) {
+                userInput = "exit";
+            }
+            else {
+                this.userPresenter.inputError();
             }
         }
     }
@@ -143,23 +162,32 @@ public class UserMenu {
      * @param tradeManager the TradeManager object
      */
     private void checkUserStatus(UserManager userManager, TradeManager tradeManager) {
-        // TODO: fix this thing jesus
-        if(tradeManager.getTempTradeHistory(this.currUser).size() >=
+        boolean tooManyIncomplete = false;
+        boolean tooManyBorrowVLoan = false;
+        // check num of incomplete trades
+        if(tradeManager.tradesToConfirm(this.currUser).size() >=
                 this.allUsers.get(this.currUser).getLimitOfIncompleteTrade()) {
-            try {
-                if(!userManager.getCanTrade(this.currUser,
-                        tradeManager.getBorrowedTimes(this.currUser), tradeManager.getLendTimes(this.currUser))) {
-                    this.userPresenter.requestFreezeOfUser();
-                    FreezeRequestMessage newFreezeRequest = new FreezeRequestMessage("User " + this.currUser +
-                            " has too many incomplete trades and their account should be frozen.", this.currUser);
-                    this.adminMessages.add(newFreezeRequest);
-                }
-            }
-            catch (UserFrozenException ex) {
-                this.userPresenter.userAccountFrozen();
-                // TODO
-                // prompt user to send admin unfreeze message?
-            }
+                this.userPresenter.tooManyIncompleteTrades();
+                tooManyIncomplete = true;
+        }
+        // check num of borrows v. loans
+        if((tradeManager.getBorrowedTimes(this.currUser) - tradeManager.getLendTimes(this.currUser)) >
+                userManager.getUserBorrowsVLoans(this.currUser)) {
+            this.userPresenter.tooManyBorrowsVLoans(tradeManager.getBorrowedTimes(this.currUser) -
+                    tradeManager.getLendTimes(this.currUser));
+            tooManyBorrowVLoan = true;
+        }
+        // check num of trades
+        if(tradeManager.numberOfTradesCreatedThisWeek(this.currUser) >=
+                userManager.getTradesPerWeekForUser(this.currUser)) {
+            this.userPresenter.tooManyTradesThisWeek();
+        }
+        // if too many incompletes or too many borrows, request Freeze of this account
+        if(tooManyIncomplete || tooManyBorrowVLoan) {
+            this.userPresenter.requestFreezeOfUser();
+            FreezeRequestMessage newFreezeRequest = new FreezeRequestMessage("User " + this.currUser +
+                    " has too many incomplete trades and their account should be frozen.", this.currUser);
+            this.adminMessages.add(newFreezeRequest);
         }
     }
 
@@ -170,7 +198,11 @@ public class UserMenu {
      */
     private void confirmIncompleteUserTrades(UserManager userManager, TradeManager tradeManager) {
         Scanner input = new Scanner(System.in);
-        this.userPresenter.promptUserToConfirmTrades();
+        // check to make sure that the user has unconfirmed trades
+        if(tradeManager.tradesToConfirm(this.currUser).size() != 0) {
+            this.userPresenter.promptUserToConfirmTrades();
+            ArrayList<Trade> incompletes = tradeManager.tradesToConfirm(this.currUser);
+        }
     }
 
     /**

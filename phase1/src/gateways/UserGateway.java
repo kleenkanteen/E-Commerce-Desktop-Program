@@ -49,7 +49,7 @@ public class UserGateway {
             }
         }
         catch(IOException ex) {
-            System.out.println("Input error during User deserialization!");
+            System.out.println("Input error during User deserialization in UserGateway!");
         }
         catch(ClassNotFoundException ex) {
             System.out.println("Class not found exception in UserGateway!");
