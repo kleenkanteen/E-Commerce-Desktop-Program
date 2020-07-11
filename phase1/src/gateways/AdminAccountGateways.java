@@ -12,6 +12,11 @@ public class AdminAccountGateways {
     String filePath;
     HashMap<String, Admin> adminMap = new HashMap<>();
 
+    /**
+     * create a gateways that loads a HashMap of Admin with UserName as key.
+     * @param filePath the directory where the .ser file is stored
+     */
+
     public AdminAccountGateways(String filePath) {
         this.filePath = filePath;
 
