@@ -52,7 +52,7 @@ public class UserMenu {
         // check to see if user can trade
         checkUserStatus(userManager, tradeManager);
         // check for all incomplete trades to confirm
-        confirmIncompleteUserTrades(userManager, tradeManager);
+        confirmIncompleteUserTrades(tradeManager);
 
         while(!userInput.equals("exit")) {
             this.userPresenter.promptUserMenu();
@@ -186,20 +186,47 @@ public class UserMenu {
         else {
             this.userPresenter.userAccountFrozen();
         }
-
     }
 
     /**
      * Helper for run() that allows a user to confirm of their incomplete trades.
-     * @param userManager the UserManager object
      * @param tradeManager the TradeManager object
      */
-    private void confirmIncompleteUserTrades(UserManager userManager, TradeManager tradeManager) {
+    private void confirmIncompleteUserTrades(TradeManager tradeManager) {
         Scanner input = new Scanner(System.in);
         // check to make sure that the user has unconfirmed trades
         if(tradeManager.tradesToConfirm(this.currUser).size() != 0) {
+            // instantiate unconfirmed trades
             this.userPresenter.promptUserToConfirmTrades();
             ArrayList<Trade> incompletes = tradeManager.tradesToConfirm(this.currUser);
+            String userInput;
+            boolean continueCheckingUnconfirmed;
+            // go through all unconfirmed trades
+            for(Trade trade : incompletes) {
+                System.out.println(trade.toString() + "\n");
+                continueCheckingUnconfirmed = true;
+                while(continueCheckingUnconfirmed) {
+                    System.out.println("Can you confirm that this meeting happened? " +
+                            "\n[1] The meeting happened " +
+                            "\n[2] The meeting did not happen.");
+                    userInput = input.nextLine();
+                    // confirm meeting
+                    if(userInput.equals("1")) {
+                        tradeManager.setConfirm(this.currUser, trade, true);
+                        System.out.println("Trade confirmed.");
+                        continueCheckingUnconfirmed = false;
+                    }
+                    // deny
+                    else if(userInput.equals("2")) {
+                        tradeManager.setConfirm(this.currUser, trade, false);
+                        System.out.println("Trade marked as failed.");
+                        continueCheckingUnconfirmed = false;
+                    }
+                    else {
+                        this.userPresenter.inputError();
+                    }
+                }
+            }
         }
     }
 
