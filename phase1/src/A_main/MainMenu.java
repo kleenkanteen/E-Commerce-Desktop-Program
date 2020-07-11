@@ -3,6 +3,8 @@ package A_main;
 import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
 import D_presenters.AdminMenu;
+import E_use_cases.AdminManager;
+import E_use_cases.GlobalInventoryManager;
 import E_use_cases.UserManager;
 import F_entities.*;
 import G_exceptions.InvalidLoginException;
@@ -160,8 +162,11 @@ public class MainMenu {
                     }
                 else {
                     AdminLogin attempt = new AdminLogin(username, pass, ag.getAdminMap());
+                    AdminManager am = new AdminManager(ag.getAdminMap(), amg.getMessages());
+                    UserManager um = new UserManager(ug.getMapOfUsers());
+                    GlobalInventoryManager gim = new GlobalInventoryManager(gig.getgI());
                     if (attempt.login().equals(username) && !(username.equals("System Messages"))){
-                        AdminSystem successful = new AdminSystem(attempt.getAdminObject(), ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers(), gig.getgI());
+                        AdminSystem successful = new AdminSystem(attempt.getAdminObject(), am, um, gim);
                         successful.run();
                     }
                     }
