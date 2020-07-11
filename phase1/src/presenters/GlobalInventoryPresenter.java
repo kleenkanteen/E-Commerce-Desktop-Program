@@ -52,7 +52,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
                 "[2] Request a trade");
     }
     public void addToWishlist(Item item){
-        System.out.println("\"Choose your option below: \\n [1] Add this item (\" + item.getName() + \") to your wish-list\"");
+        System.out.println("Choose your option below: \n [1] Add this item (" + item.getName() + ") to your wish-list\n");
     }
     public void enter(){
         System.out.println("Choose your option below: \n [1] Continue \n [2] Exit");
