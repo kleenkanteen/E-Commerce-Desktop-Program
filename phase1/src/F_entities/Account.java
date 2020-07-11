@@ -11,7 +11,7 @@ public abstract class Account implements Serializable {
      * @param username is the username of this account
      * @param password is the password of this account
      */
-    public Account(String username, String password){
+    Account(String username, String password){
         this.username = username;
         this.password = password;
     }

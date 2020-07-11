@@ -109,11 +109,19 @@ public class User extends Account implements Serializable{
 
 
     /**
-     * Setting a new list of messages to this account
-     * @param messages the new messages of this account
+     * Add a message to the list of messages to this account
+     * @param message the new message
      */
-    public void setMessages(ArrayList<Message> messages){
-        this.messages = messages;
+    public void addMessages(Message message){
+        messages.add(message);
+    }
+
+    /**
+     * Remove a message from the list of messages to this account
+     * @param message the message to be removed
+     */
+    public void removeMessages(Message message){
+        messages.remove(message);
     }
 
     /**
