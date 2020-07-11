@@ -17,11 +17,11 @@ public class UserGateway {
             File file = new File(filepath);
             if (file.exists()) {
                 this.mapOfUsers = readFromFile(filepath);
-                if(this.mapOfUsers == null) {
-                    this.mapOfUsers = new HashMap<>();
-                }
             } else {
                 file.createNewFile();
+            }
+            if(this.mapOfUsers == null) {
+                this.mapOfUsers = new HashMap<>();
             }
         }
         catch(IOException ex) {
