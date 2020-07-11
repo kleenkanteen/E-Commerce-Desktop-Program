@@ -64,7 +64,7 @@ public class UserMenu {
             // look at global inventory
             else if (userInput.equals("2")) {
                 GlobalInventoryController globalInventory = new GlobalInventoryController();
-                globalInventory.run(globalInventoryManager, userManager, this.currUser);
+                globalInventory.run(globalInventoryManager, userManager, this.currUser, tradeManager);
             }
             // global wishlist
             else if (userInput.equals("3")) {
@@ -115,7 +115,7 @@ public class UserMenu {
             // view frequent trading partners
             else if (userInput.equals("2")) {
                 String[] tradingPartners = tradeManager.getFrequentTradingPartners(this.currUser);
-                if(tradingPartners.length > 0) {
+                if (tradingPartners.length > 0) {
                     this.userPresenter.printUserTradePartners(tradingPartners);
                 }
                 else {
@@ -123,32 +123,25 @@ public class UserMenu {
                 }
             }
             // view 3 most recent trades
-            else if(userInput.equals("3")) {
-                ArrayList<Trade> tradeHistory = tradeManager.getTradeHistory(this.currUser);
-                // if user has less than 3 trades
-                if(tradeHistory.size() < 3) {
-                    for(Trade trade : tradeHistory) {
-                        System.out.println(trade.toString() + "\n");
-                    }
-                }
-                // if user has more than 3 trades
-                else {
-                    System.out.println(tradeHistory.get(tradeHistory.size() - 1) + "\n" +
-                            tradeHistory.get(tradeHistory.size() - 2) + "\n" +
-                            tradeHistory.get(tradeHistory.size() - 3));
+            else if (userInput.equals("3")) {
+                Trade[] recentTradeHistory = tradeManager.getRecentCompletedTrade(this.currUser);
+                for(Trade trade : recentTradeHistory) {
+                    System.out.println(trade.toString() + "\n");
                 }
             }
             // look at personal inventory
-            else if(userInput.equals("4")) {
+            else if (userInput.equals("4")) {
                 browseThroughUserInventory(userManager);
             }
             // look at personal wishlist
-            else if(userInput.equals("5")) {
-                browseThroughUserWishlist(userManager);
+            else if (userInput.equals("5")) {
+                browseThroughUserWishlist(userManager, tradeManager);
             }
-            else if(userInput.equals("6")) {
+            // exit
+            else if (userInput.equals("6")) {
                 userInput = "exit";
             }
+            // input error
             else {
                 this.userPresenter.inputError();
             }
@@ -163,31 +156,37 @@ public class UserMenu {
     private void checkUserStatus(UserManager userManager, TradeManager tradeManager) {
         boolean tooManyIncomplete = false;
         boolean tooManyBorrowVLoan = false;
-        // check num of incomplete trades
-        if(tradeManager.tradesToConfirm(this.currUser).size() >=
-                this.allUsers.get(this.currUser).getLimitOfIncompleteTrade()) {
+        if (!userManager.getUserFrozenStatus(this.currUser)) {
+            // check num of incomplete trades
+            if(tradeManager.tradesToConfirm(this.currUser).size() >=
+                    this.allUsers.get(this.currUser).getLimitOfIncompleteTrade()) {
                 this.userPresenter.tooManyIncompleteTrades();
                 tooManyIncomplete = true;
+            }
+            // check num of borrows v. loans
+            if((tradeManager.getBorrowedTimes(this.currUser) - tradeManager.getLendTimes(this.currUser)) >
+                    userManager.getUserBorrowsVLoans(this.currUser)) {
+                this.userPresenter.tooManyBorrowsVLoans(tradeManager.getBorrowedTimes(this.currUser) -
+                        tradeManager.getLendTimes(this.currUser));
+                tooManyBorrowVLoan = true;
+            }
+            // check num of trades
+            if(tradeManager.numberOfTradesCreatedThisWeek(this.currUser) >=
+                    userManager.getTradesPerWeekForUser(this.currUser)) {
+                this.userPresenter.tooManyTradesThisWeek();
+            }
+            // if too many incompletes or too many borrows, request Freeze of this account
+            if(tooManyIncomplete || tooManyBorrowVLoan) {
+                this.userPresenter.requestFreezeOfUser();
+                FreezeRequestMessage newFreezeRequest = new FreezeRequestMessage("User " + this.currUser +
+                        " has too many incomplete trades and their account should be frozen.", this.currUser);
+                this.adminMessages.add(newFreezeRequest);
+            }
         }
-        // check num of borrows v. loans
-        if((tradeManager.getBorrowedTimes(this.currUser) - tradeManager.getLendTimes(this.currUser)) >
-                userManager.getUserBorrowsVLoans(this.currUser)) {
-            this.userPresenter.tooManyBorrowsVLoans(tradeManager.getBorrowedTimes(this.currUser) -
-                    tradeManager.getLendTimes(this.currUser));
-            tooManyBorrowVLoan = true;
+        else {
+            this.userPresenter.userAccountFrozen();
         }
-        // check num of trades
-        if(tradeManager.numberOfTradesCreatedThisWeek(this.currUser) >=
-                userManager.getTradesPerWeekForUser(this.currUser)) {
-            this.userPresenter.tooManyTradesThisWeek();
-        }
-        // if too many incompletes or too many borrows, request Freeze of this account
-        if(tooManyIncomplete || tooManyBorrowVLoan) {
-            this.userPresenter.requestFreezeOfUser();
-            FreezeRequestMessage newFreezeRequest = new FreezeRequestMessage("User " + this.currUser +
-                    " has too many incomplete trades and their account should be frozen.", this.currUser);
-            this.adminMessages.add(newFreezeRequest);
-        }
+
     }
 
     /**
@@ -217,8 +216,7 @@ public class UserMenu {
             // check to see if inventory is empty or not
             if (userInventory.size() == 0) {
                 this.userPresenter.isEmpty("inventory");
-                userInventoryInput = "exit";
-                continue;
+                break;
             }
             System.out.println(userInventory.get(index).toString() + "\n");
             // prompt user on what to do with this item
@@ -264,7 +262,7 @@ public class UserMenu {
      * Helper...for a helper...allows a user to browse through their personal wishlist I swear if wishlist gets deleted
      * @param userManager the UserManager object
      */
-    private void browseThroughUserWishlist(UserManager userManager) {
+    private void browseThroughUserWishlist(UserManager userManager, TradeManager tradeManager) {
         ArrayList<Item> userWishlist = userManager.getUserWishlist(this.currUser);
         int index = 0;
         Scanner input = new Scanner(System.in);
@@ -273,8 +271,7 @@ public class UserMenu {
             // if the wishlist is empty
             if (userWishlist.size() == 0) {
                 this.userPresenter.isEmpty("wishlist");
-                userWishlistInput = "exit";
-                continue;
+                break;
             }
             System.out.println(userWishlist.get(index).toString() + "\n");
             // prompt user on what to do with this item
@@ -305,10 +302,15 @@ public class UserMenu {
                     index--;
                 }
             }
-            // TODO
             // send a trade request
             else if(userWishlistInput.equals("4")) {
-
+                ArrayList<Item> traderItem = new ArrayList<>();
+                traderItem.add(userWishlist.get(index));
+                TradeController tradeController = new TradeController(userManager, tradeManager, this.currUser);
+                TradeRequestMessage tradeRequest =
+                        tradeController.run(traderItem, userWishlist.get(index).getOwnerName());
+                userManager.addUserMessage(this.currUser, tradeRequest);
+                this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
             }
             // exit
             else if(userWishlistInput.equals("5")) {
