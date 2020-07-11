@@ -29,6 +29,13 @@ public class GlobalInventory implements Serializable {
         return itemMap;
     }
 
+    /**
+     * modify the hashmap that stores the Items in global inventory with hashmap passed in.
+     * @return hashmap of items stored in global inventory
+     */
+    public void setItemMap(HashMap<String, Item> itemMap) {
+        this.itemMap = itemMap;
+    }
 
 
     /**
@@ -160,7 +167,14 @@ public class GlobalInventory implements Serializable {
 //    }
 
 
-
+    public String toString() {
+        String i = "";
+        for (String key : itemMap.keySet()) {
+            i += key + itemMap.get(key)+ "\n";
+        }
+        // from https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
+        return i;
+    }
 
 
 

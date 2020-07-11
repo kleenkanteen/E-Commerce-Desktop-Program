@@ -93,4 +93,13 @@ public class GlobalWishlist implements Serializable {
     public ArrayList<String> getAllInterestedUsers(String itemid){
         return wishMap.get(itemid);
     }
+
+    public String toString(){
+        String i = "";
+        for (String key : wishMap.keySet()) {
+            i += key + wishMap.get(key)+ "\n";
+        }
+        // from https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
+        return i;
+    }
 }
