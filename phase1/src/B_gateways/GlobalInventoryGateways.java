@@ -55,7 +55,6 @@ public class GlobalInventoryGateways implements Serializable{
     /**
      * Serialize the GlobalInventory into .ser file
      * @param gi the GlobalInventory Object that we want to store in the .ser file
-     * @throws IOException when failed to serialize into .ser file
      *
      */
 
