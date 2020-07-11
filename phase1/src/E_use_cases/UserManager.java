@@ -135,7 +135,7 @@ public class UserManager {
      * @param message the arrayList of messages to set
      */
     public void setUserMessages(String username, ArrayList<Message> message) {
-        this.allUsers.get(username);
+        this.allUsers.get(username).setMessages(message);
     }
 
     /**
