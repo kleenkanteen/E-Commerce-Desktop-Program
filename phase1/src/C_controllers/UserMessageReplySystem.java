@@ -215,14 +215,10 @@ public class UserMessageReplySystem {
     }
     private void createMessage(String username, String content){
         Message reply = new Message(content);
-        ArrayList<Message> temp = um.getUserMessages(username);
-        temp.add(reply);
-        um.setUserMessages(username, temp);
+        um.addUserMessage(username, reply);
     }
     private void createMessage(String username, String content, TradeRequest t, String sender){
-        Message reply = new Message(content);
-        ArrayList<Message> temp = um.getUserMessages(username);
-        temp.add(reply);
-        um.setUserMessages(username, temp);
+        Message reply = new TradeRequestMessage(content, t, sender);
+        um.addUserMessage(username, reply);
     }
 }
