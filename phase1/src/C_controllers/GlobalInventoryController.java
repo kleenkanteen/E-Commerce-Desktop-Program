@@ -1,16 +1,18 @@
-package C_controllers;
+package controllers;
 
-import F_entities.Item;
-import D_presenters.GlobalInventoryPresenter;
-import E_use_cases.GlobalInventoryManager;
-import E_use_cases.UserManager;
+import entities.Item;
+import presenters.GlobalInventoryPresenter;
+import use_cases.GlobalInventoryManager;
+import use_cases.TradeManager;
+import use_cases.UserManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class GlobalInventoryController {
-    public void run(GlobalInventoryManager gim, UserManager UM, String user) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
@@ -44,7 +46,10 @@ public class GlobalInventoryController {
                             UM.getUserWishlist(user).add(item);
                         }
                         if (input.equals("2")) {
-                            // call trademenu
+                            TradeController trademenu = new TradeController(UM, TM, user);
+                            ArrayList<Item> items = new ArrayList<Item>();
+                            items.add(item);
+                            trademenu.run(items, user);
                         }
                     }
                     else
