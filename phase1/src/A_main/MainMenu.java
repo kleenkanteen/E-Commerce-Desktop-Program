@@ -155,21 +155,17 @@ public class MainMenu {
                         if (attempt.login(username, pass)) {
                             TradeManager y = new TradeManager(utg.getUserTrades());
                             GlobalWishlistManager y3 = new GlobalWishlistManager(gwl.getWishlistItems());
-                            //(String currUser, UserManager userManager, TradeManager tradeManager,
-                            //                    GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
-                            //                    ArrayList<Message> adminMessages)
                             UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
                             um.run();
                         }
                     }
                     else
-                        attempt.createNewUser(username, pass);
+                        attempt.createNewUser(username, pass, utg.getUserTrades());
                     }
                 else {
                     AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                     if (thing.login().equals(username) && !(username.equals("System Messages"))){
                         AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
-                        //(Admin admin, AdminManager adminManager,UserManager um, GlobalInventoryManager gim)
                         AdminSystem successful = new AdminSystem(thing.getAdminObject(), r, attempt, y2);
                         successful.run();
                     }
