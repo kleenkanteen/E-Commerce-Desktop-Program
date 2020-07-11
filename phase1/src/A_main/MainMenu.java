@@ -3,7 +3,7 @@ package A_main;
 import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
 import D_presenters.AdminMenu;
-import E_use_cases.UserManager;
+import E_use_cases.*;
 import F_entities.*;
 import G_exceptions.InvalidLoginException;
 import G_exceptions.InvalidUsernameException;
@@ -136,6 +136,7 @@ public class MainMenu {
         gwl.writeToFile(serializedGlobalWishlist,  gwl.getWishlistItems());
         amg.writeToFile(serializedAdminMessages, amg.getMessages());
          */
+        //create UserManager x
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         System.out.println("Type:\n'1' for User Login.\n'2' for User Account Creation.\n'3' for Admin Login.\nAny other value to exit the program.");
@@ -146,12 +147,18 @@ public class MainMenu {
                 String username = br.readLine();
                 System.out.println("Enter password");
                 String pass = br.readLine();
+                UserManager attempt = new UserManager(ug.getMapOfUsers());
+                GlobalInventoryManager y2 = new GlobalInventoryManager(gig.getgI());
                 if (input.equals("1") || input.equals("2")){
-                    UserManager attempt = new UserManager(ug.getMapOfUsers());
                     attempt.login(username, pass);
                     if (input.equals("1")){
                         if (attempt.login(username, pass)) {
-                            UserMenu um = new UserMenu(username, ug.getMapOfUsers(), utg.getUserTrades(), gig.getgI(), gwl.getWishlistItems(), amg.getMessages());
+                            TradeManager y = new TradeManager(utg.getUserTrades());
+                            GlobalWishlistManager y3 = new GlobalWishlistManager(gwl.getWishlistItems());
+                            //(String currUser, UserManager userManager, TradeManager tradeManager,
+                            //                    GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
+                            //                    ArrayList<Message> adminMessages)
+                            UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
                             um.run();
                         }
                     }
@@ -159,9 +166,11 @@ public class MainMenu {
                         attempt.createNewUser(username, pass);
                     }
                 else {
-                    AdminLogin attempt = new AdminLogin(username, pass, ag.getAdminMap());
-                    if (attempt.login().equals(username) && !(username.equals("System Messages"))){
-                        AdminSystem successful = new AdminSystem(attempt.getAdminObject(), ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers(), gig.getgI());
+                    AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
+                    if (thing.login().equals(username) && !(username.equals("System Messages"))){
+                        AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
+                        //(Admin admin, AdminManager adminManager,UserManager um, GlobalInventoryManager gim)
+                        AdminSystem successful = new AdminSystem(thing.getAdminObject(), r, attempt, y2);
                         successful.run();
                     }
                     }
@@ -170,7 +179,7 @@ public class MainMenu {
                 System.out.println("Exiting program.");
             }
         } catch (IOException e) {
-            System.out.println("File moved or some other I/O error.");
+            return;
         } catch (InvalidLoginException x) {
         }
         ug.writeToFile(serializedUsers, ug.getMapOfUsers());
