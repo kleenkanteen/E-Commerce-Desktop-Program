@@ -17,6 +17,12 @@ public class UserMenu {
     private ArrayList<Message> adminMessages;
     private UserPresenter userPresenter;
 
+    private UserManager userManager;
+    private GlobalInventoryManager globalInventoryManager;
+    private GlobalWishlistManager globalWishlistManager;
+    private TradeManager tradeManager;
+
+
     /**
      * Create a new UserMenu object, the primary controller that the user would interact with.
      * @param currUser the username of the currently logged in User
@@ -33,6 +39,18 @@ public class UserMenu {
         this.userTrades = userTrades;
         this.globalInventory = globalInventory;
         this.globalWishlist = globalWishlist;
+        this.adminMessages = adminMessages;
+        this.userPresenter = new UserPresenter();
+    }
+
+    public UserMenu(String currUser, UserManager userManager, TradeManager tradeManager,
+                    GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
+                    ArrayList<Message> adminMessages) {
+        this.currUser = currUser;
+        this.userManager = userManager;
+        this.tradeManager = tradeManager;
+        this.globalInventoryManager = globalInventoryManager;
+        this.globalWishlistManager = globalWishlistManager;
         this.adminMessages = adminMessages;
         this.userPresenter = new UserPresenter();
     }
