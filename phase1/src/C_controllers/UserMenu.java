@@ -3,6 +3,7 @@ package C_controllers;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Arrays;
 import F_entities.*;
 import E_use_cases.*;
 import D_presenters.UserPresenter;
@@ -103,18 +104,29 @@ public class UserMenu {
             // view frequent trading partners
             else if (userInput.equals("2")) {
                 String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser);
-                if (tradingPartners.length > 0) {
-                    this.userPresenter.printUserTradePartners(tradingPartners);
-                }
-                else {
-                    this.userPresenter.noTradingPartners();
+                // find a better way to do this
+                for(String tradePartner: tradingPartners) {
+                    if(tradePartner != null) {
+                        this.userPresenter.printUserTradePartners(tradePartner);
+                    }
+                    else {
+                        this.userPresenter.noTradingPartners();
+                        break;
+                    }
                 }
             }
             // view 3 most recent trades
             else if (userInput.equals("3")) {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
+                // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
-                    this.userPresenter.tradeToString(trade);
+                    if(trade != null) {
+                        this.userPresenter.tradeToString(trade);
+                    }
+                    else {
+                        this.userPresenter.noRecentTrades();
+                        break;
+                    }
                 }
             }
             // look at personal inventory

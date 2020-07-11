@@ -5,15 +5,15 @@ import F_entities.Trade;
 public class UserPresenter {
 
     public void requestFreezeOfUser() {
-        System.out.println("A request for your account to be frozen has been sent.");
+        System.out.println("A request for your account to be frozen has been sent.\n");
     }
 
     public void userAccountFrozen() {
-        System.out.println("Your account has been frozen, and you are unable to trade.");
+        System.out.println("Your account has been frozen, and you are unable to trade.\n");
     }
 
     public void promptUserToConfirmTrades() {
-        System.out.println("Here are all of your unconfirmed trades. Please confirm any that are complete.");
+        System.out.println("Here are all of your unconfirmed trades. Please confirm any that are complete.\n");
     }
 
     public void promptUserMenu() {
@@ -36,17 +36,15 @@ public class UserPresenter {
     }
 
     public void inputError() {
-        System.out.println("Input not understood, please try again.");
+        System.out.println("Input not understood, please try again.\n");
     }
 
     public void setNewPasswordPrompt() {
-        System.out.println("Enter in your new password");
+        System.out.println("Enter in your new password\n");
     }
 
-    public void printUserTradePartners(String[] tradingPartners) {
-        for(String user : tradingPartners) {
-            System.out.println("\n" + user);
-        }
+    public void printUserTradePartners(String tradePartner) {
+        System.out.println(tradePartner + " ");
     }
 
     public void userInventoryPrompts() {
@@ -67,35 +65,35 @@ public class UserPresenter {
     }
 
     public void endOfUserInventory() {
-        System.out.println("Reached end of inventory.");
+        System.out.println("Reached end of inventory.\n");
     }
 
     public void endOfUserWishlist() {
-        System.out.println("Reached the end of your wishlist.");
+        System.out.println("Reached the end of your wishlist.\n");
     }
 
     public void isEmpty(String collection) {
-        System.out.println("Your " + collection + " is empty!");
+        System.out.println("Your " + collection + " is empty!\n");
     }
 
     public void itemRemoved() {
-        System.out.println("Item removed.");
+        System.out.println("Item removed.\n");
     }
 
     public void tooManyIncompleteTrades() {
-        System.out.println("You have too many incomplete trades.");
+        System.out.println("You have too many incomplete trades.\n");
     }
 
     public void tooManyBorrowsVLoans(int difference) {
-        System.out.println("You have " + difference +  " more borrows than loans!");
+        System.out.println("You have " + difference +  " more borrows than loans!\n");
     }
 
     public void tooManyTradesThisWeek() {
-        System.out.println("You made too many trade offers this week! You can trade again next week.");
+        System.out.println("You made too many trade offers this week! You can trade again next week.\n");
     }
 
     public void noTradingPartners() {
-        System.out.println("You don't have any frequent trading partners yet!");
+        System.out.println("You don't have any frequent trading partners yet!\n");
     }
 
     public void userMenuUserInfoPrompts() {
@@ -109,11 +107,11 @@ public class UserPresenter {
     }
 
     public void newItemMessageSentToAdmin() {
-        System.out.println("A request for an admin to approve of your item has been sent");
+        System.out.println("A request for an admin to approve of your item has been sent.\n");
     }
 
     public void tradeRequestSent(String username) {
-        System.out.println("Trade request sent to user " + username + "!");
+        System.out.println("Trade request sent to user " + username + "!\n");
     }
 
     public void tradeToString(Trade trade) {
@@ -128,14 +126,18 @@ public class UserPresenter {
 
     public void unconfirmedTradeSystemResponse(int response) {
         if(response == 0) {
-            System.out.println("Trade confirmed.");
+            System.out.println("Trade confirmed.\n");
         }
         else {
-            System.out.println("Trade marked as failed.");
+            System.out.println("Trade marked as failed.\n");
         }
     }
 
     public void itemToString(String item) {
         System.out.println(item + "\n");
+    }
+
+    public void noRecentTrades() {
+        System.out.println("You have no recent trades!" + "\n");
     }
 }
