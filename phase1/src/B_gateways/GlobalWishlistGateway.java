@@ -3,7 +3,6 @@ package B_gateways;
 import F_entities.*;
 
 import java.io.*;
-
 public class GlobalWishlistGateway implements Serializable{
 
     GlobalWishlist wishlist;
@@ -17,8 +16,12 @@ public class GlobalWishlistGateway implements Serializable{
             File file = new File(filepath);
             if (file.exists()) {
                 wishlist = readFromFile(filepath);
+                if(wishlist == null) {
+                    wishlist = new GlobalWishlist();
+                }
             } else {
                 file.createNewFile();
+                wishlist = new GlobalWishlist();
             }
         }
         catch(IOException ex) {

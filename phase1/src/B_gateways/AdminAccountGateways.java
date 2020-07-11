@@ -21,8 +21,12 @@ public class AdminAccountGateways {
             File file = new File(filePath);
             if (file.exists()) {
                 readFromFile();
+                if(adminMap == null){
+                    adminMap = new HashMap<>();
+                }
             } else {
                 file.createNewFile();
+                adminMap = new HashMap<>();
             }
         } catch (
                 IOException | ClassNotFoundException ex) {
