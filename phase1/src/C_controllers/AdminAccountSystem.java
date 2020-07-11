@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class AdminAccountSystem {
     Admin admin;
-    HashMap<String, Admin> adminHashMap;
+
     AdminAccountPresenter aap;
     ArrayList<Message> adminMessage;
 
@@ -23,18 +23,18 @@ public class AdminAccountSystem {
      * Class constructor.
      * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
      * @param admin the admin of the currently logged in.
-     * @param adminHashMap the hashMap of admin that stored in program.
+     * @param am the AdminManager will be used to change account information
      * @param adminMessage the ArrayList of the Message
      */
 
 
-    AdminAccountSystem(Admin admin, HashMap<String, Admin> adminHashMap,
+    AdminAccountSystem(Admin admin, AdminManager am,
                        ArrayList<Message> adminMessage){
         this.admin = admin;
         aap = new AdminAccountPresenter(admin);
-        this.adminHashMap = adminHashMap;
+        this.am = am;
         this.adminMessage = adminMessage;
-        am = new AdminManager(adminHashMap, adminMessage);
+
 
     }
 
@@ -69,7 +69,7 @@ public class AdminAccountSystem {
                     String newUsername = br.readLine();
                     aap.newAdminPassword();
                     String newPassword = br.readLine();
-                    try {adminHashMap = am.addAdmin(newUsername, newPassword);
+                    try { am.addAdmin(newUsername, newPassword);
                   }
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();

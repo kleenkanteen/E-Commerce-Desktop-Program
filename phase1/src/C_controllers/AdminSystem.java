@@ -23,26 +23,22 @@ public class AdminSystem {
 
 
     AdminManager adminManager;
-    HashMap<String, Admin> adminHashMap;
     ArrayList<Message> adminMessageList;
-    HashMap<String, User> userHashMap;
-    GlobalInventory gi;
+
     UserManager um;
 
 
 
     GlobalInventoryManager gim;
-    public AdminSystem(Admin admin, HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessageList,
-                       HashMap<String, User> userHashMap, GlobalInventory gi) {
+    public AdminSystem(Admin admin, AdminManager adminManager,
+                       UserManager um, GlobalInventoryManager gim) {
         this.admin = admin;
         am = new AdminMenu(admin);
-        this.adminHashMap = adminHashMap;
-        this.adminMessageList = adminMessageList;
-        this.userHashMap = userHashMap;
-        this.gi = gi;
-        gim = new GlobalInventoryManager(gi);
-        um = new UserManager(userHashMap);
-        adminManager = new AdminManager(adminHashMap, adminMessageList);
+        this.adminManager = adminManager;
+        this.um = um;
+        this.gim = gim;
+        adminMessageList = adminManager.getAdminMessagesArrayList();
+
 
     }
 
@@ -61,7 +57,7 @@ public class AdminSystem {
                         amr.run();
                         break;
                     case "2":
-                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminHashMap, adminMessageList);
+                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
                         aas.run();
 
                         break;
