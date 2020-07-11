@@ -63,6 +63,7 @@ public class AdminAccountSystem {
                     else {
                         aap.failToChangePassword();
                     }
+                    aap.printMainMenu();
                 } else if (input.equals("2")) {
                     aap.newAdminUserName();
                     String newUsername = br.readLine();
@@ -73,6 +74,7 @@ public class AdminAccountSystem {
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();
                     }
+                    aap.printMainMenu();
 
                 }
             } catch (IOException e) {

@@ -73,7 +73,7 @@ public class AdminSystem {
                     case "4":
                         am.exitPresenter();
 
-                        return;
+                        break;
                 }
 
             } catch (IOException e) {
