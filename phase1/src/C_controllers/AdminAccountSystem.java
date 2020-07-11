@@ -37,6 +37,13 @@ public class AdminAccountSystem {
         am = new AdminManager(adminHashMap, adminMessage);
 
     }
+
+
+    /**
+     * Interacts with the admin to allow them to modify information in AdminAccount.
+     */
+
+
     public void run(){
         aap.printMainMenu();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

@@ -34,6 +34,12 @@ public class AdminAccountPresenter {
     }
     public void exitMenu(){
         System.out.println("going back to admin's menu.");
+        System.out.println("Hi," + admin.getUsername() + ", welcome back. Choose your option below:");
+        System.out.println("[1] Check your message inbox");
+        System.out.println("[2] Manage Admin account");
+        System.out.println("[3] Access the information of Users");
+        System.out.println("[4] Logout");
+
     }
 
 }
