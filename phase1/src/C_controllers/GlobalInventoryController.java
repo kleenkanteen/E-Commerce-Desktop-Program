@@ -1,11 +1,10 @@
-package controllers;
+package C_controllers;
 
-import C_controllers.TradeController;
-import F_entities.Item;
 import D_presenters.GlobalInventoryPresenter;
 import E_use_cases.GlobalInventoryManager;
 import E_use_cases.TradeManager;
 import E_use_cases.UserManager;
+import F_entities.Item;
 
 import java.io.BufferedReader;
 import java.io.IOException;
