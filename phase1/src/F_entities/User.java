@@ -125,6 +125,14 @@ public class User extends Account implements Serializable{
     }
 
     /**
+     * Setting a list of message as the list of messages to this account
+     * @param messages the list of messages
+     */
+    public void setMessages(ArrayList<Message> messages){
+        this.messages = messages;
+    }
+
+    /**
      * Changing the threshold (how many more times must you lend items before you can borrow) that this user has
      * @param newThreshold the new theshold value
      */
