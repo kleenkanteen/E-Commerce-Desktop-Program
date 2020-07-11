@@ -40,8 +40,10 @@ public class TradeController {
      * trade different items to add to their collection of items!
      * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
      * @param trader is a string that indicates the second trader.
+     * @return a TradeRequestMessage that can be used to add into other classes if necessary!
      */
-    public void run(ArrayList<Item> itemsToTrade, String trader) {
+    public TradeRequestMessage run(ArrayList<Item> itemsToTrade, String trader) {
+        TradeRequestMessage tradeRequestMessage = null;
         String userA = trader;
         String userB = itemsToTrade.get(0).getOwnerName();
 
@@ -68,7 +70,7 @@ public class TradeController {
                 tradeMenu.chooseOneOrTwo();
                 tradeType = input.nextInt();
                 itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
-                permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
+                tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
                 tradeMenu.tradeRequestSent(userB);
             // temp trade
             case 2:
@@ -76,12 +78,13 @@ public class TradeController {
                 tradeMenu.chooseOneOrTwo();
                 tradeType = input.nextInt();
                 itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
-                tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB,date, place);
+                tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB,date, place);
                 tradeMenu.tradeRequestSent(userB);
             default:
                 input.close();
                 System.exit(0);
         }
+        return tradeRequestMessage;
     }
 
     private ArrayList<Item> oneOrTwoWayTrade(int tradeType, String userA, ArrayList<Item> itemsToTradeA) {
