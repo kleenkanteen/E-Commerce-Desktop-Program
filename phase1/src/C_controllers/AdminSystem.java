@@ -48,8 +48,6 @@ public class AdminSystem {
 
     public void run() {
         am.printMainOption();
-        AdminMenu menu = new AdminMenu(admin);
-        menu.printMainOption();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input;
         while (true) {
