@@ -20,6 +20,13 @@ import java.util.HashMap;
 
 
 public class MainMenu {
+    /**
+     * attempts to deserialize all previously stored Admins, Users, the GlobalInventory, Messages shared by all admins
+     * the GlobalWishList, all UserTrades
+     * Based on user input and if a successful login is performed, grants access to User/ Admin Menu/ User Acc Creation
+     * @throws IOException in case file is moved/ some other I/O error.
+     * @throws ClassNotFoundException in case the class that is being passed in or casted does not exist.
+     */
     public void run() throws IOException, ClassNotFoundException {
         String serializedAdmins = "phase1/src/H_ser_file_infos/serializedAdmins.ser";
         String serializedUsers = "phase1/src/H_ser_file_infos/serializedUsers.ser";
@@ -152,7 +159,7 @@ public class MainMenu {
                     }
                 else {
                     AdminLogin attempt = new AdminLogin(username, pass, ag.getAdminMap());
-                    if (attempt.login().equals(username)){
+                    if (attempt.login().equals(username) && !(username.equals("System Messages"))){
                         AdminSystem successful = new AdminSystem(attempt.getAdminObject(), ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers(), gig.getgI());
                         successful.run();
                     }

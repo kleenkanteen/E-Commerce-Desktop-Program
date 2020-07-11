@@ -11,6 +11,12 @@ public class AdminManager{
     private HashMap<String, Admin> adminHashMap;
     private ArrayList<Message> adminMessagesArrayList;
 
+    /**
+     * Class constructor.
+     * Takes in HashMap of all admin accounts and ArrayList of Messages shared between all of them.
+     * @param adminHashMap HashMap containing all admin accounts.
+     * @param adminMessagesArrayList ArrayList containing all admin Messages.
+     */
     public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList) {
         this.adminHashMap = adminHashMap;
         this.adminMessagesArrayList = adminMessagesArrayList;
@@ -42,14 +48,26 @@ public class AdminManager{
         throw new InvalidUsernameException();
     }
 
+    /** Attempts to retrieve Messages shared by all admin accounts.
+     * @return ArrayList of all Messages shared by all admin accounts.
+     */
     public ArrayList<Message> getAdminMessagesArrayList() {
         return adminMessagesArrayList;
     }
 
+    /** Attempts to set shared admin Messages by replacing previous one(s).
+     * @param adminMessagesArrayList shared admin Messages to replace previous one(s).
+     */
     public void setAdminMessagesArrayList(ArrayList<Message> adminMessagesArrayList) {
         this.adminMessagesArrayList = adminMessagesArrayList;
     }
 
+    /**Attempts to change password of a specific admin by getting input of new desired password twice.
+     * @param password1 attempt 1 at entering new password
+     * @param password2 attempt 1 at entering new password
+     * @param admin admin who is attempting to get a new password
+     * @return True if successful password change (attempt 1 and attempt 2 are same), false otherwise.
+     */
     public boolean addNewPassWord(String password1, String password2, Admin admin){
         if (password1.equals(password2)){
             admin.setPassword(password1);
