@@ -142,6 +142,15 @@ public class UserManager {
     }
 
     /**
+     * Return this user's limit of incomplete trades
+     * @param username the user in question
+     * @return the max num of incomplete trades for this user
+     */
+    public int getUserIncompleteTrades(String username) {
+        return this.allUsers.get(username).getLimitOfIncompleteTrade();
+    }
+
+    /**
      * Returns the max trades per week that a specified user can make.
      * @param username the String username
      * @return the number of trades this user can make
