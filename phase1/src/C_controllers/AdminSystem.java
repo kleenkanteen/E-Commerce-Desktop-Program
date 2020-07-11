@@ -45,37 +45,26 @@ public class AdminSystem {
         while (!input.equals("4")) {
             try {
                 input = br.readLine();
-                switch (input) {
-                    case "1":
-                        am.goIntoMessageInbox();
-                        AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
-                                um, admin.getUsername());
-                        amr.run();
-                        break;
+                am.printMainOption();
+                if (input.equals("1")){
+                    am.goIntoMessageInbox();
+                    AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
+                            um, admin.getUsername());
+                    amr.run();}
 
-                    case "2":
-                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
-                        aas.run();
-                        break;
-
-                    case "3":
-                        AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
-                        abu.start();
-                        break;
-
-                    case "4":
-                        am.exitPresenter();
+                else if (input.equals("2")){
+                    AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
+                    aas.run();}
 
 
+                else if (input.equals("3")){
+                    AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
+                    abu.start();}
 
-                }
 
             } catch (IOException e) {
                 System.out.println("Something went wrong");
             }
-
-
-
         }
     }
 }
