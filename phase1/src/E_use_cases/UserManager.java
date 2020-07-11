@@ -40,11 +40,15 @@ public class UserManager {
      * Attempts to add a new user to the HashMap of all users
      * All usernames are unique.
      * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
+     * @return true if user account successfully created, false if user already exists in system
      */
-    public void createNewUser(String username, String password) {
+    public boolean createNewUser(String username, String password, HashMap<String, ArrayList<Trade>> tradeHistory) {
         if(!allUsers.containsKey(username)) {
             allUsers.put(username, new User(username, password));
+            tradeHistory.put(username, new ArrayList<>());
+            return true;
         }
+        return false;
     }
 
     /**
@@ -139,6 +143,15 @@ public class UserManager {
      */
     public void setUserMessages(String username, ArrayList<Message> message) {
         this.allUsers.get(username).setMessages(message);
+    }
+
+    /**
+     * Return this user's limit of incomplete trades
+     * @param username the user in question
+     * @return the max num of incomplete trades for this user
+     */
+    public int getUserIncompleteTrades(String username) {
+        return this.allUsers.get(username).getLimitOfIncompleteTrade();
     }
 
     /**
