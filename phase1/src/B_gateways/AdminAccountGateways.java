@@ -32,6 +32,11 @@ public class AdminAccountGateways {
 
 
     }
+
+    /**
+     * Deserializes the hashmap of Admin into the program.
+     * will assign adminMap to the hashmap which stores Admin with UserName as key
+     */
     public void readFromFile() throws ClassNotFoundException {
 
         try {
@@ -39,8 +44,6 @@ public class AdminAccountGateways {
             InputStream buffer = new BufferedInputStream(file);
             ObjectInput input = new ObjectInputStream(buffer);
 
-            // deserialize the Map
-           //TODO: delete later
             adminMap = (HashMap<String, Admin>) input.readObject();
             input.close();
             System.out.println(adminMap);
@@ -51,6 +54,13 @@ public class AdminAccountGateways {
             System.out.println("failed to find the class to read");
         }
     }
+
+    /**
+     * Serialize the HashMap of admin into .ser file
+     * @param adminMap the HashMap we want to use to store AdminAccountInformation
+     * @throws IOException when failed to serialize into .ser file
+     *
+     */
 
     public void saveToFile(HashMap<String, Admin> adminMap) throws IOException {
 
