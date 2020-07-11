@@ -1,10 +1,11 @@
 package controllers;
 
-import entities.Item;
-import presenters.GlobalInventoryPresenter;
-import use_cases.GlobalInventoryManager;
-import use_cases.TradeManager;
-import use_cases.UserManager;
+import C_controllers.TradeController;
+import F_entities.Item;
+import D_presenters.GlobalInventoryPresenter;
+import E_use_cases.GlobalInventoryManager;
+import E_use_cases.TradeManager;
+import E_use_cases.UserManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
