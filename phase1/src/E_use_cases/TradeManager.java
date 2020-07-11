@@ -235,4 +235,22 @@ public class TradeManager {
         }
         return sum;
     }
+
+
+    /**
+     * Confirm a trades this user have in their trade history with a status they entered
+     * Trade history is the list of trades that the user is involved in
+     * @param username the username of this user
+     * @param trade The trades to be confirmed
+     * @param status the confirmation status from the user
+     */
+    public void setConfirm(String username, Trade trade, boolean status) {
+        ArrayList<Trade> temp = getTradeHistory(username);
+        for(Trade t1: temp){
+            if(t1.equals(trade)){
+                t1.setConfirm(username, status);
+                return;
+            }
+        }
+    }
 }
