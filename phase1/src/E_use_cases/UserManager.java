@@ -130,12 +130,12 @@ public class UserManager {
     }
 
     /**
-     * Set a user's messages to a different arraylist
-     * @param username String username
-     * @param userMessages The arraylist of messages to set
+     * Allows for setting of a user's messages
+     * @param username the user in question
+     * @param message the arrayList of messages to set
      */
-    public void setUserMessages(String username, ArrayList<Message> userMessages) {
-        this.allUsers.get(username).setMessages(userMessages);
+    public void setUserMessages(String username, ArrayList<Message> message) {
+        this.allUsers.get(username).setMessages(message);
     }
 
     /**
@@ -171,6 +171,24 @@ public class UserManager {
      */
     public int getUserBorrowsVLoans(String username) {
         return this.allUsers.get(username).getThreshold();
+    }
+
+    /**
+     * Adds a message to a user's account
+     * @param username the user to be accessed
+     * @param message the message to add
+     */
+    public void addUserMessage(String username, Message message) {
+        this.allUsers.get(username).addMessages(message);
+    }
+
+    /**
+     * Removes a message from a user's account
+     * @param username the user in question
+     * @param message the message to remove
+     */
+    public void removeUserMessage(String username, Message message) {
+        this.allUsers.get(username).removeMessages(message);
     }
 
     // USER INVENTORY AND WISHLIST

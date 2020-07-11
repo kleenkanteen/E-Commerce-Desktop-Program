@@ -16,7 +16,7 @@ public class GlobalInventory implements Serializable {
      */
 
     public GlobalInventory(){
-        itemMap = new HashMap<String, Item>();
+        itemMap = new HashMap<>();
         itemIdCollection = new ArrayList<>();
     }
 
@@ -31,7 +31,6 @@ public class GlobalInventory implements Serializable {
 
     /**
      * modify the hashmap that stores the Items in global inventory with hashmap passed in.
-     * @return hashmap of items stored in global inventory
      */
     public void setItemMap(HashMap<String, Item> itemMap) {
         this.itemMap = itemMap;

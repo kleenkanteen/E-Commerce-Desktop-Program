@@ -14,11 +14,6 @@ public class UserPresenter {
         System.out.println("Here are all of your unconfirmed trades. Please confirm any that are complete.");
     }
 
-    public void userMaxNumOfTrades() {
-        System.out.println("You have the reached the maximum number of trades " +
-                "offers that you can send this week. \n You will have to wait until next week to send more.");
-    }
-
     public void promptUserMenu() {
         System.out.println("What would you like to do today?" +
                 "\n[1] Access your account information." +
@@ -113,5 +108,9 @@ public class UserPresenter {
 
     public void newItemMessageSentToAdmin() {
         System.out.println("A request for an admin to approve of your item has been sent");
+    }
+
+    public void tradeRequestSent(String username) {
+        System.out.println("Trade request sent to user " + username + "!");
     }
 }
