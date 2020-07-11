@@ -73,6 +73,11 @@ public class AdminAccountGateways {
         output.close();
     }
 
+    /**
+     * getter for HashMap of Admin that stored in .ser file.
+     * @return the HashMap of Admin that stored in .ser file.
+     */
+
     public HashMap<String, Admin> getAdminMap() {
         return adminMap;
     }

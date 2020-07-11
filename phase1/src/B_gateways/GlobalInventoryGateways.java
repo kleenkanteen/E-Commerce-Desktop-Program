@@ -9,6 +9,10 @@ public class GlobalInventoryGateways implements Serializable{
     String filePath;
     GlobalInventoryManager gIManager;
     GlobalInventory gI;
+
+    /**
+     * Creates a new gateway that loads GlobalInventory in a .ser file
+     */
     public GlobalInventoryGateways(String filePath){
         this.filePath = filePath;
 
@@ -26,6 +30,11 @@ public class GlobalInventoryGateways implements Serializable{
     }
     gIManager = new GlobalInventoryManager(gI);
     }
+
+    /**
+     * Deserializes the GlobalInventory object into the program.
+     * will assign gI to the GlobalInventory that stored in the program.
+     */
     public void readFromFile() {
         try {
             InputStream file = new FileInputStream(filePath);
@@ -43,6 +52,13 @@ public class GlobalInventoryGateways implements Serializable{
 
     }
 
+    /**
+     * Serialize the GlobalInventory into .ser file
+     * @param gi the GlobalInventory Object that we want to store in the .ser file
+     * @throws IOException when failed to serialize into .ser file
+     *
+     */
+
     public void writeToFile(GlobalInventory gi) {
         try {
             OutputStream file = new FileOutputStream(filePath);
@@ -58,6 +74,11 @@ public class GlobalInventoryGateways implements Serializable{
             System.out.println("Filed to write the Object");
         }
     }
+
+    /**
+     * getter for GlobalInventory that stored in .ser file.
+     * @return the globalInventory that stored in .ser file.
+     */
 
     public GlobalInventory getgI() {
         return gI;
