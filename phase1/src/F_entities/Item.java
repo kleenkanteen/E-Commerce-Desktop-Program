@@ -14,7 +14,7 @@ public class Item implements Serializable {
     private String itemID = null;
     private final String description;
     private final String name;
-    private final String ownerName;
+    private String ownerName;
 
 
     /**
