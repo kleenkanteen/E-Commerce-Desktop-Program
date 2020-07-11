@@ -32,6 +32,8 @@ public class AdminAccountGateways {
             System.out.println("Failed to read");
         }
 
+
+
     }
     public void readFromFile() throws ClassNotFoundException {
 
@@ -41,8 +43,10 @@ public class AdminAccountGateways {
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the Map
+           //TODO: delete later
             adminMap = (HashMap<String, Admin>) input.readObject();
             input.close();
+            System.out.println(adminMap);
 
         } catch (IOException ex) {
             System.out.println("Failed to read");

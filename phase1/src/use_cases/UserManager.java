@@ -17,6 +17,42 @@ public class UserManager {
     }
 
     /**
+     * Allows a user to login. Only use with user login option in main menu!
+     * If the username does not match up with password, throw InvalidLoginException.
+     * Put this method in a try-catch!!!
+     * @param username the username input
+     * @param password the password input
+     * @return True if user logged in, false if invalid login
+     */
+    public boolean login(String username, String password) {
+        // check username
+        if(allUsers.containsKey(username)) {
+            // check password
+            if(password.equals(allUsers.get(username).getPassword())) {
+                // if successful, return String username
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Attempts to add a new user to the HashMap of all users
+     * All usernames are unique.
+     * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
+     * PUt this method in a try-catch!!!
+     */
+    public void createNewUser(String username, String password) {
+        if(!allUsers.containsKey(username)) {
+            allUsers.put(username, new User(username, password));
+        }
+    }
+
+    public HashMap<String, User> returnAllUsers() {
+        return this.allUsers;
+    }
+
+    /**
      * Changes the password of a user
      * @param username String username
      * @param newPassword the new password
