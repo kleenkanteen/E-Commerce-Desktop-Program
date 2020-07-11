@@ -19,6 +19,14 @@ public class AdminAccountSystem {
 
     AdminManager am;
 
+    /**
+     * Class constructor.
+     * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
+     * @param admin the admin of the currently logged in.
+     * @param adminHashMap the hashMap of admin that stored in program.
+     * @param adminMessage the ArrayList of the Message
+     */
+
 
     AdminAccountSystem(Admin admin, HashMap<String, Admin> adminHashMap,
                        ArrayList<Message> adminMessage){
