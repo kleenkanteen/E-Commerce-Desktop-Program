@@ -17,6 +17,9 @@ public class UserGateway {
             File file = new File(filepath);
             if (file.exists()) {
                 this.mapOfUsers = readFromFile(filepath);
+                if(this.mapOfUsers == null) {
+                    this.mapOfUsers = new HashMap<>();
+                }
             } else {
                 file.createNewFile();
             }
@@ -81,5 +84,5 @@ public class UserGateway {
      * Returns the now deserialized map of user objects
      * @return the HashMap of user objects
      */
-    public HashMap<String, User> getMapOfUsers() {return this.mapOfUsers; }
+    public HashMap<String, User> getMapOfUsers() { return this.mapOfUsers; }
 }

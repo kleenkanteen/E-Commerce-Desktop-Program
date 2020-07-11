@@ -40,7 +40,6 @@ public class UserManager {
      * Attempts to add a new user to the HashMap of all users
      * All usernames are unique.
      * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
-     * PUt this method in a try-catch!!!
      */
     public void createNewUser(String username, String password) {
         if(!allUsers.containsKey(username)) {
@@ -48,6 +47,10 @@ public class UserManager {
         }
     }
 
+    /**
+     * Return the hashmap of all Users.
+     * @return the hashmap of all Users.
+     */
     public HashMap<String, User> returnAllUsers() {
         return this.allUsers;
     }
@@ -178,9 +181,7 @@ public class UserManager {
      * @param username the user to be accessed
      * @param message the message to add
      */
-    public void addUserMessage(String username, Message message) {
-        this.allUsers.get(username).addMessages(message);
-    }
+    public void addUserMessage(String username, Message message) { this.allUsers.get(username).addMessages(message); }
 
     /**
      * Removes a message from a user's account
