@@ -1,5 +1,7 @@
 package D_presenters;
 
+import F_entities.Trade;
+
 public class UserPresenter {
 
     public void requestFreezeOfUser() {
@@ -112,5 +114,28 @@ public class UserPresenter {
 
     public void tradeRequestSent(String username) {
         System.out.println("Trade request sent to user " + username + "!");
+    }
+
+    public void tradeToString(Trade trade) {
+        System.out.println(trade.toString() + "\n");
+    }
+
+    public void checkUnconfirmedTradesPrompts() {
+        System.out.println("Can you confirm that this meeting happened? " +
+                "\n[1] The meeting happened " +
+                "\n[2] The meeting did not happen.");
+    }
+
+    public void unconfirmedTradeSystemResponse(int response) {
+        if(response == 0) {
+            System.out.println("Trade confirmed.");
+        }
+        else {
+            System.out.println("Trade marked as failed.");
+        }
+    }
+
+    public void itemToString(String item) {
+        System.out.println(item + "\n");
     }
 }

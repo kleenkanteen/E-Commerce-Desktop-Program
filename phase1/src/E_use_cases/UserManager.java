@@ -41,9 +41,10 @@ public class UserManager {
      * All usernames are unique.
      * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
      */
-    public void createNewUser(String username, String password) {
+    public void createNewUser(String username, String password, HashMap<String, ArrayList<Trade>> tradeHistory) {
         if(!allUsers.containsKey(username)) {
             allUsers.put(username, new User(username, password));
+            tradeHistory.put(username, new ArrayList<>());
         }
     }
 

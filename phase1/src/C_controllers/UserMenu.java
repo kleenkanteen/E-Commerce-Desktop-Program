@@ -40,9 +40,9 @@ public class UserMenu {
         String userInput = "";
 
         // check to see if user can trade
-        checkUserStatus();
+        // checkUserStatus();
         // check for all incomplete trades to confirm
-        confirmIncompleteUserTrades();
+        // confirmIncompleteUserTrades();
 
         while(!userInput.equals("exit")) {
             this.userPresenter.promptUserMenu();
@@ -114,7 +114,7 @@ public class UserMenu {
             else if (userInput.equals("3")) {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
                 for(Trade trade : recentTradeHistory) {
-                    System.out.println(trade.toString() + "\n");
+                    this.userPresenter.tradeToString(trade);
                 }
             }
             // look at personal inventory
@@ -188,25 +188,24 @@ public class UserMenu {
             boolean continueCheckingUnconfirmed;
             // go through all unconfirmed trades
             for(Trade trade : incompletes) {
-                System.out.println(trade.toString() + "\n");
+                this.userPresenter.tradeToString(trade);
                 continueCheckingUnconfirmed = true;
                 while(continueCheckingUnconfirmed) {
-                    System.out.println("Can you confirm that this meeting happened? " +
-                            "\n[1] The meeting happened " +
-                            "\n[2] The meeting did not happen.");
+                    this.userPresenter.checkUnconfirmedTradesPrompts();
                     userInput = input.nextLine();
                     // confirm meeting
                     if(userInput.equals("1")) {
                         this.tradeManager.setConfirm(this.currUser, trade, true);
-                        System.out.println("Trade confirmed.");
+                        this.userPresenter.unconfirmedTradeSystemResponse(0);
                         continueCheckingUnconfirmed = false;
                     }
                     // deny
                     else if(userInput.equals("2")) {
                         this.tradeManager.setConfirm(this.currUser, trade, false);
-                        System.out.println("Trade marked as failed.");
+                        this.userPresenter.unconfirmedTradeSystemResponse(1);
                         continueCheckingUnconfirmed = false;
                     }
+                    // input error
                     else {
                         this.userPresenter.inputError();
                     }
@@ -229,7 +228,7 @@ public class UserMenu {
                 this.userPresenter.isEmpty("inventory");
                 break;
             }
-            System.out.println(userInventory.get(index).toString() + "\n");
+            this.userPresenter.itemToString(userInventory.get(index).toString());
             // prompt user on what to do with this item
             this.userPresenter.userInventoryPrompts();
             userInventoryInput = input.nextLine();
@@ -283,7 +282,7 @@ public class UserMenu {
                 this.userPresenter.isEmpty("wishlist");
                 break;
             }
-            System.out.println(userWishlist.get(index).toString() + "\n");
+            this.userPresenter.itemToString(userWishlist.get(index).toString());
             // prompt user on what to do with this item
             this.userPresenter.userWishlistPrompts();
             userWishlistInput = input.nextLine();
