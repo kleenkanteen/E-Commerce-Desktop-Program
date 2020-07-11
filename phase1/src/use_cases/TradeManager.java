@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class    TradeManager {
+public class TradeManager {
     private HashMap<String, ArrayList<Trade>> tradeHistory;
 
     /**

@@ -44,7 +44,7 @@ public class Message implements Serializable {
 
     /**
      * Returns a string representation of the message
-     * @return the content of the message
+     * @return the content of the message in a string representation
      */
     @Override
     public String toString() {
