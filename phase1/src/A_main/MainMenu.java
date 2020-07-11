@@ -2,6 +2,7 @@ package A_main;
 
 import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
+import D_presenters.AdminMenu;
 import E_use_cases.UserManager;
 import F_entities.*;
 import G_exceptions.InvalidLoginException;
@@ -26,6 +27,15 @@ public class MainMenu {
         String serializedAdminMessages = "phase1/src/H_ser_file_infos/serializedAdminMessages.ser";
         String serializedGlobalWishlist = "phase1/src/H_ser_file_infos/serializedGlobalWishlist.ser";
         String serializedUserTrades = "phase1/src/H_ser_file_infos/serializedUserTrades.ser";
+        //deserialize admins
+        AdminAccountGateways ag = new AdminAccountGateways(serializedAdmins);
+        System.out.println("Admins:\n" + ag.getAdminMap());
+       /* Admin tempadmin = new Admin("admin", "admin");
+        HashMap<String, Admin> tempadminlist = new HashMap<>();
+        tempadminlist.put(tempadmin.getUsername(), tempadmin);
+        ag.setAdminMap(tempadminlist);
+        System.out.println("Admins:\n" + ag.getAdminMap());
+        */
         //deserialize users
         UserGateway ug = new UserGateway(serializedUsers);
         System.out.println("Users:\n" + ug.getMapOfUsers());
@@ -141,20 +151,26 @@ public class MainMenu {
                         attempt.createNewUser(username, pass);
                     }
                 else {
-                    System.out.println("TODO");
+                    AdminLogin attempt = new AdminLogin(username, pass, ag.getAdminMap());
+                    if (attempt.login().equals(username)){
+                        AdminSystem successful = new AdminSystem(attempt.getAdminObject(), ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers(), gig.getgI());
+                        successful.run();
+                    }
                     }
                 }
             else {
                 System.out.println("Exiting program.");
             }
         } catch (IOException e) {
-            System.out.println("Something went wrong");
+            System.out.println("File moved or some other I/O error.");
+        } catch (InvalidLoginException x) {
         }
         ug.writeToFile(serializedUsers, ug.getMapOfUsers());
         gig.writeToFile(gig.getgI());
         utg.writeToFile(serializedUserTrades, utg.getUserTrades());
         gwl.writeToFile(serializedGlobalWishlist,  gwl.getWishlistItems());
         amg.writeToFile(serializedAdminMessages, amg.getMessages());
+        ag.saveToFile(ag.getAdminMap());
     }
 }
 

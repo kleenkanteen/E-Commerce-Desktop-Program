@@ -46,7 +46,6 @@ public class AdminAccountGateways {
 
             adminMap = (HashMap<String, Admin>) input.readObject();
             input.close();
-            System.out.println(adminMap);
 
         } catch (IOException ex) {
             System.out.println("Failed to read");
@@ -80,5 +79,9 @@ public class AdminAccountGateways {
 
     public HashMap<String, Admin> getAdminMap() {
         return adminMap;
+    }
+
+    public void setAdminMap(HashMap<String, Admin> adminMap) {
+        this.adminMap = adminMap;
     }
 }
