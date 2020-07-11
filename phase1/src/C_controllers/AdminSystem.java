@@ -52,23 +52,30 @@ public class AdminSystem {
                                 um, admin.getUsername());
                         amr.run();
                         break;
+
                     case "2":
                         AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
                         aas.run();
                         break;
-                    case "3":
 
+                    case "3":
                         AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
                         abu.start();
                         break;
-                }
 
+                    case "4":
                         am.exitPresenter();
 
-                } catch (IOException e) {
+
+
+                }
+
+            } catch (IOException e) {
                 System.out.println("Something went wrong");
             }
 
-        }
+
+
         }
     }
+}
