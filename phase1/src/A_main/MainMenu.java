@@ -139,8 +139,7 @@ public class MainMenu {
         //create UserManager x
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
-        System.out.println("Type:\n'1' for User Login.\n'2' for User Account Creation.\n'3' for Admin Login.\nAny other value to exit the program.");
-        try {
+        System.out.println("Choose your option below:\n[1] for User Login.\n[2] for User Account Creation.\n[3] for Admin Login.\nAny other value to exit the program.");        try {
             input = br.readLine();
             if (input.equals("1") || input.equals("2") || input.equals("3")) {
                 System.out.println("Enter username:");
