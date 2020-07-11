@@ -19,6 +19,9 @@ public class UserTradesGateway {
             File file = new File(filepath);
             if (file.exists()) {
                 this.userTrades = readFromFile(filepath);
+                if(this.userTrades == null) {
+                    this.userTrades = new HashMap<>();
+                }
             } else {
                 file.createNewFile();
             }
