@@ -18,12 +18,13 @@ public class UserTradesGateway {
         try {
             File file = new File(filepath);
             if (file.exists()) {
-                this.userTrades = readFromFile(filepath);
-                if(this.userTrades == null) {
-                    this.userTrades = new HashMap<>();
+                userTrades = readFromFile(filepath);
+                if(userTrades == null) {
+                    userTrades = new HashMap<>();
                 }
             } else {
                 file.createNewFile();
+                userTrades = new HashMap<>();
             }
         }
         catch(IOException ex) {

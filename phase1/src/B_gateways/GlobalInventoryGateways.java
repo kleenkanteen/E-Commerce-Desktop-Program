@@ -20,8 +20,13 @@ public class GlobalInventoryGateways implements Serializable{
         File file = new File(filePath);
         if (file.exists()) {
             readFromFile();
+            if(gI == null) {
+                gI = new GlobalInventory();
+            };
         } else {
             file.createNewFile();
+            gI = new GlobalInventory();
+
         }
     }
         catch(

@@ -17,8 +17,13 @@ public class AdminMessageGateway {
             File file = new File(filepath);
             if (file.exists()) {
                 this.messages = readFromFile(filepath);
+                if (messages == null){
+                    messages = new ArrayList<Message>();
+                }
+
             } else {
                 file.createNewFile();
+                messages = new ArrayList<Message>();
             }
         }
         catch(IOException ex) {
