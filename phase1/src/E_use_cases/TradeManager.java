@@ -52,21 +52,6 @@ public class TradeManager {
     }
 
     /**
-     * Getter of all the temporary trade history of a user. Trade history is the list of trades that the
-     * user is involved in
-     * @param username the user's username
-     * @return the temporary trade history of a user
-     */
-    public ArrayList<TempTrade> getTempTradeHistory(String username) {
-        ArrayList<Trade> temp = getTradeHistory(username);
-        ArrayList <TempTrade> tempTradeHistory = new ArrayList<TempTrade>();
-        for (Trade t: temp){
-            if(t instanceof TempTrade) tempTradeHistory.add((TempTrade) t);
-        }
-        return tempTradeHistory;
-    }
-
-    /**
      * Getter of the number of times a user has borrowed
      * @param username the user's username
      * @return the number of times a user has borrowed

@@ -20,6 +20,9 @@ public class UserGateway {
             } else {
                 file.createNewFile();
             }
+            if(this.mapOfUsers == null) {
+                this.mapOfUsers = new HashMap<>();
+            }
         }
         catch(IOException ex) {
             System.out.println("Input error!");
@@ -81,5 +84,5 @@ public class UserGateway {
      * Returns the now deserialized map of user objects
      * @return the HashMap of user objects
      */
-    public HashMap<String, User> getMapOfUsers() {return this.mapOfUsers; }
+    public HashMap<String, User> getMapOfUsers() { return this.mapOfUsers; }
 }
