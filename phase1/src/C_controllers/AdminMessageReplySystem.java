@@ -62,7 +62,6 @@ public class AdminMessageReplySystem {
                     if (!ContentMessageResponse(m, messages, br)) return;
                 }
             }
-            br.close();
         }catch(IOException e){
             mm.printErrorOccurred();
         }finally {

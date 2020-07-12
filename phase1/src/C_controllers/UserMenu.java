@@ -3,6 +3,7 @@ package C_controllers;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.HashMap;
+import java.util.Arrays;
 import F_entities.*;
 import E_use_cases.*;
 import D_presenters.UserPresenter;
@@ -98,23 +99,36 @@ public class UserMenu {
             if (userInput.equals("1")) {
                 this.userPresenter.setNewPasswordPrompt();
                 String newPass = input.nextLine();
-                this.userManager.changePassword(this.currUser, newPass);
+                if(!newPass.toLowerCase().equals("exit")) {
+                    this.userManager.changePassword(this.currUser, newPass);
+                }
             }
             // view frequent trading partners
             else if (userInput.equals("2")) {
                 String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser);
-                if (tradingPartners.length > 0) {
-                    this.userPresenter.printUserTradePartners(tradingPartners);
-                }
-                else {
-                    this.userPresenter.noTradingPartners();
+                // find a better way to do this
+                for(String tradePartner: tradingPartners) {
+                    if(tradePartner != null) {
+                        this.userPresenter.printUserTradePartners(tradePartner);
+                    }
+                    else {
+                        this.userPresenter.noTradingPartners();
+                        break;
+                    }
                 }
             }
             // view 3 most recent trades
             else if (userInput.equals("3")) {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
+                // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
-                    System.out.println(trade.toString() + "\n");
+                    if(trade != null) {
+                        this.userPresenter.tradeToString(trade);
+                    }
+                    else {
+                        this.userPresenter.noRecentTrades();
+                        break;
+                    }
                 }
             }
             // look at personal inventory
@@ -188,25 +202,24 @@ public class UserMenu {
             boolean continueCheckingUnconfirmed;
             // go through all unconfirmed trades
             for(Trade trade : incompletes) {
-                System.out.println(trade.toString() + "\n");
+                this.userPresenter.tradeToString(trade);
                 continueCheckingUnconfirmed = true;
                 while(continueCheckingUnconfirmed) {
-                    System.out.println("Can you confirm that this meeting happened? " +
-                            "\n[1] The meeting happened " +
-                            "\n[2] The meeting did not happen.");
+                    this.userPresenter.checkUnconfirmedTradesPrompts();
                     userInput = input.nextLine();
                     // confirm meeting
                     if(userInput.equals("1")) {
                         this.tradeManager.setConfirm(this.currUser, trade, true);
-                        System.out.println("Trade confirmed.");
+                        this.userPresenter.unconfirmedTradeSystemResponse(0);
                         continueCheckingUnconfirmed = false;
                     }
                     // deny
                     else if(userInput.equals("2")) {
                         this.tradeManager.setConfirm(this.currUser, trade, false);
-                        System.out.println("Trade marked as failed.");
+                        this.userPresenter.unconfirmedTradeSystemResponse(1);
                         continueCheckingUnconfirmed = false;
                     }
+                    // input error
                     else {
                         this.userPresenter.inputError();
                     }
@@ -229,7 +242,7 @@ public class UserMenu {
                 this.userPresenter.isEmpty("inventory");
                 break;
             }
-            System.out.println(userInventory.get(index).toString() + "\n");
+            this.userPresenter.itemToString(userInventory.get(index).toString());
             // prompt user on what to do with this item
             this.userPresenter.userInventoryPrompts();
             userInventoryInput = input.nextLine();
@@ -283,7 +296,7 @@ public class UserMenu {
                 this.userPresenter.isEmpty("wishlist");
                 break;
             }
-            System.out.println(userWishlist.get(index).toString() + "\n");
+            this.userPresenter.itemToString(userWishlist.get(index).toString());
             // prompt user on what to do with this item
             this.userPresenter.userWishlistPrompts();
             userWishlistInput = input.nextLine();

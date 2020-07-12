@@ -60,7 +60,6 @@ public class UserMessageReplySystem {
                     if (!ContentMessageResponse(m, messages, br)) return;
                 }
             }
-            br.close();
         }catch(IOException e){
             mm.printInvalidInput();
         }finally {

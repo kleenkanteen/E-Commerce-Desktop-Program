@@ -38,11 +38,11 @@ public class MainMenu {
         AdminAccountGateways ag = new AdminAccountGateways(serializedAdmins);
         System.out.println("Admins:\n" + ag.getAdminMap());
 
-        Admin tempadmin = new Admin("admin", "admin");
-        HashMap<String, Admin> tempadminlist = new HashMap<>();
-        tempadminlist.put(tempadmin.getUsername(), tempadmin);
-        ag.setAdminMap(tempadminlist);
-        System.out.println("Admins:\n" + ag.getAdminMap());
+//        Admin tempadmin = new Admin("admin", "admin");
+//        HashMap<String, Admin> tempadminlist = new HashMap<>();
+//        tempadminlist.put(tempadmin.getUsername(), tempadmin);
+//        ag.setAdminMap(tempadminlist)w;
+//        System.out.println("Admins:\n" + ag.getAdminMap());
 
         //deserialize users
         UserGateway ug = new UserGateway(serializedUsers);
@@ -139,8 +139,7 @@ public class MainMenu {
         //create UserManager x
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
-        System.out.println("Type:\n'1' for User Login.\n'2' for User Account Creation.\n'3' for Admin Login.\nAny other value to exit the program.");
-        try {
+        System.out.println("Choose your option below:\n[1] for User Login.\n[2] for User Account Creation.\n[3] for Admin Login.\nAny other value to exit the program.");        try {
             input = br.readLine();
             if (input.equals("1") || input.equals("2") || input.equals("3")) {
                 System.out.println("Enter username:");
@@ -155,21 +154,17 @@ public class MainMenu {
                         if (attempt.login(username, pass)) {
                             TradeManager y = new TradeManager(utg.getUserTrades());
                             GlobalWishlistManager y3 = new GlobalWishlistManager(gwl.getWishlistItems());
-                            //(String currUser, UserManager userManager, TradeManager tradeManager,
-                            //                    GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
-                            //                    ArrayList<Message> adminMessages)
                             UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
                             um.run();
                         }
                     }
                     else
-                        attempt.createNewUser(username, pass);
+                        attempt.createNewUser(username, pass, utg.getUserTrades());
                     }
                 else {
                     AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                     if (thing.login().equals(username) && !(username.equals("System Messages"))){
                         AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
-                        //(Admin admin, AdminManager adminManager,UserManager um, GlobalInventoryManager gim)
                         AdminSystem successful = new AdminSystem(thing.getAdminObject(), r, attempt, y2);
                         successful.run();
                     }
@@ -188,6 +183,9 @@ public class MainMenu {
         gwl.writeToFile(serializedGlobalWishlist,  gwl.getWishlistItems());
         amg.writeToFile(serializedAdminMessages, amg.getMessages());
         ag.saveToFile(ag.getAdminMap());
+
     }
+
+
 }
 

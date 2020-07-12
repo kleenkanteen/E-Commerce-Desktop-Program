@@ -38,10 +38,10 @@ public class AdminSystem {
     }
 
     public void run() {
-        am.printMainOption();
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
-
+        am.printMainOption();
         while (!input.equals("4")) {
             try {
                 input = br.readLine();
@@ -51,24 +51,24 @@ public class AdminSystem {
                         AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
                                 um, admin.getUsername());
                         amr.run();
+                        am.printMainOption();
                         break;
                     case "2":
                         AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
                         aas.run();
+                        am.printMainOption();
                         break;
                     case "3":
-
                         AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
                         abu.start();
+                        am.printMainOption();
                         break;
                 }
 
-                        am.exitPresenter();
 
-                } catch (IOException e) {
+            } catch (IOException e) {
                 System.out.println("Something went wrong");
             }
-
-        }
         }
     }
+}
