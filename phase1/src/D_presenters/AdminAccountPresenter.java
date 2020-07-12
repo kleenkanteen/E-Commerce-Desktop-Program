@@ -17,8 +17,8 @@ public class AdminAccountPresenter {
      */
     public void printMainMenu(){
         System.out.println("Hi, you are now accessing the Admin account");
-        System.out.println("Type 1 to change your password\nType 2 to " +
-                "add a new admin account\nType 3 to exit to admin's menu" );
+        System.out.println("[1]change your password\n[2] " +
+                "add a new admin account\n[3]]exit to admin's menu" );
     }
 
     /**
