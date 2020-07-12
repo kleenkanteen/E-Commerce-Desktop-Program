@@ -38,19 +38,19 @@ public class AdminBrowsingUsersPresenter {
     }
 
     public void successUser(){
-        System.out.println("Limit successfully changed");
+        System.out.println("\nLimit successfully changed\n");
     }
 
     public void thresholdsuccessUser(){
-        System.out.println("Threshold successfully changed");
+        System.out.println("\nThreshold successfully changed\n");
     }
 
-    public void freezingUser(){ System.out.println("User freezing state has been changed"); }
+    public void freezingUser(){ System.out.println("\nUser freezing state has been changed\n"); }
 
     public void error(){ System.out.println("Something went wrong"); }
 
-    public void invalid(){ System.out.println("Invalid input try again with only numbers"); }
+    public void invalid(){ System.out.println("\nInvalid input try again with only numbers\n"); }
 
-    public void invalidoption(){ System.out.println("Invalid option, reloading menu"); }
+    public void invalidoption(){ System.out.println("\nInvalid option, reloading menu\n"); }
 
 }
