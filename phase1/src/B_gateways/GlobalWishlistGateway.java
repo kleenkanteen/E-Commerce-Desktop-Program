@@ -14,20 +14,15 @@ public class GlobalWishlistGateway implements Serializable{
      * @throws ClassNotFoundException If the class cannot be found
      */
     public GlobalWishlistGateway(String filepath)  throws IOException, ClassNotFoundException{
-        try {
-            File file = new File(filepath);
-            if (file.exists()) {
-                wishlist = readFromFile(filepath);
-                if(wishlist == null) {
-                    wishlist = new GlobalWishlist();
-                }
-            } else {
-                file.createNewFile();
+        File file = new File(filepath);
+        if (file.exists()) {
+            wishlist = readFromFile(filepath);
+            if(wishlist == null) {
                 wishlist = new GlobalWishlist();
             }
-        }
-        catch (IOException | ClassNotFoundException ex) {
-            throw ex;
+        } else {
+            file.createNewFile();
+            wishlist = new GlobalWishlist();
         }
     }
     /**
@@ -39,25 +34,16 @@ public class GlobalWishlistGateway implements Serializable{
      */
     public GlobalWishlist readFromFile(String filepath) throws IOException, ClassNotFoundException{
         GlobalWishlist wishItems = new GlobalWishlist();
-        try {
-            // load in the objects
-            InputStream file = new FileInputStream(filepath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
 
-            // deserialize the hashmap of user objects
-            wishItems = (GlobalWishlist) input.readObject();
-            input.close();
-            return wishItems;
-        }
-        catch(IOException ex) {
-            System.out.println("Input error during deserialization");
-            throw ex;
-        }
-        catch(ClassNotFoundException ex) {
-            System.out.println("Class not found exception");
-            throw ex;
-        }
+        // load in the objects
+        InputStream file = new FileInputStream(filepath);
+        InputStream buffer = new BufferedInputStream(file);
+        ObjectInput input = new ObjectInputStream(buffer);
+
+        // deserialize the hashmap of user objects
+        wishItems = (GlobalWishlist) input.readObject();
+        input.close();
+        return wishItems;
     }
 
     /**
@@ -66,20 +52,14 @@ public class GlobalWishlistGateway implements Serializable{
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, GlobalWishlist wishlistItems2) throws IOException{
-        try {
-            // load allUsers onto the file at designed path
-            FileOutputStream file = new FileOutputStream(filepath);
-            OutputStream buffer = new BufferedOutputStream(file);
-            ObjectOutputStream output = new ObjectOutputStream(buffer);
+        // load allUsers onto the file at designed path
+        FileOutputStream file = new FileOutputStream(filepath);
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutputStream output = new ObjectOutputStream(buffer);
 
-            // serialize objects
-            output.writeObject(wishlistItems2);
-            output.close();
-        }
-        catch (IOException ex) {
-            System.out.println("Input error during serialization!");
-            throw ex;
-        }
+        // serialize objects
+        output.writeObject(wishlistItems2);
+        output.close();
     }
 
     public GlobalWishlist getWishlistItems() {

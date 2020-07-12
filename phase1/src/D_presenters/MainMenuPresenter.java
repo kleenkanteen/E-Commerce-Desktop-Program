@@ -23,4 +23,7 @@ public class MainMenuPresenter {
     public void wrongLogin(){
         System.out.println("Wrong login, try again");
     }
+    public void readError(){
+        System.out.println("Failed to read");
+    }
 }

@@ -17,21 +17,15 @@ public class UserTradesGateway {
      * @throws ClassNotFoundException If the class cannot be found
      */
     public UserTradesGateway(String filepath) throws IOException, ClassNotFoundException{
-        try {
-            File file = new File(filepath);
-            if (file.exists()) {
-                userTrades = readFromFile(filepath);
-                if(userTrades == null) {
-                    userTrades = new HashMap<>();
-                }
-            } else {
-                file.createNewFile();
+        File file = new File(filepath);
+        if (file.exists()) {
+            userTrades = readFromFile(filepath);
+            if(userTrades == null) {
                 userTrades = new HashMap<>();
             }
-        }
-        catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Failed to read");
-            throw ex;
+        } else {
+            file.createNewFile();
+            userTrades = new HashMap<>();
         }
     }
     /**
@@ -43,25 +37,15 @@ public class UserTradesGateway {
      */
     public HashMap<String, ArrayList<Trade>> readFromFile(String filepath) throws IOException, ClassNotFoundException{
         HashMap<String, ArrayList<Trade>> userTrades2 = new HashMap<>();
-        try {
-            // load in the objects
-            InputStream file = new FileInputStream(filepath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
 
-            // deserialize the hashmap of user objects
-            userTrades2 = (HashMap<String, ArrayList<Trade>>) input.readObject();
-            input.close();
-            return userTrades2;
-        }
-        catch(IOException ex) {
-            System.out.println("Input error during deserialization");
-            throw ex;
-        }
-        catch(ClassNotFoundException ex) {
-            System.out.println("Class not found exception");
-            throw ex;
-        }
+        // load in the objects
+        InputStream file = new FileInputStream(filepath);InputStream buffer = new BufferedInputStream(file);
+        ObjectInput input = new ObjectInputStream(buffer);
+
+        // deserialize the hashmap of user objects
+        userTrades2 = (HashMap<String, ArrayList<Trade>>) input.readObject();
+        input.close();
+        return userTrades2;
     }
 
     /**
@@ -70,20 +54,14 @@ public class UserTradesGateway {
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, HashMap<String, ArrayList<Trade>> userTrades3) throws IOException{
-        try {
-            // load allUsers onto the file at designed path
-            FileOutputStream file = new FileOutputStream(filepath);
-            OutputStream buffer = new BufferedOutputStream(file);
-            ObjectOutputStream output = new ObjectOutputStream(buffer);
+        // load allUsers onto the file at designed path
+        FileOutputStream file = new FileOutputStream(filepath);
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutputStream output = new ObjectOutputStream(buffer);
 
-            // serialize objects
-            output.writeObject(userTrades3);
-            output.close();
-        }
-        catch(IOException ex) {
-            System.out.println("Input error during serialization!");
-            throw ex;
-        }
+        // serialize objects
+        output.writeObject(userTrades3);
+        output.close();
     }
 
     public HashMap<String, ArrayList<Trade>> getUserTrades() {
