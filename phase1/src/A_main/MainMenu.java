@@ -73,8 +73,9 @@ public class MainMenu {
             mm.printMenuPrompt();
             try {
                 input = br.readLine();
+                if (input.equals("1") || input.equals("3")) mm.printLoginPrompt1();
+                if(input.equals("2")) mm.printLoginPromptNewUsername();
                 if (input.equals("1") || input.equals("2") || input.equals("3")) {
-                    mm.printLoginPrompt1();
                     String username = br.readLine();
                     mm.printLoginPrompt2();
                     String pass = br.readLine();
@@ -93,7 +94,7 @@ public class MainMenu {
                             if (attempt.createNewUser(username, pass, utg.getUserTrades())){
                                 ag.getAdminMap().put(username, new Admin(username, pass));
                             }
-                            else System.out.println("This user account already exists, user not added.\nPlease try again.");
+                            else mm.takenUsername();
                         }
                     } else {
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());

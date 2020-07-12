@@ -9,6 +9,9 @@ public class MainMenuPresenter {
                 "[3] Admin Login.\nAny other value to exit the program.");
     }
     public void printLoginPrompt1(){
+        System.out.println("Enter username:");
+    }
+    public void printLoginPromptNewUsername(){
         System.out.println("Enter username (at least 3 characters):");
     }
     public void printLoginPrompt2(){
