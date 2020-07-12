@@ -23,22 +23,26 @@ public class GlobalInventoryController {
         prompts.enter();
         try {
             String input = br.readLine();
-            while (!input.equals("exit")) { // != compares memory addresses.
+            while (!input.equals("e")) { // != compares memory addresses.
                 prompts.printpage(pageNumber);
-                if (prompts.hasNext()) {
-                    System.out.println(prompts.next()); // printing 10 item and goto next
-                }
                 input = br.readLine();
-                if (pageNumber <= gim.generatePageNumber() && input.equals("next")){
-                    pageNumber += 1;
-                    prompts.printpage(pageNumber);
+                if (input.equals("n")){
+                    if (pageNumber < gim.generatePageNumber()) {
+                        pageNumber += 1;
+                    }
+                    else
+                        prompts.emptyPage();
+
                 }
-                if (pageNumber != 1 && input.equals("previous")){
-                    pageNumber -= 1;
-                    prompts.printpage(pageNumber);
+                if (input.equals("p")){
+                    if (pageNumber == 1){
+                        prompts.atfirst();
+                    }
+                    else{
+                    pageNumber -= 1; }
                 }
-                if (Integer.parseInt(input) <= 10 && Integer.parseInt(input) >= 1){
-                    item = gim.generatePage(pageNumber).get(Integer.parseInt(input)-1);
+                if (input.matches("[0-9]") && Integer.valueOf(input) <= gim.generatePage(pageNumber).size()-1){
+                    item = gim.generatePage(pageNumber).get(Integer.parseInt(input));
                     if (UM.getUserFrozenStatus(user)) {
                         prompts.addToWishlishandTradeRequest(item);
                         input = br.readLine();
@@ -47,16 +51,21 @@ public class GlobalInventoryController {
                         }
                         if (input.equals("2")) {
                             TradeController trademenu = new TradeController(UM, TM, user);
-                            ArrayList<Item> items = new ArrayList<Item>();
+                            ArrayList<Item> items = new ArrayList<>();
                             items.add(item);
                             trademenu.run(items, user);
                         }
                     }
-                    else
+                    else {
                     prompts.addToWishlist(item);
+                    input = br.readLine();
                     if (input.equals("1")){
                         UM.getUserWishlist(user).add(item);
-                    }
+                        prompts.addedToWishlist(item);
+                    }}
+                }
+                if(input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size()-1){
+                    prompts.invalid();
                 }
             }
         } catch (IOException e) {

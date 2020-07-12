@@ -8,8 +8,8 @@ public class AdminAccountPresenter {
     }
     public void printMainMenu(){
         System.out.println("Hi, you are now accessing the Admin account");
-        System.out.println("Type 1 if you want to change your password \n Type 2 if you want to" +
-                "add a new admin account \n Type 3 if you want to exit to admin's menu" );
+        System.out.println("Type 1 if you want to change your password\nType 2 if you want to" +
+                "add a new admin account\nType 3 if you want to exit to admin's menu" );
     }
     public void askForNewPassword(){
         System.out.println("please type your new password: ");
@@ -34,11 +34,6 @@ public class AdminAccountPresenter {
     }
     public void exitMenu(){
         System.out.println("going back to admin's menu.");
-        System.out.println("Hi," + admin.getUsername() + ", welcome back. Choose your option below:");
-        System.out.println("[1] Check your message inbox");
-        System.out.println("[2] Manage Admin account");
-        System.out.println("[3] Access the information of Users");
-        System.out.println("[4] Logout");
 
     }
 

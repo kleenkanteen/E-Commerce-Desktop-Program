@@ -28,11 +28,6 @@ public class AdminBrowsingUsers {
                 browse.enterUser();
                 BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
                 String user = re.readLine();
-                // check if string is just composed of numbers
-                while (!user.matches("[0-9]+")){
-                    browse.invalid();
-                    user = re.readLine();
-                }
                 // checks to see if admin wants to leave
                 if (user.equals("1")){ start = false; }
 
@@ -41,7 +36,7 @@ public class AdminBrowsingUsers {
                 boolean validloop = true;
 
                 // keep looping until admin either gives valid user or wants to go back
-                while (!users.isValidUser(user) && validloop){
+                while (!users.isValidUser(user) && validloop && start){
                     browse.invalidUser();
                     user = re.readLine();
                     if (user.equals("0")){ validloop = false; }
@@ -67,7 +62,7 @@ public class AdminBrowsingUsers {
                                 browse.invalid();
                                 option = re.readLine();
                             }
-                            users.setNewThresholdForOneUser(user, Integer.parseInt(user));
+                            users.setNewThresholdForOneUser(user, Integer.parseInt(option));
                             browse.thresholdsuccessUser();
                             break;
                         // check if admin wants to change freeze a user
