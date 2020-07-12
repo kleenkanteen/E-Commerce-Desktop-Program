@@ -7,9 +7,8 @@ import java.util.ArrayList;
 public class TradeMenu {
     public void choosePermTemp() {
         System.out.println("What trade would you like to complete today? \n" +
-                            "Type: \n [1] Start a permanent transaction with a user.\n" +
+                            "Type: \n[1] Start a permanent transaction with a user.\n" +
                             "[2] Start a temporary transaction with a user.\n" +
-                            "[3] Go back.\n" +
                             "Enter any other number to exit.\n");
     }
 
@@ -33,7 +32,7 @@ public class TradeMenu {
     }
 
     public void enterDate() {
-        System.out.print("Enter the date and time (in 24-hour format) in which the meeting occurs (format: 2020-04-20 4:20:20): ");
+        System.out.print("Enter the date and time (in 24-hour format) in which the meeting occurs (format: 2020-04-20 4:20): ");
     }
 
     public void enterPlace() {

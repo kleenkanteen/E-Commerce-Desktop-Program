@@ -45,21 +45,23 @@ public class TradeController {
         String userB = itemsToTrade.get(0).getOwnerName();
 
         // tell user that it has to be a specific format.
-        String datePattern = "yyyy-mm-dd H:mm:ss";
+        String datePattern = "yyyy-MM-ddH:mm";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 
         // ask for date and place.
-        tradeMenu.enterDate();
+
         // asks for date, but will throw an error telling the user its wrong.
         boolean dateGiven = true;
         while (dateGiven) {
             try {
-                String dateInput = input.next().replaceAll("\\s", "");
+                tradeMenu.enterDate();
+                String dateInput = input.nextLine();
+                dateInput = dateInput.replaceAll("\\s+", "");
                 date = parse(dateInput, formatter);
-                dateGiven = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("That is incorrect! Try again.");
                 dateGiven = false;
+            } catch (DateTimeParseException e) {
+                System.out.println("That is incorrect! Try again.\n");
+                dateGiven = true;
             }
         }
 
