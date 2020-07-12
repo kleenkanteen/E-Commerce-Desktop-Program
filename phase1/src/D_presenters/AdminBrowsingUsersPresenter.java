@@ -5,7 +5,7 @@ public class AdminBrowsingUsersPresenter {
     public AdminBrowsingUsersPresenter(){
     }
 
-    public void enterUser(){ System.out.println("Enter the userid of the user you want or press [1] to exit"); }
+    public void enterUser(){ System.out.println("Enter the userid of the user you want or press [1] to exit:"); }
 
     public void invalidUser(){
         System.out.println("User does not exist, try again or press [0] to exit");
@@ -16,12 +16,12 @@ public class AdminBrowsingUsersPresenter {
      */
 
     public void infoUser(String info){
-        System.out.println(info + "\n\n" + "User account info above, choose your option below: \n" +
+        System.out.println("\n" + info + "\n\n" + "User account info above, choose your option below: \n\n" +
                 "[1] Change lending threshold, how many times user must lend before borrowing \n" +
                 "[2] Freeze/unfreeze User \n" +
                 "[3] Change limit of trades per week \n" +
                 "[4] Change limit of incomplete trades per week \n" +
-                "[5] Go back to user menu \n");
+                "[5] Go back to user selection \n");
 
     }
 

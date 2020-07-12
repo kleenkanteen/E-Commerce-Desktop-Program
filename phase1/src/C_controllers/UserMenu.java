@@ -76,8 +76,19 @@ public class UserMenu {
                 this.adminMessages.add(this.userManager.createNewItem(this.currUser, itemName, itemDescription));
                 this.userPresenter.newItemMessageSentToAdmin();
             }
-            // exit
+            // send admin an unfreeze request message
             else if (userInput.equals("6")) {
+                if(this.userManager.getUserFrozenStatus(this.currUser)) {
+                    this.adminMessages.add(new UnfreezeRequestMessage("User " +
+                            this.currUser +" has requested to be unfrozen.", this.currUser));
+                    this.userPresenter.unfreezeRequestSent();
+                }
+                else {
+                    this.userPresenter.userNotFrozen();
+                }
+            }
+            // exit
+            else if (userInput.equals("7")) {
                 userInput = "exit";
             }
             else {

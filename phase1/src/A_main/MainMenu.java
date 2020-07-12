@@ -4,8 +4,11 @@ import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
+import F_entities.Admin;
 import G_exceptions.InvalidLoginException;
 import B_gateways.*;
+import G_exceptions.InvalidUsernameException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -59,6 +62,7 @@ public class MainMenu {
             amg = new AdminMessageGateway(serializedAdminMessages);
             //System.out.println("Admin Messages:\n" + amg.getMessages());
         }catch(IOException | ClassNotFoundException ex){
+            mm.readError();
             mm.printExit();
             return;
         }
@@ -69,8 +73,9 @@ public class MainMenu {
             mm.printMenuPrompt();
             try {
                 input = br.readLine();
+                if (input.equals("1") || input.equals("3")) mm.printLoginPrompt1();
+                if(input.equals("2")) mm.printLoginPromptNewUsername();
                 if (input.equals("1") || input.equals("2") || input.equals("3")) {
-                    mm.printLoginPrompt1();
                     String username = br.readLine();
                     mm.printLoginPrompt2();
                     String pass = br.readLine();
@@ -85,8 +90,12 @@ public class MainMenu {
                                 UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
                                 um.run();
                             }
-                        } else
-                            attempt.createNewUser(username, pass, utg.getUserTrades());
+                        } else{
+                            if (attempt.createNewUser(username, pass, utg.getUserTrades())){
+                                ag.getAdminMap().put(username, new Admin(username, pass));
+                            }
+                            else mm.takenUsername();
+                        }
                     } else {
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                         if (thing.login().equals(username) && !(username.equals("System Messages"))) {
@@ -105,6 +114,9 @@ public class MainMenu {
                 return;
             } catch (InvalidLoginException x) {
                 mm.wrongLogin();
+            }
+            catch (InvalidUsernameException ex){
+                mm.takenUsername();
             }
 
         }

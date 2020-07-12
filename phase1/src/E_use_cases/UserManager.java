@@ -28,10 +28,8 @@ public class UserManager {
         // check username
         if(allUsers.containsKey(username)) {
             // check password
-            if(password.equals(allUsers.get(username).getPassword())) {
-                // if successful, return String username
-                return true;
-            }
+            // if successful, return String username
+            return password.equals(allUsers.get(username).getPassword());
         }
         return false;
     }
@@ -42,8 +40,12 @@ public class UserManager {
      * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
      * @return true if user account successfully created, false if user already exists in system
      */
-    public boolean createNewUser(String username, String password, HashMap<String, ArrayList<Trade>> tradeHistory) {
-        if(!allUsers.containsKey(username)) {
+    public boolean createNewUser(String username, String password,
+                                 HashMap<String, ArrayList<Trade>> tradeHistory) throws InvalidUsernameException{
+        if(allUsers.containsKey(username)) {
+            throw new InvalidUsernameException();
+        }
+        if(!(username.length() < 3)) {
             allUsers.put(username, new User(username, password));
             tradeHistory.put(username, new ArrayList<>());
             return true;

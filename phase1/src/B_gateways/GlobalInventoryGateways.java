@@ -18,7 +18,6 @@ public class GlobalInventoryGateways implements Serializable{
     public GlobalInventoryGateways(String filePath) throws IOException, ClassNotFoundException{
         this.filePath = filePath;
 
-    try {
         File file = new File(filePath);
         if (file.exists()) {
             readFromFile();
@@ -30,12 +29,7 @@ public class GlobalInventoryGateways implements Serializable{
             gI = new GlobalInventory();
 
         }
-    }
-    catch (IOException | ClassNotFoundException ex) {
-        System.out.println("Failed to read");
-        throw ex;
-    }
-    gIManager = new GlobalInventoryManager(gI);
+        gIManager = new GlobalInventoryManager(gI);
     }
 
     /**
@@ -45,24 +39,13 @@ public class GlobalInventoryGateways implements Serializable{
      * @throws ClassNotFoundException If the class cannot be found
      */
     public void readFromFile() throws IOException, ClassNotFoundException{
-        try {
-            InputStream file = new FileInputStream(filePath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
+        InputStream file = new FileInputStream(filePath);
+        InputStream buffer = new BufferedInputStream(file);
+        ObjectInput input = new ObjectInputStream(buffer);
 
-            // deserialize the Map
-            gI = (GlobalInventory) input.readObject();
-            input.close();
-        }
-        catch(IOException ex) {
-            System.out.println("Input error during deserialization");
-            throw ex;
-        }
-        catch(ClassNotFoundException ex) {
-            System.out.println("Class not found exception");
-            throw ex;
-        }
-
+        // deserialize the Map
+        gI = (GlobalInventory) input.readObject();
+        input.close();
     }
 
     /**
@@ -72,18 +55,12 @@ public class GlobalInventoryGateways implements Serializable{
      */
 
     public void writeToFile(GlobalInventory gi) throws IOException{
-        try {
-            OutputStream file = new FileOutputStream(filePath);
+        OutputStream file = new FileOutputStream(filePath);
 
-            OutputStream buffer = new BufferedOutputStream(file);
-            ObjectOutput output = new ObjectOutputStream(buffer);
-            output.writeObject(gi);
-            output.close();
-        }
-        catch (IOException ex) {
-            System.out.println("Input error during serialization!");
-            throw ex;
-        }
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutput output = new ObjectOutputStream(buffer);
+        output.writeObject(gi);
+        output.close();
     }
 
     /**
