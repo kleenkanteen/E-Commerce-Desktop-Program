@@ -71,6 +71,7 @@ public class AdminManager{
     public boolean addNewPassWord(String password1, String password2, Admin admin){
         if (password1.equals(password2)){
             admin.setPassword(password1);
+
             return true;
         }
         else {
