@@ -150,4 +150,12 @@ public class UserPresenter {
     public void userNotFrozen() {
         System.out.println("You are not frozen right now.\n");
     }
+
+    public void emptyPersonalInventoryWhileLoaning() {
+        System.out.println("You have nothing to lend!\n");
+    }
+
+    public void itemNotInOtherUsersWishlist() {
+        System.out.println("None of your items exists in another user's wishlist. :(\n");
+    }
 }

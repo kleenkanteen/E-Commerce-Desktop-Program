@@ -116,6 +116,24 @@ public class UserManager {
     }
 
     /**
+     * Variant of getCanTrade to check to see if the user can trade; will ignore borrows v. loans so that user can
+     * can loan items
+     * @param username user in question
+     * @param numIncomplete the number of incomplete trades
+     * @param numTradesMadeThisWeek the number of trade offers made this week
+     * @return true if the user can trade, false if not
+     * @throws UserFrozenException if the user is already frozen
+     */
+    public boolean getCanTradeIgnoreBorrowsLoans(String username, int numIncomplete, int numTradesMadeThisWeek)
+            throws UserFrozenException {
+        if (this.allUsers.get(username).getFrozenStatus()) {
+            throw new UserFrozenException();
+        }
+        return numIncomplete < this.allUsers.get(username).getLimitOfIncompleteTrade() ||
+                numTradesMadeThisWeek < this.allUsers.get(username).getTradePerWeek();
+    }
+
+    /**
      * Return a user's personal inventory.
      * @param user String username
      * @return Arraylist of user's items

@@ -7,6 +7,7 @@ import java.util.Arrays;
 import F_entities.*;
 import E_use_cases.*;
 import D_presenters.UserPresenter;
+import G_exceptions.UserFrozenException;
 
 
 public class UserMenu {
@@ -57,9 +58,9 @@ public class UserMenu {
                 GlobalInventoryController globalInventory = new GlobalInventoryController();
                 globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser);
             }
-            // global wishlist
+            // access global wishlist/lend to other users
             else if (userInput.equals("3")) {
-                // separate menu for GlobalWishlist?
+                loanPersonalItemToOtherUsers();
             }
             // messages
             else if (userInput.equals("4")) {
@@ -204,11 +205,11 @@ public class UserMenu {
      */
     private void confirmIncompleteUserTrades() {
         Scanner input = new Scanner(System.in);
+        ArrayList<Trade> incompletes = this.tradeManager.tradesToConfirm(this.currUser);
         // check to make sure that the user has unconfirmed trades
-        if(this.tradeManager.tradesToConfirm(this.currUser).size() != 0) {
+        if(incompletes.size() != 0) {
             // instantiate unconfirmed trades
             this.userPresenter.promptUserToConfirmTrades();
-            ArrayList<Trade> incompletes = this.tradeManager.tradesToConfirm(this.currUser);
             String userInput;
             boolean continueCheckingUnconfirmed;
             // go through all unconfirmed trades
@@ -222,6 +223,17 @@ public class UserMenu {
                     if(userInput.equals("1")) {
                         this.tradeManager.setConfirm(this.currUser, trade, true);
                         this.userPresenter.unconfirmedTradeSystemResponse(0);
+                        // if the trade is a permanent trade
+                        if(trade instanceof PermTrade) {
+                            // remove all traderA items from wishlist
+                            for(Item item : trade.getTraderAItemsToTrade()) {
+                                this.globalInventoryManager.removeItem(item.getItemID());
+                            }
+                            // remove all tradeB items from wishlist
+                            for (Item item : trade.getTraderBItemsToTrade()) {
+                                this.globalInventoryManager.removeItem(item.getItemID());
+                            }
+                        }
                         continueCheckingUnconfirmed = false;
                     }
                     // deny
@@ -235,6 +247,42 @@ public class UserMenu {
                         this.userPresenter.inputError();
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Helper that allows a user to offer to loan one of their items to another user if their item is in that user's
+     * wishlist.
+     */
+    private void loanPersonalItemToOtherUsers() {
+        // check to see if anything exists in user's personal inventory, if not
+        if(this.userManager.getUserInventory(this.currUser).size() == 0) {
+            this.userPresenter.emptyPersonalInventoryWhileLoaning();
+        }
+        // if user's personal inventory is populated
+        else {
+            // get an item id and the user id from the global wishlist
+            ArrayList<String> itemsToLend =
+                    this.globalWishlistManager.userWhoWants(this.userManager.getUserInventory(this.currUser));
+            // if another user has one of this user's items on their wishlist
+            if(itemsToLend.size() != 0) {
+                // check to see if user can trade, if yes loan
+                try {
+                    if(this.userManager.getCanTradeIgnoreBorrowsLoans(this.currUser,
+                            this.tradeManager.getIncompleteTimes(this.currUser),
+                            this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
+                        // some loan method in TradeController?
+                    }
+                }
+                // if the user is frozen
+                catch(UserFrozenException ex) {
+                    this.userPresenter.userAccountFrozen();
+                }
+            }
+            // if this user's items do not exist in another user's wishlist
+            else {
+                this.userPresenter.itemNotInOtherUsersWishlist();
             }
         }
     }
@@ -341,9 +389,8 @@ public class UserMenu {
                 ArrayList<Item> traderItem = new ArrayList<>();
                 traderItem.add(userWishlist.get(index));
                 TradeController tradeController = new TradeController(this.userManager);
-                TradeRequestMessage tradeRequest =
-                        tradeController.run(traderItem, userWishlist.get(index).getOwnerName());
-                this.userManager.addUserMessage(this.currUser, tradeRequest);
+                this.userManager.addUserMessage(this.currUser,
+                        tradeController.run(traderItem, userWishlist.get(index).getOwnerName()));
                 this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
             }
             // exit
