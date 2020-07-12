@@ -1,13 +1,15 @@
 package C_controllers;
 
+import D_presenters.UserPresenter;
+import E_use_cases.GlobalInventoryManager;
+import E_use_cases.GlobalWishlistManager;
+import E_use_cases.TradeManager;
+import E_use_cases.UserManager;
+import F_entities.*;
+import G_exceptions.UserFrozenException;
+
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.HashMap;
-import java.util.Arrays;
-import F_entities.*;
-import E_use_cases.*;
-import D_presenters.UserPresenter;
-import G_exceptions.UserFrozenException;
 
 
 public class UserMenu {
