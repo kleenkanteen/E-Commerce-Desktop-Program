@@ -166,4 +166,20 @@ public abstract class Trade implements Serializable {
                 "traderAItemsToTrade= " + traderAItemstoTrade +
                 "traderBItemsToTrade= " + traderBItemsToTrade;
     }
+
+
+    public boolean equals(Trade trade) {
+        boolean traderAEqual = this.traderA.equals(trade.traderA);
+        boolean traderBEqual = this.traderB.equals(trade.traderB);
+        boolean traderAItemsEqual = this.traderAItemstoTrade.equals(trade.traderAItemstoTrade);
+        boolean traderBItemsEqual = this.traderBItemsToTrade.equals(trade.traderBItemsToTrade);
+        boolean startDateEquals = this.startDate.equals(trade.startDate);
+
+
+        return traderAEqual
+                && traderBEqual
+                && traderAItemsEqual
+                && traderBItemsEqual
+                && startDateEquals;
+    }
 }
