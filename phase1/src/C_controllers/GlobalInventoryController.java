@@ -33,12 +33,12 @@ public class GlobalInventoryController {
                     pageNumber += 1;
                     prompts.printpage(pageNumber);
                 }
-                if (pageNumber != 1 && input.equals("previous")){
+                if (input.equals("previous")){
                     pageNumber -= 1;
                     prompts.printpage(pageNumber);
                 }
-                if (Integer.parseInt(input) <= 10 && Integer.parseInt(input) >= 1){
-                    item = gim.generatePage(pageNumber).get(Integer.parseInt(input)-1);
+                if (input.matches("[0-9]")){
+                    item = gim.generatePage(pageNumber).get(Integer.parseInt(input));
                     if (UM.getUserFrozenStatus(user)) {
                         prompts.addToWishlishandTradeRequest(item);
                         input = br.readLine();
@@ -47,15 +47,17 @@ public class GlobalInventoryController {
                         }
                         if (input.equals("2")) {
                             TradeController trademenu = new TradeController(UM, TM, user);
-                            ArrayList<Item> items = new ArrayList<Item>();
+                            ArrayList<Item> items = new ArrayList<>();
                             items.add(item);
                             trademenu.run(items, user);
                         }
                     }
                     else
                     prompts.addToWishlist(item);
+                    input = br.readLine();
                     if (input.equals("1")){
                         UM.getUserWishlist(user).add(item);
+                        prompts.addedToWishlist(item);
                     }
                 }
             }

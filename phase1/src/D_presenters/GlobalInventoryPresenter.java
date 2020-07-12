@@ -43,6 +43,9 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
             }
             properties.add(items + "go to next page by typing 'next' or go to previous page by typing 'previous");
         }
+        else if (page == 0){
+            properties.add("This is the first page");
+        }
         else properties.add("this page is empty");
 
     }
@@ -60,5 +63,9 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     public void error(){
         System.out.println("Something went wrong, please try again");
+    }
+
+    public void addedToWishlist(Item item){
+        System.out.println(item.getName() +  "is added to your wishlist");
     }
 }
