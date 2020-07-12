@@ -17,7 +17,7 @@ import static java.time.LocalDateTime.parse;
 public class TradeController {
 
     private final Scanner input = new Scanner(System.in);
-    private final String datePattern = "yyyy-MM-dd";
+    private final String datePattern = "yyyy-mm-dd H:mm:ss";
     private final TradeMenu tradeMenu = new TradeMenu();
 
     private final UserManager allUsers;
