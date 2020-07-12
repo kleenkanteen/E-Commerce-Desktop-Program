@@ -25,14 +25,10 @@ public class GlobalInventoryController {
             String input = br.readLine();
             while (!input.equals("e")) { // != compares memory addresses.
                 prompts.printpage(pageNumber);
-                if (prompts.hasNext()) {
-                    System.out.println(prompts.next()); // printing 10 item and goto next
-                }
                 input = br.readLine();
                 if (input.equals("n")){
                     if (pageNumber < gim.generatePageNumber()) {
                         pageNumber += 1;
-                        prompts.printpage(pageNumber);
                     }
                     else
                         prompts.emptyPage();
@@ -43,8 +39,7 @@ public class GlobalInventoryController {
                         prompts.atfirst();
                     }
                     else{
-                    pageNumber -= 1;
-                    prompts.printpage(pageNumber);}
+                    pageNumber -= 1; }
                 }
                 if (input.matches("[0-9]") && Integer.valueOf(input) <= gim.generatePage(pageNumber).size()-1){
                     item = gim.generatePage(pageNumber).get(Integer.parseInt(input));
