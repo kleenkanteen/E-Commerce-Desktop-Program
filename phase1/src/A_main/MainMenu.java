@@ -85,8 +85,14 @@ public class MainMenu {
                                 UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
                                 um.run();
                             }
-                        } else
-                            attempt.createNewUser(username, pass, utg.getUserTrades());
+                        } else{
+                            if (attempt.createNewUser(username, pass, utg.getUserTrades())){
+                                System.out.println(ag.getAdminMap());
+                                ag.getAdminMap().put(username, new Admin(username, pass));
+                                System.out.println(ag.getAdminMap());
+                            }
+                            else System.out.println("This user account already exists, user not added.\nPlease try again.");
+                        }
                     } else {
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                         if (thing.login().equals(username) && !(username.equals("System Messages"))) {
