@@ -60,6 +60,7 @@ public class MainMenu {
             amg = new AdminMessageGateway(serializedAdminMessages);
             //System.out.println("Admin Messages:\n" + amg.getMessages());
         }catch(IOException | ClassNotFoundException ex){
+            mm.readError();
             mm.printExit();
             return;
         }

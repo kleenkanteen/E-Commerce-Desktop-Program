@@ -22,6 +22,15 @@ public class AdminSystem {
 
     UserManager um;
 
+    /**
+     * Class constructor.
+     * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
+     * @param admin the admin of the currently logged in.
+     * @param adminManager the AdminManager will be used to change account information
+     * @param UserManager the UserManager will be used to change user account information
+     * @param Gim the GlobalInventory will be used to change item in GlobalInventory
+     */
+
 
 
     GlobalInventoryManager gim;
@@ -36,6 +45,9 @@ public class AdminSystem {
 
 
     }
+    /**
+     * will run after the admin logged in and give options to admin to do some admin work.
+     */
 
     public void run() {
 
@@ -70,5 +82,6 @@ public class AdminSystem {
                 System.out.println("Something went wrong");
             }
         }
+        am.exitPresenter();
     }
 }

@@ -15,22 +15,16 @@ public class AdminMessageGateway {
      * @throws ClassNotFoundException If the class cannot be found
      */
     public AdminMessageGateway(String filepath) throws IOException, ClassNotFoundException {
-        try {
-            File file = new File(filepath);
-            if (file.exists()) {
-                this.messages = readFromFile(filepath);
-                if (messages == null){
-                    messages = new ArrayList<Message>();
-                }
-
-            } else {
-                file.createNewFile();
+        File file = new File(filepath);
+        if (file.exists()) {
+            this.messages = readFromFile(filepath);
+            if (messages == null) {
                 messages = new ArrayList<Message>();
             }
-        }
-        catch (IOException | ClassNotFoundException ex) {
-            System.out.println("Failed to read");
-            throw ex;
+
+        } else {
+            file.createNewFile();
+            messages = new ArrayList<Message>();
         }
     }
     /**
@@ -42,25 +36,15 @@ public class AdminMessageGateway {
      */
     public ArrayList<Message> readFromFile(String filepath) throws IOException, ClassNotFoundException{
         ArrayList<Message> messages2 = new ArrayList<>();
-        try {
-            // load in the objects
-            InputStream file = new FileInputStream(filepath);
-            InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
+        // load in the objects
+        InputStream file = new FileInputStream(filepath);
+        InputStream buffer = new BufferedInputStream(file);
+        ObjectInput input = new ObjectInputStream(buffer);
 
-            // deserialize the hashmap of user objects
-            messages2 = (ArrayList<Message>) input.readObject();
-            input.close();
-            return messages2;
-        }
-        catch(IOException ex) {
-            System.out.println("Input error during deserialization");
-            throw ex;
-        }
-        catch(ClassNotFoundException ex) {
-            System.out.println("Class not found exception");
-            throw ex;
-        }
+        // deserialize the hashmap of user objects
+        messages2 = (ArrayList<Message>) input.readObject();
+        input.close();
+        return messages2;
     }
 
     /**
@@ -69,20 +53,14 @@ public class AdminMessageGateway {
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, ArrayList <Message> adminMessages) throws IOException {
-        try {
-            // load allUsers onto the file at designed path
-            FileOutputStream file = new FileOutputStream(filepath);
-            OutputStream buffer = new BufferedOutputStream(file);
-            ObjectOutputStream output = new ObjectOutputStream(buffer);
+        // load allUsers onto the file at designed path
+        FileOutputStream file = new FileOutputStream(filepath);
+        OutputStream buffer = new BufferedOutputStream(file);
+        ObjectOutputStream output = new ObjectOutputStream(buffer);
 
-            // serialize objects
-            output.writeObject(adminMessages);
-            output.close();
-        }
-        catch(IOException ex) {
-            System.out.println("Input error during serialization!");
-            throw ex;
-        }
+        // serialize objects
+        output.writeObject(adminMessages);
+        output.close();
     }
 
     public ArrayList<Message> getMessages() {
