@@ -50,7 +50,7 @@ public class GlobalInventoryController {
                             UM.getUserWishlist(user).add(item);
                         }
                         if (input.equals("2")) {
-                            TradeController trademenu = new TradeController(UM, TM, user);
+                            TradeController trademenu = new TradeController(UM);
                             ArrayList<Item> items = new ArrayList<>();
                             items.add(item);
                             trademenu.run(items, user);
