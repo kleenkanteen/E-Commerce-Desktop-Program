@@ -75,4 +75,12 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void atfirst(){
         System.out.println("It was the first page");
     }
+
+    public void ownItem(){
+        System.out.println("This is your own item");
+    }
+
+    public void alreadyHave(){
+        System.out.println("This item is already in you wish-list");
+    }
 }
