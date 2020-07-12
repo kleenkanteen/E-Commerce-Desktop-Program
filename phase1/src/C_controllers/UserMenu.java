@@ -369,8 +369,9 @@ public class UserMenu {
             userWishlistInput = input.nextLine();
             // remove the item
             if(userWishlistInput.equals("1")) {
+                this.globalWishlistManager.removeWish(userWishlist.get(index).getItemID(), this.currUser);
                 this.userManager.removeItemFromUserWishlist(this.currUser, userWishlist.get(index).getItemID());
-                userWishlist= this.userManager.getUserInventory(this.currUser);
+                userWishlist = this.userManager.getUserWishlist(this.currUser);
                 index = 0;
                 this.userPresenter.itemRemoved();
             }

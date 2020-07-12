@@ -242,13 +242,14 @@ public class UserManager {
      */
     public void removeItemFromUserWishlist(String user, String itemID) {
         ArrayList<Item> userWishlist = getUserWishlist(user);
-        for(Item item : userWishlist) {
-            // if you find the matching item
-            if(item.getItemID().equals(itemID)) {
-                userWishlist.remove(item);
-                this.allUsers.get(user).setWishlist(userWishlist);
+        int index = 0;
+        for(int i =0; i < userWishlist.size(); i++) {
+            if(userWishlist.get(i).getItemID().equals(itemID)) {
+                index = i;
             }
         }
+        userWishlist.remove(index);
+        this.allUsers.get(user).setWishlist(userWishlist);
     }
 
     /**
