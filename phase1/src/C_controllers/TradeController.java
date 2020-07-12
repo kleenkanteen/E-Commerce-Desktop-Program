@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static java.time.LocalDateTime.parse;
@@ -23,7 +24,7 @@ public class TradeController {
 
     private final UserManager allUsers;
 
-    private int tradeType;
+    private String tradeType;
     private boolean done;
     private TradeRequest tradeRequest;
 
@@ -74,18 +75,18 @@ public class TradeController {
         while(true) {
             // have a presenter that asks for perm trade or temp trade.
             tradeMenu.choosePermTemp();
-            int selection = input.nextInt();
+            String selection = input.nextLine();
 
             switch (selection) {
                 // perm trade
-                case 1:
+                case "1":
                     // ask the user if its one way or two way trade.
                     tradeMenu.chooseOneOrTwo();
-                    tradeType = input.nextInt();
-                    while(tradeType != 1 && tradeType !=2){
+                    tradeType = input.nextLine();
+                    while(!tradeType.equals("1") && !tradeType.equals("2")){
                         tradeMenu.invalidInput();
                         tradeMenu.chooseOneOrTwo();
-                        tradeType = input.nextInt();
+                        tradeType = input.nextLine();
                     }
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
@@ -93,14 +94,14 @@ public class TradeController {
                     tradeMenu.tradeRequestSent(userB);
                     return;
                 // temp trade
-                case 2:
+                case "2":
                     // ask the user if its one way or two way trade.
                     tradeMenu.chooseOneOrTwo();
-                    tradeType = input.nextInt();
-                    while(tradeType != 1 && tradeType !=2){
+                    tradeType = input.nextLine();
+                    while(!tradeType.equals("1") && !tradeType.equals("2")){
                         tradeMenu.invalidInput();
                         tradeMenu.chooseOneOrTwo();
-                        tradeType = input.nextInt();
+                        tradeType = input.nextLine();
                     }
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
@@ -113,14 +114,14 @@ public class TradeController {
         }
     }
 
-    private ArrayList<Item> oneOrTwoWayTrade(int tradeType, String userA, ArrayList<Item> itemsToTradeA) {
+    private ArrayList<Item> oneOrTwoWayTrade(String tradeType, String userA, ArrayList<Item> itemsToTradeA) {
         switch (tradeType) {
             // one way trade
-            case 1:
+            case "1":
                 itemsToTradeA = new ArrayList<Item>();
                 return itemsToTradeA;
             // two way trade
-            case 2:
+            case "2":
                 ArrayList<Item> items = allUsers.getUserInventory(userA);
                 // ask the user what items they want to trade, then add it into itemsToTradeA.
                 while (!done) {
@@ -130,8 +131,8 @@ public class TradeController {
                     int choice = input.nextInt();
                     if (choice == -1) {
                         done = true;
-                    } else if (choice > 0 && choice <= items.size()){
-                        itemsToTradeA.add(items.get(choice-1));
+                    } else if (choice > 0 && choice <= items.size()) {
+                        itemsToTradeA.add(items.get(choice - 1));
                         done = true;
                     }
                 }
@@ -146,9 +147,9 @@ public class TradeController {
                                                  LocalDateTime date,
                                                  String place) {
         switch (tradeType) {
-            case 1:
+            case "1":
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
-            case 2:
+            case "2":
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, true, date, place);
         }
 
@@ -163,9 +164,9 @@ public class TradeController {
                                                  String place) {
 
         switch (tradeType) {
-            case 1:
+            case "1":
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
-            case 2:
+            case "2":
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, false, date, place);
         }
         return new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
