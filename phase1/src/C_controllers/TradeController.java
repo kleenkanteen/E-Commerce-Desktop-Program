@@ -9,6 +9,7 @@ import E_use_cases.UserManager;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,22 +18,18 @@ import static java.time.LocalDateTime.parse;
 public class TradeController {
 
     private final Scanner input = new Scanner(System.in);
-    private final String datePattern = "yyyy-mm-dd H:mm:ss";
     private final TradeMenu tradeMenu = new TradeMenu();
+    private LocalDateTime date;
 
     private final UserManager allUsers;
-    private final TradeManager trades;
-    private final String userid;
 
     private int tradeType;
     private boolean done;
     private TradeRequest tradeRequest;
 
 
-    public TradeController(UserManager allUsers, TradeManager trades, String userid) {
+    public TradeController(UserManager allUsers) {
         this.allUsers = allUsers;
-        this.trades = trades;
-        this.userid = userid;
     }
 
     /**
@@ -48,11 +45,25 @@ public class TradeController {
         String userB = itemsToTrade.get(0).getOwnerName();
 
         // tell user that it has to be a specific format.
+        String datePattern = "yyyy-mm-dd H:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 
         // ask for date and place.
         tradeMenu.enterDate();
-        LocalDateTime date = parse(input.next(), formatter);
+        // asks for date, but will throw an error telling the user its wrong.
+        boolean dateGiven = true;
+        while (dateGiven) {
+            try {
+                String dateInput = input.next().replaceAll("\\s", "");
+                date = parse(dateInput, formatter);
+                dateGiven = true;
+            } catch (DateTimeParseException e) {
+                System.out.println("That is incorrect! Try again.");
+                dateGiven = false;
+            }
+        }
+
+        // asks for place.
         tradeMenu.enterPlace();
         String place = input.nextLine();
 
