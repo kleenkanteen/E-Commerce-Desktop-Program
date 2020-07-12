@@ -120,13 +120,11 @@ public class UserMenu {
                 String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser);
                 // find a better way to do this
                 for(String tradePartner: tradingPartners) {
-                    if(tradePartner != null) {
-                        this.userPresenter.printUserTradePartners(tradePartner);
-                    }
-                    else {
+                    if(tradePartner == null) {
                         this.userPresenter.noTradingPartners();
                         break;
                     }
+                    this.userPresenter.printUserTradePartners(tradePartner);
                 }
             }
             // view 3 most recent trades
@@ -134,13 +132,11 @@ public class UserMenu {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
                 // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
-                    if(trade != null) {
-                        this.userPresenter.tradeToString(trade);
-                    }
-                    else {
+                    if(trade == null) {
                         this.userPresenter.noRecentTrades();
                         break;
                     }
+                    this.userPresenter.tradeToString(trade);
                 }
             }
             // look at personal inventory
