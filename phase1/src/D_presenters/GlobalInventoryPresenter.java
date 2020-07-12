@@ -43,6 +43,9 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
             }
             properties.add(items + "go to next page by typing 'next' or go to previous page by typing 'previous");
         }
+        else if (page == 0){
+            properties.add("This is the first page");
+        }
         else properties.add("this page is empty");
 
     }
