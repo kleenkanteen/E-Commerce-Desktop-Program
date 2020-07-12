@@ -42,7 +42,7 @@ public abstract class DecisionMessage extends Message implements Serializable {
      */
     @Override
     public String toString() {
-        String optionsToString = "Choose your option below:";
+        String optionsToString = "Choose your option below:\n";
         for(int i=0; i<options.length; i++){
             if(i != 0) optionsToString = optionsToString+"\n";
             optionsToString = optionsToString+"["+Integer.toString(i+1)+"] "+options[i];

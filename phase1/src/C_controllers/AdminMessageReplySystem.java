@@ -38,6 +38,11 @@ public class AdminMessageReplySystem {
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Message> messages = am.getAdminMessagesArrayList();
+        if(messages.size() == 0){
+            mm.printNoMessages();
+            mm.printExit();
+            return;
+        }
         try {
             String input = "";
             while(true) {
@@ -66,6 +71,7 @@ public class AdminMessageReplySystem {
             mm.printErrorOccurred();
         }finally {
             am.setAdminMessagesArrayList(messages);
+            mm.printExit();
         }
     }
     private boolean ContentMessageResponse(Message m, ArrayList<Message> messages,

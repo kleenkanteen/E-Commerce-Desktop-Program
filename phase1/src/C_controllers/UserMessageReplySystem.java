@@ -41,6 +41,11 @@ public class UserMessageReplySystem {
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Message> messages = um.getUserMessages(accountUsername);
+        if(messages.size() == 0){
+            mm.printNoMessages();
+            mm.printExit();
+            return;
+        }
         try {
             String input = "";
             while(true) {
@@ -64,6 +69,7 @@ public class UserMessageReplySystem {
             mm.printInvalidInput();
         }finally {
             um.setUserMessages(accountUsername, messages);
+            mm.printExit();
         }
     }
     private void TradeRequestMessageEdit(TradeRequestMessage m, BufferedReader br){
