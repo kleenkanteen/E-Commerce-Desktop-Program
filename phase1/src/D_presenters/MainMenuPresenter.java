@@ -26,4 +26,7 @@ public class MainMenuPresenter {
     public void readError(){
         System.out.println("Failed to read");
     }
+    public void takenUsername(){
+        System.out.println("Your username is taken, try again");
+    }
 }
