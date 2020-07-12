@@ -1,13 +1,9 @@
 package C_controllers;
 
 import D_presenters.UserPresenter;
-import E_use_cases.GlobalInventoryManager;
-import E_use_cases.GlobalWishlistManager;
-import E_use_cases.TradeManager;
-import E_use_cases.UserManager;
+import E_use_cases.*;
 import F_entities.*;
 import G_exceptions.UserFrozenException;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -361,12 +357,12 @@ public class UserMenu {
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userWishlistInput = "";
-        if (userWishlist.size() == 0) {
-            this.userPresenter.isEmpty("wishlist");
-            return;
-        }
         while(!userWishlistInput.equals("exit")) {
             // if the wishlist is empty
+            if (userWishlist.size() == 0) {
+                this.userPresenter.isEmpty("wishlist");
+                break;
+            }
             this.userPresenter.itemToString(userWishlist.get(index).toString());
             // prompt user on what to do with this item
             this.userPresenter.userWishlistPrompts();
