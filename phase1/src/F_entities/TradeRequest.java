@@ -151,18 +151,21 @@ public class TradeRequest implements Serializable {
     }
 
     public String toString(){
+        String info = "";
         if (itemA.isEmpty()){
-            return getUserA() + " is requesting a trade with " + getUserB() + " for " +
-                    getItemA().get(0).getName() + " and want to meet at " + getPlace() + " on " +
-                    getDate().toString() +  ".";
+            info = getUserA() + " is requesting a trade with " + getUserB() + " for " +
+                    getItemB().get(0).getName();
         }
         else if (itemB.isEmpty()){
-            return getUserB() + " is requesting a trade with " + getUserB() + " for " +
-                    getItemB().get(0).getName() + " and want to meet at " + getPlace() + " on " +
-                    getDate().toString() +  ".";
+            info = getUserA() + " is requesting a trade with " + getUserB() + " for " +
+                    getItemA().get(0).getName();
         }
-        else return getUserA() + " is requesting a two-way trade " + getUserB() + " trading " +
-                getItemA().get(0).getName() + " for " +  getItemB().get(0).getName() + " and want to meet at " + getPlace() +
-            " on " + getDate().toString() + ".";
+        else info = getUserA() + " is requesting a two-way trade " + getUserB() + " trading " +
+                    getItemA().get(0).getName() + " for " +  getItemB().get(0).getName();
+
+        if(perm) info = info + " in a permanent trade";
+        else info = info + " in a temporary trade";
+        info = info + " and want to meet at " + getPlace() + " on " + getDate().toString() +".";
+        return info;
     }
 }

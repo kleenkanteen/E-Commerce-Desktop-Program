@@ -39,7 +39,7 @@ public class TradeController {
      * @param trader is a string that indicates the second trader.
      * @return a TradeRequestMessage that can be used to add into other classes if necessary!
      */
-    public TradeRequestMessage run(ArrayList<Item> itemsToTrade, String trader) {
+    public void run(ArrayList<Item> itemsToTrade, String trader) {
         TradeRequestMessage tradeRequestMessage = null;
         String userA = trader;
         String userB = itemsToTrade.get(0).getOwnerName();
@@ -60,7 +60,7 @@ public class TradeController {
                 date = parse(dateInput, formatter);
                 dateGiven = false;
             } catch (DateTimeParseException e) {
-                System.out.println("That is incorrect! Try again.\n");
+                tradeMenu.wrongFormat();
                 dateGiven = true;
             }
         }
@@ -84,7 +84,9 @@ public class TradeController {
                 tradeType = input.nextInt();
                 itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                 tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
+                allUsers.addUserMessage(userB, tradeRequestMessage);
                 tradeMenu.tradeRequestSent(userB);
+                return;
             // temp trade
             case 2:
                 // ask the user if its one way or two way trade.
@@ -92,12 +94,12 @@ public class TradeController {
                 tradeType = input.nextInt();
                 itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                 tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB,date, place);
+                allUsers.addUserMessage(userB, tradeRequestMessage);
                 tradeMenu.tradeRequestSent(userB);
+                return;
             default:
-                input.close();
-                System.exit(0);
+                tradeMenu.invalidInput();
         }
-        return tradeRequestMessage;
     }
 
     private ArrayList<Item> oneOrTwoWayTrade(int tradeType, String userA, ArrayList<Item> itemsToTradeA) {
@@ -105,6 +107,7 @@ public class TradeController {
             // one way trade
             case 1:
                 itemsToTradeA = new ArrayList<Item>();
+                return itemsToTradeA;
             // two way trade
             case 2:
                 ArrayList<Item> items = allUsers.getUserInventory(userA);
@@ -117,7 +120,7 @@ public class TradeController {
                     if (choice == -1) {
                         done = true;
                     } else {
-                        itemsToTradeA.add(items.get(choice));
+                        itemsToTradeA.add(items.get(choice-1));
                     }
                 }
         }
@@ -125,11 +128,11 @@ public class TradeController {
     }
 
     private TradeRequestMessage permTradeRequest(String userA,
-                                  String userB,
-                                  ArrayList<Item> itemsToTradeA,
-                                  ArrayList<Item> itemsToTradeB,
-                                  LocalDateTime date,
-                                  String place) {
+                                                 String userB,
+                                                 ArrayList<Item> itemsToTradeA,
+                                                 ArrayList<Item> itemsToTradeB,
+                                                 LocalDateTime date,
+                                                 String place) {
         switch (tradeType) {
             case 1:
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
@@ -141,11 +144,11 @@ public class TradeController {
     }
 
     private TradeRequestMessage tempTradeRequest(String userA,
-                                  String userB,
-                                  ArrayList<Item> itemsToTradeA,
-                                  ArrayList<Item> itemsToTradeB,
-                                  LocalDateTime date,
-                                  String place) {
+                                                 String userB,
+                                                 ArrayList<Item> itemsToTradeA,
+                                                 ArrayList<Item> itemsToTradeB,
+                                                 LocalDateTime date,
+                                                 String place) {
 
         switch (tradeType) {
             case 1:
@@ -153,7 +156,7 @@ public class TradeController {
             case 2:
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, false, date, place);
         }
-         return new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
+        return new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
     }
 
 }
