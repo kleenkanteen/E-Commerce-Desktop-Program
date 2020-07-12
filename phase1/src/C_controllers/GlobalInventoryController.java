@@ -2,8 +2,10 @@ package C_controllers;
 
 import D_presenters.GlobalInventoryPresenter;
 import E_use_cases.GlobalInventoryManager;
+import E_use_cases.TradeManager;
 import E_use_cases.UserManager;
 import F_entities.Item;
+import G_exceptions.UserFrozenException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,7 +13,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class GlobalInventoryController {
-    public void run(GlobalInventoryManager gim, UserManager UM, String user) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM) throws IOException, UserFrozenException{
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
@@ -23,28 +25,31 @@ public class GlobalInventoryController {
         try {
             String input = br.readLine();
             while (!input.equals("e")) { // != compares memory addresses.
-                if (input.equals("n")){
+                if (input.equals("n")) {
                     if (pageNumber < gim.generatePageNumber()) {
                         pageNumber += 1;
-                    }
-                    else
+                    } else
                         prompts.emptyPage();
 
                 }
-                if (input.equals("p")){
-                    if (pageNumber == 1){
+                if (input.equals("p")) {
+                    if (pageNumber == 1) {
                         prompts.atfirst();
+                    } else {
+                        pageNumber -= 1;
                     }
-                    else{
-                    pageNumber -= 1; }
                 }
-                if (input.matches("[0-9]") && Integer.valueOf(input) <= gim.generatePage(pageNumber).size()-1){
+                if (input.matches("[0-9]") && Integer.valueOf(input) <= gim.generatePage(pageNumber).size() - 1) {
                     item = gim.generatePage(pageNumber).get(Integer.parseInt(input));
-                    if (UM.getUserFrozenStatus(user)) {
+                    if (UM.getCanTrade(user, TM.getBorrowedTimes(user), TM.getLendTimes(user),
+                            TM.getIncompleteTimes(user), TM.numberOfTradesCreatedThisWeek(user))) {
                         prompts.addToWishlishandTradeRequest(item);
                         input = br.readLine();
                         if (input.equals("1")) {
-                            UM.getUserWishlist(user).add(item);
+                            if (UM.getUserWishlist(user).contains(item)){
+                                prompts.alreadyHave();
+                            }else{
+                                UM.getUserWishlist(user).add(item);}
                         }
                         if (input.equals("2")) {
                             TradeController trademenu = new TradeController(UM);
@@ -52,20 +57,22 @@ public class GlobalInventoryController {
                             items.add(item);
                             trademenu.run(items, user);
                         }
+                    } else {
+                        prompts.addToWishlist(item);
+                        input = br.readLine();
+                        if (input.equals("1")) {
+                            if (!item.getOwnerName().equals(user)) {
+                                UM.getUserWishlist(user).add(item);
+                                prompts.addedToWishlist(item);
+                            } else prompts.ownItem();
+                        }
                     }
-                    else {
-                    prompts.addToWishlist(item);
+                    if (input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size() - 1) {
+                        prompts.invalid();
+                    }
+                    prompts.printpage(pageNumber);
                     input = br.readLine();
-                    if (input.equals("1")){
-                        UM.getUserWishlist(user).add(item);
-                        prompts.addedToWishlist(item);
-                    }}
                 }
-                if(input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size()-1){
-                    prompts.invalid();
-                }
-                prompts.printpage(pageNumber);
-                input = br.readLine();
             }
         } catch (IOException e) {
             prompts.error();
