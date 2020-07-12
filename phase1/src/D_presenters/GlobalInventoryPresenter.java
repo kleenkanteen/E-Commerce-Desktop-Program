@@ -39,15 +39,14 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
         String items = "Choose your option below: \n";
         if (!gim.generatePage(page).isEmpty()){
             for (int k = 0; k < gim.generatePage(page).size(); k++) {
-                items += "[" + k + "]" + gim.generatePage(page).get(k).getName() + "\n" ;
+                items += "[" + k + "] " + gim.generatePage(page).get(k).getName() + "\n" ;
             }
-            properties.add(items + "go to next page by typing 'next' or go to previous page by typing 'previous");
+            System.out.println(items + "[n] next page \n[p] previous page \n[e] exit");
         }
-        else if (page == 0){
-            properties.add("This is the first page");
-        }
-        else properties.add("this page is empty");
+    }
 
+    public void emptyPage(){
+        System.out.println("this page is empty");
     }
 
     public void addToWishlishandTradeRequest(Item item){
@@ -67,5 +66,13 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     public void addedToWishlist(Item item){
         System.out.println(item.getName() +  "is added to your wishlist");
+    }
+
+    public void invalid(){
+        System.out.println("Invalid input, please try again");
+    }
+
+    public void atfirst(){
+        System.out.println("It was the first page");
     }
 }
