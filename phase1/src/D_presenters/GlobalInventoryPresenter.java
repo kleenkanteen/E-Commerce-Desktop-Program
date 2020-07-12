@@ -83,4 +83,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void alreadyHave(){
         System.out.println("This item is already in you wish-list");
     }
+    public void FrozenAcc(){
+        System.out.println("Your account is frozen, you cannot trade");
+    }
 }
