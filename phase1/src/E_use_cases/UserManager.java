@@ -54,14 +54,6 @@ public class UserManager {
     }
 
     /**
-     * Return the hashmap of all Users.
-     * @return the hashmap of all Users.
-     */
-    public HashMap<String, User> returnAllUsers() {
-        return this.allUsers;
-    }
-
-    /**
      * Changes the password of a user
      * @param username String username
      * @param newPassword the new password
@@ -85,11 +77,11 @@ public class UserManager {
      */
     @Override
     public String toString() {
-        String allUsers = "";
+        StringBuilder allUsers = new StringBuilder();
         for (String user: this.allUsers.keySet()) {
-            allUsers += user + " ";
+            allUsers.append(user).append(" ");
         }
-        return allUsers;
+        return allUsers.toString();
     }
 
     // GETTERS/SETTERS
@@ -110,7 +102,7 @@ public class UserManager {
             throw new UserFrozenException();
         }
         // check borrows, num of incomplete trades, num of trades made this week
-        return (borrowedTimes - lendTimes) < this.allUsers.get(user).getThreshold() ||
+        return (borrowedTimes - lendTimes) <= this.allUsers.get(user).getThreshold() ||
                 numIncomplete < this.allUsers.get(user).getLimitOfIncompleteTrade() ||
                 numTradesMadeThisWeek < this.allUsers.get(user).getTradePerWeek();
     }
@@ -231,38 +223,32 @@ public class UserManager {
      * Removes an item from a user's personal inventory.
      * @param user String username
      * @param itemID String item ID
-     * @return True if item removed, False if item not in inventory or some other error comes up.
      */
-    public boolean removeItemFromUserInventory (String user, String itemID) {
+    public void removeItemFromUserInventory (String user, String itemID) {
         ArrayList<Item> userInventory = getUserInventory(user);
         for(Item item : userInventory) {
             // if you find the matching item
             if(item.getItemID().equals(itemID)) {
                 userInventory.remove(item);
                 this.allUsers.get(user).setPersonalInventory(userInventory);
-                return true;
             }
         }
-        return false;
     }
 
     /**
      * Remove an item from a user's wishlist.
      * @param user String username
      * @param itemID String itemID
-     * @return Return true if item successfully removed, false if item not in wishlist
      */
-    public boolean removeItemFromUserWishlist(String user, String itemID) {
+    public void removeItemFromUserWishlist(String user, String itemID) {
         ArrayList<Item> userWishlist = getUserWishlist(user);
         for(Item item : userWishlist) {
             // if you find the matching item
             if(item.getItemID().equals(itemID)) {
                 userWishlist.remove(item);
                 this.allUsers.get(user).setWishlist(userWishlist);
-                return true;
             }
         }
-        return false;
     }
 
     /**

@@ -18,9 +18,16 @@ public class UserMenu {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
     private TradeManager tradeManager;
-    private Scanner input;
 
-
+    /**
+     * Instantiates a new UserMenu instance
+     * @param currUser the String username of the currently logged in user
+     * @param userManager the UserManager object
+     * @param tradeManager the TradeManager object
+     * @param globalInventoryManager the GlobalInventoryManager object
+     * @param globalWishlistManager the GlobalWishlistManager object
+     * @param adminMessages the AdminMessages object
+     */
     public UserMenu(String currUser, UserManager userManager, TradeManager tradeManager,
                     GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
                     ArrayList<Message> adminMessages) {
@@ -56,7 +63,7 @@ public class UserMenu {
             // look at global inventory
             else if (userInput.equals("2")) {
                 GlobalInventoryController globalInventory = new GlobalInventoryController();
-                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser);
+                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser, this.tradeManager);
             }
             // access global wishlist/lend to other users
             else if (userInput.equals("3")) {
@@ -212,6 +219,7 @@ public class UserMenu {
             for(Trade trade : incompletes) {
                 this.userPresenter.tradeToString(trade);
                 continueCheckingUnconfirmed = true;
+                // loop through user menu for this particular incomplete trade
                 while(continueCheckingUnconfirmed) {
                     this.userPresenter.checkUnconfirmedTradesPrompts();
                     userInput = input.nextLine();
@@ -221,13 +229,19 @@ public class UserMenu {
                         this.userPresenter.unconfirmedTradeSystemResponse(0);
                         // if the trade is a permanent trade
                         if(trade instanceof PermTrade) {
-                            // remove all traderA items from wishlist
+                            // remove all traderA items from Global and Personal wishlists
                             for(Item item : trade.getTraderAItemsToTrade()) {
-                                this.globalInventoryManager.removeItem(item.getItemID());
+                                this.globalWishlistManager.removeItem(item.getItemID());
+                                this.userManager.removeFromMultipleUsersWishlists(
+                                        this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
+                                        item.getItemID());
                             }
-                            // remove all tradeB items from wishlist
+                            // remove all tradeB items from Global and Personal wishlists
                             for (Item item : trade.getTraderBItemsToTrade()) {
-                                this.globalInventoryManager.removeItem(item.getItemID());
+                                this.globalWishlistManager.removeItem(item.getItemID());
+                                this.userManager.removeFromMultipleUsersWishlists(
+                                        this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
+                                        item.getItemID());
                             }
                         }
                         continueCheckingUnconfirmed = false;
@@ -345,12 +359,12 @@ public class UserMenu {
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userWishlistInput = "";
+        if (userWishlist.size() == 0) {
+            this.userPresenter.isEmpty("wishlist");
+            return;
+        }
         while(!userWishlistInput.equals("exit")) {
             // if the wishlist is empty
-            if (userWishlist.size() == 0) {
-                this.userPresenter.isEmpty("wishlist");
-                break;
-            }
             this.userPresenter.itemToString(userWishlist.get(index).toString());
             // prompt user on what to do with this item
             this.userPresenter.userWishlistPrompts();
@@ -382,11 +396,25 @@ public class UserMenu {
             }
             // send a trade request
             else if(userWishlistInput.equals("4")) {
-                ArrayList<Item> traderItem = new ArrayList<>();
-                traderItem.add(userWishlist.get(index));
-                TradeController tradeController = new TradeController(this.userManager);
-                tradeController.run(traderItem, currUser);
-                this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
+                try {
+                    // make sure the item isn't the user's own item and that they can trade
+                    if(!userWishlist.get(index).getOwnerName().equals(this.currUser) &&
+                            this.userManager.getCanTrade(this.currUser,
+                                    this.tradeManager.getBorrowedTimes(this.currUser),
+                                    this.tradeManager.getLendTimes(this.currUser),
+                                    this.tradeManager.getIncompleteTimes(this.currUser),
+                                    this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
+                        ArrayList<Item> traderItem = new ArrayList<>();
+                        traderItem.add(userWishlist.get(index));
+                        TradeController tradeController = new TradeController(this.userManager);
+                        tradeController.run(traderItem, userWishlist.get(index).getOwnerName());
+                        this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
+                    }
+                }
+                // if frozen
+                catch (UserFrozenException ex) {
+                    this.userPresenter.userAccountFrozen();
+                }
             }
             // exit
             else if(userWishlistInput.equals("5")) {

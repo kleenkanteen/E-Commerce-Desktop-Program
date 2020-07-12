@@ -20,7 +20,7 @@ public class UserPresenter {
         System.out.println("What would you like to do today?" +
                 "\n[1] Access your account information." +
                 "\n[2] Browse through the global inventory." +
-                "\n[3] Browse through the global wishlist (???) " +
+                "\n[3] Loan one of your items to another user." +
                 "\n[4] Look at your message inbox." +
                 "\n[5] Add a new item to the system." +
                 "\n[6] Send admins an unfreeze request." +
@@ -67,11 +67,11 @@ public class UserPresenter {
     }
 
     public void endOfUserInventory() {
-        System.out.println("Reached end of inventory.\n");
+        System.out.println("Reached end of inventory.");
     }
 
     public void endOfUserWishlist() {
-        System.out.println("Reached the end of your wishlist.\n");
+        System.out.println("Reached the end of your wishlist.");
     }
 
     public void isEmpty(String collection) {
