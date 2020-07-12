@@ -4,19 +4,11 @@ import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
-import F_entities.*;
 import G_exceptions.InvalidLoginException;
-import G_exceptions.InvalidUsernameException;
 import B_gateways.*;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class MainMenu {
@@ -28,12 +20,13 @@ public class MainMenu {
     public void run() {
         MainMenuPresenter mm = new MainMenuPresenter();
 
-        String serializedAdmins = "phase1/src/H_ser_file_infos/serializedAdmins.ser";
-        String serializedUsers = "phase1/src/H_ser_file_infos/serializedUsers.ser";
-        String serializedGlobalInventory = "phase1/src/H_ser_file_infos/serializedGlobalInventory.ser";
-        String serializedAdminMessages = "phase1/src/H_ser_file_infos/serializedAdminMessages.ser";
-        String serializedGlobalWishlist = "phase1/src/H_ser_file_infos/serializedGlobalWishlist.ser";
-        String serializedUserTrades = "phase1/src/H_ser_file_infos/serializedUserTrades.ser";
+        String serializedAdmins = "H_ser_file_infos/serializedAdmins.ser";
+        String serializedUsers = "H_ser_file_infos/serializedUsers.ser";
+        String serializedGlobalInventory = "H_ser_file_infos/serializedGlobalInventory.ser";
+        String serializedAdminMessages = "H_ser_file_infos/serializedAdminMessages.ser";
+        String serializedGlobalWishlist = "H_ser_file_infos/serializedGlobalWishlist.ser";
+        String serializedUserTrades = "H_ser_file_infos/serializedUserTrades.ser";
+
 
         AdminAccountGateways ag;
         UserGateway ug;
