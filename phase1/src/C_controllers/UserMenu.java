@@ -41,9 +41,9 @@ public class UserMenu {
         String userInput = "";
 
         // check to see if user can trade
-        // checkUserStatus();
+        checkUserStatus();
         // check for all incomplete trades to confirm
-        // confirmIncompleteUserTrades();
+        confirmIncompleteUserTrades();
 
         while(!userInput.equals("exit")) {
             this.userPresenter.promptUserMenu();
@@ -99,7 +99,9 @@ public class UserMenu {
             if (userInput.equals("1")) {
                 this.userPresenter.setNewPasswordPrompt();
                 String newPass = input.nextLine();
-                this.userManager.changePassword(this.currUser, newPass);
+                if(!newPass.toLowerCase().equals("exit")) {
+                    this.userManager.changePassword(this.currUser, newPass);
+                }
             }
             // view frequent trading partners
             else if (userInput.equals("2")) {

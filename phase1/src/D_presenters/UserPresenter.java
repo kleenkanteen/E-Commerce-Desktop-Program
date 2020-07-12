@@ -40,7 +40,8 @@ public class UserPresenter {
     }
 
     public void setNewPasswordPrompt() {
-        System.out.println("Enter in your new password\n");
+        System.out.println("Enter in your new password" +
+                "\nEnter 'exit' to exit.");
     }
 
     public void printUserTradePartners(String tradePartner) {
