@@ -131,8 +131,8 @@ public class MessageReplyMenu {
      * Prompt the user to make a decision due to the trade request they want to confirm cannot be made into a trade
      */
     public void printCannotTradePrompt(){
-        System.out.println("You or the other trader cannot create a new trade at this time or the items involved or not" +
-                "for trade at this time, try again later. " +
+        System.out.println("You or the other trader cannot create a new trade at this time or the items involved are not" +
+                " for trade at this time, try again later. \n" +
                 "You can delete this trade request or skip it for now.");
         System.out.println("Choose your option below:");
         System.out.println("[1] Delete");
