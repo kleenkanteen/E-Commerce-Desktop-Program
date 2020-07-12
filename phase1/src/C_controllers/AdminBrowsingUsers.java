@@ -24,25 +24,23 @@ public class AdminBrowsingUsers {
             // loops back.
             boolean start = true;
 
-            while (start) {
+            while (true) {
                 browse.enterUser();
                 BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
                 String user = re.readLine();
                 // checks to see if admin wants to leave
-                if (user.equals("1")){ start = false; }
+                if (user.equals("1")){ break; }
 
                 // check if valid user
-                boolean valid = false;
-                boolean validloop = true;
 
                 // keep looping until admin either gives valid user or wants to go back
-                while (!users.isValidUser(user) && validloop && start){
+                while (!users.isValidUser(user)){
                     browse.invalidUser();
                     user = re.readLine();
-                    if (user.equals("0")){ validloop = false; }
+                    if (user.equals("0")){ break; }
                 }
 
-                while (!user.equals("1") && !user.equals("0") ){
+                while (users.isValidUser(user)){
                     String info = users.getUserInfo(user);
                     browse.infoUser(info);
                     String option = re.readLine();
@@ -51,10 +49,10 @@ public class AdminBrowsingUsers {
                         option = re.readLine();
                     }
                     // check if admin wants to go back to userid input menu
+                    if (option.equals("5")){
+                        break;
+                    }
                     switch (option) {
-                        case "5":
-                            user = "1";
-                            break;
                         case "1":
                             browse.thresholdUser();
                             option = re.readLine();

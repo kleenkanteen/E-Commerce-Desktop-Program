@@ -18,7 +18,7 @@ public class AdminMenu {
      * print to Admin after the admin logged in so that he will know what options he has
      */
     public void printMainOption(){
-        System.out.println("Hi," + admin.getUsername() + ", welcome back. Choose your option below:");
+        System.out.println("Hello " + admin.getUsername() + ". Choose your option below:");
         System.out.println("[1] Check your message inbox");
         System.out.println("[2] Manage Admin account");
         System.out.println("[3] Access the information of Users");
