@@ -28,11 +28,6 @@ public class AdminBrowsingUsers {
                 browse.enterUser();
                 BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
                 String user = re.readLine();
-                // check if string is just composed of numbers
-                while (!user.matches("[0-9]+")){
-                    browse.invalid();
-                    user = re.readLine();
-                }
                 // checks to see if admin wants to leave
                 if (user.equals("1")){ start = false; }
 
