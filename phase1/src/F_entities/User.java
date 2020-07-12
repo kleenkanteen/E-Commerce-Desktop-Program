@@ -161,7 +161,7 @@ public class User extends Account implements Serializable{
      * @return the string representation of all information in this account
      */
     public String accountInfo(){
-        String info = "      -----Account info for----- " + this.toString();
+        String info = "   ----- Account info for " + this.toString() + " -----";
         info = info + "\n Current lend until borrow threshold: " + this.threshold;
         if (this.frozenStatus){ info = info + "\n Status: Frozen"; }
         else { info = info + "\n Status: Unfrozen"; }
