@@ -36,7 +36,7 @@ public class AdminBrowsingUsers {
                 boolean validloop = true;
 
                 // keep looping until admin either gives valid user or wants to go back
-                while (!users.isValidUser(user) && validloop){
+                while (!users.isValidUser(user) && validloop && start){
                     browse.invalidUser();
                     user = re.readLine();
                     if (user.equals("0")){ validloop = false; }
