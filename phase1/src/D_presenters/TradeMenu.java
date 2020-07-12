@@ -33,7 +33,7 @@ public class TradeMenu {
     }
 
     public void enterDate() {
-        System.out.print("Enter the date in which the meeting occurs (format: yyyy-MM-dd): ");
+        System.out.print("Enter the date and time (in 24-hour format) in which the meeting occurs (format: 2020-04-20 4:20:20): ");
     }
 
     public void enterPlace() {

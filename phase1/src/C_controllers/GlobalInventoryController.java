@@ -56,15 +56,15 @@ public class GlobalInventoryController {
                             trademenu.run(items, user);
                         }
                     }
-                    else
+                    else {
                     prompts.addToWishlist(item);
                     input = br.readLine();
                     if (input.equals("1")){
                         UM.getUserWishlist(user).add(item);
                         prompts.addedToWishlist(item);
-                    }
+                    }}
                 }
-                if(input.matches("[0-9]") && Integer.valueOf(input) < gim.generatePage(pageNumber).size()-1){
+                if(input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size()-1){
                     prompts.invalid();
                 }
             }
