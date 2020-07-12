@@ -384,7 +384,8 @@ public class UserMenu {
             else if(userWishlistInput.equals("4")) {
                 ArrayList<Item> traderItem = new ArrayList<>();
                 traderItem.add(userWishlist.get(index));
-                new TradeController(this.userManager);
+                TradeController tradeController = new TradeController(this.userManager);
+                tradeController.run(traderItem, currUser);
                 this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
             }
             // exit
