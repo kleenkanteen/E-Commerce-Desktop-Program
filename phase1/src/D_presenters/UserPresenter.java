@@ -28,10 +28,10 @@ public class UserPresenter {
 
     public void createNewItemPrompt(int select) {
         if(select == 0) {
-            System.out.println("Enter in the item's name");
+            System.out.println("Enter in the item's name.");
         }
         else {
-            System.out.println("Enter the item's description");
+            System.out.println("Enter the item's description.");
         }
     }
 
@@ -40,7 +40,7 @@ public class UserPresenter {
     }
 
     public void setNewPasswordPrompt() {
-        System.out.println("Enter in your new password" +
+        System.out.println("Enter in your new password." +
                 "\nEnter 'exit' to exit.");
     }
 
@@ -121,7 +121,7 @@ public class UserPresenter {
 
     public void checkUnconfirmedTradesPrompts() {
         System.out.println("Can you confirm that this meeting happened? " +
-                "\n[1] The meeting happened " +
+                "\n[1] The meeting happened. " +
                 "\n[2] The meeting did not happen.");
     }
 
