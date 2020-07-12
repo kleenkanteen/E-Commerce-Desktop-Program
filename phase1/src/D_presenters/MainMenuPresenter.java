@@ -18,18 +18,21 @@ public class MainMenuPresenter {
         System.out.println("Enter password:");
     }
     public void inputError(){
-        System.out.println("An error has occurred when you input");
+        System.out.println("An error has occurred with your input");
     }
     public void savingError(){
-        System.out.println("An error has occurred with saving");
+        System.out.println("An error has occurred with saving.");
     }
     public void wrongLogin(){
-        System.out.println("Wrong login, try again");
+        System.out.println("Wrong login, try again.");
     }
     public void readError(){
-        System.out.println("Failed to read");
+        System.out.println("Failed to read.");
     }
     public void takenUsername(){
-        System.out.println("Your username is taken or invalid, try again");
+        System.out.println("Your username is taken or invalid, try again.");
     }
+    public void usernameTooShort(){ System.out.println("Your username was less than 3 characters, please try again."); }
+    public void successfulAccountCreation(){ System.out.println("New user account created."); }
+
 }

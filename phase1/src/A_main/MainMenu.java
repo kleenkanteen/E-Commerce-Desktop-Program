@@ -91,10 +91,15 @@ public class MainMenu {
                                 um.run();
                             }
                         } else{
-                            if (attempt.createNewUser(username, pass, utg.getUserTrades())){
-                                ag.getAdminMap().put(username, new Admin(username, pass));
+                            boolean d = false;
+                            d = attempt.createNewUser(username, pass, utg.getUserTrades());
+                            if (d==false){
+                                mm.usernameTooShort();
                             }
-                            else mm.takenUsername();
+                            else {
+                                ag.getAdminMap().put(username, new Admin(username, pass));
+                                mm.successfulAccountCreation();
+                            }
                         }
                     } else {
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
@@ -115,10 +120,9 @@ public class MainMenu {
             } catch (InvalidLoginException x) {
                 mm.wrongLogin();
             }
-            catch (InvalidUsernameException ex){
+            catch (InvalidUsernameException f){
                 mm.takenUsername();
             }
-
         }
             try {
                 ug.writeToFile(serializedUsers, ug.getMapOfUsers());
