@@ -64,4 +64,8 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void error(){
         System.out.println("Something went wrong, please try again");
     }
+
+    public void addedToWishlist(Item item){
+        System.out.println(item.getName() +  "is added to your wishlist");
+    }
 }
