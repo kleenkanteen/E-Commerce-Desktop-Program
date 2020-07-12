@@ -71,34 +71,45 @@ public class TradeController {
 
         ArrayList<Item> itemsToTradeA = new ArrayList<Item>();
         ArrayList<Item> itemsToTradeB = itemsToTrade;
+        while(true) {
+            // have a presenter that asks for perm trade or temp trade.
+            tradeMenu.choosePermTemp();
+            int selection = input.nextInt();
 
-        // have a presenter that asks for perm trade or temp trade.
-        tradeMenu.choosePermTemp();
-        int selection = input.nextInt();
-
-        switch (selection) {
-            // perm trade
-            case 1:
-                // ask the user if its one way or two way trade.
-                tradeMenu.chooseOneOrTwo();
-                tradeType = input.nextInt();
-                itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
-                tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
-                allUsers.addUserMessage(userB, tradeRequestMessage);
-                tradeMenu.tradeRequestSent(userB);
-                return;
-            // temp trade
-            case 2:
-                // ask the user if its one way or two way trade.
-                tradeMenu.chooseOneOrTwo();
-                tradeType = input.nextInt();
-                itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
-                tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB,date, place);
-                allUsers.addUserMessage(userB, tradeRequestMessage);
-                tradeMenu.tradeRequestSent(userB);
-                return;
-            default:
-                tradeMenu.invalidInput();
+            switch (selection) {
+                // perm trade
+                case 1:
+                    // ask the user if its one way or two way trade.
+                    tradeMenu.chooseOneOrTwo();
+                    tradeType = input.nextInt();
+                    while(tradeType != 1 && tradeType !=2){
+                        tradeMenu.invalidInput();
+                        tradeMenu.chooseOneOrTwo();
+                        tradeType = input.nextInt();
+                    }
+                    itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
+                    tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
+                    allUsers.addUserMessage(userB, tradeRequestMessage);
+                    tradeMenu.tradeRequestSent(userB);
+                    return;
+                // temp trade
+                case 2:
+                    // ask the user if its one way or two way trade.
+                    tradeMenu.chooseOneOrTwo();
+                    tradeType = input.nextInt();
+                    while(tradeType != 1 && tradeType !=2){
+                        tradeMenu.invalidInput();
+                        tradeMenu.chooseOneOrTwo();
+                        tradeType = input.nextInt();
+                    }
+                    itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
+                    tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
+                    allUsers.addUserMessage(userB, tradeRequestMessage);
+                    tradeMenu.tradeRequestSent(userB);
+                    return;
+                default:
+                    tradeMenu.invalidInput();
+            }
         }
     }
 
@@ -119,8 +130,9 @@ public class TradeController {
                     int choice = input.nextInt();
                     if (choice == -1) {
                         done = true;
-                    } else {
+                    } else if (choice > 0 && choice <= items.size()){
                         itemsToTradeA.add(items.get(choice-1));
+                        done = true;
                     }
                 }
         }
