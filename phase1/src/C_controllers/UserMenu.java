@@ -55,7 +55,7 @@ public class UserMenu {
             // look at global inventory
             else if (userInput.equals("2")) {
                 GlobalInventoryController globalInventory = new GlobalInventoryController();
-                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser, this.tradeManager);
+                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser);
             }
             // global wishlist
             else if (userInput.equals("3")) {
