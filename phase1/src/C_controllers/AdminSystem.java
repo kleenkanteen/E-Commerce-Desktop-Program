@@ -38,28 +38,30 @@ public class AdminSystem {
     }
 
     public void run() {
-        am.printMainOption();
+
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
-
+        am.printMainOption();
         while (!input.equals("4")) {
             try {
                 input = br.readLine();
-                am.printMainOption();
                 if (input.equals("1")){
                     am.goIntoMessageInbox();
                     AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
                             um, admin.getUsername());
-                    amr.run();}
+                    amr.run();
+                    am.printMainOption();}
 
                 else if (input.equals("2")){
                     AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
-                    aas.run();}
+                    aas.run();
+                    am.printMainOption();}
 
 
                 else if (input.equals("3")){
                     AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
-                    abu.start();}
+                    abu.start();
+                    am.printMainOption();}
 
 
             } catch (IOException e) {
