@@ -12,8 +12,10 @@ public class GlobalInventoryGateways implements Serializable{
 
     /**
      * Creates a new gateway that loads GlobalInventory in a .ser file
+     * @throws IOException If something is wrong with the filepath or file
+     * @throws ClassNotFoundException If the class cannot be found
      */
-    public GlobalInventoryGateways(String filePath){
+    public GlobalInventoryGateways(String filePath) throws IOException, ClassNotFoundException{
         this.filePath = filePath;
 
     try {
@@ -29,9 +31,9 @@ public class GlobalInventoryGateways implements Serializable{
 
         }
     }
-        catch(
-    IOException ex) {
+    catch (IOException | ClassNotFoundException ex) {
         System.out.println("Failed to read");
+        throw ex;
     }
     gIManager = new GlobalInventoryManager(gI);
     }
@@ -39,8 +41,10 @@ public class GlobalInventoryGateways implements Serializable{
     /**
      * Deserializes the GlobalInventory object into the program.
      * will assign gI to the GlobalInventory that stored in the program.
+     * @throws IOException If the file cannot be read
+     * @throws ClassNotFoundException If the class cannot be found
      */
-    public void readFromFile() {
+    public void readFromFile() throws IOException, ClassNotFoundException{
         try {
             InputStream file = new FileInputStream(filePath);
             InputStream buffer = new BufferedInputStream(file);
@@ -49,10 +53,14 @@ public class GlobalInventoryGateways implements Serializable{
             // deserialize the Map
             gI = (GlobalInventory) input.readObject();
             input.close();
-        } catch (IOException ex) {
-            System.out.println("Failed to read");
-        } catch (ClassNotFoundException ex) {
-            System.out.println("failed to find the class to read");
+        }
+        catch(IOException ex) {
+            System.out.println("Input error during deserialization");
+            throw ex;
+        }
+        catch(ClassNotFoundException ex) {
+            System.out.println("Class not found exception");
+            throw ex;
         }
 
     }
@@ -60,10 +68,10 @@ public class GlobalInventoryGateways implements Serializable{
     /**
      * Serialize the GlobalInventory into .ser file
      * @param gi the GlobalInventory Object that we want to store in the .ser file
-     *
+     * @throws IOException when an error occur when serializing
      */
 
-    public void writeToFile(GlobalInventory gi) {
+    public void writeToFile(GlobalInventory gi) throws IOException{
         try {
             OutputStream file = new FileOutputStream(filePath);
 
@@ -71,11 +79,10 @@ public class GlobalInventoryGateways implements Serializable{
             ObjectOutput output = new ObjectOutputStream(buffer);
             output.writeObject(gi);
             output.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("No file is found");
-
-        } catch (IOException ex) {
-            System.out.println("Filed to write the Object");
+        }
+        catch (IOException ex) {
+            System.out.println("Input error during serialization!");
+            throw ex;
         }
     }
 

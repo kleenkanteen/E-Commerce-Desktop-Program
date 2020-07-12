@@ -28,6 +28,20 @@ public class MessageReplyMenu {
     }
 
     /**
+     * Print to the user that they have no messages
+     */
+    public void printNoMessages(){
+        System.out.println("You have no messages to look through");
+    }
+
+    /**
+     * Print to the user that they will exit this menu
+     */
+    public void printExit(){
+        System.out.println("Returning you to the user menu");
+    }
+
+    /**
      * Print out a content message and the options they have
      * @param m the message
      */

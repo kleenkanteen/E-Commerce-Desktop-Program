@@ -11,8 +11,10 @@ public class AdminMessageGateway {
     /**
      * Creates a new gateway that loads in the Arraylist of Message objects in a .ser file
      * @param filepath the directory where the .ser file is stored
+     * @throws IOException If something is wrong with the filepath or file
+     * @throws ClassNotFoundException If the class cannot be found
      */
-    public AdminMessageGateway(String filepath) {
+    public AdminMessageGateway(String filepath) throws IOException, ClassNotFoundException {
         try {
             File file = new File(filepath);
             if (file.exists()) {
@@ -26,16 +28,19 @@ public class AdminMessageGateway {
                 messages = new ArrayList<Message>();
             }
         }
-        catch(IOException ex) {
-            System.out.println("Input error!");
+        catch (IOException | ClassNotFoundException ex) {
+            System.out.println("Failed to read");
+            throw ex;
         }
     }
     /**
      * Deserializes the arraylist of user objects into the program.
      * @param filepath Filepath to the .ser file storing the User objects.
      * @return the arraylist of Messages an Admin can respond to.
+     * @throws IOException If the file cannot be read
+     * @throws ClassNotFoundException If the class cannot be found
      */
-    public ArrayList<Message> readFromFile(String filepath) {
+    public ArrayList<Message> readFromFile(String filepath) throws IOException, ClassNotFoundException{
         ArrayList<Message> messages2 = new ArrayList<>();
         try {
             // load in the objects
@@ -44,29 +49,26 @@ public class AdminMessageGateway {
             ObjectInput input = new ObjectInputStream(buffer);
 
             // deserialize the hashmap of user objects
-            try {
-                messages2 = (ArrayList<Message>) input.readObject();
-                input.close();
-                return messages2;
-            }
-            catch(ClassCastException ex) {
-                System.out.println("Casting to improper subclass in AdminMessageGateway.");
-            }
+            messages2 = (ArrayList<Message>) input.readObject();
+            input.close();
+            return messages2;
         }
         catch(IOException ex) {
-            System.out.println("Input error during deserialization.");
+            System.out.println("Input error during deserialization");
+            throw ex;
         }
         catch(ClassNotFoundException ex) {
-            System.out.println("Class could not be found.");
+            System.out.println("Class not found exception");
+            throw ex;
         }
-        return messages2;
     }
 
     /**
      * Serializes the arraylist of Message objects.
      * @param filepath where this file will be stored
+     * @throws IOException when an error occur when serializing
      */
-    public void writeToFile(String filepath, ArrayList <Message> adminMessages) {
+    public void writeToFile(String filepath, ArrayList <Message> adminMessages) throws IOException {
         try {
             // load allUsers onto the file at designed path
             FileOutputStream file = new FileOutputStream(filepath);
@@ -79,6 +81,7 @@ public class AdminMessageGateway {
         }
         catch(IOException ex) {
             System.out.println("Input error during serialization!");
+            throw ex;
         }
     }
 
