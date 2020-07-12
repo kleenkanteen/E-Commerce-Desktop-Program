@@ -23,15 +23,16 @@ public class UserPresenter {
                 "\n[3] Browse through the global wishlist (???) " +
                 "\n[4] Look at your message inbox." +
                 "\n[5] Add a new item to the system." +
-                "\n[6] Exit and log out.");
+                "\n[6] Send admins an unfreeze request." +
+                "\n[7] Exit and log out.");
     }
 
     public void createNewItemPrompt(int select) {
         if(select == 0) {
-            System.out.println("Enter in the item's name");
+            System.out.println("Enter in the item's name.");
         }
         else {
-            System.out.println("Enter the item's description");
+            System.out.println("Enter the item's description.");
         }
     }
 
@@ -40,7 +41,7 @@ public class UserPresenter {
     }
 
     public void setNewPasswordPrompt() {
-        System.out.println("Enter in your new password" +
+        System.out.println("Enter in your new password." +
                 "\nEnter 'exit' to exit.");
     }
 
@@ -121,7 +122,7 @@ public class UserPresenter {
 
     public void checkUnconfirmedTradesPrompts() {
         System.out.println("Can you confirm that this meeting happened? " +
-                "\n[1] The meeting happened " +
+                "\n[1] The meeting happened. " +
                 "\n[2] The meeting did not happen.");
     }
 
@@ -140,5 +141,13 @@ public class UserPresenter {
 
     public void noRecentTrades() {
         System.out.println("You have no recent trades!" + "\n");
+    }
+
+    public void unfreezeRequestSent() {
+        System.out.println("Admins have been sent an unfreeze request!\n");
+    }
+
+    public void userNotFrozen() {
+        System.out.println("You are not frozen right now.\n");
     }
 }

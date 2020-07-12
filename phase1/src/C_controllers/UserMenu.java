@@ -55,7 +55,7 @@ public class UserMenu {
             // look at global inventory
             else if (userInput.equals("2")) {
                 GlobalInventoryController globalInventory = new GlobalInventoryController();
-                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser, this.tradeManager);
+                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser);
             }
             // global wishlist
             else if (userInput.equals("3")) {
@@ -76,8 +76,19 @@ public class UserMenu {
                 this.adminMessages.add(this.userManager.createNewItem(this.currUser, itemName, itemDescription));
                 this.userPresenter.newItemMessageSentToAdmin();
             }
-            // exit
+            // send admin an unfreeze request message
             else if (userInput.equals("6")) {
+                if(this.userManager.getUserFrozenStatus(this.currUser)) {
+                    this.adminMessages.add(new UnfreezeRequestMessage("User " +
+                            this.currUser +" has requested to be unfrozen.", this.currUser));
+                    this.userPresenter.userAccountFrozen();
+                }
+                else {
+                    this.userPresenter.userNotFrozen();
+                }
+            }
+            // exit
+            else if (userInput.equals("7")) {
                 userInput = "exit";
             }
             else {
@@ -329,8 +340,7 @@ public class UserMenu {
             else if(userWishlistInput.equals("4")) {
                 ArrayList<Item> traderItem = new ArrayList<>();
                 traderItem.add(userWishlist.get(index));
-                TradeController tradeController = new TradeController(this.userManager,
-                        this.tradeManager, this.currUser);
+                TradeController tradeController = new TradeController(this.userManager);
                 TradeRequestMessage tradeRequest =
                         tradeController.run(traderItem, userWishlist.get(index).getOwnerName());
                 this.userManager.addUserMessage(this.currUser, tradeRequest);
