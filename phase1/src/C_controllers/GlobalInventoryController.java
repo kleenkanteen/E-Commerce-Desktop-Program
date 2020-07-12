@@ -19,12 +19,10 @@ public class GlobalInventoryController {
 
         int pageNumber = 1;
         Item item;
-        prompts.enter();
+        prompts.printpage(pageNumber);
         try {
             String input = br.readLine();
             while (!input.equals("e")) { // != compares memory addresses.
-                prompts.printpage(pageNumber);
-                input = br.readLine();
                 if (input.equals("n")){
                     if (pageNumber < gim.generatePageNumber()) {
                         pageNumber += 1;
@@ -66,6 +64,8 @@ public class GlobalInventoryController {
                 if(input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size()-1){
                     prompts.invalid();
                 }
+                prompts.printpage(pageNumber);
+                input = br.readLine();
             }
         } catch (IOException e) {
             prompts.error();
