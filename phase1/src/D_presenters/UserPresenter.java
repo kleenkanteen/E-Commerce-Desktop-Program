@@ -23,7 +23,8 @@ public class UserPresenter {
                 "\n[3] Browse through the global wishlist (???) " +
                 "\n[4] Look at your message inbox." +
                 "\n[5] Add a new item to the system." +
-                "\n[6] Exit and log out.");
+                "\n[6] Send admins an unfreeze request." +
+                "\n[7] Exit and log out.");
     }
 
     public void createNewItemPrompt(int select) {
@@ -140,5 +141,13 @@ public class UserPresenter {
 
     public void noRecentTrades() {
         System.out.println("You have no recent trades!" + "\n");
+    }
+
+    public void unfreezeRequestSent() {
+        System.out.println("Admins have been sent an unfreeze request!\n");
+    }
+
+    public void userNotFrozen() {
+        System.out.println("You are not frozen right now.\n");
     }
 }
