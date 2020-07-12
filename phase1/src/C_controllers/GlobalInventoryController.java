@@ -2,7 +2,6 @@ package C_controllers;
 
 import D_presenters.GlobalInventoryPresenter;
 import E_use_cases.GlobalInventoryManager;
-import E_use_cases.TradeManager;
 import E_use_cases.UserManager;
 import F_entities.Item;
 
@@ -12,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class GlobalInventoryController {
-    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
