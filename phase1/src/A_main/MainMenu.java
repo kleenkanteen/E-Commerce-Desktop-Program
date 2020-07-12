@@ -38,11 +38,11 @@ public class MainMenu {
         AdminAccountGateways ag = new AdminAccountGateways(serializedAdmins);
         System.out.println("Admins:\n" + ag.getAdminMap());
 
-        Admin tempadmin = new Admin("admin", "admin");
-        HashMap<String, Admin> tempadminlist = new HashMap<>();
-        tempadminlist.put(tempadmin.getUsername(), tempadmin);
-        ag.setAdminMap(tempadminlist);
-        System.out.println("Admins:\n" + ag.getAdminMap());
+//        Admin tempadmin = new Admin("admin", "admin");
+//        HashMap<String, Admin> tempadminlist = new HashMap<>();
+//        tempadminlist.put(tempadmin.getUsername(), tempadmin);
+//        ag.setAdminMap(tempadminlist)w;
+//        System.out.println("Admins:\n" + ag.getAdminMap());
 
         //deserialize users
         UserGateway ug = new UserGateway(serializedUsers);
@@ -183,6 +183,9 @@ public class MainMenu {
         gwl.writeToFile(serializedGlobalWishlist,  gwl.getWishlistItems());
         amg.writeToFile(serializedAdminMessages, amg.getMessages());
         ag.saveToFile(ag.getAdminMap());
+
     }
+
+
 }
 
