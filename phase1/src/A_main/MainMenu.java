@@ -4,6 +4,7 @@ import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
+import F_entities.Admin;
 import G_exceptions.InvalidLoginException;
 import B_gateways.*;
 import java.io.BufferedReader;
@@ -87,9 +88,7 @@ public class MainMenu {
                             }
                         } else{
                             if (attempt.createNewUser(username, pass, utg.getUserTrades())){
-                                System.out.println(ag.getAdminMap());
                                 ag.getAdminMap().put(username, new Admin(username, pass));
-                                System.out.println(ag.getAdminMap());
                             }
                             else System.out.println("This user account already exists, user not added.\nPlease try again.");
                         }
