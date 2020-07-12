@@ -62,7 +62,7 @@ public class AdminBrowsingUsers {
                                 browse.invalid();
                                 option = re.readLine();
                             }
-                            users.setNewThresholdForOneUser(user, Integer.parseInt(user));
+                            users.setNewThresholdForOneUser(user, Integer.parseInt(option));
                             browse.thresholdsuccessUser();
                             break;
                         // check if admin wants to change freeze a user

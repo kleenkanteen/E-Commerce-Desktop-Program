@@ -16,13 +16,12 @@ public class AdminBrowsingUsersPresenter {
      */
 
     public void infoUser(String info){
-        System.out.println("User found, info below, choose your option below: \n" +
+        System.out.println(info + "\n\n" + "User account info above, choose your option below: \n" +
                 "[1] Change lending threshold, how many times user must lend before borrowing \n" +
                 "[2] Freeze/unfreeze User \n" +
                 "[3] Change limit of trades per week \n" +
                 "[4] Change limit of incomplete trades per week \n" +
-                "[5] Go back to user menu \n" +
-                info);
+                "[5] Go back to user menu \n");
 
     }
 
