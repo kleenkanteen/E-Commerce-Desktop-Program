@@ -7,6 +7,8 @@ import E_use_cases.*;
 import F_entities.Admin;
 import G_exceptions.InvalidLoginException;
 import B_gateways.*;
+import G_exceptions.InvalidUsernameException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -111,6 +113,9 @@ public class MainMenu {
                 return;
             } catch (InvalidLoginException x) {
                 mm.wrongLogin();
+            }
+            catch (InvalidUsernameException ex){
+                mm.takenUsername();
             }
 
         }

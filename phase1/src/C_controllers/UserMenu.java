@@ -81,7 +81,7 @@ public class UserMenu {
                 if(this.userManager.getUserFrozenStatus(this.currUser)) {
                     this.adminMessages.add(new UnfreezeRequestMessage("User " +
                             this.currUser +" has requested to be unfrozen.", this.currUser));
-                    this.userPresenter.userAccountFrozen();
+                    this.userPresenter.unfreezeRequestSent();
                 }
                 else {
                     this.userPresenter.userNotFrozen();

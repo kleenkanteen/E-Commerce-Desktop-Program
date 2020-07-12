@@ -9,7 +9,7 @@ public class MainMenuPresenter {
                 "[3] Admin Login.\nAny other value to exit the program.");
     }
     public void printLoginPrompt1(){
-        System.out.println("Enter username:");
+        System.out.println("Enter username (at least 3 characters):");
     }
     public void printLoginPrompt2(){
         System.out.println("Enter password:");
@@ -25,5 +25,8 @@ public class MainMenuPresenter {
     }
     public void readError(){
         System.out.println("Failed to read");
+    }
+    public void takenUsername(){
+        System.out.println("Your username is taken or invalid, try again");
     }
 }
