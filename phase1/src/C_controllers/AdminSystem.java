@@ -45,23 +45,25 @@ public class AdminSystem {
         while (!input.equals("4")) {
             try {
                 input = br.readLine();
-                if (input.equals("1")){
-                    am.goIntoMessageInbox();
-                    AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
-                            um, admin.getUsername());
-                    amr.run();
-                    am.printMainOption();}
-
-                else if (input.equals("2")){
-                    AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
-                    aas.run();
-                    am.printMainOption();}
-
-
-                else if (input.equals("3")){
-                    AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
-                    abu.start();
-                    am.printMainOption();}
+                switch (input) {
+                    case "1":
+                        am.goIntoMessageInbox();
+                        AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
+                                um, admin.getUsername());
+                        amr.run();
+                        am.printMainOption();
+                        break;
+                    case "2":
+                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
+                        aas.run();
+                        am.printMainOption();
+                        break;
+                    case "3":
+                        AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
+                        abu.start();
+                        am.printMainOption();
+                        break;
+                }
 
 
             } catch (IOException e) {
