@@ -9,10 +9,10 @@ public class MainMenuPresenter {
                 "[3] Admin Login.\nAny other value to exit the program.");
     }
     public void printLoginPrompt1(){
-        System.out.println("Enter username:\n");
+        System.out.println("Enter username:");
     }
     public void printLoginPrompt2(){
-        System.out.println("Enter password:\n");
+        System.out.println("Enter password:");
     }
     public void inputError(){
         System.out.println("An error has occurred when you input");
