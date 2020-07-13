@@ -197,7 +197,7 @@ public class UserManager {
      * @param username the user in question
      * @return the threshold of borrows v. loans
      */
-    public int getUserBorrowsVLoans(String username) {
+    public int getUserThreshold(String username) {
         return this.allUsers.get(username).getThreshold();
     }
 

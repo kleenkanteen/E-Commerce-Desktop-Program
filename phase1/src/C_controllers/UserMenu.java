@@ -179,7 +179,7 @@ public class UserMenu {
             }
             // check num of borrows v. loans
             if((this.tradeManager.getBorrowedTimes(this.currUser) - this.tradeManager.getLendTimes(this.currUser)) >
-                    this.userManager.getUserBorrowsVLoans(this.currUser)) {
+                    this.userManager.getUserThreshold(this.currUser)) {
                 this.userPresenter.tooManyBorrowsVLoans(this.tradeManager.getBorrowedTimes(this.currUser) -
                         this.tradeManager.getLendTimes(this.currUser));
                 tooManyBorrowVLoan = true;
@@ -230,17 +230,17 @@ public class UserMenu {
                         if(trade instanceof PermTrade) {
                             // remove all traderA items from Global and Personal wishlists
                             for(Item item : trade.getTraderAItemsToTrade()) {
-                                this.globalWishlistManager.removeItem(item.getItemID());
                                 this.userManager.removeFromMultipleUsersWishlists(
                                         this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
                                         item.getItemID());
+                                this.globalWishlistManager.removeItem(item.getItemID());
                             }
                             // remove all tradeB items from Global and Personal wishlists
                             for (Item item : trade.getTraderBItemsToTrade()) {
-                                this.globalWishlistManager.removeItem(item.getItemID());
                                 this.userManager.removeFromMultipleUsersWishlists(
                                         this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
                                         item.getItemID());
+                                this.globalWishlistManager.removeItem(item.getItemID());
                             }
                         }
                         continueCheckingUnconfirmed = false;
