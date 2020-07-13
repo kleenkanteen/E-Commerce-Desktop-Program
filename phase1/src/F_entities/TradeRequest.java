@@ -104,14 +104,6 @@ public class TradeRequest implements Serializable {
         return numberOfEditB;
     }
 
-    public boolean isConfirmationA() {
-        return confirmationA;
-    }
-
-    public boolean isConfirmationB() {
-        return confirmationB;
-    }
-
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
