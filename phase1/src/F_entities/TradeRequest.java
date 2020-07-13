@@ -153,19 +153,30 @@ public class TradeRequest implements Serializable {
     public String toString(){
         String info = "";
         if (itemA.isEmpty()){
-            info = getUserA() + " is requesting a trade with " + getUserB() + " for " +
-                    getItemB().get(0).getName();
+            info =  "TraderA: " + getUserA() +
+                    "\nTraderB: " + getUserB() +
+                    "\nItemB: " + getItemB().get(0).getName() +
+                    "\nPlace: " + getPlace() +
+                    "\nDate: " + getDate().toString();
         }
         else if (itemB.isEmpty()){
-            info = getUserA() + " is requesting a trade with " + getUserB() + " for " +
-                    getItemA().get(0).getName();
+            info = "TraderA: " + getUserA() +
+                    "\nTraderB: " + getUserB() +
+                    "\nItemA: " + getItemA().get(0).getName() +
+                    "\nPlace: " + getPlace() +
+                    "\nDate: " + getDate().toString();
         }
-        else info = getUserA() + " is requesting a two-way trade " + getUserB() + " trading " +
-                    getItemA().get(0).getName() + " for " +  getItemB().get(0).getName();
+        else info = "TraderA: " + getUserA() +
+                    "\nTraderB: " + getUserB() +
+                    "\nItemA: " + getItemA().get(0).getName() +
+                    "\nItemB: " + getItemB().get(0).getName() +
+                    "\nPlace: " + getPlace() +
+                    "\nDate: " + getDate().toString();
 
-        if(perm) info = info + " in a permanent trade";
-        else info = info + " in a temporary trade";
-        info = info + " and want to meet at " + getPlace() + " on " + getDate().toString() +".";
+        if(perm) info = info + "\nTrade type: permanent trade";
+        else info = info + "\nTrade type: temporary trade";
         return info;
+
+
     }
 }

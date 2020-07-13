@@ -39,43 +39,44 @@ public class GlobalInventoryController {
             }
             if (input.matches("[0-9]") && Integer.valueOf(input) <= gim.generatePage(pageNumber).size() - 1) {
                 item = gim.generatePage(pageNumber).get(Integer.parseInt(input)); //user have selected one item
-                try {
-                    if (UM.getCanTrade(user, TM.getBorrowedTimes(user), TM.getLendTimes(user),
-                            TM.getIncompleteTimes(user), TM.numberOfTradesCreatedThisWeek(user))) {
-                        prompts.addToWishlishandTradeRequest(item);
-                        String selection = inputx.nextLine();
+                if (!item.getOwnerName().equals(user)) {
+                    try {
+                        if (UM.getCanTrade(user, TM.getBorrowedTimes(user), TM.getLendTimes(user),
+                                TM.getIncompleteTimes(user), TM.numberOfTradesCreatedThisWeek(user))) {
+                            prompts.addToWishlishandTradeRequest(item);
+                            String selection = inputx.nextLine();
 
-                        if (selection.equals("1")) { // adding to wishlist
-                            if (UM.getUserWishlist(user).contains(item)) { // if user already has it in wishlist
-                                prompts.alreadyHave();
-                            } else{
-                                UM.addItemToWishlist(user, item); // user does not have it in wishlit, adding it to wishlist
-                                prompts.addedToWishlist(item);
+                            if (selection.equals("1")) { // adding to wishlist
+                                if (UM.getUserWishlist(user).contains(item)) { // if user already has it in wishlist
+                                    prompts.alreadyHave();
+                                } else {
+                                    UM.addItemToWishlist(user, item); // user does not have it in wishlit, adding it to wishlist
+                                    prompts.addedToWishlist(item);
+                                }
+                            } else if (selection.equals("2")) { // user selected trade,
+                                TradeController trademenu = new TradeController(UM);
+                                ArrayList<Item> items = new ArrayList<>();
+                                items.add(item);
+                                trademenu.run(items, user);
+                            }
+                        } else { // if user cant trade, only allow to add to wishlist
+                            prompts.addToWishlist(item);
+                            String selection1 = inputx.nextLine();
+                            if (selection1.equals("1")) {
+                                if (!item.getOwnerName().equals(user)) {
+                                    UM.addItemToWishlist(user, item);
+                                    prompts.addedToWishlist(item);
+                                } else prompts.ownItem();
                             }
                         }
-                        else if (selection.equals("2")) { // user selected trade,
-                            TradeController trademenu = new TradeController(UM);
-                            ArrayList<Item> items = new ArrayList<>();
-                            items.add(item);
-                            trademenu.run(items, user);
-                        }
-                    } else { // if user cant trade, only allow to add to wishlist
-                        prompts.addToWishlist(item);
-                        String selection1 = inputx.nextLine();
-                        if (selection1.equals("1")) {
-                            if (!item.getOwnerName().equals(user)) {
-                                UM.addItemToWishlist(user, item);
-                                prompts.addedToWishlist(item);
-                            } else prompts.ownItem();
-                        }
+                    } catch (UserFrozenException ex) {
+                        prompts.FrozenAcc();
                     }
+                    if (input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size() - 1) {
+                        prompts.invalid();
                     }
-                catch (UserFrozenException ex){
-                    prompts.FrozenAcc();
                 }
-                if (input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size() - 1) {
-                    prompts.invalid();
-                }
+                else prompts.ownItem();
             }
             prompts.printpage(pageNumber);
             input = inputx.nextLine();
