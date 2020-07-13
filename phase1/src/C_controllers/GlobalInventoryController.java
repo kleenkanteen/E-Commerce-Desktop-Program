@@ -4,6 +4,7 @@ import D_presenters.GlobalInventoryPresenter;
 import E_use_cases.GlobalInventoryManager;
 import E_use_cases.TradeManager;
 import E_use_cases.UserManager;
+import F_entities.GlobalWishlist;
 import F_entities.Item;
 import G_exceptions.UserFrozenException;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GlobalInventoryController {
-    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM, GlobalWishlist GW) {
 
         Scanner inputx = new Scanner(System.in);
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
@@ -52,6 +53,7 @@ public class GlobalInventoryController {
                                 } else {
                                     UM.addItemToWishlist(user, item); // user does not have it in wishlit, adding it to wishlist
                                     prompts.addedToWishlist(item);
+                                    GW.addWish(item.getItemID(), user);
                                 }
                             } else if (selection.equals("2")) { // user selected trade,
                                 TradeController trademenu = new TradeController(UM);
@@ -66,6 +68,7 @@ public class GlobalInventoryController {
                                 if (!item.getOwnerName().equals(user)) {
                                     UM.addItemToWishlist(user, item);
                                     prompts.addedToWishlist(item);
+                                    GW.addWish(item.getItemID(), user);
                                 } else prompts.ownItem();
                             }
                         }
