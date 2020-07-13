@@ -278,10 +278,19 @@ public class UserMenu {
             if(itemsToLend.size() != 0) {
                 // check to see if user can trade, if yes loan
                 try {
+                    // check user status
                     if(this.userManager.getCanTradeIgnoreBorrowsLoans(this.currUser,
                             this.tradeManager.getIncompleteTimes(this.currUser),
                             this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
-                        // some loan method in TradeController?
+                        // find the item in the user inventory, then call trade controller on it
+                        ArrayList<Item> userItem = new ArrayList<>();
+                        TradeController tradeController = new TradeController(this.userManager);
+                        for(Item item : this.userManager.getUserInventory(this.currUser)) {
+                            if (item.getItemID().equals(itemsToLend.get(0))) {
+                                userItem.add(item);
+                                tradeController.runFromLoan(userItem, itemsToLend.get(1));
+                            }
+                        }
                     }
                 }
                 // if the user is frozen
@@ -314,8 +323,9 @@ public class UserMenu {
             // prompt user on what to do with this item
             this.userPresenter.userInventoryPrompts();
             userInventoryInput = input.nextLine();
-            // remove the item
+            // remove the item from the global inventory and the personal inventory
             if(userInventoryInput.equals("1")) {
+                this.globalInventoryManager.removeItem(userInventory.get(index).getItemID());
                 this.userManager.removeItemFromUserInventory(this.currUser, userInventory.get(index).getItemID());
                 userInventory = this.userManager.getUserInventory(this.currUser);
                 index = 0;
