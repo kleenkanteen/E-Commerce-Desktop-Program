@@ -70,4 +70,14 @@ public class AdminAccountGateways {
         return adminMap;
     }
 
+    /**
+     * setter for HashMap of Admin with an initial Admin
+     */
+
+    public void begainAdminMap() {
+        adminMap = new HashMap<>();
+        Admin temp = new Admin("admin", "admin");
+        adminMap.put("admin", temp);
+    }
+
 }

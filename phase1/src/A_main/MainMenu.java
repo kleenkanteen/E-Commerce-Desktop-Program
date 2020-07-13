@@ -5,6 +5,9 @@ import C_controllers.UserMenu;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
 import F_entities.Admin;
+import F_entities.GlobalInventory;
+import F_entities.GlobalWishlist;
+import F_entities.Message;
 import G_exceptions.InvalidLoginException;
 import B_gateways.*;
 import G_exceptions.InvalidUsernameException;
@@ -12,6 +15,7 @@ import G_exceptions.InvalidUsernameException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -42,25 +46,32 @@ public class MainMenu {
             //deserialize admins
             ag = new AdminAccountGateways(serializedAdmins);
             //System.out.println("Admins:\n" + ag.getAdminMap());
-
+            //ag.saveToFile(new HashMap<>());
+            if(ag.getAdminMap().isEmpty()){
+                ag.begainAdminMap();
+            }
             //deserialize users
             ug = new UserGateway(serializedUsers);
+            //ug.writeToFile(serializedUsers, new HashMap<>());
             //System.out.println("Users:\n" + ug.getMapOfUsers());
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);
+            //gig.writeToFile(new GlobalInventory());
             //System.out.println("Global inventory:\n" + gig.getgI());
 
             //deserialize all user trades
             utg = new UserTradesGateway(serializedUserTrades);
             //System.out.println("User trade info:\n" + utg.getUserTrades());
+            //utg.writeToFile(serializedUserTrades, new HashMap<>());
 
             //deserialize GlobalWishlistGateway
             gwl = new GlobalWishlistGateway(serializedGlobalWishlist);
             //System.out.println("Global Wishlist Items:\n" + gwl.getWishlistItems());
-
+            //gwl.writeToFile(serializedGlobalWishlist, new GlobalWishlist());
             //deserialize AdminMessageGateway
             amg = new AdminMessageGateway(serializedAdminMessages);
+            //amg.writeToFile(serializedAdminMessages, new ArrayList<>());
             //System.out.println("Admin Messages:\n" + amg.getMessages());
         }catch(IOException | ClassNotFoundException ex){
             mm.readError();
