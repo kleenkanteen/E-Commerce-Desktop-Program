@@ -59,6 +59,7 @@ public class AdminMessageGateway {
         ObjectOutputStream output = new ObjectOutputStream(buffer);
 
         // serialize objects
+        messages = adminMessages;
         output.writeObject(adminMessages);
         output.close();
     }

@@ -59,6 +59,8 @@ public class GlobalInventoryGateways implements Serializable{
 
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
+
+        gI = gi;
         output.writeObject(gi);
         output.close();
     }

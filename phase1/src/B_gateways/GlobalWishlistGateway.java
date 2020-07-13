@@ -58,6 +58,7 @@ public class GlobalWishlistGateway implements Serializable{
         ObjectOutputStream output = new ObjectOutputStream(buffer);
 
         // serialize objects
+        wishlist = wishlistItems2;
         output.writeObject(wishlistItems2);
         output.close();
     }

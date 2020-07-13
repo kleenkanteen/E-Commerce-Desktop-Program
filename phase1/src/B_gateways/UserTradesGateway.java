@@ -60,6 +60,7 @@ public class UserTradesGateway {
         ObjectOutputStream output = new ObjectOutputStream(buffer);
 
         // serialize objects
+        userTrades = userTrades3;
         output.writeObject(userTrades3);
         output.close();
     }

@@ -57,6 +57,7 @@ public class AdminAccountGateways {
         ObjectOutput output = new ObjectOutputStream(buffer);
 
         // serialize the Map
+        this.adminMap = adminMap;
         output.writeObject(adminMap);
         output.close();
     }

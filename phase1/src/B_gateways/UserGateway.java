@@ -57,6 +57,7 @@ public class UserGateway {
         ObjectOutputStream output = new ObjectOutputStream(buffer);
 
         // serialize objects
+        this.mapOfUsers = userObjects;
         output.writeObject(userObjects);
         output.close();
     }
