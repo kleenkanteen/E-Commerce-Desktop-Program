@@ -116,7 +116,7 @@ public class MessageReplyMenu {
      * Prompt the user to enter a new place for the trade request
      */
     public void changePlacePrompt(String oldPlace){
-        System.out.println("Enter the new date in the format yyyy-MM-dd HH:mm");
+        System.out.println("Enter the new place");
         System.out.println("Your old place: "+oldPlace);
     }
 
