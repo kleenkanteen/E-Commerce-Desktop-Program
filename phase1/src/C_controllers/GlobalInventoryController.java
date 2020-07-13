@@ -2,9 +2,9 @@ package C_controllers;
 
 import D_presenters.GlobalInventoryPresenter;
 import E_use_cases.GlobalInventoryManager;
+import E_use_cases.GlobalWishlistManager;
 import E_use_cases.TradeManager;
 import E_use_cases.UserManager;
-import F_entities.GlobalWishlist;
 import F_entities.Item;
 import G_exceptions.UserFrozenException;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GlobalInventoryController {
-    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM, GlobalWishlist GW) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM, GlobalWishlistManager GW) {
 
         Scanner inputx = new Scanner(System.in);
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
