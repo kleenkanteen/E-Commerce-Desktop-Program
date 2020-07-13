@@ -99,13 +99,14 @@ public class UserPresenter {
     }
 
     public void userMenuUserInfoPrompts() {
-        System.out.println("What would you like to do with your account?" +
-                "\n[1] Set new password." +
-                "\n[2] View your most frequent Trading Partners. " +
-                "\n[3] Your three most recent trades. " +
-                "\n[4] Your inventory. " +
-                "\n[5] Your wishlist. " +
-                "\n[6] Exit.");
+        System.out.println("What would you like to do with your account? " +
+                "\n[1] View your trade history." +
+                "\n[2] Set new password." +
+                "\n[3] View your most frequent Trading Partners. " +
+                "\n[4] Your three most recent trades. " +
+                "\n[5] Your inventory. " +
+                "\n[6] Your wishlist. " +
+                "\n[7] Exit.");
     }
 
     public void newItemMessageSentToAdmin() {
@@ -157,5 +158,16 @@ public class UserPresenter {
 
     public void itemNotInOtherUsersWishlist() {
         System.out.println("None of your items exists in another user's wishlist. :(\n");
+    }
+
+    public void userTradeHistoryPrompts() {
+        System.out.println("What would you like to see in your trade history?" +
+                "\n[1] Next trade." +
+                "\n[2] Previous trade." +
+                "\n[3] Exit");
+    }
+
+    public void userTradeHistoryEndOfIndex() {
+        System.out.println("Reached end of user trades");
     }
 }

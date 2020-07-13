@@ -113,8 +113,12 @@ public class UserMenu {
         while(!userInput.equals("exit")) {
             this.userPresenter.userMenuUserInfoPrompts();
             userInput = input.nextLine();
-            // change password
+            // view trade history
             if (userInput.equals("1")) {
+                browseThroughUserTrades();
+            }
+            // change password
+            else if (userInput.equals("2")) {
                 this.userPresenter.setNewPasswordPrompt();
                 String newPass = input.nextLine();
                 if(!newPass.toLowerCase().equals("exit")) {
@@ -122,7 +126,7 @@ public class UserMenu {
                 }
             }
             // view frequent trading partners
-            else if (userInput.equals("2")) {
+            else if (userInput.equals("3")) {
                 String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser);
                 // find a better way to do this
                 for(String tradePartner: tradingPartners) {
@@ -134,7 +138,7 @@ public class UserMenu {
                 }
             }
             // view 3 most recent trades
-            else if (userInput.equals("3")) {
+            else if (userInput.equals("4")) {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
                 // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
@@ -146,15 +150,15 @@ public class UserMenu {
                 }
             }
             // look at personal inventory
-            else if (userInput.equals("4")) {
+            else if (userInput.equals("5")) {
                 browseThroughUserInventory();
             }
             // look at personal wishlist
-            else if (userInput.equals("5")) {
+            else if (userInput.equals("6")) {
                 browseThroughUserWishlist();
             }
             // exit
-            else if (userInput.equals("6")) {
+            else if (userInput.equals("7")) {
                 userInput = "exit";
             }
             // input error
@@ -228,19 +232,23 @@ public class UserMenu {
                         this.userPresenter.unconfirmedTradeSystemResponse(0);
                         // if the trade is a permanent trade
                         if(trade instanceof PermTrade) {
-                            // remove all traderA items from Global and Personal wishlists
-                            for(Item item : trade.getTraderAItemsToTrade()) {
-                                this.userManager.removeFromMultipleUsersWishlists(
-                                        this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
-                                        item.getItemID());
-                                this.globalWishlistManager.removeItem(item.getItemID());
+                            // remove all traderA items from Global and Personal wishlists if not empty
+                            if(trade.getTraderAItemsToTrade().size() != 0) {
+                                for(Item item : trade.getTraderAItemsToTrade()) {
+                                    this.userManager.removeFromMultipleUsersWishlists(
+                                            this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
+                                            item.getItemID());
+                                    this.globalWishlistManager.removeItem(item.getItemID());
+                                }
                             }
-                            // remove all tradeB items from Global and Personal wishlists
-                            for (Item item : trade.getTraderBItemsToTrade()) {
-                                this.userManager.removeFromMultipleUsersWishlists(
-                                        this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
-                                        item.getItemID());
-                                this.globalWishlistManager.removeItem(item.getItemID());
+                            // remove all tradeB items from Global and Personal wishlists if not empty
+                            if(trade.getTraderBItemsToTrade().size() != 0) {
+                                for (Item item : trade.getTraderBItemsToTrade()) {
+                                    this.userManager.removeFromMultipleUsersWishlists(
+                                            this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
+                                            item.getItemID());
+                                    this.globalWishlistManager.removeItem(item.getItemID());
+                                }
                             }
                         }
                         continueCheckingUnconfirmed = false;
@@ -301,6 +309,48 @@ public class UserMenu {
             // if this user's items do not exist in another user's wishlist
             else {
                 this.userPresenter.itemNotInOtherUsersWishlist();
+            }
+        }
+    }
+
+    private void browseThroughUserTrades() {
+        ArrayList<Trade> userTrades = tradeManager.getTradeHistory(this.currUser);
+        int index = 0;
+        Scanner input = new Scanner(System.in);
+        String userTradeInput = "";
+        while(!userTradeInput.equals("exit")) {
+            if (userTrades.size() == 0) {
+                this.userPresenter.isEmpty("trade history");
+                break;
+            }
+            this.userPresenter.itemToString(userTrades.get(index).toString());
+            this.userPresenter.userTradeHistoryPrompts();
+            userTradeInput = input.nextLine();
+            // next
+            if(userTradeInput.equals("1")) {
+                if(index == userTrades.size() - 1) {
+                    this.userPresenter.userTradeHistoryEndOfIndex();
+                }
+                else{
+                    index++;
+                }
+            }
+            // previous
+            else if(userTradeInput.equals("2")) {
+                if(index == userTrades.size() - 1) {
+                    this.userPresenter.userTradeHistoryEndOfIndex();
+                }
+                else{
+                    index--;
+                }
+            }
+            // exit
+            else if(userTradeInput.equals("3")) {
+                userTradeInput = "exit";
+            }
+            // input error
+            else {
+                this.userPresenter.inputError();
             }
         }
     }
