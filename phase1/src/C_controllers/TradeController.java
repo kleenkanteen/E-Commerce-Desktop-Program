@@ -34,37 +34,43 @@ public class TradeController {
     }
 
     /**
+     * Does the same thing as run except it only works on temporary trades and it MUST be a one way trade.
+     * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
+     * @param trader is a string that indicates the second trader (userA).
+     */
+    public void runFromLoan(ArrayList<Item> itemsToTrade, String trader) {
+        TradeRequestMessage tradeRequestMessage = null;
+        TradeRequest tradeRequest = null;
+        String userA = trader;
+        String userB = itemsToTrade.get(0).getOwnerName();
+
+        LocalDateTime date = getDateInput();
+
+        // asks for place.
+        tradeMenu.enterPlace();
+        String place = input.nextLine();
+
+        ArrayList<Item> itemsToTradeB = itemsToTrade;
+
+        tradeType = input.nextLine();
+        tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
+        tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
+        allUsers.addUserMessage(userB, tradeRequestMessage);
+        tradeMenu.tradeRequestSent(userB);
+    }
+
+    /**
      * Presents a User friendly trade menu that'll allow people to
      * trade different items to add to their collection of items!
      * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
-     * @param trader is a string that indicates the second trader.
-     * @return a TradeRequestMessage that can be used to add into other classes if necessary!
+     * @param trader is a string that indicates the second trader (userA).
      */
     public void run(ArrayList<Item> itemsToTrade, String trader) {
         TradeRequestMessage tradeRequestMessage = null;
         String userA = trader;
         String userB = itemsToTrade.get(0).getOwnerName();
 
-        // tell user that it has to be a specific format.
-        String datePattern = "yyyy-MM-ddH:mm";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-
-        // ask for date and place.
-
-        // asks for date, but will throw an error telling the user its wrong.
-        boolean dateGiven = true;
-        while (dateGiven) {
-            try {
-                tradeMenu.enterDate();
-                String dateInput = input.nextLine();
-                dateInput = dateInput.replaceAll("\\s+", "");
-                date = parse(dateInput, formatter);
-                dateGiven = false;
-            } catch (DateTimeParseException e) {
-                tradeMenu.wrongFormat();
-                dateGiven = true;
-            }
-        }
+        LocalDateTime date = getDateInput();
 
         // asks for place.
         tradeMenu.enterPlace();
@@ -83,34 +89,60 @@ public class TradeController {
                     // ask the user if its one way or two way trade.
                     tradeMenu.chooseOneOrTwo();
                     tradeType = input.nextLine();
-                    while(!tradeType.equals("1") && !tradeType.equals("2")){
-                        tradeMenu.invalidInput();
-                        tradeMenu.chooseOneOrTwo();
-                        tradeType = input.nextLine();
-                    }
+                    invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
                     allUsers.addUserMessage(userB, tradeRequestMessage);
                     tradeMenu.tradeRequestSent(userB);
-                    return;
                 // temp trade
                 case "2":
                     // ask the user if its one way or two way trade.
                     tradeMenu.chooseOneOrTwo();
                     tradeType = input.nextLine();
-                    while(!tradeType.equals("1") && !tradeType.equals("2")){
-                        tradeMenu.invalidInput();
-                        tradeMenu.chooseOneOrTwo();
-                        tradeType = input.nextLine();
-                    }
+                    invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
                     allUsers.addUserMessage(userB, tradeRequestMessage);
                     tradeMenu.tradeRequestSent(userB);
-                    return;
                 default:
                     tradeMenu.invalidInput();
             }
+        }
+    }
+
+    private LocalDateTime getDateInput() {
+        // tell user that it has to be a specific format.
+        String datePattern = "yyyy-MM-ddH:mm";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
+
+        boolean dateGiven = false;
+        while (!dateGiven) {
+            try {
+                tradeMenu.enterDate();
+                String dateInput = input.nextLine();
+                // asks for date, but will throw an error telling the user its wrong.
+                dateInput = dateInput.replaceAll("\\s+", "");
+                date = parse(dateInput, formatter);
+                LocalDateTime today = LocalDateTime.now();
+                // checks if the date inputted is not before today's date.
+                if (date.isBefore(today)) {
+                    tradeMenu.wrongFormat();
+                } else {
+                    dateGiven = true;
+                }
+            } catch (DateTimeParseException e) {
+                tradeMenu.wrongFormat();
+                dateGiven = false;
+            }
+        }
+        return date;
+    }
+
+    private void invalidTradeTypeChoice() {
+        while(!tradeType.equals("1") && !tradeType.equals("2")){
+            tradeMenu.invalidInput();
+            tradeMenu.chooseOneOrTwo();
+            tradeType = input.nextLine();
         }
     }
 
