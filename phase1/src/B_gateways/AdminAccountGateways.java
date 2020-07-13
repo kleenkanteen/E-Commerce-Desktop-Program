@@ -70,7 +70,4 @@ public class AdminAccountGateways {
         return adminMap;
     }
 
-    public void setAdminMap(HashMap<String, Admin> adminMap) {
-        this.adminMap = adminMap;
-    }
 }

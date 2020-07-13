@@ -21,19 +21,20 @@ public class AdminSystem {
     ArrayList<Message> adminMessageList;
 
     UserManager um;
+    GlobalInventoryManager gim;
 
     /**
      * Class constructor.
      * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
      * @param admin the admin of the currently logged in.
      * @param adminManager the AdminManager will be used to change account information
-     * @param UserManager the UserManager will be used to change user account information
-     * @param Gim the GlobalInventory will be used to change item in GlobalInventory
+     * @param um the UserManager will be used to change user account information
+     * @param gim the GlobalInventory will be used to change item in GlobalInventory
      */
 
 
 
-    GlobalInventoryManager gim;
+
     public AdminSystem(Admin admin, AdminManager adminManager,
                        UserManager um, GlobalInventoryManager gim) {
         this.admin = admin;
