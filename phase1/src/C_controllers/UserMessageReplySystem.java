@@ -48,13 +48,12 @@ public class UserMessageReplySystem {
         }
         try {
             String input = "";
-            while(true) {
+            do {
                 mm.printMenuPrompt(messages.size());
                 input = br.readLine();
                 if(input.equals("2"))return;
-                else if(input.equals("1")) break;
-                else mm.printInvalidInput();
-            }
+                else if(!input.equals("1")) mm.printInvalidInput();
+            }while(!input.equals("1"));
 
             final ArrayList<Message> loopingMessages =  new ArrayList<Message>(messages);
             for(Message m: loopingMessages){
@@ -86,35 +85,36 @@ public class UserMessageReplySystem {
             LocalDateTime time = t.getDate();
             String place = t.getPlace();
             try {
-                while (true) {
+                while (!input.equals("1")&&!input.equals("2")&&!input.equals("3")) {
                     mm.printEditTradeRequestPrompt(t);
                     input = br.readLine();
+                    boolean valid = false;
                     if(input.equals("2")||input.equals("3")){
-                        while (true) {
+                        do{
                             try {
                                 mm.changeDatePrompt(t.getDate());
                                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                 time = LocalDateTime.parse(br.readLine(), dtf);
-                                break;
+                                valid = true;
                             } catch (DateTimeParseException e) {
                                 mm.wrongFormat();
                             } catch (IOException e) {
                                 mm.printErrorOccurred();
                             }
-                        }
+                        }while (valid);
                     }
                     if(input.equals("1")||input.equals("3")){
-                        while (true) {
+                        valid = false;
+                        do {
                             try {
                                 mm.changePlacePrompt(place);
                                 place = br.readLine();
-                                break;
+                                valid = true;
                             } catch (IOException e) {
                                 mm.printErrorOccurred();
                             }
-                        }
+                        }while (valid);
                     }
-                    if(input.equals("1")||input.equals("2")||input.equals("3"))break;
                 }
                 tempTRM.setDateAndPlace(accountUsername, time, place);
                 createMessage(username, "Your trade request has been edited", tempTRM.getTradeRequest(),
@@ -134,30 +134,32 @@ public class UserMessageReplySystem {
         TradeRequestManager temp = new TradeRequestManager(t);
 
         if(!temp.canEdit(accountUsername)&&!temp.canEdit(username))mm.tradeRequestWarning();
-        System.out.println("");
-        while (true) {
+        boolean done = false;
+        do {
             String input = br.readLine();
             switch (input){
                 case "a":
-                    return true;
+                    done = true;
+                    break;
                 case "b":
                     return false;
                 case "1":
                     if(cannotTrade(t.getUserA(),t.getItemA())||cannotTrade(t.getUserB(), t.getItemB())){
                         mm.printCannotTradePrompt();
-                        while(true) {
+                        do {
                             input = br.readLine();
-                            if(input.equals("2"))return true;
+                            if(input.equals("2"))done = true;
                             else if(input.equals("1")) {
                                 messages.remove(m);
                                 createMessage(username, "You or the other trader cannot create a new trade " +
                                         "at this time or the items involved or not for trade at this time. The" +
                                         "Other trader has choosed to delete this trade request.\n"+
                                         "Trade Request: "+t.toString());
-                                return true;
+                                done = true;
                             }
                             else mm.printInvalidInput();
-                        }
+                        }while(!done);
+                        return true;
                     }
                     messages.remove(m);
                     Trade trade = temp.setConfirmation(accountUsername);
@@ -176,39 +178,47 @@ public class UserMessageReplySystem {
                         gi.removeItem(i.getItemID());
                     }
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 case "2":
                     messages.remove(m);
                     createMessage(username, "Your trade request:"+t.toString()+"\n is rejected by "+
                             accountUsername);
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 case "3":
                     messages.remove(m);
                     TradeRequestMessageEdit(m, br);
-                    return true;
+                    done = true;
+                    break;
                 default:
                     mm.printInvalidInput();
             }
-        }
+        }while(!done);
+        return true;
     }
     private boolean ContentMessageResponse(Message m, ArrayList<Message> messages,
                                            BufferedReader br) throws IOException {
-        while (true) {
+        boolean done = false;
+        do {
             mm.printContentMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "1":
                     messages.remove(m);
-                    return true;
+                    done = true;
+                    break;
                 case "2":
-                    return true;
+                    done = true;
+                    break;
                 case "3":
                     return false;
                 default:
                     mm.printInvalidInput();
             }
-        }
+        }while(!done);
+        return true;
     }
     private boolean cannotTrade(String username, ArrayList<Item> userItem){
         try{
