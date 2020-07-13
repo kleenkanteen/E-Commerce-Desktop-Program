@@ -101,7 +101,7 @@ public class UserMessageReplySystem {
                             } catch (IOException e) {
                                 mm.printErrorOccurred();
                             }
-                        }while (valid);
+                        }while (!valid);
                     }
                     if(input.equals("1")||input.equals("3")){
                         valid = false;
@@ -113,7 +113,7 @@ public class UserMessageReplySystem {
                             } catch (IOException e) {
                                 mm.printErrorOccurred();
                             }
-                        }while (valid);
+                        }while (!valid);
                     }
                 }
                 tempTRM.setDateAndPlace(accountUsername, time, place);

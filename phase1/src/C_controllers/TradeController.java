@@ -78,7 +78,8 @@ public class TradeController {
 
         ArrayList<Item> itemsToTradeA = new ArrayList<Item>();
         ArrayList<Item> itemsToTradeB = itemsToTrade;
-        while(true) {
+        boolean done = false;
+        do {
             // have a presenter that asks for perm trade or temp trade.
             tradeMenu.choosePermTemp();
             String selection = input.nextLine();
@@ -94,6 +95,8 @@ public class TradeController {
                     tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
                     allUsers.addUserMessage(userB, tradeRequestMessage);
                     tradeMenu.tradeRequestSent(userB);
+                    done = true;
+                    break;
                 // temp trade
                 case "2":
                     // ask the user if its one way or two way trade.
@@ -104,10 +107,12 @@ public class TradeController {
                     tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
                     allUsers.addUserMessage(userB, tradeRequestMessage);
                     tradeMenu.tradeRequestSent(userB);
+                    done = true;
+                    break;
                 default:
                     tradeMenu.invalidInput();
             }
-        }
+        }while(!done);
     }
 
     private LocalDateTime getDateInput() {
