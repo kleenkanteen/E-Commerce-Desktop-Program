@@ -45,14 +45,13 @@ public class AdminMessageReplySystem {
         }
         try {
             String input = "";
-            while(true) {
+            do{
                 mm.printMenuPrompt(messages.size());
                 input = br.readLine();
                 if(input.equals("2"))return;
-                else if(input.equals("1")) break;
-                else mm.printInvalidInput();
-            }
-            final ArrayList<Message> loopingMessages =  new ArrayList<Message>(messages);
+                else if(!input.equals("1")) mm.printInvalidInput();
+            }while(!input.equals("1"));
+ ;           final ArrayList<Message> loopingMessages =  new ArrayList<Message>(messages);
             for(Message m: loopingMessages){
                 if(m instanceof NewItemMessage){
                     if(!NewItemMessageResponse((NewItemMessage) m, messages, br))return;
@@ -76,31 +75,37 @@ public class AdminMessageReplySystem {
     }
     private boolean ContentMessageResponse(Message m, ArrayList<Message> messages,
                                            BufferedReader br) throws IOException {
-        while (true) {
+        boolean done = false;
+        do {
             mm.printContentMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "1":
                     messages.remove(m);
-                    return true;
+                    done = true;
+                    break;
                 case "2":
-                    return true;
+                    done = true;
+                    break;
                 case "3":
                     return false;
                 default:
                     mm.printInvalidInput();
             }
-        }
+        }while(!done);
+        return true;
     }
     private boolean UnfreezeRequestMessageResponse(UnfreezeRequestMessage m, ArrayList<Message> messages,
                                                    BufferedReader br) throws IOException{
         String u = m.getUser();
-        while (true) {
+        boolean done = false;
+        do{
             mm.printDecisionMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "a":
-                    return true;
+                    done = true;
+                    break;
                 case "b":
                     return false;
                 case "1":
@@ -108,26 +113,31 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     createMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 case "2":
                     messages.remove(m);
                     createMessage(u, "Your request is rejected by the Admin "+accountUsername);
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                  default:
                      mm.printInvalidInput();
             }
-        }
+        }while(!done);
+        return true;
     }
     private boolean FreezeRequestMessageResponse(FreezeRequestMessage m, ArrayList<Message> messages,
                                                  BufferedReader br) throws IOException{
         String u = m.getUser();
-        while (true) {
+        boolean done = false;
+        do {
             mm.printDecisionMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "a":
-                    return true;
+                    done = true;
+                    break;
                 case "b":
                     return false;
                 case "1":
@@ -135,26 +145,31 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     createMessage(u, "Your account is frozen by the Admin "+accountUsername);
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 case "2":
                     messages.remove(m);
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 default:
                     mm.printInvalidInput();
             }
-        }
+        }while(!done);
+        return true;
     }
 
     private boolean NewItemMessageResponse(NewItemMessage m, ArrayList<Message> messages,
                                            BufferedReader br) throws IOException{
         Item item = m.getNewItem();
-        while (true) {
+        boolean done = true;
+        do {
             mm.printDecisionMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "a":
-                    return true;
+                    done = true;
+                    break;
                 case "b":
                     return false;
                 case "1":
@@ -164,17 +179,20 @@ public class AdminMessageReplySystem {
                     createMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been successfully added to the system");
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 case "2":
                     messages.remove(m);
                     createMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been rejected by the Admin "+accountUsername);
                     mm.success();
-                    return true;
+                    done = true;
+                    break;
                 default:
                     mm.printInvalidInput();
             }
-        }
+        }while(!done);
+        return true;
     }
     private void createMessage(String username, String content){
         Message reply = new Message(content);
