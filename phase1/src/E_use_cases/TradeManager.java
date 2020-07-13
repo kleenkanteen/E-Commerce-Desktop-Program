@@ -27,6 +27,7 @@ public class TradeManager {
      * @return the trade history of a user
      */
     public ArrayList<Trade> getTradeHistory(String username) {
+        if(!tradeHistory.containsKey(username))return new ArrayList<>();
         return tradeHistory.get(username);
     }
 

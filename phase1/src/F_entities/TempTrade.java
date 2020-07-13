@@ -6,10 +6,7 @@ import java.util.ArrayList;
 
 public class TempTrade extends Trade implements Serializable {
 
-    private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean failed = getFailed();
-
-    private final LocalDateTime finishDate, startDate;
+    private final LocalDateTime finishDate;
     private final int daysInYear = 365;
 
     /**
@@ -26,14 +23,13 @@ public class TempTrade extends Trade implements Serializable {
     public TempTrade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, LocalDateTime startDate, LocalDateTime finishDate) {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, startDate);
         this.finishDate = finishDate;
-        this.startDate = startDate;
     }
     /**
      * This method provides you with the number of days left after a trade has been processed.
      * @return an integer that indicates the number of days left in the trade.
      */
     public int daysLeft() {
-        return (daysInYear - startDate.getDayOfYear()) - (finishDate.getDayOfYear());
+        return (daysInYear - getStartDate().getDayOfYear()) - (finishDate.getDayOfYear());
     }
 
     /**
@@ -47,14 +43,14 @@ public class TempTrade extends Trade implements Serializable {
      */
     public boolean needToConfirmMeetingTwo(String traderName) {
         boolean meetingCompleted = false;
-        boolean confirmTimes = traderAConfirmTimes == 1 && traderBConfirmTimes == 1,
+        boolean confirmTimes = getTraderAConfirmTimes() == 1 && getTraderBConfirmTimes() == 1,
                 endTimePast = (LocalDateTime.now()).compareTo(finishDate) >= 0;
         if (traderName.equals(getTraderA())) {
-            if (!failed && confirmTimes && endTimePast) {
+            if (!getFailed() && confirmTimes && endTimePast) {
                 meetingCompleted = true;
             }
         } else if (traderName.equals(getTraderB())) {
-            if (!failed && confirmTimes && endTimePast) {
+            if (!getFailed() && confirmTimes && endTimePast) {
                 meetingCompleted = true;
             }
         }
@@ -63,7 +59,7 @@ public class TempTrade extends Trade implements Serializable {
 
     @Override
     public boolean getCompleted() {
-        return traderBConfirmTimes == 2 && traderAConfirmTimes == 2 && !failed;
+        return getTraderBConfirmTimes() == 2 && getTraderAConfirmTimes() == 2 && !getFailed();
     }
 
     /**
@@ -77,16 +73,16 @@ public class TempTrade extends Trade implements Serializable {
     public void setConfirm(String traderName, boolean confirmation) {
         if (traderName.equals(getTraderA())) {
             if (needToConfirmMeetingOne(traderName) || needToConfirmMeetingTwo(traderName)) {
-                traderAConfirmTimes++;
+                addTraderAConfirmTimes();
                 if (!confirmation) {
-                    failed = true;
+                    setFailed(true);
                 }
             }
         } else if (traderName.equals(getTraderB())) {
             if (needToConfirmMeetingOne(traderName) || needToConfirmMeetingTwo(traderName)) {
-                traderBConfirmTimes++;
+                addTraderBConfirmTimes();
                 if (!confirmation) {
-                    failed = true;
+                    setFailed(true);
                 }
             }
         }

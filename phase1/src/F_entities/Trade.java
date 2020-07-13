@@ -39,8 +39,28 @@ public abstract class Trade implements Serializable {
         return creationDate;
     }
 
-    public boolean getFailed() {
+    boolean getFailed() {
         return failed;
+    }
+
+    void setFailed(boolean failed) {
+        this.failed = failed;
+    }
+
+    int getTraderAConfirmTimes(){
+        return traderAConfirmTimes;
+    }
+
+    int getTraderBConfirmTimes(){
+        return traderBConfirmTimes;
+    }
+
+    void addTraderAConfirmTimes(){
+        traderAConfirmTimes++;
+    }
+
+    void addTraderBConfirmTimes(){
+        traderBConfirmTimes++;
     }
 
     public abstract boolean getCompleted();

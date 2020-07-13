@@ -6,10 +6,7 @@ import java.util.ArrayList;
 
 public class PermTrade extends Trade implements Serializable {
 
-    private final LocalDateTime startDate;
     private final int daysInYear = 365;
-    private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
-    private boolean failed = getFailed();
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -27,12 +24,11 @@ public class PermTrade extends Trade implements Serializable {
      */
     public PermTrade(String traderA, String traderB, ArrayList<Item> userAItemsToTrade, ArrayList<Item> userBItemsToTrade, LocalDateTime startDate) {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, startDate);
-        this.startDate = startDate;
     }
 
     @Override
     public boolean getCompleted() {
-        return traderBConfirmTimes == 1 && traderAConfirmTimes == 1 && !failed;
+        return getTraderAConfirmTimes() == 1 && getTraderBConfirmTimes() == 1 && !getFailed();
     }
 
     /**
@@ -46,16 +42,16 @@ public class PermTrade extends Trade implements Serializable {
     public void setConfirm(String traderName, boolean confirmation) {
         if (traderName.equals(getTraderA())) {
             if (needToConfirmMeetingOne(traderName)) {
-                traderAConfirmTimes++;
+                addTraderAConfirmTimes();
                 if (!confirmation) {
-                    failed = true;
+                    setFailed(true);
                 }
             }
         } else if (traderName.equals(getTraderB())) {
             if (needToConfirmMeetingOne(traderName)) {
-                traderBConfirmTimes++;
+                addTraderBConfirmTimes();
                 if (!confirmation) {
-                    failed = true;
+                    setFailed(true);
                 }
             }
         }
@@ -67,6 +63,6 @@ public class PermTrade extends Trade implements Serializable {
      */
     public int daysLeft() {
         LocalDateTime finishDate = LocalDateTime.now();
-        return (daysInYear - startDate.getDayOfYear()) - finishDate.getDayOfYear();
+        return (daysInYear - getStartDate().getDayOfYear()) - finishDate.getDayOfYear();
     }
 }

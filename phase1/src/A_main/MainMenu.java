@@ -12,6 +12,7 @@ import G_exceptions.InvalidUsernameException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 
 public class MainMenu {
@@ -69,7 +70,8 @@ public class MainMenu {
         //create UserManager x
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
-        while (true) {
+        boolean done = false;
+        do {
             mm.printMenuPrompt();
             try {
                 input = br.readLine();
@@ -91,9 +93,8 @@ public class MainMenu {
                                 um.run();
                             }
                         } else{
-                            boolean d = false;
-                            d = attempt.createNewUser(username, pass, utg.getUserTrades());
-                            if (d==false){
+                            boolean d = attempt.createNewUser(username, pass, utg.getUserTrades());
+                            if (!d){
                                 mm.usernameTooShort();
                             }
                             else {
@@ -111,7 +112,7 @@ public class MainMenu {
                     }
                 } else {
                     mm.printExit();
-                    break;
+                    done = true;
                 }
             } catch (IOException e) {
                 mm.inputError();
@@ -123,7 +124,7 @@ public class MainMenu {
             catch (InvalidUsernameException f){
                 mm.takenUsername();
             }
-        }
+        } while(!done);
             try {
                 ug.writeToFile(serializedUsers, ug.getMapOfUsers());
                 gig.writeToFile(gig.getgI());
