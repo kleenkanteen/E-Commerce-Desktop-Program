@@ -30,6 +30,6 @@ public class NewItemMessage extends DecisionMessage implements Serializable {
      */
     @Override
     public String toString() {
-        return super.toString() + "\nThe item: "+newItem;
+        return "From " + getSender()+": "+getContent() +  "\nThe item: \n"+newItem+"\n"+super.toString();
     }
 }

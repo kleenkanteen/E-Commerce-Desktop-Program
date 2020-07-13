@@ -117,7 +117,7 @@ public class MessageReplyMenu {
      */
     public void changePlacePrompt(String oldPlace){
         System.out.println("Enter the new date in the format yyyy-MM-dd HH:mm");
-        System.out.println("Your old date: "+oldPlace);
+        System.out.println("Your old place: "+oldPlace);
     }
 
     /**
@@ -137,6 +137,13 @@ public class MessageReplyMenu {
         System.out.println("Choose your option below:");
         System.out.println("[1] Delete");
         System.out.println("[2] Skip");
+    }
+
+    /**
+     * Prompt the user their action is successful
+     */
+    public void success(){
+        System.out.println("Success");
     }
 
 }

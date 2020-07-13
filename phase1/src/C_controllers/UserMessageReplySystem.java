@@ -119,6 +119,7 @@ public class UserMessageReplySystem {
                 tempTRM.setDateAndPlace(accountUsername, time, place);
                 createMessage(username, "Your trade request has been edited", tempTRM.getTradeRequest(),
                         accountUsername);
+                mm.success();
             }
             catch(IOException e){
                 mm.printErrorOccurred();
@@ -164,19 +165,23 @@ public class UserMessageReplySystem {
                     tm.addTrade(trade);
 
                     //Removing the items from the GI and personal inventory and wishlist
-                    for(Item i:trade.getTraderAItemsToTrade()) {
+                    ArrayList<Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
+                    for(Item i:list) {
                         um.removeItemFromUserInventory(trade.getTraderA(), i.getItemID());
                         gi.removeItem(i.getItemID());
                     }
-                    for(Item i:trade.getTraderBItemsToTrade()) {
+                    list = new ArrayList<>(trade.getTraderBItemsToTrade());
+                    for(Item i:list) {
                         um.removeItemFromUserInventory(trade.getTraderB(), i.getItemID());
                         gi.removeItem(i.getItemID());
                     }
+                    mm.success();
                     return true;
                 case "2":
                     messages.remove(m);
                     createMessage(username, "Your trade request:"+t.toString()+"\n is rejected by "+
                             accountUsername);
+                    mm.success();
                     return true;
                 case "3":
                     messages.remove(m);
@@ -214,7 +219,11 @@ public class UserMessageReplySystem {
         }
         for(Item i: userItem){
             if(!gi.contains(i))return true;
-            if(!um.getUserInventory(username).contains(i)) return true;
+            boolean contain = false;
+            for(Item j: userItem){
+                if(i.isEqual(j))contain = true;
+            }
+            if(!contain)return true;
         }
         return false;
     }

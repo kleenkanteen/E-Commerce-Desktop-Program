@@ -107,10 +107,12 @@ public class AdminMessageReplySystem {
                     um.freezeUserAccount(u, false);
                     messages.remove(m);
                     createMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
+                    mm.success();
                     return true;
                 case "2":
                     messages.remove(m);
                     createMessage(u, "Your request is rejected by the Admin "+accountUsername);
+                    mm.success();
                     return true;
                  default:
                      mm.printInvalidInput();
@@ -132,9 +134,11 @@ public class AdminMessageReplySystem {
                     um.freezeUserAccount(u, true);
                     messages.remove(m);
                     createMessage(u, "Your account is frozen by the Admin "+accountUsername);
+                    mm.success();
                     return true;
                 case "2":
                     messages.remove(m);
+                    mm.success();
                     return true;
                 default:
                     mm.printInvalidInput();
@@ -159,11 +163,13 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     createMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been successfully added to the system");
+                    mm.success();
                     return true;
                 case "2":
                     messages.remove(m);
                     createMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been rejected by the Admin "+accountUsername);
+                    mm.success();
                     return true;
                 default:
                     mm.printInvalidInput();

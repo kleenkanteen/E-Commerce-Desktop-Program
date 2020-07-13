@@ -47,6 +47,6 @@ public abstract class DecisionMessage extends Message implements Serializable {
             if(i != 0) optionsToString = optionsToString+"\n";
             optionsToString = optionsToString+"["+Integer.toString(i+1)+"] "+options[i];
         }
-        return super.toString() + "\n" + optionsToString;
+        return optionsToString;
     }
 }
