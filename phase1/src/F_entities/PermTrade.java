@@ -6,8 +6,6 @@ import java.util.ArrayList;
 
 public class PermTrade extends Trade implements Serializable {
 
-    private final int daysInYear = 365;
-
     /**
      * Creates a trade with an item that both the seller wants to sell
      * and the buyer wants to buy.
@@ -26,6 +24,12 @@ public class PermTrade extends Trade implements Serializable {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, startDate);
     }
 
+    /**
+     * Determines whether a trade is completed based on the number of times
+     * both traders confirm the TradeRequest details. In this class, each trader
+     * needs to confirm once in order for the trade to be completed.
+     * @return a boolean on whether a trade is completed or not.
+     */
     @Override
     public boolean getCompleted() {
         return getTraderAConfirmTimes() == 1 && getTraderBConfirmTimes() == 1 && !getFailed();
@@ -63,6 +67,7 @@ public class PermTrade extends Trade implements Serializable {
      */
     public int daysLeft() {
         LocalDateTime finishDate = LocalDateTime.now();
+        int daysInYear = 365;
         return (daysInYear - getStartDate().getDayOfYear()) - finishDate.getDayOfYear();
     }
 }

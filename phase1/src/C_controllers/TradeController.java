@@ -29,12 +29,17 @@ public class TradeController {
     private TradeRequest tradeRequest;
 
 
+    /**
+     * Takes in a UserManager in order to search for userA making a trade request to userB.
+     * @param allUsers takes in a UserManager that contains all users that are in the system.
+     */
     public TradeController(UserManager allUsers) {
         this.allUsers = allUsers;
     }
 
     /**
-     * Does the same thing as run except it only works on temporary trades and it MUST be a one way trade.
+     * Takes an ArrayList and a String that contains details about both userA and userB.
+     * This method is similar to run, except it only accomplishes a one way trade temp trade request.
      * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
      * @param trader is a string that indicates the second trader (userA).
      */

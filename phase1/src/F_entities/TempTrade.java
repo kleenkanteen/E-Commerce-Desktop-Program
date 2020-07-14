@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class TempTrade extends Trade implements Serializable {
 
     private final LocalDateTime finishDate;
-    private final int daysInYear = 365;
 
     /**
      * Creates a trade with an item that both the seller wants to sell
@@ -29,6 +28,7 @@ public class TempTrade extends Trade implements Serializable {
      * @return an integer that indicates the number of days left in the trade.
      */
     public int daysLeft() {
+        int daysInYear = 365;
         return (daysInYear - getStartDate().getDayOfYear()) - (finishDate.getDayOfYear());
     }
 
@@ -57,6 +57,12 @@ public class TempTrade extends Trade implements Serializable {
         return meetingCompleted;
     }
 
+    /**
+     * Determines whether a trade is completed based on the number of times
+     * both traders confirm the TradeRequest details. In this class, both traders need
+     * to confirm twice.
+     * @return a boolean on whether a trade is completed or not.
+     */
     @Override
     public boolean getCompleted() {
         return getTraderBConfirmTimes() == 2 && getTraderAConfirmTimes() == 2 && !getFailed();
@@ -88,6 +94,10 @@ public class TempTrade extends Trade implements Serializable {
         }
     }
 
+    /**
+     * String representation of TempTrade
+     * @return a string that represents tempTrade
+     */
     @Override
     public String toString() {
         return super.toString() + "\n" + "The Object(s) involved in trade had been returned on" + finishDate;
