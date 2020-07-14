@@ -32,6 +32,15 @@ public class Item implements Serializable {
     }
 
     /**
+     * set the new ownerName to the items that have been traded
+     * @param newOwnerName the new ownerName that should be assigned to the item
+     */
+
+    public void setOwnerName(String newOwnerName){
+        ownerName = newOwnerName;
+    }
+
+    /**
      * change the String representation of Item.
      * @return String of item's content.
      */
@@ -65,14 +74,14 @@ public class Item implements Serializable {
         return itemID;
     }
 
-    /**
-     * Getter to get the description of the Item
-     * @return the description of the Item
-     */
-
-    public String getDescription() {
-        return description;
-    }
+//    /**
+//     * Getter to get the description of the Item
+//     * @return the description of the Item
+//     */
+//
+//    public String getDescription() {
+//        return description;
+//    }
 
     /**
      * Getter to get the name of the Item

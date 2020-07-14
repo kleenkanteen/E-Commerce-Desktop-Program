@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.*;
 
 public class GlobalInventory implements Serializable {
+
     private HashMap<String, Item> itemMap;
     private ArrayList<String> itemIdCollection;
     /**
@@ -20,21 +21,21 @@ public class GlobalInventory implements Serializable {
         itemIdCollection = new ArrayList<>();
     }
 
-    /**
-     * return the hashmap that stores the Items in global inventory
-     * @return hashmap of items stored in global inventory
-     */
+//    /**
+//     * return the hashmap that stores the Items in global inventory
+//     * @return hashmap of items stored in global inventory
+//     */
+//
+//    public HashMap<String, Item> getItemMap() {
+//        return itemMap;
+//    }
 
-    public HashMap<String, Item> getItemMap() {
-        return itemMap;
-    }
-
-    /**
-     * modify the hashmap that stores the Items in global inventory with hashmap passed in.
-     */
-    public void setItemMap(HashMap<String, Item> itemMap) {
-        this.itemMap = itemMap;
-    }
+//    /**
+//     * modify the hashmap that stores the Items in global inventory with hashmap passed in.
+//     */
+//    public void setItemMap(HashMap<String, Item> itemMap) {
+//        this.itemMap = itemMap;
+//    }
 
 
     /**
@@ -58,24 +59,24 @@ public class GlobalInventory implements Serializable {
         return itemIdCollection;
     }
 
-    /**
-     * Getter of Item in GlobalInventory with ItemID been called
-     * @param itemID is the unique ID of each Item.
-
-     * @return Item with itemID been called
-     * and return null if the itemID is not in the GlobalInventory
-     */
-
-    public Object getItem(String itemID) {
-        if (itemMap.containsKey(itemID)){
-            return itemMap.get(itemID);
-        }
-        else {
-            System.out.println("itemID not found");
-            return null;
-        }
-
-    }
+//    /**
+//     * Getter of Item in GlobalInventory with ItemID been called
+//     * @param itemID is the unique ID of each Item.
+//
+//     * @return Item with itemID been called
+//     * and return null if the itemID is not in the GlobalInventory
+//     */
+//
+//    public Object getItem(String itemID) {
+//        if (itemMap.containsKey(itemID)){
+//            return itemMap.get(itemID);
+//        }
+//        else {
+//            System.out.println("itemID not found");
+//            return null;
+//        }
+//
+//    }
 
     /**
      * Getter of the Item by the index with the order of key stored in itemMap
@@ -167,12 +168,12 @@ public class GlobalInventory implements Serializable {
 
 
     public String toString() {
-        String i = "";
+        StringBuilder i = new StringBuilder();
         for (String key : itemMap.keySet()) {
-            i += key + itemMap.get(key)+ "\n";
+            i.append(key).append(itemMap.get(key)).append("\n");
         }
         // from https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
-        return i;
+        return i.toString();
     }
 
 

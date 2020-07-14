@@ -19,16 +19,16 @@ public class GlobalInventoryManager implements Serializable {
         this.gI = gI;
     }
 
-    /**
-     * getter to get the Item from GlobalInventory with itemID.
-     * @param itemID is the unique id that each item has.
-     * @return the Item with itemID and return nothing if ID doesn't exist in GlobalInventory
-     */
-
-
-    public Item getItemFromGI(String itemID){
-        return (Item) gI.getItem(itemID);
-    }
+//    /**
+//     * getter to get the Item from GlobalInventory with itemID.
+//     * @param itemID is the unique id that each item has.
+//     * @return the Item with itemID and return nothing if ID doesn't exist in GlobalInventory
+//     */
+//
+//
+//    public Item getItemFromGI(String itemID){
+//        return (Item) gI.getItem(itemID);
+//    }
 
 
 
