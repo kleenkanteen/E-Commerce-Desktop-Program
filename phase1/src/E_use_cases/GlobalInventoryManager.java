@@ -137,7 +137,14 @@ public class GlobalInventoryManager implements Serializable {
         public boolean contains(Item item){
             return gI.containsKey(item.getItemID());
         }
-    }
+
+
+
+
+    public boolean hasNoItem(){
+            return gI.isEmpty();
+
+    }}
 
 
 
