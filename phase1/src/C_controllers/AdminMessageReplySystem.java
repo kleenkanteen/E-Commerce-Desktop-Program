@@ -38,6 +38,7 @@ public class AdminMessageReplySystem {
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Message> messages = am.getAdminMessagesArrayList();
+        //Initial Menu
         if(messages.size() == 0){
             mm.printNoMessages();
             mm.printExit();
@@ -51,7 +52,9 @@ public class AdminMessageReplySystem {
                 if(input.equals("2"))return;
                 else if(!input.equals("1")) mm.printInvalidInput();
             }while(!input.equals("1"));
- ;           final ArrayList<Message> loopingMessages =  new ArrayList<Message>(messages);
+
+            //Going through all the messages the user have
+ ;          final ArrayList<Message> loopingMessages =  new ArrayList<Message>(messages);
             for(Message m: loopingMessages){
                 if(m instanceof NewItemMessage){
                     if(!NewItemMessageResponse((NewItemMessage) m, messages, br))return;
@@ -109,14 +112,18 @@ public class AdminMessageReplySystem {
                 case "b":
                     return false;
                 case "1":
+                    //Unfreezing the user aka accepting the unfreeze request
                     um.freezeUserAccount(u, false);
                     messages.remove(m);
+                    //Informing the other user
                     createMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
                     mm.success();
                     done = true;
                     break;
                 case "2":
+                    //Ignoring the message
                     messages.remove(m);
+                    //Informing the other user
                     createMessage(u, "Your request is rejected by the Admin "+accountUsername);
                     mm.success();
                     done = true;
@@ -141,13 +148,16 @@ public class AdminMessageReplySystem {
                 case "b":
                     return false;
                 case "1":
+                    //freezing the user
                     um.freezeUserAccount(u, true);
                     messages.remove(m);
+                    //informing the other user
                     createMessage(u, "Your account is frozen by the Admin "+accountUsername);
                     mm.success();
                     done = true;
                     break;
                 case "2":
+                    //Ignoring the request
                     messages.remove(m);
                     mm.success();
                     done = true;
@@ -162,7 +172,7 @@ public class AdminMessageReplySystem {
     private boolean NewItemMessageResponse(NewItemMessage m, ArrayList<Message> messages,
                                            BufferedReader br) throws IOException{
         Item item = m.getNewItem();
-        boolean done = true;
+        boolean done = false;
         do {
             mm.printDecisionMessagePrompt(m);
             String input = br.readLine();
@@ -173,16 +183,23 @@ public class AdminMessageReplySystem {
                 case "b":
                     return false;
                 case "1":
+                    //Accepting the new item
+
+                    //Adding the new message to the GI
                     gi.addItemToHashMap(item);
+                    //Adding the new message to the personal inventory
                     um.addItemToUserInventory(item, item.getOwnerName());
                     messages.remove(m);
+                    //Informing the other user
                     createMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been successfully added to the system");
                     mm.success();
                     done = true;
                     break;
                 case "2":
+                    //Denying the new item
                     messages.remove(m);
+                    //Informing the other user
                     createMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been rejected by the Admin "+accountUsername);
                     mm.success();

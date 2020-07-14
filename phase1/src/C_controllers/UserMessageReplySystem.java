@@ -41,6 +41,8 @@ public class UserMessageReplySystem {
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         ArrayList<Message> messages = um.getUserMessages(accountUsername);
+
+        //Initial Menu
         if(messages.size() == 0){
             mm.printNoMessages();
             mm.printExit();
@@ -55,6 +57,7 @@ public class UserMessageReplySystem {
                 else if(!input.equals("1")) mm.printInvalidInput();
             }while(!input.equals("1"));
 
+            //Going through all the messages the user have
             final ArrayList<Message> loopingMessages =  new ArrayList<Message>(messages);
             for(Message m: loopingMessages){
                 if(m instanceof TradeRequestMessage){
@@ -67,19 +70,24 @@ public class UserMessageReplySystem {
         }catch(IOException e){
             mm.printInvalidInput();
         }finally {
+            //Exiting the user from the menu do to an error or that the user has exited
             um.setUserMessages(accountUsername, messages);
             mm.printExit();
         }
     }
+
+    //Allow the user to edit a trade request
     private void TradeRequestMessageEdit(TradeRequestMessage m, BufferedReader br){
         TradeRequest t = m.getTradeContent();
         String username = m.getSender();
         TradeRequestManager tempTRM = new TradeRequestManager(t);
 
+        //warning the user that their trade request is cancelled due to too much edits
         if(!tempTRM.canEdit(accountUsername)&&!tempTRM.canEdit(username)){
             mm.tradeRequestCancel();
             createMessage(username, "Your trade request:"+t.toString()+"\n is cancelled due to too much edits");
         }
+        //Allow the user to edit a trade request
         else{
             String input = "";
             LocalDateTime time = t.getDate();
@@ -89,6 +97,7 @@ public class UserMessageReplySystem {
                     mm.printEditTradeRequestPrompt(t);
                     input = br.readLine();
                     boolean valid = false;
+                    //Editing the date
                     if(input.equals("2")||input.equals("3")){
                         do{
                             try {
@@ -103,6 +112,7 @@ public class UserMessageReplySystem {
                             }
                         }while (!valid);
                     }
+                    //Editing the place
                     if(input.equals("1")||input.equals("3")){
                         valid = false;
                         do {
@@ -116,7 +126,9 @@ public class UserMessageReplySystem {
                         }while (!valid);
                     }
                 }
+                //Setting the new date/place that the user edit
                 tempTRM.setDateAndPlace(accountUsername, time, place);
+                //Sent the new trade request to other trader
                 createMessage(username, "Your trade request has been edited", tempTRM.getTradeRequest(),
                         accountUsername);
                 mm.success();
@@ -133,6 +145,7 @@ public class UserMessageReplySystem {
         String username = m.getSender();
         TradeRequestManager temp = new TradeRequestManager(t);
 
+        //Warn the user if their trade request cannot be edit anymore
         if(!temp.canEdit(accountUsername)&&!temp.canEdit(username))mm.tradeRequestWarning();
         boolean done = false;
         do {
@@ -144,13 +157,16 @@ public class UserMessageReplySystem {
                 case "b":
                     return false;
                 case "1":
+                    //Check if the trade can be created
                     if(cannotTrade(t.getUserA(),t.getItemA())||cannotTrade(t.getUserB(), t.getItemB())){
+                        //Tell the user that their trade cannot be created at this time
                         mm.printCannotTradePrompt();
                         do {
                             input = br.readLine();
                             if(input.equals("2"))done = true;
                             else if(input.equals("1")) {
                                 messages.remove(m);
+                                //Tell the other trader that the trade could not be created at this time
                                 createMessage(username, "You or the other trader cannot create a new trade " +
                                         "at this time or the items involved or not for trade at this time. The" +
                                         "Other trader has choosed to delete this trade request.\n"+
@@ -161,12 +177,13 @@ public class UserMessageReplySystem {
                         }while(!done);
                         return true;
                     }
+                    //Confirming the trade
                     messages.remove(m);
                     Trade trade = temp.setConfirmation(accountUsername);
                     //Add trade to both user's trade history
                     tm.addTrade(trade);
 
-                    //Removing the items from the GI and personal inventory and wishlist
+                    //Removing the items from the GI and personal inventory
                     ArrayList<Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
                     for(Item i:list) {
                         um.removeItemFromUserInventory(trade.getTraderA(), i.getItemID());
@@ -181,6 +198,7 @@ public class UserMessageReplySystem {
                     done = true;
                     break;
                 case "2":
+                    //Removing and informing the other trade that the request is rejected
                     messages.remove(m);
                     createMessage(username, "Your trade request:"+t.toString()+"\n is rejected by "+
                             accountUsername);
@@ -221,12 +239,14 @@ public class UserMessageReplySystem {
         return true;
     }
     private boolean cannotTrade(String username, ArrayList<Item> userItem){
+        //Checking if the user can trade
         try{
             if(!um.getCanTrade(username, tm.getBorrowedTimes(username), tm.getLendTimes(username),
                     tm.getIncompleteTimes(username), tm.numberOfTradesCreatedThisWeek(username))) return true;
         }catch(UserFrozenException e){
             return true;
         }
+        //Checking if the items in the trade is valid aka in the personal inventory and GI
         for(Item i: userItem){
             if(!gi.contains(i))return true;
             boolean contain = false;
