@@ -170,4 +170,8 @@ public class UserPresenter {
     public void userTradeHistoryEndOfIndex() {
         System.out.println("Reached end of user trades");
     }
+
+    public void emptyGlobalInventory() {
+        System.out.println("There are no items in the global inventory! Add some of your own! :)");
+    }
 }
