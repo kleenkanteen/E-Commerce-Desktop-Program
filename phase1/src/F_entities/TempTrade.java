@@ -90,6 +90,6 @@ public class TempTrade extends Trade implements Serializable {
 
     @Override
     public String toString() {
-        return super.toString() + "\n" + "The Object(s) involved in trade will be returned on" + finishDate;
+        return super.toString() + "\n" + "The Object(s) involved in trade had been returned on" + finishDate;
     }
 }
