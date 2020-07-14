@@ -4,10 +4,7 @@ import C_controllers.AdminSystem;
 import C_controllers.UserMenu;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
-import F_entities.Admin;
-import F_entities.GlobalInventory;
-import F_entities.GlobalWishlist;
-import F_entities.Message;
+import F_entities.*;
 import G_exceptions.InvalidLoginException;
 import B_gateways.*;
 import G_exceptions.InvalidUsernameException;
@@ -88,7 +85,7 @@ public class MainMenu {
             try {
                 input = br.readLine();
                 if (input.equals("1") || input.equals("3")) mm.printLoginPrompt1();
-                if(input.equals("2")) mm.printLoginPromptNewUsername();
+                if (input.equals("2")) mm.printLoginPromptNewUsername();
                 if (input.equals("1") || input.equals("2") || input.equals("3")) {
                     String username = br.readLine();
                     mm.printLoginPrompt2();
@@ -98,6 +95,7 @@ public class MainMenu {
                     if (input.equals("1") || input.equals("2")) {
                         attempt.login(username, pass);
                         if (input.equals("1")) {
+                            // user selected "1" (user sign-in)
                             if (attempt.login(username, pass)) {
                                 TradeManager y = new TradeManager(utg.getUserTrades());
                                 GlobalWishlistManager y3 = new GlobalWishlistManager(gwl.getWishlistItems());
@@ -105,16 +103,18 @@ public class MainMenu {
                                 um.run();
                             }
                         } else{
+                            // user selected "2" (user sign-up)
                             boolean d = attempt.createNewUser(username, pass, utg.getUserTrades());
                             if (!d){
                                 mm.usernameTooShort();
                             }
                             else {
-                                ag.getAdminMap().put(username, new Admin(username, pass));
+                                ug.getMapOfUsers().put(username, new User(username, pass));
                                 mm.successfulAccountCreation();
                             }
                         }
                     } else {
+                        // user selected "3" (admin sign-in)
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                         if (thing.login().equals(username) && !(username.equals("System Messages"))) {
                             AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
