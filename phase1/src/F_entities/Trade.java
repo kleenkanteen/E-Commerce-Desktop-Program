@@ -208,8 +208,12 @@ public abstract class Trade implements Serializable {
     public boolean equals(Trade trade) {
         boolean traderAEqual = this.traderA.equals(trade.traderA);
         boolean traderBEqual = this.traderB.equals(trade.traderB);
-        boolean traderAItemsEqual = this.traderAItemstoTrade.equals(trade.traderAItemstoTrade);
-        boolean traderBItemsEqual = this.traderBItemsToTrade.equals(trade.traderBItemsToTrade);
+        if(traderAItemstoTrade.size() != trade.traderAItemstoTrade.size()) return false;
+        boolean traderAItemsEqual = true;
+        if(!traderAItemstoTrade.isEmpty())traderAItemsEqual = this.traderAItemstoTrade.get(0).isEqual(trade.traderAItemstoTrade.get(0));
+        if(traderBItemsToTrade.size() != trade.traderBItemsToTrade.size()) return false;
+        boolean traderBItemsEqual = true;
+        if(!traderBItemsToTrade.isEmpty())traderBItemsEqual= this.traderBItemsToTrade.get(0).isEqual(trade.traderBItemsToTrade.get(0));
         boolean startDateEquals = this.startDate.equals(trade.startDate);
 
 
