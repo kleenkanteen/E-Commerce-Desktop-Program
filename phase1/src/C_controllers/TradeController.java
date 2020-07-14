@@ -38,16 +38,16 @@ public class TradeController {
     }
 
     /**
-     * Takes an ArrayList and a String that contains details about both userA and userB.
+     * Takes an ArrayList and a String that will be used to loan items to userB.
      * This method is similar to run, except it only accomplishes a one way trade temp/perm trade request.
-     * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
-     * @param trader is a string that indicates the second trader (userA).
+     * @param itemsToTrade takes in an arraylist of items that represent the items to loan to userB.
+     * @param trader is a string that indicates the current trader (userA).
      */
-    public void runFromLoan(ArrayList<Item> itemsToTrade, String trader) {
+    public void runFromLoan(ArrayList<Item> itemsToTrade, String trader, String secTrader) {
         TradeRequestMessage tradeRequestMessage = null;
         TradeRequest tradeRequest = null;
         String userA = trader;
-        String userB = itemsToTrade.get(0).getOwnerName();
+        String userB = secTrader;
 
         LocalDateTime date = getDateInput();
 
@@ -69,6 +69,8 @@ public class TradeController {
             case "2":
                 tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
                 tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
+            default:
+                tradeMenu.invalidInput();
 
         }
         allUsers.addUserMessage(userA, tradeRequestMessage);
