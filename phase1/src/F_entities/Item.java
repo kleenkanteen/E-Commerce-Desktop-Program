@@ -33,7 +33,7 @@ public class Item implements Serializable {
 
     /**
      * set the new ownerName to the items that have been traded
-     * @param newOwnerName the new ownerName that should be assigned to the item
+     * @param newOwnerName the new ownerName that will be assigned to the Item.
      */
 
     public void setOwnerName(String newOwnerName){
@@ -47,11 +47,9 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Item{" +
-                ", description='" + description + '\'' +
-                ", name='" + name + '\'' +
-                ", ownerName='" + ownerName + '\'' +
-                '}';
+        return "Item Name: " + getName() + "\n"
+                + "Owner Name: " + getOwnerName() + "\n"
+                + "Description " + getDescription();
     }
 
 
@@ -73,14 +71,14 @@ public class Item implements Serializable {
         return itemID;
     }
 
-//    /**
-//     * Getter to get the description of the Item
-//     * @return the description of the Item
-//     */
-//
-//    public String getDescription() {
-//        return description;
-//    }
+    /**
+     * Getter to get the description of the Item
+     * @return the description of the Item
+     */
+
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * Getter to get the name of the Item
