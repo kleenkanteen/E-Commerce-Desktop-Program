@@ -17,7 +17,6 @@ public class AdminLogin {
     private HashMap<String, Admin> adminHashMap;
 
     public AdminLogin(String username, String password, HashMap<String, Admin> adminHashMap) {
-        // do I throw IOException and ClassNotFoundException here
         this.username = username;
         this.password = password;
         this.adminHashMap = adminHashMap;

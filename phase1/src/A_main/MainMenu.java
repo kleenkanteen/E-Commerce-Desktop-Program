@@ -102,6 +102,7 @@ public class MainMenu {
                                 UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
                                 um.run();
                             }
+                            else mm.wrongLogin();
                         } else{
                             // user selected "2" (user sign-up)
                             boolean d = attempt.createNewUser(username, pass, utg.getUserTrades());
