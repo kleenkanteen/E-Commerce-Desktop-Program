@@ -22,7 +22,8 @@ public class TradeManager {
     }
 
     /**
-     * Getter of the trade history of a user. Trade history is the list of trades that the user is involved in
+     * Getter of the trade history of a user. Trade history is the list of trades that the user is involved in the order
+     * of recency
      * @param username the username of the user
      * @return the trade history of a user
      */
@@ -40,9 +41,11 @@ public class TradeManager {
     public Trade[] getRecentCompletedTrade(String username) {
         ArrayList<Trade> tradeHistory = getTradeHistory(username);
         ArrayList<Trade> temp = new ArrayList<>();
+        //getting the list of completed trades from this user
         for(Trade t: tradeHistory){
             if(t.getCompleted())temp.add(t);
         }
+        //getting the 3 most recent trades
         int size = temp.size();
         Trade[] trades = new Trade[3];
         for(int i = 0; i<3; i++){
@@ -90,11 +93,13 @@ public class TradeManager {
         TreeMap<Integer, ArrayList<String>> counter = new TreeMap<Integer, ArrayList<String>>();
         ArrayList<String> partners = new ArrayList<String>();
         String[] tradingPartners = new String[3];
+        //Getting the list of username of the trading partners
         for(Trade t: l){
             String partner = t.tradingPartner(username);
             if(partner == null)continue;
             partners.add(partner);
         }
+        //counting and ordering the times the username of the trading partner occurs
         for(String u: partners) {
             int n = count(partners, u);
             if (counter.containsKey(n)) {
@@ -106,6 +111,7 @@ public class TradeManager {
                 counter.put(n, temp);
             }
         }
+        //getting the 3 most frequent username in the list
         Set<Integer> keys = counter.descendingKeySet();
         for(Integer key: keys){
             ArrayList<String> p = counter.get(key);
@@ -126,6 +132,7 @@ public class TradeManager {
 
     }
     private int count(ArrayList<String> list, String item){
+        //counting the number of times a username occured in the list
         int sum = 0;
         for(String u: list){
             if(u.equals(item))sum++;
@@ -138,6 +145,7 @@ public class TradeManager {
      * @param trade the trade added to the system
      */
     public void addTrade(Trade trade){
+        //Adding the trade to TraderA's history
         if(tradeHistory.containsKey(trade.getTraderA())) {
             ArrayList<Trade> temp = tradeHistory.get(trade.getTraderA());
             temp.add(trade);
@@ -149,6 +157,7 @@ public class TradeManager {
             tradeHistory.put(trade.getTraderA(), temp);
         }
 
+        //Adding the trade to TraderB's history
         if(tradeHistory.containsKey(trade.getTraderB())) {
             ArrayList<Trade> temp = tradeHistory.get(trade.getTraderB());
             temp.add(trade);
@@ -203,6 +212,8 @@ public class TradeManager {
     public int numberOfTradesCreatedThisWeek(String username) {
         ArrayList<Trade> temp = getTradeHistory(username);
         int sum = 0;
+
+        //Getting the time frame of the current week
         LocalDateTime now = LocalDateTime.now();
         int n = (now.getDayOfWeek()).getValue();
 
@@ -214,6 +225,8 @@ public class TradeManager {
         end = end.withHour(23);
         end = end.withMinute(59);
         end = end.withSecond(59);
+
+        //Getting the number of trades created within the time frame
         for(Trade t: temp) {
             if (start.compareTo(t.getCreationDate()) <= 0 && end.compareTo(t.getCreationDate()) >= 0) {
                 sum++;

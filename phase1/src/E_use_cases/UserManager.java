@@ -298,6 +298,27 @@ public class UserManager {
         return new NewItemMessage("User " + username + " has created a new item, requires approval", newItem);
     }
 
+    /**
+     * Create and add a new message object to a user's list of messages
+     * @param username the user in question
+     * @param content the content of the message to be added to the user's inbox
+     */
+    public void createUserMessage(String username, String content) {
+        addUserMessage(username, new Message(content, username));
+    }
+
+    /**
+     * Create a new TradeRequestMessage object and add it to another user's inbox
+     * @param recipient the user account that will receive the TradeRequestMessage
+     * @param messageContent the content of the message
+     * @param tradeRequest the TradeRequest object
+     * @param senderUsername the user sending the trade request offer
+     */
+    public void createAndAddNewTradeRequestMessage(String recipient, String messageContent,
+                                                   TradeRequest tradeRequest, String senderUsername) {
+        addUserMessage(recipient, new TradeRequestMessage(messageContent, tradeRequest, senderUsername));
+    }
+
     // ADMIN METHODS
 
     /**
