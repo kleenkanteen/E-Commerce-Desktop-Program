@@ -37,7 +37,7 @@ public class AdminBrowsingUsers {
                 while (!users.isValidUser(user)){
                     browse.invalidUser();
                     user = re.readLine();
-                    if (user.equals("0")){ break; }
+                    if (user.equals("1")){ break; }
                 }
 
                 while (users.isValidUser(user)){
