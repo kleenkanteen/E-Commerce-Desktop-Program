@@ -177,5 +177,10 @@ public class GlobalInventory implements Serializable {
     }
 
 
+    public boolean isEmpty(){
+        return itemMap.size() == 0;
+    }
+
+
 
 }

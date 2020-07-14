@@ -48,7 +48,6 @@ public class Item implements Serializable {
     @Override
     public String toString() {
         return "entities.Item{" +
-                "itemID='" + itemID + '\'' +
                 ", description='" + description + '\'' +
                 ", name='" + name + '\'' +
                 ", ownerName='" + ownerName + '\'' +
