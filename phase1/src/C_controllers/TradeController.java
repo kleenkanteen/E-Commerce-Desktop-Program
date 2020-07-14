@@ -71,8 +71,8 @@ public class TradeController {
                 tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
 
         }
-        allUsers.addUserMessage(userB, tradeRequestMessage);
-        tradeMenu.tradeRequestSent(userB);
+        allUsers.addUserMessage(userA, tradeRequestMessage);
+        tradeMenu.tradeRequestSent(userA);
     }
 
     /**
@@ -109,8 +109,8 @@ public class TradeController {
                     invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
-                    allUsers.addUserMessage(userB, tradeRequestMessage);
-                    tradeMenu.tradeRequestSent(userB);
+                    allUsers.addUserMessage(userA, tradeRequestMessage);
+                    tradeMenu.tradeRequestSent(userA);
                     done = true;
                     break;
                 // temp trade
@@ -121,8 +121,8 @@ public class TradeController {
                     invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
-                    allUsers.addUserMessage(userB, tradeRequestMessage);
-                    tradeMenu.tradeRequestSent(userB);
+                    allUsers.addUserMessage(userA, tradeRequestMessage);
+                    tradeMenu.tradeRequestSent(userA);
                     done = true;
                     break;
                 default:
