@@ -79,7 +79,7 @@ public class TradeController {
      * Presents a User friendly trade menu that'll allow people to
      * trade different items to add to their collection of items!
      * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
-     * @param trader is a string that indicates the second trader (userA).
+     * @param trader is a string that indicates the current user (userA)
      */
     public void run(ArrayList<Item> itemsToTrade, String trader) {
         TradeRequestMessage tradeRequestMessage = null;
