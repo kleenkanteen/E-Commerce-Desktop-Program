@@ -5,7 +5,7 @@ public class AdminBrowsingUsersPresenter {
     public AdminBrowsingUsersPresenter(){
     }
 
-    public void enterUser(){ System.out.println("Enter the userid of the user you want or press [1] to exit:"); }
+    public void enterUser(){ System.out.println("Enter the username of the user you want or press [1] to exit:"); }
 
     public void invalidUser(){
         System.out.println("User does not exist, try again or press [0] to exit");
