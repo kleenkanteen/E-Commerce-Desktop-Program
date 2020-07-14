@@ -42,6 +42,7 @@ public class TradeController {
      * This method is similar to run, except it only accomplishes a one way trade temp/perm trade request.
      * @param itemsToTrade takes in an arraylist of items that represent the items to loan to userB.
      * @param trader is a string that indicates the current trader (userA).
+     * @param secTrader is a string that indicates the second trader (userB).
      */
     public void runFromLoan(ArrayList<Item> itemsToTrade, String trader, String secTrader) {
         TradeRequestMessage tradeRequestMessage = null;
