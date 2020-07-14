@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GlobalInventoryController {
+    /**
+     * runs the global inventory browsing menu
+     * @param gim the GlobalInventoryManager object
+     * @param UM the UserManager object
+     * @param user the username for current user
+     * @param TM the TradeManager object
+     * @param GW the GlobalWishlistManager object
+     */
     public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM, GlobalWishlistManager GW) {
 
         Scanner inputx = new Scanner(System.in);
