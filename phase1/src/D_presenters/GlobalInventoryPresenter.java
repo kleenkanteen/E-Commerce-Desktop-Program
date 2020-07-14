@@ -96,7 +96,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
      * @param item
      */
     public void addedToWishlist(Item item){
-        System.out.println(item.getName() +  "is added to your wishlist");
+        System.out.println(item.getName() +  " is added to your wishlist");
     }
 
     /**
