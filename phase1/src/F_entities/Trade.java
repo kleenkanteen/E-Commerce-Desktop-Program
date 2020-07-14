@@ -8,8 +8,7 @@ public abstract class Trade implements Serializable {
     private final LocalDateTime startDate;
     private final ArrayList<Item> traderBItemsToTrade;
     private final ArrayList<Item> traderAItemstoTrade;
-    private final String traderA;
-    private final String traderB;
+    private final String traderA, traderB;
     private boolean failed = false;
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
     private LocalDateTime creationDate = LocalDateTime.now();
@@ -35,52 +34,98 @@ public abstract class Trade implements Serializable {
         this.traderBItemsToTrade = traderBItemsToTrade;
     }
 
+    /**
+     * Getter for returning creationDate
+     * @return a LocalDateTime for the date of the creation of Trade
+     */
     public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    boolean getFailed() {
+    /**
+     * Getter for returning failed
+     * @return a boolean that determines whether a trade failed or not.
+     */
+    public boolean getFailed() {
         return failed;
     }
 
-    void setFailed(boolean failed) {
+    /**
+     * Sets the boolean for failed.
+     */
+    public void setFailed(boolean failed) {
         this.failed = failed;
     }
 
-    int getTraderAConfirmTimes(){
+    /**
+     * Getter for returning traderAConfirmTimes
+     * @return a int that gives traderAConfirmTimes
+     */
+    public int getTraderAConfirmTimes(){
         return traderAConfirmTimes;
     }
 
-    int getTraderBConfirmTimes(){
+    /**
+     * Getter for returning traderBConfirmTimes
+     * @return a int that gives traderAConfirmTimes
+     */
+    public int getTraderBConfirmTimes(){
         return traderBConfirmTimes;
     }
 
-    void addTraderAConfirmTimes(){
+    /**
+     * increases the traderAConfirmTime by one.
+     */
+    public void addTraderAConfirmTimes(){
         traderAConfirmTimes++;
     }
 
-    void addTraderBConfirmTimes(){
+    /**
+     * increases the traderBConfirmTime by one.
+     */
+    public void addTraderBConfirmTimes(){
         traderBConfirmTimes++;
     }
 
+    /**
+     * an abstract method that (if implemented), will determine
+     * whether the trade is completed or not.
+     * @return a boolean that determines whether a trade is completed or not.
+     */
     public abstract boolean getCompleted();
 
+    /**
+     * Getter for returning startDate
+     * @return a LocalDateTime that gives the startDate
+     */
     public LocalDateTime getStartDate() {
         return startDate;
     }
-
+    /**
+     * Getter for returning traderAItemsToTrade
+     * @return an ArrayList that gives traderAItemsToTrade
+     */
     public ArrayList<Item> getTraderAItemsToTrade() {
         return traderAItemstoTrade;
     }
-
+    /**
+     * Getter for returning traderBItemsToTrade
+     * @return an ArrayList that gives traderAItemsToTrade
+     */
     public ArrayList<Item> getTraderBItemsToTrade() {
         return traderBItemsToTrade;
     }
-
+    /**
+     * Getter for returning traderA
+     * @return a String that gives traderA
+     */
     public String getTraderA() {
         return traderA;
     }
-
+    /**
+     * Getter for returning traderB
+     * @return a String that gives traderB
+     */
     public String getTraderB() {
         return traderB;
     }

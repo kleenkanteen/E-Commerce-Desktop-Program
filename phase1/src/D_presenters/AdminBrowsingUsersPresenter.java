@@ -5,10 +5,10 @@ public class AdminBrowsingUsersPresenter {
     public AdminBrowsingUsersPresenter(){
     }
 
-    public void enterUser(){ System.out.println("Enter the userid of the user you want or press [1] to exit:"); }
+    public void enterUser(){ System.out.println("Enter the username of the user you want or press [1] to exit:"); }
 
     public void invalidUser(){
-        System.out.println("User does not exist, try again or press [0] to exit");
+        System.out.println("User does not exist, try again or press [1] to exit");
     }
 
     /**
@@ -21,7 +21,8 @@ public class AdminBrowsingUsersPresenter {
                 "[2] Freeze/unfreeze User \n" +
                 "[3] Change limit of trades per week \n" +
                 "[4] Change limit of incomplete trades per week \n" +
-                "[5] Go back to user selection \n");
+                "[5] Return to user selection \n" +
+                "[6] Return to admin menu");
 
     }
 

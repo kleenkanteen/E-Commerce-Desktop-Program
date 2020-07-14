@@ -85,7 +85,7 @@ public class UserMessageReplySystem {
         //warning the user that their trade request is cancelled due to too much edits
         if(!tempTRM.canEdit(accountUsername)&&!tempTRM.canEdit(username)){
             mm.tradeRequestCancel();
-            createMessage(username, "Your trade request:"+t.toString()+"\n is cancelled due to too much edits");
+            um.createUserMessage(username, "Your trade request:"+t.toString()+"\n is cancelled due to too much edits");
         }
         //Allow the user to edit a trade request
         else{
@@ -129,8 +129,8 @@ public class UserMessageReplySystem {
                 //Setting the new date/place that the user edit
                 tempTRM.setDateAndPlace(accountUsername, time, place);
                 //Sent the new trade request to other trader
-                createMessage(username, "Your trade request has been edited", tempTRM.getTradeRequest(),
-                        accountUsername);
+                um.createAndAddNewTradeRequestMessage(username, "Your trade request has been edited",
+                        tempTRM.getTradeRequest(), accountUsername);
                 mm.success();
             }
             catch(IOException e){
@@ -167,7 +167,7 @@ public class UserMessageReplySystem {
                             else if(input.equals("1")) {
                                 messages.remove(m);
                                 //Tell the other trader that the trade could not be created at this time
-                                createMessage(username, "You or the other trader cannot create a new trade " +
+                                um.createUserMessage(username, "You or the other trader cannot create a new trade " +
                                         "at this time or the items involved or not for trade at this time. The" +
                                         "Other trader has choosed to delete this trade request.\n"+
                                         "Trade Request: "+t.toString());
@@ -200,7 +200,7 @@ public class UserMessageReplySystem {
                 case "2":
                     //Removing and informing the other trade that the request is rejected
                     messages.remove(m);
-                    createMessage(username, "Your trade request:"+t.toString()+"\n is rejected by "+
+                    um.createUserMessage(username, "Your trade request:"+t.toString()+"\n is rejected by "+
                             accountUsername);
                     mm.success();
                     done = true;
@@ -256,13 +256,5 @@ public class UserMessageReplySystem {
             if(!contain)return true;
         }
         return false;
-    }
-    private void createMessage(String username, String content){
-        Message reply = new Message(content);
-        um.addUserMessage(username, reply);
-    }
-    private void createMessage(String username, String content, TradeRequest t, String sender){
-        Message reply = new TradeRequestMessage(content, t, sender);
-        um.addUserMessage(username, reply);
     }
 }
