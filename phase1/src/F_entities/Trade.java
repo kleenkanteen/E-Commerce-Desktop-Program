@@ -179,12 +179,29 @@ public abstract class Trade implements Serializable {
 
     @Override
     public String toString() {
-        return "Trade:\n " +
-                "   date= " + startDate +
-                "   traderA= " + traderA +
-                "   traderB= " + traderB +
-                "   traderAItemsToTrade= " + traderAItemstoTrade +
-                "   traderBItemsToTrade= " + traderBItemsToTrade;
+        String info = "";
+        if (traderBItemsToTrade.isEmpty()){
+            info =  "The Trade is generated on" + getCreationDate() + "\n" +
+                    "TraderA(Sender): " + getTraderA() +
+                    "\nTraderB(Receiver): " + getTraderB() +
+                    "\nItem: " + getTraderAItemsToTrade().get(0).getName()+
+                    "\nThe Trade has been made on: " + getStartDate();
+        }
+        else if (traderAItemstoTrade.isEmpty()){
+            info = "The Trade is generated on" + getCreationDate() + "\n" +
+                    "TraderA(Receiver): " + getTraderA() +
+                    "\nTraderB(Sender): " + getTraderB() +
+                    "\nItem: " + getTraderBItemsToTrade().get(0).getName()+
+                    "\nThe Trade has been made on: " + getStartDate();
+        }
+        else info = "The Trade is generated on" + getCreationDate() + "\n" +
+                    "TraderA: " + getTraderA() +
+                    "\nTraderB: " + getTraderB() +
+                    "\n" + getTraderA()+ "confirmed to trade with: " + getTraderAItemsToTrade().get(0).getName() +
+                    "\n" + getTraderB()+ "confirmed to trade with: " + getTraderBItemsToTrade().get(0).getName() +
+                    "\nThe Trade has been made on: " + getStartDate();
+
+        return info;
     }
 
 
