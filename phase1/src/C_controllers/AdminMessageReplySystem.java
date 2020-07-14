@@ -116,7 +116,7 @@ public class AdminMessageReplySystem {
                     um.freezeUserAccount(u, false);
                     messages.remove(m);
                     //Informing the other user
-                    createMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
+                    um.createUserMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
                     mm.success();
                     done = true;
                     break;
@@ -124,7 +124,7 @@ public class AdminMessageReplySystem {
                     //Ignoring the message
                     messages.remove(m);
                     //Informing the other user
-                    createMessage(u, "Your request is rejected by the Admin "+accountUsername);
+                    um.createUserMessage(u, "Your request is rejected by the Admin "+accountUsername);
                     mm.success();
                     done = true;
                     break;
@@ -152,7 +152,7 @@ public class AdminMessageReplySystem {
                     um.freezeUserAccount(u, true);
                     messages.remove(m);
                     //informing the other user
-                    createMessage(u, "Your account is frozen by the Admin "+accountUsername);
+                    um.createUserMessage(u, "Your account is frozen by the Admin "+accountUsername);
                     mm.success();
                     done = true;
                     break;
@@ -191,7 +191,7 @@ public class AdminMessageReplySystem {
                     um.addItemToUserInventory(item, item.getOwnerName());
                     messages.remove(m);
                     //Informing the other user
-                    createMessage(item.getOwnerName(), "Your Item: "+item+
+                    um.createUserMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been successfully added to the system");
                     mm.success();
                     done = true;
@@ -200,7 +200,7 @@ public class AdminMessageReplySystem {
                     //Denying the new item
                     messages.remove(m);
                     //Informing the other user
-                    createMessage(item.getOwnerName(), "Your Item: "+item+
+                    um.createUserMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been rejected by the Admin "+accountUsername);
                     mm.success();
                     done = true;
@@ -210,11 +210,5 @@ public class AdminMessageReplySystem {
             }
         }while(!done);
         return true;
-    }
-    private void createMessage(String username, String content){
-        Message reply = new Message(content);
-        ArrayList<Message> temp = um.getUserMessages(username);
-        temp.add(reply);
-        um.setUserMessages(username, temp);
     }
 }
