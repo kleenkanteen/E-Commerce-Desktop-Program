@@ -166,6 +166,11 @@ public class GlobalInventory implements Serializable {
 //        return banana;
 //    }
 
+    /**
+     * change the String representation of GlobalInventory.
+     * @return String of global's content.
+     */
+
 
     public String toString() {
         StringBuilder i = new StringBuilder();
@@ -175,6 +180,11 @@ public class GlobalInventory implements Serializable {
         // from https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
         return i.toString();
     }
+
+    /**
+     * return true if the globalInventory has no item in it currently
+     * @return true if the globalInventory has no item in it currently
+     */
 
 
     public boolean isEmpty(){

@@ -138,9 +138,10 @@ public class GlobalInventoryManager implements Serializable {
             return gI.containsKey(item.getItemID());
         }
 
-
-
-
+    /**
+     * return true if the globalInventory has no item in it currently
+     * @return true if the globalInventory has no item in it currently
+     */
     public boolean hasNoItem(){
             return gI.isEmpty();
 
