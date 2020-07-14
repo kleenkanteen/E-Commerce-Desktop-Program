@@ -57,8 +57,9 @@ public class MainMenu {
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);
-            //gig.writeToFile(new GlobalInventory());
             //System.out.println("Global inventory:\n" + gig.getgI());
+            //gig.writeToFile(new GlobalInventory());
+
 
             //deserialize all user trades
             utg = new UserTradesGateway(serializedUserTrades);
