@@ -179,12 +179,12 @@ public abstract class Trade implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Trade{ \n " +
-                "date= " + startDate +
-                "traderA= " + traderA +
-                "traderB= " + traderB +
-                "traderAItemsToTrade= " + traderAItemstoTrade +
-                "traderBItemsToTrade= " + traderBItemsToTrade;
+        return "Trade:\n " +
+                "   date= " + startDate +
+                "   traderA= " + traderA +
+                "   traderB= " + traderB +
+                "   traderAItemsToTrade= " + traderAItemstoTrade +
+                "   traderBItemsToTrade= " + traderBItemsToTrade;
     }
 
 

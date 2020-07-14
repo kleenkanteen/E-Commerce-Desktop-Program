@@ -28,6 +28,6 @@ public class FreezeRequestMessage extends DecisionMessage implements Serializabl
      */
     @Override
     public String toString() {
-        return "From " + getSender()+": "+getContent() + "\nThe User's username: \n"+username+"\n"+super.toString();
+        return super.toString() + "\nThe User's username: \n"+username+"\n"+optionsToString();
     }
 }

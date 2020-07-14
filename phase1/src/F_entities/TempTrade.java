@@ -87,4 +87,14 @@ public class TempTrade extends Trade implements Serializable {
             }
         }
     }
+
+    @Override
+    public String toString() {
+        return "Trade:\n " +
+                "   date= " + getStartDate() +
+                "   traderA= " + getTraderA() +
+                "   traderB= " + getTraderB() +
+                "   traderAItemsToTrade= " + getTraderAItemsToTrade() +
+                "   traderBItemsToTrade= " + getTraderBItemsToTrade();
+    }
 }

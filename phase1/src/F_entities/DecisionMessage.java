@@ -29,19 +29,10 @@ public abstract class DecisionMessage extends Message implements Serializable {
     }
 
     /**
-     * Getter for the options of this decision message
-     * @return the options of this decision message
+     * Returns a string representation of the message's option
+     * @return the decisions of the message in a string representation
      */
-    public String[] getOptions(){
-        return options;
-    }
-
-    /**
-     * Returns a string representation of the message
-     * @return the content and decisions of the message in a string representation
-     */
-    @Override
-    public String toString() {
+    String optionsToString() {
         String optionsToString = "Choose your option below:\n";
         for(int i=0; i<options.length; i++){
             if(i != 0) optionsToString = optionsToString+"\n";

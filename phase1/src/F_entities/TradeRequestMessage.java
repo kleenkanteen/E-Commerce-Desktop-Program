@@ -31,6 +31,6 @@ public class TradeRequestMessage extends DecisionMessage implements Serializable
      */
     @Override
     public String toString() {
-        return "From " + getSender()+": "+getContent() + "\nThe trade request: \n"+tradeContent+"\n"+super.toString();
+        return super.toString() + "\nThe trade request: \n"+tradeContent+"\n"+optionsToString();
     }
 }
