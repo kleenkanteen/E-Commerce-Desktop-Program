@@ -60,9 +60,14 @@ public class UserMenu {
             }
             // look at global inventory
             else if (userInput.equals("2")) {
-                GlobalInventoryController globalInventory = new GlobalInventoryController();
-                globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser, 
-                        this.tradeManager, this.globalWishlistManager);
+                if(!this.globalInventoryManager.hasNoItem()) {
+                    GlobalInventoryController globalInventory = new GlobalInventoryController();
+                    globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser,
+                            this.tradeManager, this.globalWishlistManager);
+                }
+                else {
+                    this.userPresenter.emptyGlobalInventory();
+                }
             }
             // access global wishlist/lend to other users
             else if (userInput.equals("3")) {
