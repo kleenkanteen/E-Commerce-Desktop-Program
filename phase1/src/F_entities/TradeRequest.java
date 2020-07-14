@@ -68,38 +68,73 @@ public class TradeRequest implements Serializable {
         this.place = place;
     }
 
+    /**
+     * get the userA involved in this trade request
+     * @return userA
+     */
     public String getUserA() {
         return userA;
     }
 
+    /**
+     * get the userA involved in this trade request
+     * @return
+     */
     public String getUserB() {
         return userB;
     }
 
+    /**
+     * get the items belongs to userA
+     * @return list of items involved in this trade request belong to userA
+     */
     public ArrayList<Item> getItemA() {
         return itemA;
     }
-
+    /**
+     * get the items belongs to userB
+     * @return list of items involved in this trade request belong to userB
+     */
     public ArrayList<Item> getItemB() {
         return itemB;
     }
 
+    /**
+     * returns if this a permanent trade request
+     * @return true if this is a permanent trade request, flase if this is a temporary trade request
+     */
     public boolean isPerm() {
         return perm;
     }
 
+    /**
+     * get the meeting date set by the user
+     * @return the date of the meeting
+     */
     public LocalDateTime getDate() {
         return date;
     }
 
+    /**
+     * get the place of the meeting
+     * @return the place of the meeting
+     */
     public String getPlace() {
         return place;
     }
 
+    /**
+     * get the number of edit for userA
+     * @return the number of edit for userA
+     */
     public int getNumberOfEditA() {
         return numberOfEditA;
     }
 
+    /**
+     * get the number of edit for userB
+     * @return the number of edit for userB
+     */
     public int getNumberOfEditB() {
         return numberOfEditB;
     }
@@ -112,26 +147,50 @@ public class TradeRequest implements Serializable {
 //        return confirmationB;
 //    }
 
+    /**
+     * set the date of the meeting
+     * @param date date of the meeting
+     */
     public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
+    /**
+     * set the place of the meeting
+     * @param place the place of the meeting
+     */
     public void setPlace(String place) {
         this.place = place;
     }
 
+    /**
+     * set the confirmation state for userA
+     * @param confirmationA true if user confirm, flase if user does not confirm
+     */
     public void setConfirmationA(boolean confirmationA) {
         this.confirmationA = confirmationA;
     }
 
+    /**
+     * set the confirmation state for userB
+     * @param confirmationB true if user confirm, flase if user does not confirm
+     */
     public void setConfirmationB(boolean confirmationB) {
         this.confirmationB = confirmationB;
     }
 
+    /**
+     * set the number of edits for userA
+     * @param numberOfEditA number of edit for userA
+     */
     public void setNumberOfEditA(int numberOfEditA) {
         this.numberOfEditA = numberOfEditA;
     }
 
+    /**
+     * set the number of edits for userB
+     * @param numberOfEditB number of edit for userB
+     */
     public void setNumberOfEditB(int numberOfEditB) {
         this.numberOfEditB = numberOfEditB;
     }
@@ -150,6 +209,10 @@ public class TradeRequest implements Serializable {
         }
     }
 
+    /**
+     * toString method for trade request
+     * @return a String represents the trade request
+     */
     public String toString(){
         String info = "";
         if (itemA.isEmpty()){
