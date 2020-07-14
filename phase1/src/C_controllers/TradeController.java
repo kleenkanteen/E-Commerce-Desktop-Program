@@ -39,7 +39,7 @@ public class TradeController {
 
     /**
      * Takes an ArrayList and a String that contains details about both userA and userB.
-     * This method is similar to run, except it only accomplishes a one way trade temp trade request.
+     * This method is similar to run, except it only accomplishes a one way trade temp/perm trade request.
      * @param itemsToTrade takes in an arraylist of items that represent the items to trade from userB.
      * @param trader is a string that indicates the second trader (userA).
      */
@@ -57,9 +57,20 @@ public class TradeController {
 
         ArrayList<Item> itemsToTradeB = itemsToTrade;
 
-        tradeType = input.nextLine();
-        tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
-        tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
+        // have a presenter that asks for perm trade or temp trade.
+        tradeMenu.choosePermTemp();
+        String selection = input.nextLine();
+        switch (selection) {
+            // temp trade
+            case "1":
+                tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
+                tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
+            // perm trade
+            case "2":
+                tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
+                tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
+
+        }
         allUsers.addUserMessage(userB, tradeRequestMessage);
         tradeMenu.tradeRequestSent(userB);
     }
@@ -136,7 +147,7 @@ public class TradeController {
                 LocalDateTime today = LocalDateTime.now();
                 // checks if the date inputted is not before today's date.
                 if (date.isBefore(today)) {
-                    tradeMenu.wrongFormat();
+                    tradeMenu.enteredPastDate();
                 } else {
                     dateGiven = true;
                 }

@@ -74,6 +74,13 @@ public class TradeMenu {
     }
 
     /**
+     * Presenter for entering an incorrect date.
+     */
+    public void enteredPastDate() {
+        System.out.println("Date and Time must be in future, try again.");
+    }
+
+    /**
      * Presenter for entering invalid input.
      */
     public void invalidInput(){
