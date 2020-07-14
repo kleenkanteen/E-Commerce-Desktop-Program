@@ -21,7 +21,8 @@ public class AdminBrowsingUsersPresenter {
                 "[2] Freeze/unfreeze User \n" +
                 "[3] Change limit of trades per week \n" +
                 "[4] Change limit of incomplete trades per week \n" +
-                "[5] Go back to user selection \n");
+                "[5] Return to user selection \n" +
+                "[6] Return to admin menu");
 
     }
 

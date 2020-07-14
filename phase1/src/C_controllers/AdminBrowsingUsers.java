@@ -23,8 +23,9 @@ public class AdminBrowsingUsers {
             // printed every time user comes back to menu. Pressing 1 will stop while loop when it
             // loops back.
             boolean start = true;
+            boolean menu = true;
 
-            while (true) {
+            while (menu) {
                 browse.enterUser();
                 BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
                 String user = re.readLine();
@@ -50,6 +51,10 @@ public class AdminBrowsingUsers {
                     }
                     // check if admin wants to go back to userid input menu
                     if (option.equals("5")){
+                        break;
+                    }
+                    else if (option.equals("6")){
+                        menu = false;
                         break;
                     }
                     switch (option) {
