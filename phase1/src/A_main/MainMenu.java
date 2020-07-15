@@ -32,7 +32,6 @@ public class MainMenu {
         String serializedGlobalWishlist = "phase1/H_ser_file_infos/serializedGlobalWishlist.ser";
         String serializedUserTrades = "phase1/H_ser_file_infos/serializedUserTrades.ser";
 
-
         AdminAccountGateways ag;
         UserGateway ug;
         GlobalInventoryGateways gig;
@@ -118,7 +117,7 @@ public class MainMenu {
                         // user selected "3" (admin sign-in)
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                         if (thing.login().equals(username) && !(username.equals("System Messages"))) {
-                            AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
+                            AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers());
                             AdminSystem successful = new AdminSystem(thing.getAdminObject(), r, attempt, y2);
                             successful.run();
                         }
