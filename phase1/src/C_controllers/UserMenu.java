@@ -295,13 +295,33 @@ public class UserMenu {
                     if(this.userManager.getCanTradeIgnoreBorrowsLoans(this.currUser,
                             this.tradeManager.getIncompleteTimes(this.currUser),
                             this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
-                        // find the item in the user inventory, then call trade controller on it
+                        // find the selected item from userInventory
                         ArrayList<Item> userItem = new ArrayList<>();
-                        TradeController tradeController = new TradeController(this.userManager);
                         for(Item item : this.userManager.getUserInventory(this.currUser)) {
                             if (item.getItemID().equals(itemsToLend.get(0))) {
                                 userItem.add(item);
-                                tradeController.runFromLoan(userItem, itemsToLend.get(1));
+                                break;
+                            }
+                        }
+                        // give user choice whether to continue with trade offer or return to main UserMenu
+                        Scanner input = new Scanner(System.in);
+                        while(true) {
+                            this.userPresenter.loanToOtherUserPrompt(userItem.get(0).getName(),
+                                    userItem.get(0).getOwnerName());
+                            int userLoanInput = input.nextInt();
+                            switch(userLoanInput) {
+                                // yes, continue with the trade offer
+                                case 1:
+                                    TradeController tradeController = new TradeController(this.userManager);
+                                    tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
+                                    return;
+                                // no return to main menu
+                                case 2:
+                                    this.userPresenter.returnToMainMenu();
+                                    return;
+                                // input error
+                                default:
+                                    this.userPresenter.inputError();
                             }
                         }
                     }
@@ -318,6 +338,9 @@ public class UserMenu {
         }
     }
 
+    /**
+     * Helper method that will browse through all user trades (assuming user trades is populated)
+     */
     private void browseThroughUserTrades() {
         ArrayList<Trade> userTrades = tradeManager.getTradeHistory(this.currUser);
         int index = 0;
@@ -472,7 +495,7 @@ public class UserMenu {
                         ArrayList<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
                         TradeController tradeController = new TradeController(this.userManager);
-                        tradeController.run(traderItem, userWishlist.get(index).getOwnerName());
+                        tradeController.run(traderItem, this.currUser);
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
                     }
                 }
