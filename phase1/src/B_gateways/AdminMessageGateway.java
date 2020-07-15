@@ -65,7 +65,5 @@ public class AdminMessageGateway {
         output.close();
     }
 
-    public ArrayList<Message> getMessages() {
-        return this.messages;
-    }
+    public ArrayList<Message> getMessages() { return this.messages; }
 }
