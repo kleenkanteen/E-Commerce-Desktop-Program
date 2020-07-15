@@ -16,7 +16,7 @@ public class AdminBrowsingUsers {
         this.users = system;
     }
 
-
+    // Starts the menu, presents options, taking in input
     public void start() throws IOException {
         try {
             // initially use start variable for while loop so .enterUser() menu is
