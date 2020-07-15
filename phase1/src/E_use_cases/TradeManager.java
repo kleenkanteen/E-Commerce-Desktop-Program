@@ -33,24 +33,19 @@ public class TradeManager {
     }
 
     /**
-     * Getter of the 3 most recent completed trade from the trade history of a user.
+     * Getter of the 3 most recent trade from the trade history of a user.
      * Trade history is the list of trades that the user is involved in
      * @param username the username of the user
-     * @return the 3 most recent completed trade from the trade history of this user
+     * @return the 3 most recent trade from the trade history of this user
      */
-    public Trade[] getRecentCompletedTrade(String username) {
+    public Trade[] getRecentTrade(String username) {
         ArrayList<Trade> tradeHistory = getTradeHistory(username);
-        ArrayList<Trade> temp = new ArrayList<>();
-        //getting the list of completed trades from this user
-        for(Trade t: tradeHistory){
-            if(t.getCompleted())temp.add(t);
-        }
         //getting the 3 most recent trades
-        int size = temp.size();
+        int size = tradeHistory.size();
         Trade[] trades = new Trade[3];
         for(int i = 0; i<3; i++){
             if(size < i+1) break;
-            trades[i] = temp.get(size - i - 1);
+            trades[i] = tradeHistory.get(size - i - 1);
         }
         return trades;
     }

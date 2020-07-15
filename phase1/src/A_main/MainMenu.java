@@ -50,7 +50,7 @@ public class MainMenu {
             //deserialize users
             ug = new UserGateway(serializedUsers);
             //ug.writeToFile(serializedUsers, new HashMap<>());
-            //System.out.println("Users:\n" + ug.getMapOfUsers());
+            System.out.println("Users:\n" + ug.getMapOfUsers());
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);

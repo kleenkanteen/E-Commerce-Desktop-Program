@@ -144,7 +144,7 @@ public class UserMenu {
             }
             // view 3 most recent trades
             else if (userInput.equals("4")) {
-                Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
+                Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser);
                 // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
                     if(trade == null) {
