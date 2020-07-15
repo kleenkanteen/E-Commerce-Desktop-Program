@@ -163,7 +163,7 @@ public class UserPresenter {
         System.out.println("What would you like to do with your account? " +
                 "\n[1] View your trade history." +
                 "\n[2] Set new password." +
-                "\n[3] View your most frequent Trading Partners. " +
+                "\n[3] View your three most frequent Trading Partners. " +
                 "\n[4] Your three most recent trades. " +
                 "\n[5] Your inventory. " +
                 "\n[6] Your wishlist. " +

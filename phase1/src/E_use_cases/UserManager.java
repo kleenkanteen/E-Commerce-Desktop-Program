@@ -38,7 +38,11 @@ public class UserManager {
      * Attempts to add a new user to the HashMap of all users
      * All usernames are unique.
      * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
+     * @param username the new username
+     * @param password the string password
+     * @param tradeHistory the hashmap of all user trades
      * @return true if user account successfully created, false if user already exists in system
+     * @throws InvalidUsernameException if the username already exists in the system
      */
     public boolean createNewUser(String username, String password,
                                  HashMap<String, ArrayList<Trade>> tradeHistory) throws InvalidUsernameException{
