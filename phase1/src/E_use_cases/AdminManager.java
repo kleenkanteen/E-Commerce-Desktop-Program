@@ -2,6 +2,7 @@ package E_use_cases;
 
 import F_entities.Admin;
 import F_entities.Message;
+import F_entities.User;
 import G_exceptions.InvalidUsernameException;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 
 public class AdminManager{
     private HashMap<String, Admin> adminHashMap;
+    private HashMap<String, User> userHashMap;
     private ArrayList<Message> adminMessagesArrayList;
 
     /**
@@ -16,15 +18,18 @@ public class AdminManager{
      * Takes in HashMap of all admin accounts and ArrayList of Messages shared between all of them.
      * @param adminHashMap HashMap containing all admin accounts.
      * @param adminMessagesArrayList ArrayList containing all admin Messages.
+     * @param userHashMap HashMap containing all user accounts.
      */
-    public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList) {
+    public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList,
+                        HashMap<String, User> userHashMap) {
         this.adminHashMap = adminHashMap;
         this.adminMessagesArrayList = adminMessagesArrayList;
+        this.userHashMap = userHashMap;
     }
 
     /**
      * Attempts to add a new admin to the HashMap of all admins
-     * All usernames are unique.
+     * All usernames are unique (including between admins and users)
      * Returns the HashMap if the admin successfully created
      * Throw error if there's another admin with the same username.
      * Put this method in a try-catch!!!
@@ -33,19 +38,18 @@ public class AdminManager{
      */
 
     public HashMap<String, Admin> addAdmin (Admin toAdd) throws InvalidUsernameException{
-        if(!adminHashMap.containsKey(toAdd.getUsername())) {
-            adminHashMap.put(toAdd.getUsername(), toAdd);
-            return adminHashMap;
-        }
-        throw new InvalidUsernameException();
+        if (adminHashMap.containsKey(toAdd.getUsername()) || userHashMap.containsKey((toAdd.getUsername())))
+            throw new InvalidUsernameException();
+
+        adminHashMap.put(toAdd.getUsername(), toAdd);
+        return adminHashMap;
     }
 
     public HashMap<String, Admin> addAdmin (String username, String password) throws InvalidUsernameException{
-        if(!adminHashMap.containsKey(username)) {
-            adminHashMap.put(username, new Admin(username, password));
-            return adminHashMap;
-        }
-        throw new InvalidUsernameException();
+        if (adminHashMap.containsKey(username) || userHashMap.containsKey(username))
+            throw new InvalidUsernameException();
+        adminHashMap.put(username, new Admin(username, password));
+        return adminHashMap;
     }
 
     /** Attempts to retrieve Messages shared by all admin accounts.
