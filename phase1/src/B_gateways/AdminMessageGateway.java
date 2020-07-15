@@ -65,5 +65,9 @@ public class AdminMessageGateway {
         output.close();
     }
 
+    /**
+     * Returns all messages of the logged in Admin.
+     * @return
+     */
     public ArrayList<Message> getMessages() { return this.messages; }
 }

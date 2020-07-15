@@ -66,10 +66,9 @@ public class GlobalInventoryGateways implements Serializable{
     }
 
     /**
-     * getter for GlobalInventory that stored in .ser file.
+     * Getter for GlobalInventory that stored in .ser file.
      * @return the globalInventory that stored in .ser file.
      */
-
     public GlobalInventory getgI() {
         return gI;
     }

@@ -44,7 +44,7 @@ public class MainMenu {
             //System.out.println("Admins:\n" + ag.getAdminMap());
             //ag.saveToFile(new HashMap<>());
             if(ag.getAdminMap().isEmpty()){
-                ag.begainAdminMap();
+                ag.beginAdminMap();
             }
             //deserialize users
             ug = new UserGateway(serializedUsers);

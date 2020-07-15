@@ -63,6 +63,10 @@ public class GlobalWishlistGateway implements Serializable{
         output.close();
     }
 
+    /**
+     * Returns WishListItems which is shared between all users.
+     * @return
+     */
     public GlobalWishlist getWishlistItems() {
         return wishlist;
     }

@@ -51,6 +51,7 @@ public class UserTradesGateway {
     /**
      * Serializes the HashMap of usernames and their trades
      * @param filepath where this file will be stored
+     * @param userTrades3 HashMap of the trades for all users.
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, HashMap<String, ArrayList<Trade>> userTrades3) throws IOException{
@@ -65,6 +66,10 @@ public class UserTradesGateway {
         output.close();
     }
 
+    /**
+     * returns the HashMap of trades for all users.
+     * @return
+     */
     public HashMap<String, ArrayList<Trade>> getUserTrades() {
         return userTrades;
     }

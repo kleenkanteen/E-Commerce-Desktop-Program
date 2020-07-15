@@ -74,8 +74,7 @@ public class AdminAccountGateways {
     /**
      * setter for HashMap of Admin with an initial Admin
      */
-
-    public void begainAdminMap() {
+    public void beginAdminMap() {
         adminMap = new HashMap<>();
         Admin temp = new Admin("admin", "admin");
         adminMap.put("admin", temp);
