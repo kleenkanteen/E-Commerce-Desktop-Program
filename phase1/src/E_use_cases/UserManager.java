@@ -259,8 +259,10 @@ public class UserManager {
      * @param itemID the itemID of the item to be removed
      */
     public void removeFromMultipleUsersWishlists(ArrayList<String> users, String itemID) {
-        for (String user : users) {
-            removeItemFromUserWishlist(user, itemID);
+        if (users.size() != 0) {
+            for (String user : users) {
+                removeItemFromUserWishlist(user, itemID);
+            }
         }
     }
 

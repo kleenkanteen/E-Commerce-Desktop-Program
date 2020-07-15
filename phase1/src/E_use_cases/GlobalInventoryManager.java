@@ -13,6 +13,7 @@ public class GlobalInventoryManager implements Serializable {
 
     /**
      * construct the Use Case class to do some changes on globalinventory.
+     *
      * @param gI - the globalInventory it takes in
      */
     public GlobalInventoryManager(GlobalInventory gI) {
@@ -31,7 +32,6 @@ public class GlobalInventoryManager implements Serializable {
 //    }
 
 
-
     private String IdGenerator() {
         Random rand = new Random();
         int id = rand.nextInt(900000000) + 100000000;
@@ -48,6 +48,7 @@ public class GlobalInventoryManager implements Serializable {
      * add the item to globalInventory with an unique Id generated automatically
      * The ID generated will be assigned to the Item
      * and then the that ItemID will be sent to IdCollection to record
+     *
      * @param item set what the key refers to in globalInventory
      */
 
@@ -67,48 +68,49 @@ public class GlobalInventoryManager implements Serializable {
             gI.addItem(itemID, item);
 
 
-        }}
-
-
-        /**
-         * remove the item with specific itemID
-         * @param itemID is the itemID of the item we want to remove
-
-         */
-
-        public void removeItem (String itemID){
-             gI.removeItem(itemID);
         }
+    }
 
 
+    /**
+     * remove the item with specific itemID
+     *
+     * @param itemID is the itemID of the item we want to remove
+     */
+
+    public void removeItem(String itemID) {
+        gI.removeItem(itemID);
+    }
 
 
-        /**
-         * Generate an arraylist with at most 10 items sorted by key order
-         * @param pageNumber is what page the user want to see
-         * @return an arraylist with at most 10 items sorted by key order
-         */
+    /**
+     * Generate an arraylist with at most 10 items sorted by key order
+     *
+     * @param pageNumber is what page the user want to see
+     * @return an arraylist with at most 10 items sorted by key order
+     */
 
 
-        public ArrayList<Item> generatePage ( int pageNumber){
-            ArrayList<Item> itemList = new ArrayList<>();
-            for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < gI.getNumOfItem(); i++) {
-                itemList.add(gI.getItemByIndex(i));
-
-            }
-            return itemList;
+    public ArrayList<Item> generatePage(int pageNumber) {
+        ArrayList<Item> itemList = new ArrayList<>();
+        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < gI.getNumOfItem(); i++) {
+            itemList.add(gI.getItemByIndex(i));
 
         }
+        return itemList;
+
+    }
 
     /**
      * generate the page number of the last page in globalInventory
+     *
      * @return an int to represent the last page in globalInventory.
      */
 
-    public int generatePageNumber(){
-           int num =  gI.getNumOfItem();
-           return (int) Math.ceil((double)num/10);
-        }
+    public int generatePageNumber() {
+        int num = gI.getNumOfItem();
+        return (int) Math.ceil((double) num / 10);
+    }
 
 //        /**
 //         * generate an arraylist of Item which has itemName
@@ -131,21 +133,60 @@ public class GlobalInventoryManager implements Serializable {
 
     /**
      * returns whether the global inventory contains an item
+     *
      * @param item is the name of item the user want to search
      * @return whether the item is in the global inventory
      */
-        public boolean contains(Item item){
-            return gI.containsKey(item.getItemID());
-        }
+    public boolean contains(Item item) {
+        return gI.containsKey(item.getItemID());
+    }
+
 
     /**
-     * return true if the globalInventory has no item in it currently
-     * @return true if the globalInventory has no item in it currently
+     * return if gI has no Item in it.
+     *
+     * @return true if gI has no Item in it.
      */
-    public boolean hasNoItem(){
-            return gI.isEmpty();
 
-    }}
 
+    public boolean hasNoItem() {
+        return gI.isEmpty();
+
+    }
+
+//    public ArrayList<Item> generatePage(int pageNumber, String userName) {
+//        ArrayList<Item> lst = new ArrayList<>();
+//
+//        for (int i = 0; i < gI.getNumOfItem(); i++) {
+//            if (!gI.getItemByIndex(i).getOwnerName().equals(userName)) {
+//                lst.add(gI.getItemByIndex(i));
+//            }
+//        }
+//        ArrayList<Item> itemList = new ArrayList<>();
+//        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < lst.size(); i++) {
+//            itemList.add(lst.get(i));
+//
+//        }
+//        return itemList;
+//
+//    }
+//
+//    /**
+//     * generate the page number of the last page in globalInventory
+//     *
+//     * @return an int to represent the last page in globalInventory.
+//     */
+//
+//    public int generatePageNumber(String userName) {
+//        ArrayList<Item> lst = new ArrayList<>();
+//        for (int i = 0; i < gI.getNumOfItem(); i++) {
+//            if (!gI.getItemByIndex(i).getOwnerName().equals(userName)) {
+//                lst.add(gI.getItemByIndex(i));
+//            }
+//        }
+//        int num = lst.size();
+//        return (int) Math.ceil((double) num / 10);
+//    }
+}
 
 

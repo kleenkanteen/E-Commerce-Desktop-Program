@@ -50,6 +50,7 @@ public class AdminMessageGateway {
     /**
      * Serializes the arraylist of Message objects.
      * @param filepath where this file will be stored
+     * @param adminMessages ArrayList of Messages that the Admin must still respond to
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, ArrayList <Message> adminMessages) throws IOException {
@@ -64,7 +65,9 @@ public class AdminMessageGateway {
         output.close();
     }
 
-    public ArrayList<Message> getMessages() {
-        return this.messages;
-    }
+    /**
+     * Returns all messages of the logged in Admin.
+     * @return return messages presently saved in the .ser file of a particular Admin.
+     */
+    public ArrayList<Message> getMessages() { return this.messages; }
 }

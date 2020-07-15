@@ -132,7 +132,7 @@ public class UserMenu {
             }
             // view frequent trading partners
             else if (userInput.equals("3")) {
-                String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser);
+                String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
                 // find a better way to do this
                 for(String tradePartner: tradingPartners) {
                     if(tradePartner == null) {
@@ -144,7 +144,7 @@ public class UserMenu {
             }
             // view 3 most recent trades
             else if (userInput.equals("4")) {
-                Trade[] recentTradeHistory = this.tradeManager.getRecentCompletedTrade(this.currUser);
+                Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
                 // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
                     if(trade == null) {
@@ -240,19 +240,25 @@ public class UserMenu {
                             // remove all traderA items from Global and Personal wishlists if not empty
                             if(trade.getTraderAItemsToTrade().size() != 0) {
                                 for(Item item : trade.getTraderAItemsToTrade()) {
-                                    this.userManager.removeFromMultipleUsersWishlists(
-                                            this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
-                                            item.getItemID());
-                                    this.globalWishlistManager.removeItem(item.getItemID());
+                                    // check to make sure that this item exists on the global wishlist
+                                    if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
+                                        this.userManager.removeFromMultipleUsersWishlists(
+                                                this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
+                                                item.getItemID());
+                                        this.globalWishlistManager.removeItem(item.getItemID());
+                                    }
                                 }
                             }
                             // remove all tradeB items from Global and Personal wishlists if not empty
                             if(trade.getTraderBItemsToTrade().size() != 0) {
                                 for (Item item : trade.getTraderBItemsToTrade()) {
-                                    this.userManager.removeFromMultipleUsersWishlists(
-                                            this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
-                                            item.getItemID());
-                                    this.globalWishlistManager.removeItem(item.getItemID());
+                                    // check to make sure item exists in global wishlist
+                                    if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
+                                        this.userManager.removeFromMultipleUsersWishlists(
+                                                this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
+                                                item.getItemID());
+                                        this.globalWishlistManager.removeItem(item.getItemID());
+                                    }
                                 }
                             }
                         }

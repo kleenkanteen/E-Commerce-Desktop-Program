@@ -49,6 +49,7 @@ public class GlobalWishlistGateway implements Serializable{
     /**
      * Serializes the arraylist of Message objects.
      * @param filepath where this file will be stored
+     * @param wishlistItems2 new GlobalWishList to overwrite previous one during saving.
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, GlobalWishlist wishlistItems2) throws IOException{
@@ -63,6 +64,10 @@ public class GlobalWishlistGateway implements Serializable{
         output.close();
     }
 
+    /**
+     * Returns WishListItems which is shared between all users.
+     * @return returns GlobalWishList presently saved in serialized file.
+     */
     public GlobalWishlist getWishlistItems() {
         return wishlist;
     }

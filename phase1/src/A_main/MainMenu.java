@@ -32,7 +32,6 @@ public class MainMenu {
         String serializedGlobalWishlist = "phase1/H_ser_file_infos/serializedGlobalWishlist.ser";
         String serializedUserTrades = "phase1/H_ser_file_infos/serializedUserTrades.ser";
 
-
         AdminAccountGateways ag;
         UserGateway ug;
         GlobalInventoryGateways gig;
@@ -45,12 +44,12 @@ public class MainMenu {
             //System.out.println("Admins:\n" + ag.getAdminMap());
             //ag.saveToFile(new HashMap<>());
             if(ag.getAdminMap().isEmpty()){
-                ag.begainAdminMap();
+                ag.beginAdminMap();
             }
             //deserialize users
             ug = new UserGateway(serializedUsers);
             //ug.writeToFile(serializedUsers, new HashMap<>());
-            //System.out.println("Users:\n" + ug.getMapOfUsers());
+            System.out.println("Users:\n" + ug.getMapOfUsers());
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);
@@ -118,7 +117,7 @@ public class MainMenu {
                         // user selected "3" (admin sign-in)
                         AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
                         if (thing.login().equals(username) && !(username.equals("System Messages"))) {
-                            AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
+                            AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers());
                             AdminSystem successful = new AdminSystem(thing.getAdminObject(), r, attempt, y2);
                             successful.run();
                         }

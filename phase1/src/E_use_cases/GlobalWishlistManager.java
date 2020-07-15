@@ -18,6 +18,14 @@ public class GlobalWishlistManager implements Serializable {
         this.gW = gW;
     }
 
+    /**
+     * Return if an item is wanted by anyone
+     * @param itemid - id of item that is wanted
+     * @return Whether or not anyone wants the item
+     */
+    public boolean isItemWanted(String itemid){
+        return gW.isItemWanted(itemid);
+    }
 
     /**
      * add the user's wish to the global wishlist
@@ -32,6 +40,7 @@ public class GlobalWishlistManager implements Serializable {
 
     /**
      * remove the user's wish from the global wishlist
+     * Make sure you ALWAYS call isItemWanted() before calling this else will error
      * @param itemid - the item the user wants to be removed from
      * @param userid - the user who wants it
      */
@@ -43,6 +52,7 @@ public class GlobalWishlistManager implements Serializable {
 
     /**
      * Return all userids that wants the item
+     * Make sure you ALWAYS call isItemWanted() before calling this
      * @param itemid - id of first user that wants the item
      * @return - arraylist of all users who want this item
      */
@@ -53,6 +63,7 @@ public class GlobalWishlistManager implements Serializable {
 
     /**
      * Remove itemid key from globalwishlist
+     * Make sure you ALWAYS call isItemWanted() before calling this else will error
      * @param itemid - id of item that you want removed
      */
 
@@ -79,6 +90,7 @@ public class GlobalWishlistManager implements Serializable {
         }
         return interested;
     }
+
 }
 
 

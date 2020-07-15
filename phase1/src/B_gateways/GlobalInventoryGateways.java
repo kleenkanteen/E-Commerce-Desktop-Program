@@ -11,7 +11,8 @@ public class GlobalInventoryGateways implements Serializable{
     GlobalInventory gI;
 
     /**
-     * Creates a new gateway that loads GlobalInventory in a .ser file
+     * Creates a new gateway that loads GlobalInventory in a .ser file\
+     * @param filePath filePath of the ser file containing the serialized GlobalInventory
      * @throws IOException If something is wrong with the filepath or file
      * @throws ClassNotFoundException If the class cannot be found
      */
@@ -66,10 +67,9 @@ public class GlobalInventoryGateways implements Serializable{
     }
 
     /**
-     * getter for GlobalInventory that stored in .ser file.
+     * Getter for GlobalInventory that stored in .ser file.
      * @return the globalInventory that stored in .ser file.
      */
-
     public GlobalInventory getgI() {
         return gI;
     }

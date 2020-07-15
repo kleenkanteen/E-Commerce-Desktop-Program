@@ -46,21 +46,25 @@ public class MessageReplyMenu {
      * @param m the message
      */
     public void printContentMessagePrompt(Message m){
+        System.out.println("================================================================");
         System.out.println(m);
         System.out.println("Choose your option below:");
         System.out.println("[1] Delete this message");
         System.out.println("[2] Skip this message");
         System.out.println("[3] Exit");
+        System.out.println("================================================================");
     }
     /**
      * Print out a decision message and the options they have
      * @param m the message
      */
     public void printDecisionMessagePrompt(DecisionMessage m){
+        System.out.println("================================================================");
         System.out.println(m);
         System.out.println("Or Choose your option below:");
         System.out.println("[a] Skip this message");
         System.out.println("[b] Exit");
+        System.out.println("================================================================");
     }
     /**
      * Print out the old date and place of the old trade request and the options they have to edit the
@@ -93,7 +97,7 @@ public class MessageReplyMenu {
      * Print to the user that their trade request has reached it's limit of edits
      */
     public void tradeRequestWarning(){
-        System.out.println("Warning, if the max number of edits for both traders are reach, selecting edit means " +
+        System.out.println("Warning, you and the other trader has reached the max number of edits,\nselecting edit means " +
                 "you will cancel this trade request");
     }
 
@@ -106,6 +110,7 @@ public class MessageReplyMenu {
 
     /**
      * Prompt the user to enter a new date for the trade request
+     * @param oldTime The old time of the meet up
      */
     public void changeDatePrompt(LocalDateTime oldTime){
         System.out.println("Enter the new date in the format yyyy-MM-dd HH:mm");
@@ -114,6 +119,7 @@ public class MessageReplyMenu {
 
     /**
      * Prompt the user to enter a new place for the trade request
+     * @param oldPlace The old place of the meet up
      */
     public void changePlacePrompt(String oldPlace){
         System.out.println("Enter the new place");

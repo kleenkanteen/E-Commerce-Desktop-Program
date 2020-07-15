@@ -33,24 +33,20 @@ public class TradeManager {
     }
 
     /**
-     * Getter of the 3 most recent completed trade from the trade history of a user.
+     * Getter of the n most recent trade from the trade history of a user.
      * Trade history is the list of trades that the user is involved in
      * @param username the username of the user
-     * @return the 3 most recent completed trade from the trade history of this user
+     * @param n the amount of recent trade. If n is 3, the 3 most recent trade will be returned
+     * @return the n most recent trade from the trade history of this user
      */
-    public Trade[] getRecentCompletedTrade(String username) {
+    public Trade[] getRecentTrade(String username, int n) {
         ArrayList<Trade> tradeHistory = getTradeHistory(username);
-        ArrayList<Trade> temp = new ArrayList<>();
-        //getting the list of completed trades from this user
-        for(Trade t: tradeHistory){
-            if(t.getCompleted())temp.add(t);
-        }
-        //getting the 3 most recent trades
-        int size = temp.size();
-        Trade[] trades = new Trade[3];
-        for(int i = 0; i<3; i++){
+        //getting the n most recent trades
+        int size = tradeHistory.size();
+        Trade[] trades = new Trade[n];
+        for(int i = 0; i<n; i++){
             if(size < i+1) break;
-            trades[i] = temp.get(size - i - 1);
+            trades[i] = tradeHistory.get(size - i - 1);
         }
         return trades;
     }
@@ -84,15 +80,17 @@ public class TradeManager {
     }
 
     /**
-     * Getter of the usernames of the 3 most frequent trading partners of a user
+     * Getter of the usernames of the n most frequent trading partners of a user
      * @param username the user's username
-     * @return the username of the 3 most frequent trading partners
+     * @param n the amount of most frequent trading partners. If n is 3, the 3 frequent trading
+     *          partners of a user will be returned
+     * @return the username of the n most frequent trading partners
      */
-    public String[] getFrequentTradingPartners(String username) {
+    public String[] getFrequentTradingPartners(String username, int n) {
         ArrayList<Trade> l = getTradeHistory(username);
         TreeMap<Integer, ArrayList<String>> counter = new TreeMap<Integer, ArrayList<String>>();
         ArrayList<String> partners = new ArrayList<String>();
-        String[] tradingPartners = new String[3];
+        String[] tradingPartners = new String[n];
         //Getting the list of username of the trading partners
         for(Trade t: l){
             String partner = t.tradingPartner(username);
@@ -101,31 +99,31 @@ public class TradeManager {
         }
         //counting and ordering the times the username of the trading partner occurs
         for(String u: partners) {
-            int n = count(partners, u);
-            if (counter.containsKey(n)) {
-                ArrayList<String> list = counter.get(n);
+            int c = count(partners, u);
+            if (counter.containsKey(c)) {
+                ArrayList<String> list = counter.get(c);
                 if (!list.contains(u)) list.add(u);
             } else {
                 ArrayList<String> temp = new ArrayList<String>();
                 temp.add(u);
-                counter.put(n, temp);
+                counter.put(c, temp);
             }
         }
-        //getting the 3 most frequent username in the list
+        //getting the n most frequent username in the list
         Set<Integer> keys = counter.descendingKeySet();
         for(Integer key: keys){
             ArrayList<String> p = counter.get(key);
             for(int i = 0; i< p.size(); i++){
-                for(int j=0; j<3; j++){
+                for(int j=0; j<n; j++){
                     if(tradingPartners[j] == (null)){
                         tradingPartners[j] = p.get(i);
                         break;
                     }
                     if(tradingPartners[j].equals(p.get(i)))break;
                 }
-                if(tradingPartners[2] != (null))break;
+                if(tradingPartners[n-1] != (null))break;
             }
-            if(tradingPartners[2]!=(null))break;
+            if(tradingPartners[n-1]!=(null))break;
         }
 
         return tradingPartners;
