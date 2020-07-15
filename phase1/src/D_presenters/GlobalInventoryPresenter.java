@@ -32,7 +32,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     /**
      * Prints next prompts
-     * @return
+     * @return next promts as a string
      */
     @Override
     public String next() {
@@ -78,7 +78,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     /**
      * prints option for user to add the item to wish-list
-     * @param item
+     * @param item the item
      */
     public void addToWishlist(Item item){
         System.out.println("Choose your option below: \n [1] Add this item (" + item.getName() + ") to your wish-list\n");
@@ -93,7 +93,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     /**
      * shows the item successfully added to wish-list
-     * @param item
+     * @param item the item
      */
     public void addedToWishlist(Item item){
         System.out.println(item.getName() +  " is added to your wishlist");
