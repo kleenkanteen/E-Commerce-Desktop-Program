@@ -52,6 +52,7 @@ public abstract class Trade implements Serializable {
 
     /**
      * Sets the boolean for failed.
+     * @param failed takes in a boolean that determines whether the trade failed.
      */
     public void setFailed(boolean failed) {
         this.failed = failed;
