@@ -132,7 +132,7 @@ public class UserMenu {
             }
             // view frequent trading partners
             else if (userInput.equals("3")) {
-                String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser);
+                String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
                 // find a better way to do this
                 for(String tradePartner: tradingPartners) {
                     if(tradePartner == null) {
@@ -144,7 +144,7 @@ public class UserMenu {
             }
             // view 3 most recent trades
             else if (userInput.equals("4")) {
-                Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser);
+                Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
                 // find a better way to do this
                 for(Trade trade : recentTradeHistory) {
                     if(trade == null) {
