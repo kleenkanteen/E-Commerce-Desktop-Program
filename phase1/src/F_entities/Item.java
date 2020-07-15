@@ -3,13 +3,6 @@ package F_entities;
 import java.io.Serializable;
 
 public class Item implements Serializable {
-    /**
-     * Creates an Item that available for trade if the admin approve the Item and assign an unique ID to it.
-     * @param itemID is a unique String assigned by AdminUser to the item
-     * @param description is the String that the user sets to describe the Item condition
-     * @param name is the name of this Item
-     * @param ownerName refers who this Item belongs to.
-     */
 
     private String itemID = null;
     private final String description;
