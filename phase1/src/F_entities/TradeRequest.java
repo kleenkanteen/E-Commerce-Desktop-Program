@@ -33,7 +33,8 @@ public class TradeRequest implements Serializable {
      * @param date the date of this trade request meeting date
      * @param place the place for the meeting
      */
-    public TradeRequest(String userA, String userB, ArrayList<Item> itemB, boolean perm, LocalDateTime date, String place) {
+    public TradeRequest(String userA, String userB, ArrayList<Item> itemB, boolean perm, LocalDateTime date,
+                        String place) {
         this.userA = userA;
         this.userB = userB;
         this.itemB = itemB;

@@ -20,7 +20,8 @@ public class GlobalInventoryController {
      * @param TM the TradeManager object
      * @param GW the GlobalWishlistManager object
      */
-    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM, GlobalWishlistManager GW) {
+    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM,
+                    GlobalWishlistManager GW) {
 
         Scanner inputx = new Scanner(System.in);
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
@@ -59,7 +60,7 @@ public class GlobalInventoryController {
                                 if (UM.getUserWishlist(user).contains(item)) { // if user already has it in wishlist
                                     prompts.alreadyHave();
                                 } else {
-                                    UM.addItemToWishlist(user, item); // user does not have it in wishlit, adding it to wishlist
+                                    UM.addItemToWishlist(user, item); // user does not have it in wishlit, adding it
                                     prompts.addedToWishlist(item);
                                     GW.addWish(item.getItemID(), user);
                                 }
@@ -83,7 +84,8 @@ public class GlobalInventoryController {
                     } catch (UserFrozenException ex) {
                         prompts.FrozenAcc();
                     }
-                    if (input.matches("[0-9]") && Integer.valueOf(input) > gim.generatePage(pageNumber).size() - 1) {
+                    if (input.matches("[0-9]") &&
+                            Integer.valueOf(input) > gim.generatePage(pageNumber).size() - 1) {
                         prompts.invalid();
                     }
                 }

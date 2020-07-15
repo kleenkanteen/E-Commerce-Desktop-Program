@@ -72,7 +72,8 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
      * @param item the item
      */
     public void addToWishlishandTradeRequest(Item item){
-        System.out.println("Choose your option below: \n[1] Add this item (" + item.getName() + ") to your wish-list \n" +
+        System.out.println("Choose your option below: \n[1] Add this item (" + item.getName() +
+                ") to your wish-list \n" +
                 "[2] Request a trade");
     }
 
