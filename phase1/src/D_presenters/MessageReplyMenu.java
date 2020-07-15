@@ -110,6 +110,7 @@ public class MessageReplyMenu {
 
     /**
      * Prompt the user to enter a new date for the trade request
+     * @param oldTime The old time of the meet up
      */
     public void changeDatePrompt(LocalDateTime oldTime){
         System.out.println("Enter the new date in the format yyyy-MM-dd HH:mm");
@@ -118,6 +119,7 @@ public class MessageReplyMenu {
 
     /**
      * Prompt the user to enter a new place for the trade request
+     * @param oldPlace The old place of the meet up
      */
     public void changePlacePrompt(String oldPlace){
         System.out.println("Enter the new place");
