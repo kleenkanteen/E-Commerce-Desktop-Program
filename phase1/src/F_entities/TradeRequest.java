@@ -78,7 +78,7 @@ public class TradeRequest implements Serializable {
 
     /**
      * get the userA involved in this trade request
-     * @return
+     * @return userB
      */
     public String getUserB() {
         return userB;
