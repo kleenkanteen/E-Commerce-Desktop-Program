@@ -68,7 +68,7 @@ public class UserTradesGateway {
 
     /**
      * returns the HashMap of trades for all users.
-     * @return
+     * @return HashMap of trades for all users that is presently serialized.
      */
     public HashMap<String, ArrayList<Trade>> getUserTrades() {
         return userTrades;

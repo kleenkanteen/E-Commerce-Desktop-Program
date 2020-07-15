@@ -48,6 +48,7 @@ public class UserGateway {
     /**
      * Serializes the arraylist of user objects.
      * @param filepath where this file will be stored
+     * @param userObjects HashMap with Users and their respective usernames that we want to serialize.
      * @throws IOException when an error occur when serializing
      */
     public void writeToFile(String filepath, HashMap<String, User> userObjects) throws IOException{

@@ -67,7 +67,7 @@ public class AdminMessageGateway {
 
     /**
      * Returns all messages of the logged in Admin.
-     * @return
+     * @return return messages presently saved in the .ser file of a particular Admin.
      */
     public ArrayList<Message> getMessages() { return this.messages; }
 }
