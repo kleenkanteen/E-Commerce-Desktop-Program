@@ -229,13 +229,13 @@ public class UserManager {
      */
     public void removeItemFromUserInventory (String user, String itemID) {
         ArrayList<Item> userInventory = new ArrayList<>(getUserInventory(user));
-        int index = 0;
-        for(int i = 0; i < userInventory.size(); i++) {
-            if(userInventory.get(i).getItemID().equals(itemID)) {
-                userInventory.remove(index);
+        for(Item item : userInventory) {
+            if (item.getItemID().equals(itemID)) {
+                userInventory.remove(item);
+                this.allUsers.get(user).setPersonalInventory(userInventory);
+                return;
             }
         }
-        this.allUsers.get(user).setPersonalInventory(userInventory);
     }
 
     /**

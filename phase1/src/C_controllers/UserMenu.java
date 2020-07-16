@@ -152,9 +152,10 @@ public class UserMenu {
                 // find a better way to do this
                 if(recentTradeHistory[0] == null){
                     this.userPresenter.noRecentTrades();
-                }else{
+                }
+                else {
                     for(Trade trade : recentTradeHistory) {
-                        if(trade == null) {
+                        if (trade == null) {
                             break;
                         }
                         this.userPresenter.tradeToString(trade);
