@@ -96,7 +96,7 @@ public class AdminManager{
      * @throws InvalidLoginException throw this is password for a given username isn't valid.
      */
     public boolean login(String username, String password) throws InvalidLoginException {
-        if (adminHashMap.get(username).equals(password)){
+        if (adminHashMap.get(username).getPassword().equals(password)){
             return true;
         }
         return false;
