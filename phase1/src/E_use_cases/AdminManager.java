@@ -47,7 +47,8 @@ public class AdminManager{
      * adds a particular admin to the HashMap of all admins given a username and password String input
      * @param username username of admin to be added
      * @param password password of admin to be added
-     * @throws InvalidUsernameException will be thrown when the new userName has already been used in Admin or in User
+     * @throws InvalidUsernameException if the username and password were wrong, throw this
+     *
      */
     public void addAdmin (String username, String password) throws InvalidUsernameException{
         if (adminHashMap.containsKey(username))
