@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.HashMap;
 
 public class UserGateway {
-    HashMap<String, User> mapOfUsers;
+    private HashMap<String, User> mapOfUsers;
 
     /**
      * Creates a new gateway that loads in the HashMap of user objects for an .ser file.

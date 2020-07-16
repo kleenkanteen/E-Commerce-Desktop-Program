@@ -210,7 +210,7 @@ public class UserMenu {
             if(tooManyIncomplete || tooManyBorrowVLoan) {
                 this.userPresenter.requestFreezeOfUser();
                 FreezeRequestMessage newFreezeRequest = new FreezeRequestMessage("User " + this.currUser +
-                        " has too many incomplete trades and their account should be frozen.", this.currUser);
+                        " should have their account frozen.", this.currUser);
                 this.adminMessages.add(newFreezeRequest);
             }
         }
@@ -509,7 +509,8 @@ public class UserMenu {
                         ArrayList<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
                         TradeController tradeController = new TradeController(this.userManager);
-                        tradeController.run(traderItem, this.currUser);
+                        tradeController.run(traderItem, this.currUser,
+                                this.tradeManager.getTradeHistory(this.currUser).size());
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
                     }
                 }

@@ -105,8 +105,8 @@ public class UserManager {
             throw new UserFrozenException();
         }
         // check borrows, num of incomplete trades, num of trades made this week
-        return (borrowedTimes - lendTimes) <= this.allUsers.get(user).getThreshold() ||
-                numIncomplete < this.allUsers.get(user).getLimitOfIncompleteTrade() ||
+        return (borrowedTimes - lendTimes) < this.allUsers.get(user).getThreshold() &&
+                numIncomplete < this.allUsers.get(user).getLimitOfIncompleteTrade() &&
                 numTradesMadeThisWeek < this.allUsers.get(user).getTradePerWeek();
     }
 
@@ -124,7 +124,7 @@ public class UserManager {
         if (this.allUsers.get(username).getFrozenStatus()) {
             throw new UserFrozenException();
         }
-        return numIncomplete < this.allUsers.get(username).getLimitOfIncompleteTrade() ||
+        return numIncomplete < this.allUsers.get(username).getLimitOfIncompleteTrade() &&
                 numTradesMadeThisWeek < this.allUsers.get(username).getTradePerWeek();
     }
 
