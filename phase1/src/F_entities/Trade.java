@@ -227,20 +227,20 @@ public abstract class Trade implements Serializable {
     public String toString() {
         String info = "";
         if (traderBItemsToTrade.isEmpty()){
-            info =  "The Trade is generated on" + getCreationDate() + "\n" +
+            info =  "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA: " + getTraderA() +
                     "\nTraderB (Borrower): " + getTraderB() +
                     "\nItem from TraderA: " + getTraderAItemsToTrade().get(0).getName()+
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else if (traderAItemstoTrade.isEmpty()){
-            info = "The Trade is generated on" + getCreationDate() + "\n" +
+            info = "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA (Borrower): " + getTraderA() +
                     "\nTraderB: " + getTraderB() +
                     "\nItem from TraderB: " + getTraderBItemsToTrade().get(0).getName()+
                     "\nThe Trade has been made on: " + getStartDate();
         }
-        else info = "The Trade is generated on" + getCreationDate() + "\n" +
+        else info = "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA: " + getTraderA() +
                     "\nTraderB: " + getTraderB() +
                     "\n" + getTraderA()+ " confirmed to trade with: " + getTraderAItemsToTrade().get(0).getName() +
