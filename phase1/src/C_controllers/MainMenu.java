@@ -3,10 +3,8 @@ import B_gateways.*;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
 import F_entities.User;
-import G_exceptions.InvalidLoginException;
 import G_exceptions.InvalidUsernameException;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,7 +43,7 @@ public class MainMenu {
             //deserialize users
             ug = new UserGateway(serializedUsers);
             //ug.writeToFile(serializedUsers, new HashMap<>());
-            System.out.println("Users:\n" + ug.getMapOfUsers());
+            //System.out.println("Users:\n" + ug.getMapOfUsers());
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);
@@ -126,8 +124,6 @@ public class MainMenu {
                 mm.inputError();
                 mm.printExit();
                 return;
-            } catch (InvalidLoginException x) {
-                mm.wrongLogin();
             }
             catch (InvalidUsernameException f){
                 mm.takenUsername();

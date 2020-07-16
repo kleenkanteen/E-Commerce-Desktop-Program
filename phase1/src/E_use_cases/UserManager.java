@@ -18,8 +18,7 @@ public class UserManager {
 
     /**
      * Allows a user to login. Only use with user login option in main menu!
-     * If the username does not match up with password, throw InvalidLoginException.
-     * Put this method in a try-catch!!!
+     * If the username does not match up with password
      * @param username the username input
      * @param password the password input
      * @return True if user logged in, false if invalid login
