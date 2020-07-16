@@ -8,8 +8,8 @@ import java.io.InputStreamReader;
 
 
 public class AdminBrowsingUsers {
-    UserManager users;
-    AdminBrowsingUsersPresenter browse;
+    private UserManager users;
+    private AdminBrowsingUsersPresenter browse;
 
     public AdminBrowsingUsers(UserManager system){
         this.browse = new AdminBrowsingUsersPresenter();
