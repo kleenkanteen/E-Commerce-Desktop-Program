@@ -32,6 +32,7 @@ public class TradeController {
      */
     public TradeController(UserManager allUsers) {
         this.allUsers = allUsers;
+
     }
 
     /**
@@ -85,7 +86,7 @@ public class TradeController {
      * @param itemsToTradeB takes in an arraylist of items that represent the items to trade from userB.
      * @param userA is a string that indicates the current user (userA)
      */
-    public void run(ArrayList<Item> itemsToTradeB, String userA) {
+    public void run(ArrayList<Item> itemsToTradeB, String userA, int numTrades) {
         TradeRequestMessage tradeRequestMessage;
         String userB = itemsToTradeB.get(0).getOwnerName();
 
@@ -111,11 +112,15 @@ public class TradeController {
                     this.tradeMenu.chooseOneOrTwo();
                     this.tradeType = this.input.nextLine();
                     invalidTradeTypeChoice();
-                    itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
-                    tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                    this.allUsers.addUserMessage(userB, tradeRequestMessage);
-                    this.tradeMenu.tradeRequestSent(userB);
-                    done = true;
+                    if (tradeType.equals("1") && numTrades == 0) {
+                        tradeMenu.unavailableChoice();
+                    } else {
+                        itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
+                        tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
+                        this.allUsers.addUserMessage(userB, tradeRequestMessage);
+                        this.tradeMenu.tradeRequestSent(userB);
+                        done = true;
+                    }
                     break;
                 // temp trade
                 case "2":
@@ -123,17 +128,23 @@ public class TradeController {
                     this.tradeMenu.chooseOneOrTwo();
                     this.tradeType = this.input.nextLine();
                     invalidTradeTypeChoice();
-                    itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
-                    tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                    this.allUsers.addUserMessage(userB, tradeRequestMessage);
-                    this.tradeMenu.tradeRequestSent(userB);
-                    done = true;
+                    if (tradeType.equals("1") && numTrades == 0) {
+                        tradeMenu.unavailableChoice();
+                    } else {
+                        itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
+                        tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
+                        this.allUsers.addUserMessage(userB, tradeRequestMessage);
+                        this.tradeMenu.tradeRequestSent(userB);
+                        done = true;
+                    }
                     break;
                 default:
                     this.tradeMenu.invalidInput();
             }
         }while(!done);
     }
+
+
 
     private LocalDateTime getDateInput() {
         // tell user that it has to be a specific format.
@@ -146,7 +157,7 @@ public class TradeController {
             try {
                 this.tradeMenu.enterDate();
                 String dateInput = this.input.nextLine();
-                // asks for date, but will throw an exception telling the user its wrong.
+                // asks for date
                 dateInput = dateInput.replaceAll("\\s+", "");
                 this.date = parse(dateInput, formatter);
                 LocalDateTime today = LocalDateTime.now();

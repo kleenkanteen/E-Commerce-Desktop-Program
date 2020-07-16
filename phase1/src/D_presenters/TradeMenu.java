@@ -86,4 +86,11 @@ public class TradeMenu {
     public void invalidInput(){
         System.out.println("Invalid input.\n");
     }
+
+    /**
+     * Presenter for an unavailable choice.
+     */
+    public void unavailableChoice() {
+        System.out.println("Sorry, this selection is not available for you! :-( Try Again!");
+    }
 }
