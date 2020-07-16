@@ -57,25 +57,31 @@ public class TradeController {
         String place = input.nextLine();
 
         ArrayList<Item> itemsToTradeB = itemsToTrade;
+        String selection;
+        do {
+            // have a presenter that asks for perm trade or temp trade.
+            tradeMenu.choosePermTemp();
+            selection = input.nextLine();
+            switch (selection) {
+                // temp trade
+                case "1":
+                    tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
+                    allUsers.createAndAddNewTradeRequestMessage(userB,
+                            "User " + userA + " wants to trade with you.", tradeRequest, userA);
+                    break;
+                // perm trade
+                case "2":
+                    tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
+                    allUsers.createAndAddNewTradeRequestMessage(userB,
+                            "User " + userA + " wants to trade with you.", tradeRequest, userA);
+                    break;
 
-        // have a presenter that asks for perm trade or temp trade.
-        tradeMenu.choosePermTemp();
-        String selection = input.nextLine();
-        switch (selection) {
-            // temp trade
-            case "1":
-                tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
-                tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
-            // perm trade
-            case "2":
-                tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
-                tradeRequestMessage = new TradeRequestMessage("User " + userA + " wants to trade with you.", tradeRequest, userA);
-            default:
-                tradeMenu.invalidInput();
+                default:
+                    tradeMenu.invalidInput();
 
-        }
-        allUsers.addUserMessage(userA, tradeRequestMessage);
-        tradeMenu.tradeRequestSent(userA);
+            }
+        }while(!selection.equals("1")&&!selection.equals("2"));
+        tradeMenu.tradeRequestSent(userB);
     }
 
     /**
@@ -112,8 +118,8 @@ public class TradeController {
                     invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
-                    allUsers.addUserMessage(userA, tradeRequestMessage);
-                    tradeMenu.tradeRequestSent(userA);
+                    allUsers.addUserMessage(userB, tradeRequestMessage);
+                    tradeMenu.tradeRequestSent(userB);
                     done = true;
                     break;
                 // temp trade
@@ -124,8 +130,8 @@ public class TradeController {
                     invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, itemsToTradeA);
                     tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
-                    allUsers.addUserMessage(userA, tradeRequestMessage);
-                    tradeMenu.tradeRequestSent(userA);
+                    allUsers.addUserMessage(userB, tradeRequestMessage);
+                    tradeMenu.tradeRequestSent(userB);
                     done = true;
                     break;
                 default:
