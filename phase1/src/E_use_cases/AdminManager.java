@@ -2,8 +2,6 @@ package E_use_cases;
 
 import F_entities.Admin;
 import F_entities.Message;
-import F_entities.User;
-import G_exceptions.InvalidLoginException;
 import G_exceptions.InvalidUsernameException;
 
 import java.util.ArrayList;
@@ -91,13 +89,11 @@ public class AdminManager{
      * verifies login is correct
      * @param username username that admin logs in with
      * @param password password that admin logs in with
-     * @return
-     * @throws InvalidLoginException
+     * @return whether or not a login matches
      */
-    public boolean login(String username, String password) throws InvalidLoginException {
+    public boolean login(String username, String password) {
         if (adminHashMap.containsKey(username))
-          if (getAdmin(username).getPassword().equals(password))
-                return true;
+          return (getAdmin(username).getPassword().equals(password));
         return false;
     }
 
