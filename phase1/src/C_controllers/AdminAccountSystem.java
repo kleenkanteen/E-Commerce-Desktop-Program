@@ -83,7 +83,8 @@ public class AdminAccountSystem {
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();
                     }
-                    aap.printMainMenu();}
+                    }
+                    aap.printMainMenu();
 
                 }
             } catch (IOException e) {
