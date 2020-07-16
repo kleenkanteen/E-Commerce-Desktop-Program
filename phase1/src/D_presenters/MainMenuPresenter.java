@@ -14,7 +14,7 @@ public class MainMenuPresenter {
      *Presents options to the user to log in (as admin or user) or create an account or exit.
      */
     public void printMenuPrompt() {
-        System.out.println("Choose your option below:\n[1] User Login.\n[2] User Account Creation.\n " +
+        System.out.println("Choose your option below:\n[1] User Login.\n[2] User Account Creation.\n" +
                 "[3] Admin Login.\nOr any other value to exit the program\n");
     }
     /**
