@@ -244,15 +244,14 @@ public class UserManager {
      * @param itemID String itemID
      */
     public void removeItemFromUserWishlist(String user, String itemID) {
-        ArrayList<Item> userWishlist = getUserWishlist(user);
-        int index = 0;
-        for(int i =0; i < userWishlist.size(); i++) {
-            if(userWishlist.get(i).getItemID().equals(itemID)) {
-                index = i;
+        ArrayList<Item> userWishlist = new ArrayList<>(getUserWishlist(user));
+        for(Item item : userWishlist) {
+            if(item.getItemID().equals(itemID)) {
+                userWishlist.remove(item);
+                this.allUsers.get(user).setWishlist(userWishlist);
+                return;
             }
         }
-        userWishlist.remove(index);
-        this.allUsers.get(user).setWishlist(userWishlist);
     }
 
     /**
