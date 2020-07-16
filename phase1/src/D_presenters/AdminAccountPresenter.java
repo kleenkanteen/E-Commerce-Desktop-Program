@@ -2,7 +2,7 @@ package D_presenters;
 import F_entities.Admin;
 
 public class AdminAccountPresenter {
-    Admin admin;
+    private Admin admin;
 
     /**
      * class constructor, it will create a new adminAccountMenu and print the option the admins have in console

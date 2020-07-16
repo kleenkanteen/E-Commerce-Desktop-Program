@@ -3,7 +3,7 @@ package D_presenters;
 import F_entities.Admin;
 
 public class AdminMenu {
-    Admin admin;
+    private Admin admin;
     /**
      * class constructor, it will create a new adminMenu and print the option the admins have in console
      * @param admin the admin that is currently logged in.
