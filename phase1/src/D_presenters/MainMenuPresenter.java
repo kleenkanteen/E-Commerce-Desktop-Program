@@ -6,7 +6,7 @@ public class MainMenuPresenter {
     }
     public void printMenuPrompt(){
         System.out.println("Choose your option below:\n[1] User Login.\n[2] User Account Creation.\n" +
-                "[3] Admin Login.\nAny other value to exit the program.");
+                "[3] Admin Login.\nOr any other value to exit the program\n");
     }
     public void printLoginPrompt1(){
         System.out.println("Enter username:");
