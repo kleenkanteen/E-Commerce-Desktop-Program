@@ -2,6 +2,9 @@ package D_presenters;
 
 public class AdminBrowsingUsersPresenter {
 
+    /*
+    Construct an instance of AdminBrowsingUsersPresenter.
+     */
     public AdminBrowsingUsersPresenter(){
     }
 
