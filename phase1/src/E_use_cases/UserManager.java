@@ -228,15 +228,14 @@ public class UserManager {
      * @param itemID String item ID
      */
     public void removeItemFromUserInventory (String user, String itemID) {
-        ArrayList<Item> userInventory = getUserInventory(user);
-        int index = 0;
-        for(int i = 0; i < userInventory.size(); i++) {
-            if(userInventory.get(i).getItemID().equals(itemID)) {
-                index = i;
+        ArrayList<Item> userInventory = new ArrayList<>(getUserInventory(user));
+        for(Item item : userInventory) {
+            if (item.getItemID().equals(itemID)) {
+                userInventory.remove(item);
+                this.allUsers.get(user).setPersonalInventory(userInventory);
+                return;
             }
         }
-        userInventory.remove(index);
-        this.allUsers.get(user).setPersonalInventory(userInventory);
     }
 
     /**
@@ -245,15 +244,14 @@ public class UserManager {
      * @param itemID String itemID
      */
     public void removeItemFromUserWishlist(String user, String itemID) {
-        ArrayList<Item> userWishlist = getUserWishlist(user);
-        int index = 0;
-        for(int i =0; i < userWishlist.size(); i++) {
-            if(userWishlist.get(i).getItemID().equals(itemID)) {
-                index = i;
+        ArrayList<Item> userWishlist = new ArrayList<>(getUserWishlist(user));
+        for(Item item : userWishlist) {
+            if(item.getItemID().equals(itemID)) {
+                userWishlist.remove(item);
+                this.allUsers.get(user).setWishlist(userWishlist);
+                return;
             }
         }
-        userWishlist.remove(index);
-        this.allUsers.get(user).setWishlist(userWishlist);
     }
 
     /**

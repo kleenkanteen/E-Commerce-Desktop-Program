@@ -28,6 +28,7 @@ public class AdminAccountSystem {
      * @param admin the admin of the currently logged in.
      * @param am the AdminManager will be used to change account information
      * @param adminMessage the ArrayList of the Message
+     * @param um the UserManager used to check account information
      */
 
 
@@ -78,7 +79,9 @@ public class AdminAccountSystem {
                         aap.failToCreateNewAdmin();
                     }
                     else {
-                    try { am.addAdmin(newUsername, newPassword);
+                    try {
+                        am.addAdmin(newUsername, newPassword);
+                        aap.successadmin();
                   }
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();
@@ -88,7 +91,7 @@ public class AdminAccountSystem {
 
                 }
             } catch (IOException e) {
-                System.out.println("Something went wrong");
+                aap.printErrorOccurred();
             }
         }
         aap.exitMenu();

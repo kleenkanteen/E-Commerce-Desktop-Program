@@ -35,7 +35,6 @@ public class MainMenu {
         try {
             //deserialize admins
             ag = new AdminAccountGateways(serializedAdmins);
-            //System.out.println("Admins:\n" + ag.getAdminMap());
             //ag.saveToFile(new HashMap<>());
             if(ag.getAdminMap().isEmpty()){
                 ag.beginAdminMap();
@@ -43,27 +42,22 @@ public class MainMenu {
             //deserialize users
             ug = new UserGateway(serializedUsers);
             //ug.writeToFile(serializedUsers, new HashMap<>());
-            //System.out.println("Users:\n" + ug.getMapOfUsers());
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);
-            //System.out.println("Global inventory:\n" + gig.getgI());
             //gig.writeToFile(new GlobalInventory());
 
 
             //deserialize all user trades
             utg = new UserTradesGateway(serializedUserTrades);
-            //System.out.println("User trade info:\n" + utg.getUserTrades());
             //utg.writeToFile(serializedUserTrades, new HashMap<>());
 
             //deserialize GlobalWishlistGateway
             gwl = new GlobalWishlistGateway(serializedGlobalWishlist);
-            //System.out.println("Global Wishlist Items:\n" + gwl.getWishlistItems());
             //gwl.writeToFile(serializedGlobalWishlist, new GlobalWishlist());
             //deserialize AdminMessageGateway
             amg = new AdminMessageGateway(serializedAdminMessages);
             //amg.writeToFile(serializedAdminMessages, new ArrayList<>());
-            //System.out.println("Admin Messages:\n" + amg.getMessages());
         }catch(IOException | ClassNotFoundException ex){
             mm.readError();
             mm.printExit();
@@ -83,13 +77,14 @@ public class MainMenu {
                     String username = br.readLine();
                     mm.printLoginPrompt2();
                     String pass = br.readLine();
+                    AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
                     UserManager attempt = new UserManager(ug.getMapOfUsers());
                     GlobalInventoryManager y2 = new GlobalInventoryManager(gig.getgI());
                     if (input.equals("1") || input.equals("2")) {
                         attempt.login(username, pass);
                         if (input.equals("1")) {
                             // user selected "1" (user sign-in)
-                            if (attempt.login(username, pass)) {
+                            if(attempt.login(username, pass)) {
                                 TradeManager y = new TradeManager(utg.getUserTrades());
                                 GlobalWishlistManager y3 = new GlobalWishlistManager(gwl.getWishlistItems());
                                 UserMenu um = new UserMenu(username, attempt, y, y2, y3, amg.getMessages());
@@ -103,14 +98,16 @@ public class MainMenu {
                                 mm.usernameTooShort();
                             }
                             else {
-                                ug.getMapOfUsers().put(username, new User(username, pass));
-                                mm.successfulAccountCreation();
+                                if (!(ag.getAdminMap().containsKey(username))) {
+                                    ug.getMapOfUsers().put(username, new User(username, pass));
+                                    mm.successfulAccountCreation();
+                                }
+                                mm.takenUsername();
                             }
                         }
                     } else {
                         // user selected "3" (admin sign-in)
-                        AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
-                        if (r.login(username, pass)) {
+                        if ((r.login(username, pass))) {
                             AdminSystem successful = new AdminSystem(r.getAdmin(username), r, attempt, y2);
                             successful.run();
                         }

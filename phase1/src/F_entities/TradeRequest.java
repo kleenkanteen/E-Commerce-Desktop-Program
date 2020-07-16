@@ -218,23 +218,23 @@ public class TradeRequest implements Serializable {
     public String toString(){
         String info = "";
         if (itemA.isEmpty()){
-            info =  "TraderA: " + getUserA() +
+            info =  "TraderA (Borrower): " + getUserA() +
                     "\nTraderB: " + getUserB() +
-                    "\nItemB: " + getItemB().get(0).getName() +
+                    "\nItem from B: " + getItemB().get(0).getName() +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
         }
         else if (itemB.isEmpty()){
             info = "TraderA: " + getUserA() +
-                    "\nTraderB: " + getUserB() +
-                    "\nItemA: " + getItemA().get(0).getName() +
+                    "\nTraderB (Borrower): " + getUserB() +
+                    "\nItem from A: " + getItemA().get(0).getName() +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
         }
         else info = "TraderA: " + getUserA() +
                     "\nTraderB: " + getUserB() +
-                    "\nItemA: " + getItemA().get(0).getName() +
-                    "\nItemB: " + getItemB().get(0).getName() +
+                    "\nItem from A: " + getItemA().get(0).getName() +
+                    "\nItem from B: " + getItemB().get(0).getName() +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
 

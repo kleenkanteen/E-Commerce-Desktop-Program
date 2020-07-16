@@ -11,8 +11,7 @@ public class TradeMenu {
     public void choosePermTemp() {
         System.out.println("What trade would you like to complete today?" +
                 "\n[1] Start a permanent transaction with a user." +
-                "\n[2] Start a temporary transaction with a user." +
-                "\nEnter any other number to exit.");
+                "\n[2] Start a temporary transaction with a user.");
     }
 
     /**

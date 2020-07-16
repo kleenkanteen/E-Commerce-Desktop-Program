@@ -134,24 +134,32 @@ public class UserMenu {
             else if (userInput.equals("3")) {
                 String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
                 // find a better way to do this
-                for(String tradePartner: tradingPartners) {
-                    if(tradePartner == null) {
-                        this.userPresenter.noTradingPartners();
-                        break;
+                if(tradingPartners[0] == null) {
+                    this.userPresenter.noTradingPartners();
+                }
+                else {
+                    for (String tradePartner : tradingPartners) {
+                        if (tradePartner == null) {
+                            break;
+                        }
+                        this.userPresenter.printUserTradePartners(tradePartner);
                     }
-                    this.userPresenter.printUserTradePartners(tradePartner);
                 }
             }
             // view 3 most recent trades
             else if (userInput.equals("4")) {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
                 // find a better way to do this
-                for(Trade trade : recentTradeHistory) {
-                    if(trade == null) {
-                        this.userPresenter.noRecentTrades();
-                        break;
+                if(recentTradeHistory[0] == null){
+                    this.userPresenter.noRecentTrades();
+                }
+                else {
+                    for(Trade trade : recentTradeHistory) {
+                        if (trade == null) {
+                            break;
+                        }
+                        this.userPresenter.tradeToString(trade);
                     }
-                    this.userPresenter.tradeToString(trade);
                 }
             }
             // look at personal inventory

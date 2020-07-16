@@ -192,7 +192,7 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     //Informing the other user
                     um.createUserMessage(item.getOwnerName(), "Your Item: "+item+
-                            "\n has been successfully added to the system");
+                            "\n has been successfully added to the system by the Admin "+accountUsername);
                     mm.success();
                     done = true;
                     break;
