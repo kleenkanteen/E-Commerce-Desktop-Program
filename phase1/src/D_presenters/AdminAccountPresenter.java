@@ -18,7 +18,7 @@ public class AdminAccountPresenter {
     public void printMainMenu(){
         System.out.println("You are accessing your Admin account. Choose your option below:");
         System.out.println("[1] Change your password\n[2] " +
-                "Add a new admin account\n[3] Exit to admin menu" );
+                "Add a new admin account\n[3] Exit to admin menu\n" );
     }
 
     /**
@@ -38,7 +38,7 @@ public class AdminAccountPresenter {
      * print to Admin if he fails to change the password
      */
     public void failToChangePassword(){
-        System.out.println("Two passwords don't match, failed to change your password");
+        System.out.println("Two passwords don't match, failed to change your password\n");
     }
 
     /**
@@ -66,14 +66,14 @@ public class AdminAccountPresenter {
      * print to Admin if he failed to create a new Admin Account since the userName has been taken
      */
     public void failToCreateNewAdmin(){
-        System.out.println("Failed to create new admin because the Username has been taken");
+        System.out.println("Failed to create new admin because the Username has been taken\n");
     }
 
     /**
      * print to Admin after he decides to leave AdminAccountMenu
      */
     public void exitMenu(){
-        System.out.println("Going back to admin's menu...");
+        System.out.println("Going back to admin's menu...\n");
 
     }
 
@@ -81,7 +81,7 @@ public class AdminAccountPresenter {
      * print admin account was successfully created
      */
     public void successadmin(){
-        System.out.println("Success, admin account created");
+        System.out.println("Success, admin account created\n");
 
     }
 
@@ -89,7 +89,7 @@ public class AdminAccountPresenter {
      * Print to the user that an error as occurred
      */
     public void printErrorOccurred(){
-        System.out.println("Something went wrong");
+        System.out.println("Something went wrong\n");
     }
 
 }
