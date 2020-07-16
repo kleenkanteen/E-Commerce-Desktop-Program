@@ -67,7 +67,7 @@ public class AdminSystem {
                         am.printMainOption();
                         break;
                     case "2":
-                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList);
+                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList, um);
                         aas.run();
                         am.printMainOption();
                         break;
