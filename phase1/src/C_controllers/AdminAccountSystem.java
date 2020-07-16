@@ -28,6 +28,7 @@ public class AdminAccountSystem {
      * @param admin the admin of the currently logged in.
      * @param am the AdminManager will be used to change account information
      * @param adminMessage the ArrayList of the Message
+     * @param um the UserManager used to check account information
      */
 
 
