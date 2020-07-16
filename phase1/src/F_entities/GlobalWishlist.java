@@ -89,6 +89,11 @@ public class GlobalWishlist implements Serializable {
         else { return new ArrayList<>();}
     }
 
+    /**
+     * Return all userids that wants every item
+     * @return - A string representation of all users who wants all items
+     */
+    @Override
     public String toString(){
         String i = "";
         for (String key : wishMap.keySet()) {
