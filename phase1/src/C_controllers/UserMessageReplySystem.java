@@ -169,10 +169,11 @@ public class UserMessageReplySystem {
                             if(input.equals("2"))done = true;
                             else if(input.equals("1")) {
                                 messages.remove(m);
-                                //Tell the other trader that the trade could not be created at this time
-                                um.createUserMessage(username, "You or the other trader cannot create a new trade " +
-                                        "at this time or the items involved or not for trade at this time. The" +
-                                        "Other trader has choosed to delete this trade request.\n"+
+                                //Tell the other trader that the trade could not be created at this time and
+                                //the trade request is deleted
+                                um.createUserMessage(username, "You or the other trader cannot create a " +
+                                        "new trade at this time or the items involved or not for trade at this time. " +
+                                        "The other trader has chosen to delete this trade request.\n"+
                                         "Trade Request: "+t.toString());
                                 done = true;
                             }

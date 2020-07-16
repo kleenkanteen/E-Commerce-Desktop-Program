@@ -2,7 +2,7 @@ Welcome to use Group 0147's Trade system
 
 To view the java docs open the index.html under javadoc
 To view the UML diagram (separated by layers (Entity, Use Case, Presenter, Controller, Gateway)) open uml folder under
-phase 1 and open a file called design.pdf
+phase 1 and open the pdf (which is the uml)
 
 You need to load the program from group_0147 and run the program from the Main class. You might
 have to create your own out folder. The initial files are empty.
