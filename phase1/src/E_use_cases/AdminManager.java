@@ -48,7 +48,7 @@ public class AdminManager{
      * @param username username of admin to be added
      * @param password password of admin to be added
      * @return new HashMap with added admin
-     * @throws InvalidUsernameException
+     * @throws InvalidUsernameException if the username and password were wrong, throw this
      */
     public HashMap<String, Admin> addAdmin (String username, String password) throws InvalidUsernameException{
         if (adminHashMap.containsKey(username))
@@ -92,8 +92,8 @@ public class AdminManager{
      * verifies login is correct
      * @param username username that admin logs in with
      * @param password password that admin logs in with
-     * @return
-     * @throws InvalidLoginException
+     * @return True if username and password exist within the adminHashMap, False otherwise
+     * @throws InvalidLoginException throw this is password for a given username isn't valid.
      */
     public boolean login(String username, String password) throws InvalidLoginException {
         if (adminHashMap.get(username).equals(password)){
