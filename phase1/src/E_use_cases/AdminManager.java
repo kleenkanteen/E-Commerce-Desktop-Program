@@ -3,6 +3,7 @@ package E_use_cases;
 import F_entities.Admin;
 import F_entities.Message;
 import F_entities.User;
+import G_exceptions.InvalidLoginException;
 import G_exceptions.InvalidUsernameException;
 
 import java.util.ArrayList;
@@ -10,7 +11,6 @@ import java.util.HashMap;
 
 public class AdminManager{
     private HashMap<String, Admin> adminHashMap;
-    private HashMap<String, User> userHashMap;
     private ArrayList<Message> adminMessagesArrayList;
 
     /**
@@ -18,13 +18,10 @@ public class AdminManager{
      * Takes in HashMap of all admin accounts and ArrayList of Messages shared between all of them.
      * @param adminHashMap HashMap containing all admin accounts.
      * @param adminMessagesArrayList ArrayList containing all admin Messages.
-     * @param userHashMap HashMap containing all user accounts.
      */
-    public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList,
-                        HashMap<String, User> userHashMap) {
+    public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList) {
         this.adminHashMap = adminHashMap;
         this.adminMessagesArrayList = adminMessagesArrayList;
-        this.userHashMap = userHashMap;
     }
 
     /**
@@ -39,15 +36,22 @@ public class AdminManager{
      */
 
     public HashMap<String, Admin> addAdmin (Admin toAdd) throws InvalidUsernameException{
-        if (adminHashMap.containsKey(toAdd.getUsername()) || userHashMap.containsKey((toAdd.getUsername())))
+        if (adminHashMap.containsKey(toAdd.getUsername()))
             throw new InvalidUsernameException();
 
         adminHashMap.put(toAdd.getUsername(), toAdd);
         return adminHashMap;
     }
 
+    /**
+     * adds a particular admin to the HashMap of all admins given a username and password String input
+     * @param username username of admin to be added
+     * @param password password of admin to be added
+     * @return new HashMap with added admin
+     * @throws InvalidUsernameException
+     */
     public HashMap<String, Admin> addAdmin (String username, String password) throws InvalidUsernameException{
-        if (adminHashMap.containsKey(username) || userHashMap.containsKey(username))
+        if (adminHashMap.containsKey(username))
             throw new InvalidUsernameException();
         adminHashMap.put(username, new Admin(username, password));
         return adminHashMap;
@@ -82,5 +86,28 @@ public class AdminManager{
         else {
             return false;
         }
+    }
+
+    /**
+     * verifies login is correct
+     * @param username username that admin logs in with
+     * @param password password that admin logs in with
+     * @return
+     * @throws InvalidLoginException
+     */
+    public boolean login(String username, String password) throws InvalidLoginException {
+        if (adminHashMap.get(username).equals(password)){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * returns the admin with the specified username
+     * @param username of the particular admin
+     * @return the Admin with the specified username
+     */
+    public Admin getAdmin(String username){
+        return adminHashMap.get(username);
     }
 }

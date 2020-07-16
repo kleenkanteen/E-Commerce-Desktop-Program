@@ -1,19 +1,15 @@
-package A_main;
-
-import C_controllers.AdminSystem;
-import C_controllers.UserMenu;
+package C_controllers;
+import B_gateways.*;
 import D_presenters.MainMenuPresenter;
 import E_use_cases.*;
-import F_entities.*;
+import F_entities.User;
 import G_exceptions.InvalidLoginException;
-import B_gateways.*;
 import G_exceptions.InvalidUsernameException;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 public class MainMenu {
@@ -115,10 +111,9 @@ public class MainMenu {
                         }
                     } else {
                         // user selected "3" (admin sign-in)
-                        AdminLogin thing = new AdminLogin(username, pass, ag.getAdminMap());
-                        if (thing.login().equals(username) && !(username.equals("System Messages"))) {
-                            AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages(), ug.getMapOfUsers());
-                            AdminSystem successful = new AdminSystem(thing.getAdminObject(), r, attempt, y2);
+                        AdminManager r = new AdminManager(ag.getAdminMap(), amg.getMessages());
+                        if (r.login(username, pass)) {
+                            AdminSystem successful = new AdminSystem(r.getAdmin(username), r, attempt, y2);
                             successful.run();
                         }
                     }
@@ -137,16 +132,16 @@ public class MainMenu {
                 mm.takenUsername();
             }
         } while(!done);
-            try {
-                ug.writeToFile(serializedUsers, ug.getMapOfUsers());
-                gig.writeToFile(gig.getgI());
-                utg.writeToFile(serializedUserTrades, utg.getUserTrades());
-                gwl.writeToFile(serializedGlobalWishlist, gwl.getWishlistItems());
-                amg.writeToFile(serializedAdminMessages, amg.getMessages());
-                ag.saveToFile(ag.getAdminMap());
-            }catch(IOException e){
-                mm.savingError();
-            }
+        try {
+            ug.writeToFile(serializedUsers, ug.getMapOfUsers());
+            gig.writeToFile(gig.getgI());
+            utg.writeToFile(serializedUserTrades, utg.getUserTrades());
+            gwl.writeToFile(serializedGlobalWishlist, gwl.getWishlistItems());
+            amg.writeToFile(serializedAdminMessages, amg.getMessages());
+            ag.saveToFile(ag.getAdminMap());
+        }catch(IOException e){
+            mm.savingError();
+        }
     }
 
 

@@ -1,4 +1,4 @@
-package A_main;
+import C_controllers.MainMenu;
 
 import java.io.IOException;
 
