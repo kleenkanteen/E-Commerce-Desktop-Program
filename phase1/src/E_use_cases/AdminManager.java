@@ -95,9 +95,10 @@ public class AdminManager{
      * @return True if username and password exist within the adminHashMap, False otherwise
      * @throws InvalidLoginException throw this is password for a given username isn't valid.
      */
-    public boolean login(String username, String password) throws InvalidLoginException {
-        if (adminHashMap.get(username).getPassword().equals(password)){
-            return true;
+    public boolean login(String username, String password) {
+        if (adminHashMap.containsKey(username)){
+            if (adminHashMap.get(username).getPassword().equals(password))
+                return true;
         }
         return false;
     }
