@@ -102,7 +102,7 @@ public class MainMenu {
                                     ug.getMapOfUsers().put(username, new User(username, pass));
                                     mm.successfulAccountCreation();
                                 }
-                                mm.takenUsername();
+                                else mm.takenUsername();
                             }
                         }
                     } else {
