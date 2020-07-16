@@ -42,7 +42,7 @@ public class Item implements Serializable {
     public String toString() {
         return "Item Name: " + getName() + "\n"
                 + "Owner Name: " + getOwnerName() + "\n"
-                + "Description " + getDescription();
+                + "Description: " + getDescription();
     }
 
 
