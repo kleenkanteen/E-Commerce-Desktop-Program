@@ -35,29 +35,25 @@ public class MainMenu {
         try {
             //deserialize admins
             ag = new AdminAccountGateways(serializedAdmins);
-            //ag.saveToFile(new HashMap<>());
+
             if(ag.getAdminMap().isEmpty()){
                 ag.beginAdminMap();
             }
             //deserialize users
             ug = new UserGateway(serializedUsers);
-            //ug.writeToFile(serializedUsers, new HashMap<>());
 
             //deserialize global inventory
             gig = new GlobalInventoryGateways(serializedGlobalInventory);
-            //gig.writeToFile(new GlobalInventory());
-
 
             //deserialize all user trades
             utg = new UserTradesGateway(serializedUserTrades);
-            //utg.writeToFile(serializedUserTrades, new HashMap<>());
 
             //deserialize GlobalWishlistGateway
             gwl = new GlobalWishlistGateway(serializedGlobalWishlist);
-            //gwl.writeToFile(serializedGlobalWishlist, new GlobalWishlist());
+
             //deserialize AdminMessageGateway
             amg = new AdminMessageGateway(serializedAdminMessages);
-            //amg.writeToFile(serializedAdminMessages, new ArrayList<>());
+
         }catch(IOException | ClassNotFoundException ex){
             mm.readError();
             mm.printExit();
