@@ -79,7 +79,9 @@ public class AdminAccountSystem {
                         aap.failToCreateNewAdmin();
                     }
                     else {
-                    try { am.addAdmin(newUsername, newPassword);
+                    try {
+                        am.addAdmin(newUsername, newPassword);
+                        aap.successadmin();
                   }
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();

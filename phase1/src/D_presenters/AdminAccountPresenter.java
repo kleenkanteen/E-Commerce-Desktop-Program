@@ -78,6 +78,14 @@ public class AdminAccountPresenter {
     }
 
     /**
+     * print admin account was successfully created
+     */
+    public void successadmin(){
+        System.out.println("Success, admin account created");
+
+    }
+
+    /**
      * Print to the user that an error as occurred
      */
     public void printErrorOccurred(){
