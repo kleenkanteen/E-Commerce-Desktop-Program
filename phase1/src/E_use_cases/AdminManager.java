@@ -47,14 +47,12 @@ public class AdminManager{
      * adds a particular admin to the HashMap of all admins given a username and password String input
      * @param username username of admin to be added
      * @param password password of admin to be added
-     * @return new HashMap with added admin
-     * @throws InvalidUsernameException
+     * @throws InvalidUsernameException will be thrown when the new userName has already been used in Admin or in User
      */
-    public HashMap<String, Admin> addAdmin (String username, String password) throws InvalidUsernameException{
+    public void addAdmin (String username, String password) throws InvalidUsernameException{
         if (adminHashMap.containsKey(username))
             throw new InvalidUsernameException();
         adminHashMap.put(username, new Admin(username, password));
-        return adminHashMap;
     }
 
     /** Attempts to retrieve Messages shared by all admin accounts.
