@@ -13,15 +13,15 @@ import java.util.ArrayList;
 
 
 public class AdminSystem {
-    Admin admin;
-    AdminMenu am;
+    private Admin admin;
+    private AdminMenu am;
 
 
-    AdminManager adminManager;
-    ArrayList<Message> adminMessageList;
+    private AdminManager adminManager;
+    private ArrayList<Message> adminMessageList;
 
-    UserManager um;
-    GlobalInventoryManager gim;
+    private UserManager um;
+    private GlobalInventoryManager gim;
 
     /**
      * Class constructor.
@@ -67,7 +67,7 @@ public class AdminSystem {
                         am.printMainOption();
                         break;
                     case "2":
-                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, adminMessageList, um);
+                        AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, um);
                         aas.run();
                         am.printMainOption();
                         break;

@@ -68,7 +68,7 @@ public class GlobalInventoryController {
                                 TradeController trademenu = new TradeController(UM);
                                 ArrayList<Item> items = new ArrayList<>();
                                 items.add(item);
-                                trademenu.run(items, user);
+                                trademenu.run(items, user, TM.getTradeHistory(user).size());
                             }
                         } else { // if user cant trade, only allow to add to wishlist
                             prompts.addToWishlist(item);
