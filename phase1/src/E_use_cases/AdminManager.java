@@ -49,9 +49,11 @@ public class AdminManager{
      *
      */
     public void addAdmin (String username, String password) throws InvalidUsernameException{
-        if (adminHashMap.containsKey(username))
-            throw new InvalidUsernameException();
+        if (adminHashMap.containsKey(username)){
+            throw new InvalidUsernameException();}
+
         adminHashMap.put(username, new Admin(username, password));
+
     }
 
     /** Attempts to retrieve Messages shared by all admin accounts.

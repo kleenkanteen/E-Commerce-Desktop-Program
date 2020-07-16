@@ -1,4 +1,5 @@
 package C_controllers;
+import E_use_cases.UserManager;
 import F_entities.Admin;
 import F_entities.Message;
 import G_exceptions.InvalidUsernameException;
@@ -16,8 +17,10 @@ public class AdminAccountSystem {
 
     AdminAccountPresenter aap;
     ArrayList<Message> adminMessage;
+    UserManager um;
 
     AdminManager am;
+
 
     /**
      * Class constructor.
@@ -29,11 +32,13 @@ public class AdminAccountSystem {
 
 
     AdminAccountSystem(Admin admin, AdminManager am,
-                       ArrayList<Message> adminMessage){
+                       ArrayList<Message> adminMessage, UserManager um){
         this.admin = admin;
         aap = new AdminAccountPresenter(admin);
         this.am = am;
         this.adminMessage = adminMessage;
+        this.um = um;
+
 
 
     }
@@ -69,12 +74,16 @@ public class AdminAccountSystem {
                     String newUsername = br.readLine();
                     aap.newAdminPassword();
                     String newPassword = br.readLine();
+                    if(um.isValidUser(newUsername)){
+                        aap.failToCreateNewAdmin();
+                    }
+                    else {
                     try { am.addAdmin(newUsername, newPassword);
                   }
                     catch (InvalidUsernameException e) {
                         aap.failToCreateNewAdmin();
                     }
-                    aap.printMainMenu();
+                    aap.printMainMenu();}
 
                 }
             } catch (IOException e) {
