@@ -2,7 +2,8 @@ Welcome to use Group 0147's Trade system
 
 To view the java docs open the index.html under javadoc
 
-You need to load the program from group_0147 and run the program from the Main class. The initial files are empty.
+You need to load the program from group_0147 and run the program from the Main class. You might
+have to create your own out folder. The initial files are empty.
 After you do so you will see a menu.
 
 There are no user account right now. You are able to first create one ([2] User Account Creation) and you will be
