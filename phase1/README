@@ -46,3 +46,5 @@ Notes:
  1. There are commented methods that are for the purpose of extensibility
  2. An admin cannot trade
  3. The personal and global wishlist/inventory are created for extensibility
+ 4. There is a PDF with the UML diagram (separated by layers (Entity, Use Case, Presenter, Controller, Gateway))
+ in phase1\UML\CSC207 Phase 1 UML - Group 0147.pdf
