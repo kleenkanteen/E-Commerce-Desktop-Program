@@ -20,7 +20,7 @@ public class AdminBrowsingUsersPresenter {
                 "[1] Change lending threshold, how many times user must lend before borrowing \n" +
                 "[2] Freeze/unfreeze User \n" +
                 "[3] Change limit of trades per week \n" +
-                "[4] Change limit of incomplete trades per week \n" +
+                "[4] Change limit of incomplete trades \n" +
                 "[5] Return to user selection \n" +
                 "[6] Return to admin menu");
 

@@ -4,7 +4,6 @@ import D_presenters.UserPresenter;
 import E_use_cases.*;
 import F_entities.*;
 import G_exceptions.UserFrozenException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -134,12 +133,15 @@ public class UserMenu {
             // view frequent trading partners
             else if (userInput.equals("3")) {
                 String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
-                if(Array.get(tradingPartners, 0) == null) {
+                // find a better way to do this
+                if(tradingPartners[0] == null) {
                     this.userPresenter.noTradingPartners();
-                    break;
                 }
-                for(String tradePartner: tradingPartners) {
-                    if(tradePartner != null) {
+                else {
+                    for (String tradePartner : tradingPartners) {
+                        if (tradePartner == null) {
+                            break;
+                        }
                         this.userPresenter.printUserTradePartners(tradePartner);
                     }
                 }
@@ -147,13 +149,14 @@ public class UserMenu {
             // view 3 most recent trades
             else if (userInput.equals("4")) {
                 Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
-                if(Array.get(recentTradeHistory, 0) == null) {
-                    this.userPresenter.noRecentTrades();
-                    break;
-                }
                 // find a better way to do this
-                for(Trade trade : recentTradeHistory) {
-                    if(trade != null) {
+                if(recentTradeHistory[0] == null){
+                    this.userPresenter.noRecentTrades();
+                }else{
+                    for(Trade trade : recentTradeHistory) {
+                        if(trade == null) {
+                            break;
+                        }
                         this.userPresenter.tradeToString(trade);
                     }
                 }
@@ -206,7 +209,7 @@ public class UserMenu {
             if(tooManyIncomplete || tooManyBorrowVLoan) {
                 this.userPresenter.requestFreezeOfUser();
                 FreezeRequestMessage newFreezeRequest = new FreezeRequestMessage("User " + this.currUser +
-                        " should have their account frozen.", this.currUser);
+                        " has too many incomplete trades and their account should be frozen.", this.currUser);
                 this.adminMessages.add(newFreezeRequest);
             }
         }
@@ -239,9 +242,9 @@ public class UserMenu {
                     if(userInput.equals("1")) {
                         this.tradeManager.setConfirm(this.currUser, trade, true);
                         this.userPresenter.unconfirmedTradeSystemResponse(0);
-                        // if the trade is a permanent trade...
+                        // if the trade is a permanent trade
                         if(trade instanceof PermTrade) {
-                            // ...then remove all traderA items from Global and Personal wishlists if not empty
+                            // remove all traderA items from Global and Personal wishlists if not empty
                             if(trade.getTraderAItemsToTrade().size() != 0) {
                                 for(Item item : trade.getTraderAItemsToTrade()) {
                                     // check to make sure that this item exists on the global wishlist
@@ -253,7 +256,7 @@ public class UserMenu {
                                     }
                                 }
                             }
-                            // and remove all traderB items from Global and Personal wishlists if not empty
+                            // remove all tradeB items from Global and Personal wishlists if not empty
                             if(trade.getTraderBItemsToTrade().size() != 0) {
                                 for (Item item : trade.getTraderBItemsToTrade()) {
                                     // check to make sure item exists in global wishlist
@@ -357,7 +360,6 @@ public class UserMenu {
         Scanner input = new Scanner(System.in);
         String userTradeInput = "";
         while(!userTradeInput.equals("exit")) {
-            // make sure user trades is populated
             if (userTrades.size() == 0) {
                 this.userPresenter.isEmpty("trade history");
                 break;

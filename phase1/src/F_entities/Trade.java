@@ -150,11 +150,11 @@ public abstract class Trade implements Serializable {
     public boolean isBorrowed(String traderName) {
         boolean borrowed = false;
         if (traderName.equals(traderA)) {
-            if (traderAItemstoTrade.isEmpty()) {
+            if (!traderBItemsToTrade.isEmpty()) {
                 borrowed = true;
             }
         } else if (traderName.equals(traderB)) {
-            if (traderAItemstoTrade.isEmpty()) {
+            if (!traderAItemstoTrade.isEmpty()) {
                 borrowed = true;
             }
         }
@@ -228,16 +228,16 @@ public abstract class Trade implements Serializable {
         String info = "";
         if (traderBItemsToTrade.isEmpty()){
             info =  "The Trade is generated on" + getCreationDate() + "\n" +
-                    "TraderA(Sender): " + getTraderA() +
-                    "\nTraderB(Receiver): " + getTraderB() +
-                    "\nItem: " + getTraderAItemsToTrade().get(0).getName()+
+                    "TraderA: " + getTraderA() +
+                    "\nTraderB (Borrower): " + getTraderB() +
+                    "\nItem from TraderA: " + getTraderAItemsToTrade().get(0).getName()+
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else if (traderAItemstoTrade.isEmpty()){
             info = "The Trade is generated on" + getCreationDate() + "\n" +
-                    "TraderA(Receiver): " + getTraderA() +
-                    "\nTraderB(Sender): " + getTraderB() +
-                    "\nItem: " + getTraderBItemsToTrade().get(0).getName()+
+                    "TraderA (Borrower): " + getTraderA() +
+                    "\nTraderB: " + getTraderB() +
+                    "\nItem from TraderB: " + getTraderBItemsToTrade().get(0).getName()+
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else info = "The Trade is generated on" + getCreationDate() + "\n" +
