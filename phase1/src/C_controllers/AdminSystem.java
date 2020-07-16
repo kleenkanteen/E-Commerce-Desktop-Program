@@ -80,7 +80,7 @@ public class AdminSystem {
 
 
             } catch (IOException e) {
-                System.out.println("Something went wrong");
+                am.printErrorOccurred();
             }
         }
         am.exitPresenter();

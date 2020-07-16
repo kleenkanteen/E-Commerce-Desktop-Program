@@ -89,7 +89,7 @@ public class AdminAccountSystem {
 
                 }
             } catch (IOException e) {
-                System.out.println("Something went wrong");
+                aap.printErrorOccurred();
             }
         }
         aap.exitMenu();

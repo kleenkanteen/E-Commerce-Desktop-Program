@@ -53,6 +53,7 @@ By choosing 1 (check your message inbox), you can look through messages. Note al
    user. You can choose to ignore this message or to unfreeze the user
 
 Notes:
- 1. There are commented methods that are for the purpose of extensibility
+ 1. There are commented methods that are for the purpose of extensibility and some commented line are for resetting the
+    files in main
  2. An admin cannot trade
  3. The personal and global wishlist/inventory are created for extensibility

@@ -184,7 +184,6 @@ public class UserMessageReplySystem {
                     messages.remove(m);
                     Trade trade = temp.setConfirmation(accountUsername);
                     //Add trade to both user's trade history
-                    System.out.println(trade);
                     tm.addTrade(trade);
 
                     //Removing the items from the GI and personal inventory
