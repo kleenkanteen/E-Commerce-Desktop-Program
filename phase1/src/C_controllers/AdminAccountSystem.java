@@ -13,13 +13,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AdminAccountSystem {
-    Admin admin;
+    private Admin admin;
 
-    AdminAccountPresenter aap;
-    ArrayList<Message> adminMessage;
-    UserManager um;
+    private AdminAccountPresenter aap;
 
-    AdminManager am;
+
+
+    private UserManager um;
+
+    private AdminManager am;
 
 
     /**
@@ -27,17 +29,16 @@ public class AdminAccountSystem {
      * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
      * @param admin the admin of the currently logged in.
      * @param am the AdminManager will be used to change account information
-     * @param adminMessage the ArrayList of the Message
+
      * @param um the UserManager used to check account information
      */
 
 
     AdminAccountSystem(Admin admin, AdminManager am,
-                       ArrayList<Message> adminMessage, UserManager um){
+                       UserManager um){
         this.admin = admin;
         aap = new AdminAccountPresenter(admin);
         this.am = am;
-        this.adminMessage = adminMessage;
         this.um = um;
 
 
