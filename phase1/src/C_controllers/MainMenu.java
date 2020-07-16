@@ -116,6 +116,7 @@ public class MainMenu {
                             AdminSystem successful = new AdminSystem(r.getAdmin(username), r, attempt, y2);
                             successful.run();
                         }
+                        else mm.wrongLogin();
                     }
                 } else {
                     mm.printExit();
