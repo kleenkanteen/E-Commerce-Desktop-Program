@@ -77,4 +77,11 @@ public class AdminAccountPresenter {
 
     }
 
+    /**
+     * Print to the user that an error as occurred
+     */
+    public void printErrorOccurred(){
+        System.out.println("Something went wrong");
+    }
+
 }

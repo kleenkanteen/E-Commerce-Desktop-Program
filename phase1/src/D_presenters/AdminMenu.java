@@ -42,6 +42,12 @@ public class AdminMenu {
         System.out.println("You are now looking through messages you received");
     }
 
+    /**
+     * Print to the user that an error as occurred
+     */
+    public void printErrorOccurred(){
+        System.out.println("Something went wrong");
+    }
 
 
 
