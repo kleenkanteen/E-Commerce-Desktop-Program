@@ -11,6 +11,9 @@ public class AdminBrowsingUsers {
     private UserManager users;
     private AdminBrowsingUsersPresenter browse;
 
+    /*
+    Construct an instance, takes in an usermanager object, creates a AdminBrowsingUsersPresenter.
+     */
     public AdminBrowsingUsers(UserManager system){
         this.browse = new AdminBrowsingUsersPresenter();
         this.users = system;
