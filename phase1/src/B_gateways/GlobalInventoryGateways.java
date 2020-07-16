@@ -6,9 +6,9 @@ import E_use_cases.GlobalInventoryManager;
 import java.io.*;
 
 public class GlobalInventoryGateways implements Serializable{
-    String filePath;
-    GlobalInventoryManager gIManager;
-    GlobalInventory gI;
+    private String filePath;
+    private GlobalInventoryManager gIManager;
+    private GlobalInventory gI;
 
     /**
      * Creates a new gateway that loads GlobalInventory in a .ser file\

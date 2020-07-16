@@ -6,8 +6,8 @@ import java.io.*;
 import java.util.HashMap;
 
 public class AdminAccountGateways {
-    String filePath;
-    HashMap<String, Admin> adminMap = new HashMap<>();
+    private String filePath;
+    private HashMap<String, Admin> adminMap = new HashMap<>();
 
     /**
      * create a gateways that loads a HashMap of Admin with UserName as key.
