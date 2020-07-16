@@ -18,7 +18,7 @@ public class AdminSystem {
 
 
     private AdminManager adminManager;
-    private ArrayList<Message> adminMessageList;
+
 
     private UserManager um;
     private GlobalInventoryManager gim;
@@ -42,7 +42,7 @@ public class AdminSystem {
         this.adminManager = adminManager;
         this.um = um;
         this.gim = gim;
-        adminMessageList = adminManager.getAdminMessagesArrayList();
+
 
 
     }
