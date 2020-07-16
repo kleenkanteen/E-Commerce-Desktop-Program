@@ -148,17 +148,7 @@ public abstract class Trade implements Serializable {
      * @return a boolean that determines if the trader is part of the trade and is a borrower.
      */
     public boolean isBorrowed(String traderName) {
-        boolean borrowed = false;
-        if (traderName.equals(traderA)) {
-            if (!traderBItemsToTrade.isEmpty()) {
-                borrowed = true;
-            }
-        } else if (traderName.equals(traderB)) {
-            if (!traderAItemstoTrade.isEmpty()) {
-                borrowed = true;
-            }
-        }
-        return borrowed;
+        return trader(traderName, traderBItemsToTrade, traderAItemstoTrade);
     }
 
     /**
@@ -169,6 +159,10 @@ public abstract class Trade implements Serializable {
      * @return a boolean that determines if the trader is part of the trade and is a lender.
      */
     public boolean isLent(String traderName) {
+        return trader(traderName, traderAItemstoTrade, traderBItemsToTrade);
+    }
+
+    private boolean trader(String traderName, ArrayList<Item> traderAItemstoTrade, ArrayList<Item> traderBItemsToTrade) {
         boolean lent = false;
         if (traderName.equals(traderA)) {
             if (!traderAItemstoTrade.isEmpty()) {
