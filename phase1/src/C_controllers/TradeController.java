@@ -112,7 +112,7 @@ public class TradeController {
                     this.tradeType = this.input.nextLine();
                     invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
-                    tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
+                    tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
                     this.allUsers.addUserMessage(userB, tradeRequestMessage);
                     this.tradeMenu.tradeRequestSent(userB);
                     done = true;
@@ -124,7 +124,7 @@ public class TradeController {
                     this.tradeType = this.input.nextLine();
                     invalidTradeTypeChoice();
                     itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
-                    tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place);
+                    tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
                     this.allUsers.addUserMessage(userB, tradeRequestMessage);
                     this.tradeMenu.tradeRequestSent(userB);
                     done = true;

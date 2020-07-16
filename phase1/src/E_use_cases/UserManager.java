@@ -228,14 +228,13 @@ public class UserManager {
      * @param itemID String item ID
      */
     public void removeItemFromUserInventory (String user, String itemID) {
-        ArrayList<Item> userInventory = getUserInventory(user);
+        ArrayList<Item> userInventory = new ArrayList<>(getUserInventory(user));
         int index = 0;
         for(int i = 0; i < userInventory.size(); i++) {
             if(userInventory.get(i).getItemID().equals(itemID)) {
-                index = i;
+                userInventory.remove(index);
             }
         }
-        userInventory.remove(index);
         this.allUsers.get(user).setPersonalInventory(userInventory);
     }
 
