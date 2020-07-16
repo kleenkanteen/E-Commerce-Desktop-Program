@@ -38,6 +38,7 @@ public class TradeRequest implements Serializable {
         this.userA = userA;
         this.userB = userB;
         this.itemB = itemB;
+        itemA = new ArrayList<>();
         this.perm = perm;
         this.date = date;
         this.place = place;

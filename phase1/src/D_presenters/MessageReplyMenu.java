@@ -152,4 +152,11 @@ public class MessageReplyMenu {
         System.out.println("Success");
     }
 
+    /**
+     * Tell the user the date they enter is in the past
+     */
+    public void wrongDate(){
+        System.out.println("Enter a date in the future");
+    }
+
 }

@@ -104,7 +104,10 @@ public class UserMessageReplySystem {
                                 mm.changeDatePrompt(t.getDate());
                                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                 time = LocalDateTime.parse(br.readLine(), dtf);
-                                valid = true;
+                                if(!time.isBefore(LocalDateTime.now()))  valid = true;
+                                else{
+                                    mm.wrongDate();
+                                }
                             } catch (DateTimeParseException e) {
                                 mm.wrongFormat();
                             } catch (IOException e) {
