@@ -1,59 +1,89 @@
-Welcome to use Group 0147's Trade system
+Welcome to Group 0147's Trading System.
 
-To view the java docs open the index.html under javadoc
-To view the UML diagram (separated by layers (Entity, Use Case, Presenter, Controller, Gateway)) open uml folder under
-phase 1 and open the pdf (which is the uml)
+Javadocs are available under phase1/javadoc/.
+Accessing index.html will allow you to view the javadocs for the whole program.
 
-You need to load the program from group_0147 and run the program from the Main class. You might
-have to create your own out folder. The initial files are empty.
-After you do so you will see a menu.
+The UML is available in the UML folder.
 
-There are no user account right now. You are able to first create one ([2] User Account Creation) and you will be
-informed if the username and password you entered is valid.
-Then you can login ([1] User Login).
-- If you are frozen you will be notified and you can select 6 (Send admins an unfreeze request) to ask to be unfrozen
-- By choosing 5 (Add a new item to the system) you can create a new item that after admin approval will be added
-to your inventory and the global inventory to be looked at by other users
-- By choosing 3 (Loan one of your items to another user) if your item is in the wishlist of another user you
-  are able to sent them a loan request
-- By choosing 2 (Browse through the global inventory) you are able to look at all the items that people are willing
-  to borrow. You can choose an item and make a trade request with them. A message will be sent to them awaiting their
-confirmation. You can also choose an item and just put it in your wishlist.
-- By choosing 1 (Access your account information) you are able to view all your trade history, reset your password,
-  view your three most frequent trading partners, your three most recent trades, inventory, and wishlist.
-   - You are able to remove an item from your inventory or wishlist when browsing
-   - You are able to make a trade request with an item in your wishlist when browsing
-   - You are able to see the traders and items the creation date and meet up date/s involved in the trade when looking
-     at recent trade or full trade history
-- By choosing 4 (check your message inbox), you can look through messages.
-   - If someone has sent you a trade request you can see it here. You can confirm, deny, or edit the trade request.
-     - If you and the other trader can trade and the items are for trade, you are able confirm and accept your trade.
-     - If you edit the trade request, the new trade request will be sent to the other trade to await their confirmation
-     - You will be warned if the max number of edits have been reach for both trades and the request will be deleted
-     if you ignore the warning and continue to edit
-   - You will also get other notification such as the success/rejection of the new item creation, etc.
-- After you login if you have trades that has passed the in person meet up time, you are forced to enter if the meeting
-  Occurred or not. If one person says that it has not occurred, the trade is failed.
-- After you login if you have reached the limit of incomplete trades or the lend threshold you will be informed that
-  a message is sent to the admins that might cause you to be frozen
+Should there be no .ser files under phase1/H_ser_file_infos, running class Main.java under phase1/src/
+will generate new .ser files. Should an input exception occur while reading these .ser files,
+deleting them and running Main.java once more will generate fresh and (hopefully) error free .ser files.
 
-You are able to login into an initial admin account with the username: admin and the password: admin. no space no caps
-By choosing 2 (manage admin account) you are able to change this account's password and add another admin account.
-  - The system will tell you if you entered an invalid admin username and you can create a new one
-By choosing 3 (access the information of users) you have to first enter the username of a user then you can
-freeze/unfreeze the user, change the user's threshold, limit of trades per week, limit of incomplete trades or
-re-selecting a user
- - You will be informed if you entered the username wrong
-By choosing 1 (check your message inbox), you can look through messages. Note all admins share the same messages.
- - If an user has added a new item to the system you will receive a message asking if you want to confirm or deny the
-   item creation.
- - If an user has reached the limit of incomplete trades and/or the lending threshold, you will receive message
-   asking if you want to freeze this user. You can choose to freeze or ignore this message
- - If an user has been frozen and ask to be unfrozen, you will receive a message asking if you want to unfreeze this
-   user. You can choose to ignore this message or to unfreeze the user
+Upon loading in, you will see 3 menu options, an option to login, another to create a new user account,
+and a final one to login under an administrator account. There are no users in the system at the moment;
+you will have to create a user account to access user functionality (your chosen username must be unique).
 
-Notes:
- 1. There are commented methods that are for the purpose of extensibility and some commented line are for resetting the
-    files in main
- 2. An admin cannot trade
- 3. The personal and global wishlist/inventory are created for extensibility
+An admin account already exists in the system (Username: admin, password: admin).
+Login under this account to access admin functionality.
+
+                                            ----------------------------
+User Account:
+Upon logging in as a USER, you will see a menu of options.
+Many of these options will not be available since your account is new.
+
+[1] Account Information : Opens up a submenu that allows you to access your account info
+	[1] View your trade history : allows you to view your trade history
+	[2] Set new password
+	[3] View your three most frequent trading partners : will only present what partners you do have if you
+	    have fewer than 3 trading partners
+	[4] Your three most recent trades
+	[5] Inventory : allows you to view and remove items in your personal inventory
+	[6] Wishlist : allows you to view and remove items in your personal wishlist
+	[7] Exit
+
+[2] Browse through global inventory : Allows you to access all user's items, and add items to your wishlist and
+    (if you aren't frozen or don't have more borrows than loans), will allow you to send the owner of that item a
+    trade request or trade offer.
+    Note: Upon initial user account creation, your first trade cannot be a borrow.
+
+[3] Loan one of your items to another user : this function was created to allow you to loan one of your items to
+    another user if your item is within that user's wishlist.
+    Currently will only select one item, this function may be expanded upon in Phase 2.
+
+[4] Look at your message inbox : Will let you browse through your messages. Any trade offers, updates, etc.
+    sent to your account will be viewed here.
+    You will be able to edit any trade offers through this menu, and you will be warned if you have met the maximum
+    number of trades, and if you continue to edit, the offer will be deleted.
+
+[5] Add a new item to the system : Will allow you to request an administrator to approve of your item.
+    This menu option will ask for the name and description of the item.
+
+[6] Send admins an unfreeze request : If your account is frozen by an administrator, this menu option will send the
+    administrators a request to unfreeze your account.
+
+[7] Exit.
+
+Should you confirm a meeting/transaction, and log back in after the meeting was supposed to occur,
+the system will automatically prompt you to confirm whether or not this meeting
+(as well as any other meetings that were supposed to have happened) actually occurred. If the meeting did happen,
+the items involved in the trade will be removed from their owner's accounts, and the items will no longer exist on the
+global inventory (we are assuming that after trading an item, the user would not want to automatically trade it again;
+this can, of course, be expanded upon/changed in phase 2).
+
+If you have more borrows than loans, your account is frozen, you have too many incomplete trades,
+or if you have sent too many trade offers this week, the system will automatically notify you that you are unable to
+trade, and if the requirements are met, will automatically send the admin system a request to freeze your account.
+
+                                            ----------------------------
+Admin Account:
+Upon logging in as an ADMINISTRATOR, you will see a menu of options
+
+[1] Check your message inbox : allows you to view and interact with admin system messages.
+    All admin accounts have access to these admin messages.
+    Any item approval, freeze, and unfreeze requests will be handled here.
+
+[2] Manage admin account : accesses a submenu to manage this admin account
+	[1] Change your password
+	[2] Add a new admin account : adds a new admin account to the system. Username must be unique.
+
+[3] Access the information of users : browsing functionality that allows you to directly enter a username
+    to manage that user's account.
+    Will first print information about this user before bringing up a menu to manage this user's account.
+	[1] Change lending (number of borrows v. loans) threshold
+	[2] Freeze/unfreeze a user
+	[3] Change maximum number of trades per week
+	[4] Changes the max number of incomplete trades
+	[5] Return to user selection
+	[6] Return to main menu
+
+[4] Logout
