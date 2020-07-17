@@ -85,6 +85,7 @@ public class TradeController {
      * trade different items to add to their collection of items!
      * @param itemsToTradeB takes in an arraylist of items that represent the items to trade from userB.
      * @param userA is a string that indicates the current user (userA)
+     * @param numTrades the num of trades this user has made
      */
     public void run(ArrayList<Item> itemsToTradeB, String userA, int numTrades) {
         TradeRequestMessage tradeRequestMessage;
