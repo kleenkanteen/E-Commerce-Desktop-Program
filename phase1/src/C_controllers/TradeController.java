@@ -112,15 +112,15 @@ public class TradeController {
                     this.tradeMenu.chooseOneOrTwo();
                     this.tradeType = this.input.nextLine();
                     invalidTradeTypeChoice();
-                    if (tradeType.equals("1") && numTrades == 0) {
+                    itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
+                    if(itemsToTradeA.isEmpty() && numTrades == 0){
                         tradeMenu.unavailableChoice();
-                    } else {
-                        itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
-                        tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                        this.allUsers.addUserMessage(userB, tradeRequestMessage);
-                        this.tradeMenu.tradeRequestSent(userB);
-                        done = true;
+                        return;
                     }
+                    tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
+                    this.allUsers.addUserMessage(userB, tradeRequestMessage);
+                    this.tradeMenu.tradeRequestSent(userB);
+                    done = true;
                     break;
                 // temp trade
                 case "2":
@@ -128,15 +128,15 @@ public class TradeController {
                     this.tradeMenu.chooseOneOrTwo();
                     this.tradeType = this.input.nextLine();
                     invalidTradeTypeChoice();
-                    if (tradeType.equals("1") && numTrades == 0) {
+                    itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
+                    if(itemsToTradeA.isEmpty() && numTrades == 0){
                         tradeMenu.unavailableChoice();
-                    } else {
-                        itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
-                        tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                        this.allUsers.addUserMessage(userB, tradeRequestMessage);
-                        this.tradeMenu.tradeRequestSent(userB);
-                        done = true;
+                        return;
                     }
+                    tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
+                    this.allUsers.addUserMessage(userB, tradeRequestMessage);
+                    this.tradeMenu.tradeRequestSent(userB);
+                    done = true;
                     break;
                 default:
                     this.tradeMenu.invalidInput();

@@ -91,6 +91,6 @@ public class TradeMenu {
      * Presenter for an unavailable choice.
      */
     public void unavailableChoice() {
-        System.out.println("Sorry, this selection is not available for you! :-( Try Again!");
+        System.out.println("Sorry, this selection is not available for you! :-( Make a two way trade or a lend first");
     }
 }
