@@ -10,7 +10,7 @@ public class Item implements Serializable {
     private String ownerName;
     private String place = null;
     private enum category{
-        Carbon Based Life Forms, Books, Electronics, Furniture, Games, Tools, Clothing, Other
+        CARBON BASED LIFE FORMS, BOOKS, ELECTRONIC, FURNITURE, GAMES, TOOLS, ClOTHING, OTHER
     };
 
 
@@ -28,6 +28,8 @@ public class Item implements Serializable {
 
     }
 
+    public category
+
     /**
      * setter to set the location that the owner of this item belongs to.
      * @param place the location the owner of this Item in.
@@ -36,6 +38,8 @@ public class Item implements Serializable {
     public void setPlace(String place){
         this.place = place;
     }
+
+
 
     /**
      * getter to the place of the Item
