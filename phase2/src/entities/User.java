@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class User extends Account implements Serializable{
     private List<Message> messages = new ArrayList<>();
-    private boolean frozenStatus = false;
+    private Status status = Status.UNFROZEN;
     private int tradePerWeek = 5;
     private int threshold = 1;
     private int limitOfIncompleteTrade = 5;
@@ -51,11 +51,11 @@ public class User extends Account implements Serializable{
     }
 
     /**
-     * Getter of the frozen status of this account
-     * @return the frozen status of this account
+     * Getter of the status of this class
+     * @return the status of this class
      */
-    public boolean getFrozenStatus(){
-        return frozenStatus;
+    public Status getStatus(){
+        return status;
     }
 
     /**
@@ -68,13 +68,25 @@ public class User extends Account implements Serializable{
 
 
     /**
-     * Setting the frozen status to this account
-     * @param status the new frozen status to this account
+     * Setting the user to be frozen
      */
-    public void setFrozenStatus(boolean status){
-        this.frozenStatus = status;
+    public void setFrozen(){
+        status = Status.FROZEN;
     }
 
+    /**
+     * Setting the user to be unfrozen
+     */
+    public void setUnfrozen(){
+        status = Status.UNFROZEN;
+    }
+
+    /**
+     * Setting the user to be banned
+     */
+    public void setBanned(){
+        status = Status.BANNED;
+    }
 
     /**
      * Add a message to the list of messages to this account
@@ -129,12 +141,21 @@ public class User extends Account implements Serializable{
      * @return the string representation of all information in this account
      */
     public String accountInfo(){
-        String info = "   ----- Account info for " + this.toString() + " -----";
-        info = info + "\n Current lend until borrow threshold: " + this.threshold;
-        if (this.frozenStatus){ info = info + "\n Status: Frozen"; }
-        else { info = info + "\n Status: Unfrozen"; }
-        info = info + "\n Limit for trades per week: " + this.tradePerWeek;
-        info = info + "\n Limit for incomplete trades per week: " + this.limitOfIncompleteTrade;
+        String info = String.format("   ----- Account info for %s -----", this.toString());
+        info = String.format("%s\n Current lend until borrow threshold: %d", info, this.threshold);
+        switch (status){
+            case BANNED:
+                info = String.format("%s\n Status: BANNED", info);
+                break;
+            case UNFROZEN:
+                info = String.format("%s\n Status: UNFROZEN", info);
+                break;
+            case FROZEN:
+                info = String.format("%s\n Status: FROZEN", info);
+                break;
+        }
+        info = String.format("%s\n Limit for trades per week: %d", info, this.tradePerWeek);
+        info = String.format("%s\n Limit for incomplete trades per week: %d", info, this.limitOfIncompleteTrade);
         return info;
     }
 }
