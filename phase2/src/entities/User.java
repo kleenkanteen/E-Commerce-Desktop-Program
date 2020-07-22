@@ -1,12 +1,11 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.io.Serializable;
 
 public class User extends Account implements Serializable{
-    private ArrayList<entities.Item> personalInventory = new ArrayList<>();
-    private ArrayList<entities.Item> wishlist = new ArrayList<>();
-    private ArrayList<entities.Message> messages = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
     private boolean frozenStatus = false;
     private int tradePerWeek = 5;
     private int threshold = 1;
@@ -25,22 +24,6 @@ public class User extends Account implements Serializable{
      */
     public User(String username, String password) {
         super(username, password);
-    }
-
-    /**
-     * Getter of the personal inventory of this account
-     * @return the personal inventory of this account
-     */
-    public ArrayList<entities.Item> getPersonalInventory(){
-        return personalInventory;
-    }
-
-    /**
-     * Getter of the wishlist of this account
-     * @return the wishlist of this account
-     */
-    public ArrayList<entities.Item> getWishlist(){
-        return wishlist;
     }
 
     /**
@@ -79,25 +62,10 @@ public class User extends Account implements Serializable{
      * Getter of the messages of this account
      * @return the messages of this account
      */
-    public ArrayList<entities.Message> getMessages(){
+    public List<Message> getMessages(){
         return messages;
     }
 
-    /**
-     * Setting a new personal inventory to this account
-     * @param personalInventory the new personal inventory
-     */
-    public void setPersonalInventory(ArrayList<entities.Item> personalInventory){
-        this.personalInventory = personalInventory;
-    }
-
-    /**
-     * Setting a new wishlist to this account
-     * @param wishlist the new wishlist
-     */
-    public void setWishlist(ArrayList<Item> wishlist){
-        this.wishlist = wishlist;
-    }
 
     /**
      * Setting the frozen status to this account
@@ -112,7 +80,7 @@ public class User extends Account implements Serializable{
      * Add a message to the list of messages to this account
      * @param message the new message
      */
-    public void addMessages(entities.Message message){
+    public void addMessages(Message message){
         messages.add(message);
     }
 
@@ -120,7 +88,7 @@ public class User extends Account implements Serializable{
      * Remove a message from the list of messages to this account
      * @param message the message to be removed
      */
-    public void removeMessages(entities.Message message){
+    public void removeMessages(Message message){
         messages.remove(message);
     }
 
@@ -128,7 +96,7 @@ public class User extends Account implements Serializable{
      * Setting a list of message as the list of messages to this account
      * @param messages the list of messages
      */
-    public void setMessages(ArrayList<Message> messages){
+    public void setMessages(List<Message> messages){
         this.messages = messages;
     }
 

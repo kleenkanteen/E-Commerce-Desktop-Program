@@ -2,8 +2,8 @@ package entities;
 
 import java.io.Serializable;
 
-public class NewItemMessage extends DecisionMessage implements Serializable {
-    private entities.Item newItem;
+public class NewItemRequest extends Request implements Serializable {
+    private Item newItem;
 
     /**
      * Class constructor.
@@ -11,7 +11,7 @@ public class NewItemMessage extends DecisionMessage implements Serializable {
      * @param content is the content of the message
      * @param item is the new item created and belonging to the user
      */
-    public NewItemMessage(String content, entities.Item item) {
+    public NewItemRequest(String content, Item item) {
         super(content, new String[]{"Confirm", "Deny"}, item.getOwnerName());
         this.newItem = item;
     }

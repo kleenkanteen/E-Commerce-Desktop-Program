@@ -2,22 +2,22 @@ package entities;
 
 import java.io.Serializable;
 
-public class FreezeRequestMessage extends DecisionMessage implements Serializable {
+public class UnfreezeRequest extends Request implements Serializable {
     private String username;
 
     /**
      * Class constructor.
-     * A message sent to the Admins from the system that request to freeze a User
+     * A message sent to a Admin from a User that request to unfreeze themselves
      * @param content is the content of the message
-     * @param username the user that might be frozen's username
+     * @param username is the user wanted to be unfrozen's username
      */
-    public FreezeRequestMessage(String content, String username) {
-        super(content, new String[]{"Freeze", "Ignore"});
+    public UnfreezeRequest(String content, String username) {
+        super(content, new String[]{"Unfreeze", "Ignore"}, username);
         this.username = username;
     }
 
     /**
-     * Getter for the user that might need to be frozen's username
+     * Getter for the user that wanted to be unfrozen's usename
      * @return the user's username
      */
     public String getUser(){ return username; }

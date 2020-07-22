@@ -2,7 +2,7 @@ package entities;
 
 import java.io.Serializable;
 
-public abstract class DecisionMessage extends Message implements Serializable {
+public abstract class Request extends Message implements Serializable {
     private String[] options;
 
     /**
@@ -11,7 +11,7 @@ public abstract class DecisionMessage extends Message implements Serializable {
      * @param content is the content of the message
      * @param options the options that can be made
      */
-    DecisionMessage(String content, String[] options){
+    Request(String content, String[] options){
         super(content);
         this.options = options;
     }
@@ -23,7 +23,7 @@ public abstract class DecisionMessage extends Message implements Serializable {
      * @param options the options that can be made
      * @param username is the sender's username
      */
-    DecisionMessage(String content, String[] options, String username){
+    Request(String content, String[] options, String username){
         super(content, username);
         this.options = options;
     }
