@@ -4,32 +4,33 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
-import entities.UnfreezeRequestMessage;
+import entities.*;
 import presenters.MessageReplyMenu;
-import use_cases.UserManager;
+import use_cases.*;
 
 public class AdminMessageReplySystem {
-    private use_cases.AdminManager am;
-    private use_cases.GlobalInventoryManager gi;
-    private use_cases.UserManager um;
+    private AdminManager adminManager;
+    private GlobalInventoryManager globalInventoryManager;
+    private UserManager userManager;
     private String accountUsername;
-    private MessageReplyMenu mm;
+    private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();;
 
     /**
      * Class constructor.
      * Create a new UserMessageReplySystem that controls and allows the admin to reply to system messages
      * @param accountUsername the username of the currently logged in User
-     * @param um the user manager of the system
-     * @param am the admin manager of the system
-     * @param gi the global inventory manager of the system
+     * @param userManager the user manager of the system
+     * @param adminManager the admin manager of the system
+     * @param globalInventoryManager the global inventory manager of the system
      */
-    public AdminMessageReplySystem(use_cases.AdminManager am, use_cases.GlobalInventoryManager gi, UserManager um, String accountUsername){
-        this.am = am;
-        this.gi = gi;
-        this.um = um;
+    public AdminMessageReplySystem(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
+                                   UserManager userManager, String accountUsername){
+        this.adminManager = adminManager;
+        this.globalInventoryManager = globalInventoryManager;
+        this.userManager = userManager;
         this.accountUsername = accountUsername;
-        mm = new MessageReplyMenu();
     }
 
     /**
@@ -37,50 +38,50 @@ public class AdminMessageReplySystem {
      */
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<entities.Message> messages = am.getAdminMessagesArrayList();
+        List<Message> messages = new ArrayList<>(adminManager.getAdminMessages());
         //Initial Menu
         if(messages.size() == 0){
-            mm.printNoMessages();
-            mm.printExit();
+            messageReplyMenu.printNoMessages();
+            messageReplyMenu.printExit();
             return;
         }
         try {
             String input = "";
             do{
-                mm.printMenuPrompt(messages.size());
+                messageReplyMenu.printMenuPrompt(messages.size());
                 input = br.readLine();
                 if(input.equals("2"))return;
-                else if(!input.equals("1")) mm.printInvalidInput();
+                else if(!input.equals("1")) messageReplyMenu.printInvalidInput();
             }while(!input.equals("1"));
 
             //Going through all the messages the user have
- ;          final ArrayList<entities.Message> loopingMessages =  new ArrayList<entities.Message>(messages);
-            for(entities.Message m: loopingMessages){
-                if(m instanceof entities.NewItemMessage){
-                    if(!NewItemMessageResponse((entities.NewItemMessage) m, messages, br))return;
+ ;          final List<Message> loopingMessages =  new ArrayList<>(messages);
+            for(Message m: loopingMessages){
+                if(m instanceof NewItemRequest){
+                    if(!NewItemMessageResponse((NewItemRequest) m, messages, br))return;
                 }
-                else if(m instanceof entities.FreezeRequestMessage){
-                    if(!FreezeRequestMessageResponse((entities.FreezeRequestMessage) m, messages, br))return;
+                else if(m instanceof FreezeRequest){
+                    if(!FreezeRequestMessageResponse((FreezeRequest) m, messages, br))return;
                 }
-                else if(m instanceof entities.UnfreezeRequestMessage){
-                    if(!UnfreezeRequestMessageResponse((entities.UnfreezeRequestMessage) m, messages, br))return;
+                else if(m instanceof UnfreezeRequest){
+                    if(!UnfreezeRequestMessageResponse((UnfreezeRequest) m, messages, br))return;
                 }
-                else {
-                    if (!ContentMessageResponse(m, messages, br)) return;
+                else if(m instanceof ContentMessage){
+                    if (!ContentMessageResponse((ContentMessage) m, messages, br)) return;
                 }
             }
         }catch(IOException e){
-            mm.printErrorOccurred();
+            messageReplyMenu.printErrorOccurred();
         }finally {
-            am.setAdminMessagesArrayList(messages);
-            mm.printExit();
+            adminManager.setAdminMessages(messages);
+            messageReplyMenu.printExit();
         }
     }
-    private boolean ContentMessageResponse(entities.Message m, ArrayList<entities.Message> messages,
+    private boolean ContentMessageResponse(ContentMessage m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
-            mm.printContentMessagePrompt(m);
+            messageReplyMenu.printContentMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "1":
@@ -93,17 +94,17 @@ public class AdminMessageReplySystem {
                 case "3":
                     return false;
                 default:
-                    mm.printInvalidInput();
+                    messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;
     }
-    private boolean UnfreezeRequestMessageResponse(UnfreezeRequestMessage m, ArrayList<entities.Message> messages,
+    private boolean UnfreezeRequestMessageResponse(UnfreezeRequest m, List<Message> messages,
                                                    BufferedReader br) throws IOException{
         String u = m.getUser();
         boolean done = false;
         do{
-            mm.printDecisionMessagePrompt(m);
+            messageReplyMenu.printRequestPrompt(m);
             String input = br.readLine();
             switch (input){
                 case "a":
@@ -113,33 +114,33 @@ public class AdminMessageReplySystem {
                     return false;
                 case "1":
                     //Unfreezing the user aka accepting the unfreeze request
-                    um.freezeUserAccount(u, false);
+                    userManager.unFreezeUserAccount(u);
                     messages.remove(m);
                     //Informing the other user
-                    um.createUserMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
-                    mm.success();
+                    userManager.createUserMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 case "2":
                     //Ignoring the message
                     messages.remove(m);
                     //Informing the other user
-                    um.createUserMessage(u, "Your request is rejected by the Admin "+accountUsername);
-                    mm.success();
+                    userManager.createUserMessage(u, "Your request is rejected by the Admin "+accountUsername);
+                    messageReplyMenu.success();
                     done = true;
                     break;
                  default:
-                     mm.printInvalidInput();
+                     messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;
     }
-    private boolean FreezeRequestMessageResponse(entities.FreezeRequestMessage m, ArrayList<entities.Message> messages,
+    private boolean FreezeRequestMessageResponse(FreezeRequest m, List<Message> messages,
                                                  BufferedReader br) throws IOException{
         String u = m.getUser();
         boolean done = false;
         do {
-            mm.printDecisionMessagePrompt(m);
+            messageReplyMenu.printRequestPrompt(m);
             String input = br.readLine();
             switch (input){
                 case "a":
@@ -149,32 +150,32 @@ public class AdminMessageReplySystem {
                     return false;
                 case "1":
                     //freezing the user
-                    um.freezeUserAccount(u, true);
+                    userManager.freezeUserAccount(u);
                     messages.remove(m);
                     //informing the other user
-                    um.createUserMessage(u, "Your account is frozen by the Admin "+accountUsername);
-                    mm.success();
+                    userManager.createUserMessage(u, "Your account is frozen by the Admin "+accountUsername);
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 case "2":
                     //Ignoring the request
                     messages.remove(m);
-                    mm.success();
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 default:
-                    mm.printInvalidInput();
+                    messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;
     }
 
-    private boolean NewItemMessageResponse(entities.NewItemMessage m, ArrayList<entities.Message> messages,
+    private boolean NewItemMessageResponse(NewItemRequest m, List<Message> messages,
                                            BufferedReader br) throws IOException{
-        entities.Item item = m.getNewItem();
+        Item item = m.getNewItem();
         boolean done = false;
         do {
-            mm.printDecisionMessagePrompt(m);
+            messageReplyMenu.printRequestPrompt(m);
             String input = br.readLine();
             switch (input){
                 case "a":
@@ -186,27 +187,25 @@ public class AdminMessageReplySystem {
                     //Accepting the new item
 
                     //Adding the new message to the GI
-                    gi.addItemToHashMap(item);
-                    //Adding the new message to the personal inventory
-                    um.addItemToUserInventory(item, item.getOwnerName());
+                    globalInventoryManager.addItemToHashMap(item);
                     messages.remove(m);
                     //Informing the other user
-                    um.createUserMessage(item.getOwnerName(), "Your Item: "+item+
+                    userManager.createUserMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been successfully added to the system by the Admin "+accountUsername);
-                    mm.success();
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 case "2":
                     //Denying the new item
                     messages.remove(m);
                     //Informing the other user
-                    um.createUserMessage(item.getOwnerName(), "Your Item: "+item+
+                    userManager.createUserMessage(item.getOwnerName(), "Your Item: "+item+
                             "\n has been rejected by the Admin "+accountUsername);
-                    mm.success();
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 default:
-                    mm.printInvalidInput();
+                    messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;
