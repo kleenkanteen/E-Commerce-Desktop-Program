@@ -1,19 +1,19 @@
 package use_cases;
 
-import entities.TradeRequest;
-import exceptions.InvalidUsernameException;
-
+import entities.*;
+import exceptions.*;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class UserManager {
-    private HashMap<String, entities.User> allUsers;
+    private HashMap<String, User> allUsers;
 
     /**
      * Constructs a UserManager object
      * @param allUsers the hashmap of all user objects
      */
-    public UserManager(HashMap<String, entities.User> allUsers) {
+    public UserManager(HashMap<String, User> allUsers) {
         this.allUsers = allUsers;
     }
 
@@ -26,10 +26,10 @@ public class UserManager {
      */
     public boolean login(String username, String password) {
         // check username
-        if(allUsers.containsKey(username)) {
+        if(this.allUsers.containsKey(username)) {
             // check password
             // if successful, return String username
-            return password.equals(allUsers.get(username).getPassword());
+            return password.equals(this.allUsers.get(username).getPassword());
         }
         return false;
     }
@@ -37,20 +37,20 @@ public class UserManager {
     /**
      * Attempts to add a new user to the HashMap of all users
      * All usernames are unique.
-     * Returns the HashMap if the user successfully created, Throw error if there's another user with the same username.
+     * Returns the HashMap if the user successfully created, throw an error if user already exists.
      * @param username the new username
      * @param password the string password
      * @param tradeHistory the hashmap of all user trades
      * @return true if user account successfully created, false if user already exists in system
      * @throws exceptions.InvalidUsernameException if the username already exists in the system
      */
-    public boolean createNewUser(String username, String password,
-                                 HashMap<String, ArrayList<entities.Trade>> tradeHistory) throws exceptions.InvalidUsernameException {
-        if(allUsers.containsKey(username)) {
+    public boolean createNewUser(String username, String password, HashMap<String, List<Trade>> tradeHistory)
+            throws InvalidUsernameException {
+        if(this.allUsers.containsKey(username)) {
             throw new exceptions.InvalidUsernameException();
         }
         if(!(username.length() < 3)) {
-            allUsers.put(username, new entities.User(username, password));
+            this.allUsers.put(username, new entities.User(username, password));
             tradeHistory.put(username, new ArrayList<>());
             return true;
         }
@@ -98,12 +98,12 @@ public class UserManager {
      * @param numIncomplete the num of incomplete trades this user has
      * @param numTradesMadeThisWeek the num of trade this user made this week
      * @return True if this user can trade, false if not
-     * @throws exceptions.UserFrozenException Throws if the user is already frozen
+     * @throws UserFrozenException Throws if the user is already frozen
      */
     public boolean getCanTrade(String user, int borrowedTimes, int lendTimes,
-                               int numIncomplete, int numTradesMadeThisWeek) throws exceptions.UserFrozenException {
-        if (this.allUsers.get(user).getFrozenStatus()) {
-            throw new exceptions.UserFrozenException();
+                               int numIncomplete, int numTradesMadeThisWeek) throws UserFrozenException {
+        if (this.allUsers.get(user).getIsFrozen()) {
+            throw new UserFrozenException();
         }
         // check borrows, num of incomplete trades, num of trades made this week
         return (borrowedTimes - lendTimes) < this.allUsers.get(user).getThreshold() &&
@@ -118,37 +118,23 @@ public class UserManager {
      * @param numIncomplete the number of incomplete trades
      * @param numTradesMadeThisWeek the number of trade offers made this week
      * @return true if the user can trade, false if not
-     * @throws exceptions.UserFrozenException if the user is already frozen
+     * @throws UserFrozenException if the user is already frozen
      */
     public boolean getCanTradeIgnoreBorrowsLoans(String username, int numIncomplete, int numTradesMadeThisWeek)
-            throws exceptions.UserFrozenException {
-        if (this.allUsers.get(username).getFrozenStatus()) {
-            throw new exceptions.UserFrozenException();
+            throws UserFrozenException {
+        if (this.allUsers.get(username).getIsFrozen()) {
+            throw new UserFrozenException();
         }
         return numIncomplete < this.allUsers.get(username).getLimitOfIncompleteTrade() &&
                 numTradesMadeThisWeek < this.allUsers.get(username).getTradePerWeek();
     }
 
     /**
-     * Return a user's personal inventory.
-     * @param user String username
-     * @return Arraylist of user's items
-     */
-    public ArrayList<entities.Item> getUserInventory (String user) { return this.allUsers.get(user).getPersonalInventory(); }
-
-    /**
-     * Return a user's personal wishlist.
-     * @param user String username
-     * @return the user's wishlist
-     */
-    public ArrayList<entities.Item> getUserWishlist (String user) { return this.allUsers.get(user).getWishlist(); }
-
-    /**
      * Return a certain user's messages.
      * @param username the user you want
      * @return arraylist of this user's messages
      */
-    public ArrayList<entities.Message> getUserMessages(String username) {
+    public List<Message> getUserMessages(String username) {
         return this.allUsers.get(username).getMessages();
     }
 
@@ -157,7 +143,7 @@ public class UserManager {
      * @param username the user in question
      * @param message the arrayList of messages to set
      */
-    public void setUserMessages(String username, ArrayList<entities.Message> message) {
+    public void setUserMessages(String username, List<Message> message) {
         this.allUsers.get(username).setMessages(message);
     }
 
@@ -193,7 +179,25 @@ public class UserManager {
      * @return True if frozen, false if unfrozen.
      */
     public boolean getUserFrozenStatus(String username) {
-        return this.allUsers.get(username).getFrozenStatus();
+        return this.allUsers.get(username).getIsFrozen();
+    }
+
+    /**
+     * Returns a user's unfrozen status
+     * @param username the user in question
+     * @return True if unfrozen, false if not
+     */
+    public boolean getUserUnfrozenStatus(String username) {
+        return this.allUsers.get(username).getIsUnfrozen();
+    }
+
+    /**
+     * Returns whether or not this user is banned.
+     * @param username the string username in question
+     * @return True if banned, false if not
+     */
+    public boolean getUserIsBanned(String username) {
+        return this.allUsers.get(username).getIsBanned();
     }
 
     /**
@@ -210,85 +214,7 @@ public class UserManager {
      * @param username the user to be accessed
      * @param message the message to add
      */
-    public void addUserMessage(String username, entities.Message message) { this.allUsers.get(username).addMessages(message); }
-
-    /**
-     * Removes a message from a user's account
-     * @param username the user in question
-     * @param message the message to remove
-     */
-    public void removeUserMessage(String username, entities.Message message) {
-        this.allUsers.get(username).removeMessages(message);
-    }
-
-    // USER INVENTORY AND WISHLIST
-
-    /**
-     * Removes an item from a user's personal inventory.
-     * @param user String username
-     * @param itemID String item ID
-     */
-    public void removeItemFromUserInventory (String user, String itemID) {
-        ArrayList<entities.Item> userInventory = new ArrayList<>(getUserInventory(user));
-        for(entities.Item item : userInventory) {
-            if (item.getItemID().equals(itemID)) {
-                userInventory.remove(item);
-                this.allUsers.get(user).setPersonalInventory(userInventory);
-                return;
-            }
-        }
-    }
-
-    /**
-     * Remove an item from a user's wishlist.
-     * @param user String username
-     * @param itemID String itemID
-     */
-    public void removeItemFromUserWishlist(String user, String itemID) {
-        ArrayList<entities.Item> userWishlist = new ArrayList<>(getUserWishlist(user));
-        for(entities.Item item : userWishlist) {
-            if(item.getItemID().equals(itemID)) {
-                userWishlist.remove(item);
-                this.allUsers.get(user).setWishlist(userWishlist);
-                return;
-            }
-        }
-    }
-
-    /**
-     * Removes an item from multiple user's wishlists.
-     * @param users The users to be accessed
-     * @param itemID the itemID of the item to be removed
-     */
-    public void removeFromMultipleUsersWishlists(ArrayList<String> users, String itemID) {
-        if (users.size() != 0) {
-            for (String user : users) {
-                removeItemFromUserWishlist(user, itemID);
-            }
-        }
-    }
-
-    /**
-     * Add an item to a user's inventory.
-     * @param item item to be added to inventory
-     * @param username String username
-     */
-    public void addItemToUserInventory(entities.Item item, String username) {
-        ArrayList<entities.Item> userInventory = getUserInventory(username);
-        userInventory.add(item);
-        this.allUsers.get(username).setPersonalInventory(userInventory);
-    }
-
-    /**
-     * Add an item to a user's wishlist
-     * @param username String username
-     * @param item Item object to be added
-     */
-    public void addItemToWishlist(String username, entities.Item item) {
-        ArrayList<entities.Item> userWishlist = getUserWishlist(username);
-        userWishlist.add(item);
-        this.allUsers.get(username).setWishlist(userWishlist);
-    }
+    public void addUserMessage(String username, Message message) { this.allUsers.get(username).addMessages(message); }
 
     /**
      * Allows a user to request an admin approve of a new item.
@@ -297,9 +223,9 @@ public class UserManager {
      * @param description description of this object
      * @return the NewItemMessage to be approved by an admin
      */
-    public entities.NewItemMessage createNewItem(String username, String itemName, String description) {
-        entities.Item newItem = new entities.Item(itemName, username, description);
-        return new entities.NewItemMessage("User " + username + " has created a new item, requires approval", newItem);
+    public NewItemRequest createNewItem(String username, String itemName, String description) {
+        Item newItem = new Item(itemName, username, description);
+        return new NewItemRequest("User " + username + " has created a new item, requires approval", newItem);
     }
 
     /**
@@ -308,40 +234,36 @@ public class UserManager {
      * @param content the content of the message to be added to the user's inbox
      */
     public void createUserMessage(String username, String content) {
-        addUserMessage(username, new entities.Message(content, username));
-    }
-
-    /**
-     * Create a new TradeRequestMessage object and add it to another user's inbox
-     * @param recipient the user account that will receive the TradeRequestMessage
-     * @param messageContent the content of the message
-     * @param tradeRequest the TradeRequest object
-     * @param senderUsername the user sending the trade request offer
-     */
-    public void createAndAddNewTradeRequestMessage(String recipient, String messageContent,
-                                                   entities.TradeRequest tradeRequest, String senderUsername) {
-        addUserMessage(recipient, new TradeRequest(messageContent, tradeRequest, senderUsername));
+        addUserMessage(username, new ContentMessage(content, username));
     }
 
     // ADMIN METHODS
 
     /**
      * ADMIN ONLY
-     * Allows an admin to either freeze an unfrozen user account or unfreeze a frozen user account.
-     * @param username the User object in question.
-     * @param freezeStatus what to set the user's freeze status to
+     * Sets a user account to banned
+     * @param username the user in question
      */
-    public void freezeUserAccount(String username, boolean freezeStatus) {
-        this.allUsers.get(username).setFrozenStatus(freezeStatus);
+    public void banUserAccount(String username) {
+        this.allUsers.get(username).setBanned();
     }
 
     /**
      * ADMIN ONLY
-     * Overloaded FreezeUserAccount for AdminMenu use
-     * @param username the user to freeze
+     * Sets a user account's status to frozen.
+     * @param username the user in question
      */
     public void freezeUserAccount(String username) {
-        this.allUsers.get(username).setFrozenStatus(!this.allUsers.get(username).getFrozenStatus());
+        this.allUsers.get(username).setFrozen();
+    }
+
+    /**
+     * ADMIN ONLY
+     * Sets a user account's status to unfrozen
+     * @param username the user in question
+     */
+    public void unFreezeUserAccount(String username) {
+        this.allUsers.get(username).setUnfrozen();
     }
 
     /**
@@ -363,20 +285,6 @@ public class UserManager {
      */
     public void setWeeklyTradesForOneUser(String username, int newTradesPerWeek) {
         this.allUsers.get(username).setTradePerWeek(newTradesPerWeek);
-    }
-
-    /**
-     * ADMIN ONLY
-     * Removes the selected user.
-     * Returns true if the user successfully removed, false if the user is not in the list of users.
-     * @param userName String of username
-     * @throws exceptions.InvalidUsernameException if username not in list of users (checks for typos)
-     */
-    public void removeUser(String userName) throws exceptions.InvalidUsernameException {
-        if(!this.allUsers.containsKey(userName)) {
-            throw new InvalidUsernameException();
-        }
-        this.allUsers.remove(userName);
     }
 
     /**

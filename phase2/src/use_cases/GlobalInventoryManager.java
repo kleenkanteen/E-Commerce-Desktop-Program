@@ -125,15 +125,13 @@ public class GlobalInventoryManager implements Serializable {
 //        public List<Item> searchWithItemName (String itemName){
 //            return gI.searchByItemName(itemName);
 //        }
-//
-//        /**
-//         * generate an arraylist of Item belongs to the specific owner
-//         * @param ownerName is the name of item the user want to search
-//         * @return an arraylist of Item belongs to the specific owner
-//         */
-//        public List<Item> getPersonInventory (String ownerName){
-//            return gI.searchByOwnerName(ownerName);
-//        }
+
+    /**
+     * generate an arraylist of Item belongs to the specific owner
+     * @param ownerName is the name of item the user want to search
+     * @return an arraylist of Item belongs to the specific owner
+     */
+    public ArrayList<Item> getPersonInventory (String ownerName){ return gI.searchByOwnerName(ownerName); }
 
     /**
      * returns whether the global inventory contains an item

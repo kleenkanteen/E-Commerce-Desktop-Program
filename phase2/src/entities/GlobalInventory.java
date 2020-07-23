@@ -137,7 +137,7 @@ public class GlobalInventory implements Serializable {
      */
 
     public List<Item> searchByItemName(String itemName){
-        ArrayList<Item> banana = new ArrayList<Item>();
+        ArrayList<Item> banana = new ArrayList<>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
@@ -154,8 +154,8 @@ public class GlobalInventory implements Serializable {
      * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
      */
 
-    public List<Item> searchByOwnerName(String ownerName){
-        List<Item> banana = new ArrayList<Item>();
+    public ArrayList<Item> searchByOwnerName(String ownerName){
+        ArrayList<Item> banana = new ArrayList<>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
@@ -175,7 +175,7 @@ public class GlobalInventory implements Serializable {
 
     public List<Item> filterWithPlace(String place){
 
-        List<Item> omiyage = new ArrayList<Item>();
+        List<Item> omiyage = new ArrayList<>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
@@ -195,7 +195,7 @@ public class GlobalInventory implements Serializable {
      */
 
     public List<Item> filterWithCategory(Category category){
-        List<Item> categoryStuff = new ArrayList<Item>();
+        List<Item> categoryStuff = new ArrayList<>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
