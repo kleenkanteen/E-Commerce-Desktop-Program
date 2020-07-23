@@ -9,6 +9,7 @@ public class Item implements Serializable {
     private final String name;
     private String ownerName;
     private String place = null;
+    private Category category = null;
 
 
 
@@ -26,7 +27,23 @@ public class Item implements Serializable {
 
     }
 
+    /**
+     * setter for the value of the category of the Item.
+     * @param category the Category that Item belongs to.
+     */
 
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    /**
+     * getter for the value of the category of the Item.
+     * @return the value of the category of the Item
+     */
+
+    public Category getCategory() {
+        return category;
+    }
 
     /**
      * setter to set the location that the owner of this item belongs to.
