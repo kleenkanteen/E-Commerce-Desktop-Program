@@ -28,7 +28,7 @@ public class Item implements Serializable {
 
     }
 
-    public category
+
 
     /**
      * setter to set the location that the owner of this item belongs to.
