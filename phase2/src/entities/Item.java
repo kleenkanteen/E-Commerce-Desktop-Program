@@ -9,9 +9,7 @@ public class Item implements Serializable {
     private final String name;
     private String ownerName;
     private String place = null;
-    private enum category{
-        CARBON BASED LIFE FORMS, BOOKS, ELECTRONIC, FURNITURE, GAMES, TOOLS, ClOTHING, OTHER
-    };
+
 
 
     /**
