@@ -8,7 +8,7 @@ public enum Category {
     FURNITURE,
     GAMES,
     TOOLS,
-    ClOTHING,
+    CLOTHING,
     OTHER
 
 }
