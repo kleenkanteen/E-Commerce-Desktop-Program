@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class TradeRequest extends Request implements Serializable {
 
-    private String userA; // username of user who initiate the trade request (borrower in one way trade)
-    private String userB; // username of user who gets the trade request (lander in one way trade)
-    private ArrayList<Item> itemA; // userA's items
-    private ArrayList<entities.Item> itemB;  // userB's items
+    private String userA = ""; // username of user who initiate the trade request (borrower in one way trade)
+    private String userB = ""; // username of user who gets the trade request (lander in one way trade)
+    private ArrayList<Item> itemA = new ArrayList<>(); // userA's items
+    private ArrayList<entities.Item> itemB = new ArrayList<>();  // userB's items
     private boolean perm;
     private LocalDateTime date;
-    private String place;
+    private String place = "";
     private int numberOfEditA = 3;
     private int numberOfEditB = 3;
 
@@ -25,6 +25,13 @@ public class TradeRequest extends Request implements Serializable {
     public TradeRequest(String content, String sender) {
         super(content, new String[]{"confirm", "deny", "edit"}, sender);
         this.userA  = sender;
+    }
+
+    public void setInfo(String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+        this.userB = userB;
+        this.itemA = itemA;
+        this.itemB = itemB;
+        this.perm = perm;
     }
 
     /**
