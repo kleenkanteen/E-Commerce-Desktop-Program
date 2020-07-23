@@ -79,8 +79,6 @@ public class TradeRequestManager {
      * @return the trade object that store the involved users, item and meeting date, due date and place of the meeting
      */
     public Trade setConfirmation() {
-        t.setConfirmation(true);
-
         if (t.isPerm()){
             this.trade = new PermTrade(t.getUserA(), t.getUserB(), t.getItemA() , t.getItemB(), t.getDate());
             return this.trade;

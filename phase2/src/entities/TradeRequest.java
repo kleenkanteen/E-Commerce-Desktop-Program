@@ -13,7 +13,6 @@ public class TradeRequest extends Request implements Serializable {
     private boolean perm;
     private LocalDateTime date;
     private String place;
-    private boolean confirmation = true;
     private int numberOfEditA = 3;
     private int numberOfEditB = 3;
 
@@ -159,14 +158,6 @@ public class TradeRequest extends Request implements Serializable {
      */
     public void setPerm(boolean perm) {
         this.perm = perm;
-    }
-
-    /**
-     * set the confirmation state for userA
-     * @param confirmation true if user confirm, flase if user does not confirm
-     */
-    public void setConfirmation(boolean confirmation) {
-        this.confirmation = confirmation;
     }
 
     public void addItemA (Item item){
