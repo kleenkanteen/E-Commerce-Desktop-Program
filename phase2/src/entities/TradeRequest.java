@@ -12,10 +12,9 @@ public class TradeRequest extends Request implements Serializable {
     private ArrayList<entities.Item> itemB = new ArrayList<>();  // userB's items
     private boolean perm;
     private LocalDateTime date;
-    private String place = "";
+    private String place;
     private int numberOfEditA = 3;
     private int numberOfEditB = 3;
-    private String content;
 
     /**
      * Class constructor.
@@ -180,10 +179,6 @@ public class TradeRequest extends Request implements Serializable {
 
     public void addItemB (Item item){
         itemB.add(item);
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     /**

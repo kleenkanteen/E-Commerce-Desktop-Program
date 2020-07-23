@@ -1,7 +1,8 @@
 package presenters;
 
-import entities.DecisionMessage;
+import entities.Request;
 import entities.Message;
+import entities.TradeRequest;
 
 import java.time.LocalDateTime;
 
@@ -57,7 +58,7 @@ public class MessageReplyMenu {
      * Print out a decision message and the options they have
      * @param m the message
      */
-    public void printDecisionMessagePrompt(DecisionMessage m){
+    public void printRequestPrompt(Request m){
         System.out.println("================================================================");
         System.out.println(m);
         System.out.println("Or Choose your option below:");

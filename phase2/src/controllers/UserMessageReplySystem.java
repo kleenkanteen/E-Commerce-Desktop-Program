@@ -1,9 +1,9 @@
 package controllers;
 
-import entities.TradeRequest;
+import entities.*;
 import presenters.MessageReplyMenu;
 import exceptions.UserFrozenException;
-import use_cases.TradeManager;
+import use_cases.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,26 +13,26 @@ import java.time.*;
 import java.time.format.*;
 
 public class UserMessageReplySystem {
-    private use_cases.UserManager um;
-    private use_cases.GlobalInventoryManager gi;
-    private use_cases.TradeManager tm;
+    private UserManager userManager;
+    private GlobalInventoryManager globalInventoryManager;
+    private TradeManager tradeManager;
     private String accountUsername;
-    private MessageReplyMenu mm;
+    private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
 
     /**
      * Class constructor.
      * Create a new UserMessageReplySystem that controls and allows the user to reply to their messages
      * @param accountUsername the username of the currently logged in User
-     * @param um the user manager of the system
-     * @param tm the trade manager of the system
-     * @param gi the global inventory manager of the system
+     * @param userManager the user manager of the system
+     * @param tradeManager the trade manager of the system
+     * @param globalInventoryManager the global inventory manager of the system
      */
-    public UserMessageReplySystem(use_cases.UserManager um, use_cases.GlobalInventoryManager gi, TradeManager tm, String accountUsername){
-        this.um = um;
-        this.gi = gi;
-        this.tm = tm;
+    public UserMessageReplySystem(UserManager userManager, GlobalInventoryManager globalInventoryManager,
+                                  TradeManager tradeManager, String accountUsername){
+        this.userManager = userManager;
+        this.globalInventoryManager = globalInventoryManager;
+        this.tradeManager = tradeManager;
         this.accountUsername = accountUsername;
-        mm = new MessageReplyMenu();
     }
 
     /**
@@ -40,78 +40,78 @@ public class UserMessageReplySystem {
      */
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<entities.Message> messages = um.getUserMessages(accountUsername);
+        ArrayList<Message> messages = new ArrayList<>(userManager.getUserMessages(accountUsername));
 
         //Initial Menu
         if(messages.size() == 0){
-            mm.printNoMessages();
-            mm.printExit();
+            messageReplyMenu.printNoMessages();
+            messageReplyMenu.printExit();
             return;
         }
         try {
             String input = "";
             do {
-                mm.printMenuPrompt(messages.size());
+                messageReplyMenu.printMenuPrompt(messages.size());
                 input = br.readLine();
                 if(input.equals("2"))return;
-                else if(!input.equals("1")) mm.printInvalidInput();
+                else if(!input.equals("1")) messageReplyMenu.printInvalidInput();
             }while(!input.equals("1"));
 
             //Going through all the messages the user have
-            final ArrayList<entities.Message> loopingMessages =  new ArrayList<entities.Message>(messages);
+            final List<Message> loopingMessages =  new ArrayList<>(messages);
             for(entities.Message m: loopingMessages){
                 if(m instanceof TradeRequest){
                     if(!TradeRequestMessageResponse((TradeRequest) m, messages, br))return;
                 }
-                else {
-                    if (!ContentMessageResponse(m, messages, br)) return;
+                else if (m instanceof ContentMessage){
+                    if (!ContentMessageResponse((ContentMessage) m, messages, br)) return;
                 }
             }
         }catch(IOException e){
-            mm.printInvalidInput();
+            messageReplyMenu.printInvalidInput();
         }finally {
             //Exiting the user from the menu do to an error or that the user has exited
-            um.setUserMessages(accountUsername, messages);
-            mm.printExit();
+            userManager.setUserMessages(accountUsername, messages);
+            messageReplyMenu.printExit();
         }
     }
 
     //Allow the user to edit a trade request
     private void TradeRequestMessageEdit(TradeRequest m, BufferedReader br){
-        entities.TradeRequest t = m.getTradeContent();
         String username = m.getSender();
-        use_cases.TradeRequestManager tempTRM = new use_cases.TradeRequestManager(t);
+        TradeRequestManager tempTradeRequestManager = new TradeRequestManager(m);
 
         //warning the user that their trade request is cancelled due to too much edits
-        if(!tempTRM.canEdit(accountUsername)&&!tempTRM.canEdit(username)){
-            mm.tradeRequestCancel();
-            um.createUserMessage(username, "Your trade request:"+t.toString()+"\n is cancelled due to too much edits");
+        if(!tempTradeRequestManager.canEdit(accountUsername)&&!tempTradeRequestManager.canEdit(username)){
+            messageReplyMenu.tradeRequestCancel();
+            userManager.createUserMessage(username, "Your trade request:"+m.toString()+
+                    "\n is cancelled due to too much edits");
         }
         //Allow the user to edit a trade request
         else{
             String input = "";
-            LocalDateTime time = t.getDate();
-            String place = t.getPlace();
+            LocalDateTime time = m.getDate();
+            String place = m.getPlace();
             try {
                 while (!input.equals("1")&&!input.equals("2")&&!input.equals("3")) {
-                    mm.printEditTradeRequestPrompt(t);
+                    messageReplyMenu.printEditTradeRequestPrompt(m);
                     input = br.readLine();
                     boolean valid = false;
                     //Editing the date
                     if(input.equals("2")||input.equals("3")){
                         do{
                             try {
-                                mm.changeDatePrompt(t.getDate());
+                                messageReplyMenu.changeDatePrompt(time);
                                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                                 time = LocalDateTime.parse(br.readLine(), dtf);
                                 if(!time.isBefore(LocalDateTime.now()))  valid = true;
                                 else{
-                                    mm.wrongDate();
+                                    messageReplyMenu.wrongDate();
                                 }
                             } catch (DateTimeParseException e) {
-                                mm.wrongFormat();
+                                messageReplyMenu.wrongFormat();
                             } catch (IOException e) {
-                                mm.printErrorOccurred();
+                                messageReplyMenu.printErrorOccurred();
                             }
                         }while (!valid);
                     }
@@ -120,36 +120,35 @@ public class UserMessageReplySystem {
                         valid = false;
                         do {
                             try {
-                                mm.changePlacePrompt(place);
+                                messageReplyMenu.changePlacePrompt(place);
                                 place = br.readLine();
                                 valid = true;
                             } catch (IOException e) {
-                                mm.printErrorOccurred();
+                                messageReplyMenu.printErrorOccurred();
                             }
                         }while (!valid);
                     }
                 }
                 //Setting the new date/place that the user edit
-                tempTRM.setDateAndPlace(accountUsername, time, place);
-                //Sent the new trade request to other trader
-                um.createAndAddNewTradeRequestMessage(username, "Your trade request has been edited",
-                        tempTRM.getTradeRequest(), accountUsername);
-                mm.success();
+                tempTradeRequestManager.setDateAndPlace(accountUsername, time, place);
+                //Sent the new trade request to other trader TODO
+                //userManager.addUserMessage(username, "Your trade request has been edited",
+                // tempTradeRequestManager.getTradeRequest(), accountUsername);
+                messageReplyMenu.success();
             }
             catch(IOException e){
-                mm.printErrorOccurred();
+                messageReplyMenu.printErrorOccurred();
             }
         }
     }
     private boolean TradeRequestMessageResponse(TradeRequest m, ArrayList<entities.Message> messages, BufferedReader br)
             throws IOException{
-        mm.printDecisionMessagePrompt(m);
-        entities.TradeRequest t = m.getTradeContent();
+        messageReplyMenu.printRequestPrompt(m);
         String username = m.getSender();
-        use_cases.TradeRequestManager temp = new use_cases.TradeRequestManager(t);
+        TradeRequestManager temp = new TradeRequestManager(m);
 
         //Warn the user if their trade request cannot be edit anymore
-        if(!temp.canEdit(accountUsername)&&!temp.canEdit(username))mm.tradeRequestWarning();
+        if(!temp.canEdit(accountUsername)&&!temp.canEdit(username))messageReplyMenu.tradeRequestWarning();
         boolean done = false;
         do {
             String input = br.readLine();
@@ -161,9 +160,9 @@ public class UserMessageReplySystem {
                     return false;
                 case "1":
                     //Check if the trade can be created
-                    if(cannotTrade(t.getUserA(),t.getItemA())||cannotTrade(t.getUserB(), t.getItemB())){
+                    if(cannotTrade(m.getUserA(),m.getItemA())||cannotTrade(m.getUserB(), m.getItemB())){
                         //Tell the user that their trade cannot be created at this time
-                        mm.printCannotTradePrompt();
+                        messageReplyMenu.printCannotTradePrompt();
                         do {
                             input = br.readLine();
                             if(input.equals("2"))done = true;
@@ -171,42 +170,40 @@ public class UserMessageReplySystem {
                                 messages.remove(m);
                                 //Tell the other trader that the trade could not be created at this time and
                                 //the trade request is deleted
-                                um.createUserMessage(username, "You or the other trader cannot create a " +
+                                userManager.createUserMessage(username, "You or the other trader cannot create a " +
                                         "new trade at this time or the items involved or not for trade at this time. " +
                                         "The other trader has chosen to delete this trade request.\n"+
-                                        "Trade Request: "+t.toString());
+                                        "Trade Request: "+m.toString());
                                 done = true;
                             }
-                            else mm.printInvalidInput();
+                            else messageReplyMenu.printInvalidInput();
                         }while(!done);
                         return true;
                     }
                     //Confirming the trade
                     messages.remove(m);
-                    entities.Trade trade = temp.setConfirmation(accountUsername);
+                    entities.Trade trade = temp.setConfirmation();
                     //Add trade to both user's trade history
-                    tm.addTrade(trade);
+                    tradeManager.addTrade(trade);
 
                     //Removing the items from the GI and personal inventory
                     ArrayList<entities.Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
                     for(entities.Item i:list) {
-                        um.removeItemFromUserInventory(trade.getTraderA(), i.getItemID());
-                        gi.removeItem(i.getItemID());
+                        globalInventoryManager.removeItem(i.getItemID());
                     }
                     list = new ArrayList<>(trade.getTraderBItemsToTrade());
                     for(entities.Item i:list) {
-                        um.removeItemFromUserInventory(trade.getTraderB(), i.getItemID());
-                        gi.removeItem(i.getItemID());
+                        globalInventoryManager.removeItem(i.getItemID());
                     }
-                    mm.success();
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 case "2":
                     //Removing and informing the other trade that the request is rejected
                     messages.remove(m);
-                    um.createUserMessage(username, "Your trade request:"+t.toString()+"\n is rejected by "+
+                    userManager.createUserMessage(username, "Your trade request:"+m.toString()+"\n is rejected by "+
                             accountUsername);
-                    mm.success();
+                    messageReplyMenu.success();
                     done = true;
                     break;
                 case "3":
@@ -215,7 +212,7 @@ public class UserMessageReplySystem {
                     done = true;
                     break;
                 default:
-                    mm.printInvalidInput();
+                    messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;
@@ -224,7 +221,7 @@ public class UserMessageReplySystem {
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
-            mm.printContentMessagePrompt(m);
+            messageReplyMenu.printContentMessagePrompt(m);
             String input = br.readLine();
             switch (input){
                 case "1":
@@ -237,7 +234,7 @@ public class UserMessageReplySystem {
                 case "3":
                     return false;
                 default:
-                    mm.printInvalidInput();
+                    messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;
@@ -245,14 +242,14 @@ public class UserMessageReplySystem {
     private boolean cannotTrade(String username, ArrayList<entities.Item> userItem){
         //Checking if the user can trade
         try{
-            if(!um.getCanTrade(username, tm.getBorrowedTimes(username), tm.getLendTimes(username),
-                    tm.getIncompleteTimes(username), tm.numberOfTradesCreatedThisWeek(username))) return true;
+            if(!userManager.getCanTrade(username, tradeManager.getBorrowedTimes(username), tradeManager.getLendTimes(username),
+                    tradeManager.getIncompleteTimes(username), tradeManager.numberOfTradesCreatedThisWeek(username))) return true;
         }catch(UserFrozenException e){
             return true;
         }
         //Checking if the items in the trade is valid aka in the personal inventory and GI
         for(entities.Item i: userItem){
-            if(!gi.contains(i))return true;
+            if(!globalInventoryManager.contains(i))return true;
             boolean contain = false;
             for(entities.Item j: userItem){
                 if(i.isEqual(j))contain = true;
