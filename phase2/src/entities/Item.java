@@ -9,7 +9,7 @@ public class Item implements Serializable {
     private final String name;
     private String ownerName;
     private String place = "";
-    private Category category;
+    private Category category = Category.OTHER;
 
 
 
