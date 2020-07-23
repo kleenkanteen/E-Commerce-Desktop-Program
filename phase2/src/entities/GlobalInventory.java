@@ -166,14 +166,20 @@ public class GlobalInventory implements Serializable {
         return banana;
     }
 
+    /**
+     * filter the search results by the place that Item's owner belongs to
+     * @param  place the place that Item's owner belongs to
+     * @return the List of Item with the place that Item's owner belongs to
+     */
 
-    public List<Item> filterWithPlace(String Place){
+
+    public List<Item> filterWithPlace(String place){
 
         List<Item> omiyage = new ArrayList<Item>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
-            if (itemMap.get(f).getPlace().equals(Place)){
+            if (itemMap.get(f).getPlace().equals(place)){
                 omiyage.add(itemMap.get(f));
             }
         }
@@ -181,6 +187,12 @@ public class GlobalInventory implements Serializable {
 
 
     }
+
+    /**
+     * filter the search results by the category of Item
+     * @param category the category of Item that the user wants to search
+     * @return the List of Item with the category of Item that the user wants to search
+     */
 
     public List<Item> filterWithCategory(Category category){
         List<Item> categoryStuff = new ArrayList<Item>();
