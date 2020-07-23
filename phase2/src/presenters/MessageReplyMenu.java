@@ -2,7 +2,6 @@ package presenters;
 
 import entities.DecisionMessage;
 import entities.Message;
-import entities.TradeRequest;
 
 import java.time.LocalDateTime;
 

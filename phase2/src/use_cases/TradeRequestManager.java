@@ -1,9 +1,6 @@
 package use_cases;
 
-import entities.PermTrade;
-import entities.TempTrade;
-import entities.Trade;
-import entities.TradeRequest;
+import entities.*;
 
 import java.time.LocalDateTime;
 
@@ -34,14 +31,10 @@ public class TradeRequestManager {
         if (user.equals(t.getUserA()) && canEditA){
             t.setDate(date);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
-            t.setConfirmationB(false);
-            t.setConfirmationA(true);
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setDate(date);
             t.setNumberOfEditB(t.getNumberOfEditB() - 1);
-            t.setConfirmationA(false);
-            t.setConfirmationB(true);
         }
 
     }
@@ -55,14 +48,10 @@ public class TradeRequestManager {
         if (user.equals(t.getUserA()) && canEditA){
             t.setPlace(place);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
-            t.setConfirmationB(false);
-            t.setConfirmationA(true);
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setPlace(place);
             t.setNumberOfEditB(t.getNumberOfEditB() - 1);
-            t.setConfirmationA(false);
-            t.setConfirmationB(true);
         }
     }
 
@@ -77,28 +66,20 @@ public class TradeRequestManager {
             t.setDate(date);
             t.setPlace(place);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
-            t.setConfirmationB(false);
-            t.setConfirmationA(true);
         }
         else if (user.equals(t.getUserB()) && canEditB){
             t.setDate(date);
             t.setPlace(place);
             t.setNumberOfEditB(t.getNumberOfEditB() - 1);
-            t.setConfirmationA(false);
-            t.setConfirmationB(true);
         }
     }
 
     /**
      * set the user's confirmation state in the traderequest obejct.
-     * @param user the user who is confirming
      * @return the trade object that store the involved users, item and meeting date, due date and place of the meeting
      */
-    public Trade setConfirmation(String user) {
-        if (user.equals(t.getUserA())){
-            t.setConfirmationA(true);
-        }
-        else t.setConfirmationB(true);
+    public Trade setConfirmation() {
+        t.setConfirmation(true);
 
         if (t.isPerm()){
             this.trade = new PermTrade(t.getUserA(), t.getUserB(), t.getItemA() , t.getItemB(), t.getDate());
