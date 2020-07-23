@@ -1,6 +1,6 @@
 package use_cases;
 
-import entities.TradeRequestMessage;
+import entities.TradeRequest;
 import exceptions.InvalidUsernameException;
 
 import java.util.ArrayList;
@@ -320,7 +320,7 @@ public class UserManager {
      */
     public void createAndAddNewTradeRequestMessage(String recipient, String messageContent,
                                                    entities.TradeRequest tradeRequest, String senderUsername) {
-        addUserMessage(recipient, new TradeRequestMessage(messageContent, tradeRequest, senderUsername));
+        addUserMessage(recipient, new TradeRequest(messageContent, tradeRequest, senderUsername));
     }
 
     // ADMIN METHODS
