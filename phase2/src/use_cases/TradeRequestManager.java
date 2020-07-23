@@ -25,11 +25,12 @@ public class TradeRequestManager {
         this.t = new TradeRequest(content, sender);
     }
 
-    public void setInfo (String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+    public TradeRequest setInfo (String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
         t.setUserB(userB);
         t.setItemA(itemA);
         t.setItemB(itemB);
         t.setPerm(perm);
+        return t;
     }
 
     /**
@@ -38,18 +39,20 @@ public class TradeRequestManager {
      * @param date new date of the meeting
      * @param place new place of the meeting
      */
-    public void setDateAndPlace(String user, LocalDateTime date, String place){
-        if (user.equals(t.getUserA()) && canEdit(user)){
+    public TradeRequest setDateAndPlace(String user, LocalDateTime date, String place){
+        if (user.equals(t.getUserA())){
             t.setDate(date);
             t.setPlace(place);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
             t.setContent("Your trade request has been edited");
+            return t;
         }
-        else if (user.equals(t.getUserB()) && canEdit(user)){
+        else{
             t.setDate(date);
             t.setPlace(place);
             t.setNumberOfEditB(t.getNumberOfEditB() - 1);
             t.setContent("Your trade request has been edited");
+            return t;
         }
     }
 
