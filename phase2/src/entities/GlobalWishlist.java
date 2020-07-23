@@ -3,6 +3,8 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class GlobalWishlist implements Serializable {
     private HashMap<String, ArrayList<String>> wishMap;
@@ -11,7 +13,7 @@ public class GlobalWishlist implements Serializable {
     * Constructor just creates a new empty hashmap.
     */
     public GlobalWishlist(){
-        wishMap = new HashMap<String, ArrayList<String>>();
+        wishMap = new HashMap<>();
     }
 
 
@@ -102,4 +104,24 @@ public class GlobalWishlist implements Serializable {
         // from https://stackoverflow.com/questions/46898/how-do-i-efficiently-iterate-over-each-entry-in-a-java-map
         return i;
     }
+
+
+    /**
+     * Return all items in the user's personal wishlist
+     * Make sure you ALWAYS call isValidUser() before calling this.
+     * @param userid id of user who's wishlist is wanted
+     * @return arraylist of their wishlist
+     */
+    public ArrayList<String> getPersonWishlist(String userid){
+        ArrayList<String> wishlist = new ArrayList<>();
+        for (Map.Entry<String, ArrayList<String>> entry : wishMap.entrySet()) {
+            String item = entry.getKey();
+            List<String> interestedusers = entry.getValue();
+            if (interestedusers.contains(userid)){
+                wishlist.add(item);
+            }
+            }
+        return wishlist;
+        }
 }
+

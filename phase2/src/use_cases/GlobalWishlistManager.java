@@ -4,6 +4,8 @@ import entities.GlobalWishlist;
 import entities.Item;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class GlobalWishlistManager implements Serializable {
 
@@ -91,5 +93,14 @@ public class GlobalWishlistManager implements Serializable {
         return interested;
     }
 
+    /**
+     * Return all items in the user's personal wishlist
+     * Make sure you ALWAYS call isValidUser() before calling this.
+     * @param userid id of user who's wishlist is wanted
+     * @return arraylist of their wishlist
+     */
+    public ArrayList<String> getPersonWishlist(String userid){
+        return gW.getPersonWishlist(userid);
+    }
 }
 
