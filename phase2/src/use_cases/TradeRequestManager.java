@@ -3,15 +3,11 @@ package use_cases;
 import entities.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class TradeRequestManager {
     private TradeRequest t;
-
-    private boolean canEditA = true;
-    private boolean canEditB = true;
-
     private Trade trade;
-
     /**
      * a constructor for TradeRequestManager to edit the traderequet object
      * @param t the traderequest that is been edit
@@ -20,39 +16,20 @@ public class TradeRequestManager {
         this.t = t;
     }
 
-    //user can set data, place and confirm
-
     /**
-     * change the date in the tradreqeust object
-     * @param user the user who is making the edit
-     * @param date new date of the meeting
+     * a constructor of TradeRequestManager to generate the new traderequest object
+     * @param content trade request message content
+     * @param sender userA who sends the trade request
      */
-    public void setDate(String user, LocalDateTime date) {
-        if (user.equals(t.getUserA()) && canEditA){
-            t.setDate(date);
-            t.setNumberOfEditA(t.getNumberOfEditA() - 1);
-        }
-        else if (user.equals(t.getUserB()) && canEditB){
-            t.setDate(date);
-            t.setNumberOfEditB(t.getNumberOfEditB() - 1);
-        }
-
+    public TradeRequestManager(String content, String sender){
+        this.t = new TradeRequest(content, sender);
     }
 
-    /**
-     * change the place in the traderequest object
-     * @param user the user who is making the edit
-     * @param place new place of the meeting
-     */
-    public void setPlace(String user, String place) {
-        if (user.equals(t.getUserA()) && canEditA){
-            t.setPlace(place);
-            t.setNumberOfEditA(t.getNumberOfEditA() - 1);
-        }
-        else if (user.equals(t.getUserB()) && canEditB){
-            t.setPlace(place);
-            t.setNumberOfEditB(t.getNumberOfEditB() - 1);
-        }
+    public void setInfo (String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+        t.setUserB(userB);
+        t.setItemA(itemA);
+        t.setItemB(itemB);
+        t.setPerm(perm);
     }
 
     /**
@@ -62,15 +39,17 @@ public class TradeRequestManager {
      * @param place new place of the meeting
      */
     public void setDateAndPlace(String user, LocalDateTime date, String place){
-        if (user.equals(t.getUserA()) && canEditA){
+        if (user.equals(t.getUserA()) && canEdit(user)){
             t.setDate(date);
             t.setPlace(place);
             t.setNumberOfEditA(t.getNumberOfEditA() - 1);
+            t.setContent("Your trade request has been edited");
         }
-        else if (user.equals(t.getUserB()) && canEditB){
+        else if (user.equals(t.getUserB()) && canEdit(user)){
             t.setDate(date);
             t.setPlace(place);
             t.setNumberOfEditB(t.getNumberOfEditB() - 1);
+            t.setContent("Your trade request has been edited");
         }
     }
 
@@ -103,14 +82,12 @@ public class TradeRequestManager {
      * @return true if user can edit, false if user can not edit
      */
     public boolean canEdit (String user){
-        if (user.equals(t.getUserA()) && this.t.getNumberOfEditA() ==0){
-            canEditA = false;
-            return false;
+        if (user.equals(t.getUserA())){
+            return t.getNumberOfEditA() > 0;
         }
-        else if (user.equals(t.getUserB()) && this.t.getNumberOfEditB()==0){
-            canEditB = false;
-            return false;
-        } else return true;
+         else {
+            return t.getNumberOfEditB() > 0;
+        }
     }
 
     /**

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class TradeRequest extends Request implements Serializable {
 
-    private String userA = ""; // username of user who initiate the trade request (borrower in one way trade)
-    private String userB = ""; // username of user who gets the trade request (lander in one way trade)
+    private String userA; // username of user who initiate the trade request (borrower in one way trade)
+    private String userB; // username of user who gets the trade request (lander in one way trade)
     private ArrayList<Item> itemA = new ArrayList<>(); // userA's items
     private ArrayList<entities.Item> itemB = new ArrayList<>();  // userB's items
     private boolean perm;
@@ -15,6 +15,7 @@ public class TradeRequest extends Request implements Serializable {
     private String place = "";
     private int numberOfEditA = 3;
     private int numberOfEditB = 3;
+    private String content;
 
     /**
      * Class constructor.
@@ -25,13 +26,6 @@ public class TradeRequest extends Request implements Serializable {
     public TradeRequest(String content, String sender) {
         super(content, new String[]{"confirm", "deny", "edit"}, sender);
         this.userA  = sender;
-    }
-
-    public void setInfo(String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
-        this.userB = userB;
-        this.itemA = itemA;
-        this.itemB = itemB;
-        this.perm = perm;
     }
 
     /**
@@ -150,6 +144,18 @@ public class TradeRequest extends Request implements Serializable {
         }
     }
 
+    public void setUserA(String userA) {
+        this.userA = userA;
+    }
+
+    public void setItemA(ArrayList<Item> itemA) {
+        this.itemA = itemA;
+    }
+
+    public void setItemB(ArrayList<Item> itemB) {
+        this.itemB = itemB;
+    }
+
     /**
      * set the userB involved in this trade request
      * @param userB a user
@@ -161,7 +167,8 @@ public class TradeRequest extends Request implements Serializable {
     /**
      * set to true if this trade request is a permanent trade request, false if this trade request is a
      * temporary trade request
-     * @param perm
+     * @param perm true if this trade request is a permanent trade request, false if this trade request is a
+     *      temporary trade request
      */
     public void setPerm(boolean perm) {
         this.perm = perm;
@@ -175,6 +182,10 @@ public class TradeRequest extends Request implements Serializable {
         itemB.add(item);
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     /**
      * Returns a string representation of the message
      * @return the content, decisions, and trade request of the message in a string representation
@@ -182,7 +193,7 @@ public class TradeRequest extends Request implements Serializable {
 
     @Override
     public String toString(){
-        String info = "";
+        String info;
         String itema = "";
         String itemb = "";
         for (int i = 0; i < itemB.size(); i ++){
