@@ -8,7 +8,7 @@ import java.util.*;
 public class GlobalInventory implements Serializable {
 
     private HashMap<String, entities.Item> itemMap;
-    private ArrayList<String> itemIdCollection;
+    private List<String> itemIdCollection;
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
      * Crease an ArrayList to store all the ID that has been assigned to Item.
@@ -55,7 +55,7 @@ public class GlobalInventory implements Serializable {
      */
 
 
-    public ArrayList<String> getItemIdCollection() {
+    public List<String> getItemIdCollection() {
         return itemIdCollection;
     }
 
@@ -130,41 +130,82 @@ public class GlobalInventory implements Serializable {
     }
 
 
-//    /**
-//     * method for the situation if the user wants to search a specific type of item.
-//     * @param itemName is the item name the user wants to search in GlobalInventory
-//     * @return an arraylist of Item with the Name the User searches
-//     */
-//
-//    public ArrayList<Item> searchByItemName(String itemName){
-//        ArrayList<Item> banana = new ArrayList<Item>();
-//        for (int i = 0; i < itemMap.size(); i++){
-//            Set<String> keys = itemMap.keySet();
-//            String f = new ArrayList<>(keys).get(i);
-//            if (itemMap.get(f).getName().equals(itemName)){
-//                banana.add(itemMap.get(f));
-//            }
-//        }
-//        return banana;
-//    }
+    /**
+     * method for the situation if the user wants to search a specific type of item.
+     * @param itemName is the item name the user wants to search in GlobalInventory
+     * @return an arraylist of Item with the Name the User searches
+     */
 
-//    /**
-//     * method for search engine that if the user want ot search the items that belongs to a specific person.
-//     * @param ownerName is the owner name the user wants to search in GlobalInventory
-//     * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
-//     */
-//
-//    public ArrayList<Item> searchByOwnerName(String ownerName){
-//        ArrayList<Item> banana = new ArrayList<Item>();
-//        for (int i = 0; i < itemMap.size(); i++){
-//            Set<String> keys = itemMap.keySet();
-//            String f = new ArrayList<>(keys).get(i);
-//            if (itemMap.get(f).getOwnerName().equals(ownerName)){
-//                banana.add(itemMap.get(f));
-//            }
-//        }
-//        return banana;
-//    }
+    public List<Item> searchByItemName(String itemName){
+        ArrayList<Item> banana = new ArrayList<>();
+        for (int i = 0; i < itemMap.size(); i++){
+            Set<String> keys = itemMap.keySet();
+            String f = new ArrayList<>(keys).get(i);
+            if (itemMap.get(f).getName().equals(itemName)){
+                banana.add(itemMap.get(f));
+            }
+        }
+        return banana;
+    }
+
+    /**
+     * method for search engine that if the user want ot search the items that belongs to a specific person.
+     * @param ownerName is the owner name the user wants to search in GlobalInventory
+     * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
+     */
+
+    public ArrayList<Item> searchByOwnerName(String ownerName){
+        ArrayList<Item> banana = new ArrayList<>();
+        for (int i = 0; i < itemMap.size(); i++){
+            Set<String> keys = itemMap.keySet();
+            String f = new ArrayList<>(keys).get(i);
+            if (itemMap.get(f).getOwnerName().equals(ownerName)){
+                banana.add(itemMap.get(f));
+            }
+        }
+        return banana;
+    }
+
+    /**
+     * filter the search results by the place that Item's owner belongs to
+     * @param  place the place that Item's owner belongs to
+     * @return the List of Item with the place that Item's owner belongs to
+     */
+
+
+    public List<Item> filterWithPlace(String place){
+
+        List<Item> omiyage = new ArrayList<>();
+        for (int i = 0; i < itemMap.size(); i++){
+            Set<String> keys = itemMap.keySet();
+            String f = new ArrayList<>(keys).get(i);
+            if (itemMap.get(f).getPlace().equals(place)){
+                omiyage.add(itemMap.get(f));
+            }
+        }
+        return omiyage;
+
+
+    }
+
+    /**
+     * filter the search results by the category of Item
+     * @param category the category of Item that the user wants to search
+     * @return the List of Item with the category of Item that the user wants to search
+     */
+
+    public List<Item> filterWithCategory(Category category){
+        List<Item> categoryStuff = new ArrayList<>();
+        for (int i = 0; i < itemMap.size(); i++){
+            Set<String> keys = itemMap.keySet();
+            String f = new ArrayList<>(keys).get(i);
+            if (itemMap.get(f).getCategory().equals(category)){
+                categoryStuff.add(itemMap.get(f));
+            }
+        }
+        return categoryStuff;
+
+    }
 
     /**
      * change the String representation of GlobalInventory.

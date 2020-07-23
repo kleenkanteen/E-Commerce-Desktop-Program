@@ -4,12 +4,16 @@ import entities.Item;
 import entities.GlobalInventory;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class GlobalInventoryManager implements Serializable {
 
     // gI is the GlobalInventory we want to modify.
     private GlobalInventory gI;
+
+
+
 
     /**
      * construct the Use Case class to do some changes on globalinventory.
@@ -91,7 +95,7 @@ public class GlobalInventoryManager implements Serializable {
      */
 
 
-    public ArrayList<Item> generatePage(int pageNumber) {
+    public List<Item> generatePage(int pageNumber) {
         ArrayList<Item> itemList = new ArrayList<>();
         for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < gI.getNumOfItem(); i++) {
             itemList.add(gI.getItemByIndex(i));
@@ -118,18 +122,16 @@ public class GlobalInventoryManager implements Serializable {
 //         * @return an arraylist of Item which the user want to search
 //         */
 //
-//        public ArrayList<Item> searchWithItemName (String itemName){
+//        public List<Item> searchWithItemName (String itemName){
 //            return gI.searchByItemName(itemName);
 //        }
-//
-//        /**
-//         * generate an arraylist of Item belongs to the specific owner
-//         * @param ownerName is the name of item the user want to search
-//         * @return an arraylist of Item belongs to the specific owner
-//         */
-//        public ArrayList<Item> searchWithItemOwner (String ownerName){
-//            return gI.searchByOwnerName(ownerName);
-//        }
+
+    /**
+     * generate an arraylist of Item belongs to the specific owner
+     * @param ownerName is the name of item the user want to search
+     * @return an arraylist of Item belongs to the specific owner
+     */
+    public ArrayList<Item> getPersonInventory (String ownerName){ return gI.searchByOwnerName(ownerName); }
 
     /**
      * returns whether the global inventory contains an item

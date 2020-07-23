@@ -1,22 +1,22 @@
 package controllers;
 
-import entities.Trade;
+import entities.*;
 import presenters.UserPresenter;
 import exceptions.UserFrozenException;
-import use_cases.GlobalWishlistManager;
-
+import use_cases.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
 public class UserMenu {
     private String currUser;
-    private ArrayList<entities.Message> adminMessages;
+    private List<Message> adminMessages;
     private UserPresenter userPresenter;
-    private use_cases.UserManager userManager;
-    private use_cases.GlobalInventoryManager globalInventoryManager;
-    private use_cases.GlobalWishlistManager globalWishlistManager;
-    private use_cases.TradeManager tradeManager;
+    private UserManager userManager;
+    private GlobalInventoryManager globalInventoryManager;
+    private GlobalWishlistManager globalWishlistManager;
+    private TradeManager tradeManager;
 
     /**
      * Instantiates a new UserMenu instance
@@ -27,9 +27,9 @@ public class UserMenu {
      * @param globalWishlistManager the GlobalWishlistManager object
      * @param adminMessages the AdminMessages object
      */
-    public UserMenu(String currUser, use_cases.UserManager userManager, use_cases.TradeManager tradeManager,
-                    use_cases.GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
-                    ArrayList<entities.Message> adminMessages) {
+    public UserMenu(String currUser, UserManager userManager, TradeManager tradeManager,
+                    GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
+                    List<Message> adminMessages) {
         this.currUser = currUser;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
@@ -62,7 +62,7 @@ public class UserMenu {
             // look at global inventory
             else if (userInput.equals("2")) {
                 if(!this.globalInventoryManager.hasNoItem()) {
-                    controllers.GlobalInventoryController globalInventory = new GlobalInventoryController();
+                    GlobalInventoryController globalInventory = new GlobalInventoryController();
                     globalInventory.run(this.globalInventoryManager, this.userManager, this.currUser,
                             this.tradeManager, this.globalWishlistManager);
                 }
@@ -76,7 +76,7 @@ public class UserMenu {
             }
             // messages
             else if (userInput.equals("4")) {
-                controllers.UserMessageReplySystem messageSystem = new UserMessageReplySystem(this.userManager,
+                UserMessageReplySystem messageSystem = new UserMessageReplySystem(this.userManager,
                         this.globalInventoryManager, this.tradeManager, this.currUser);
                 messageSystem.run();
             }
@@ -92,7 +92,7 @@ public class UserMenu {
             // send admin an unfreeze request message
             else if (userInput.equals("6")) {
                 if(this.userManager.getUserFrozenStatus(this.currUser)) {
-                    this.adminMessages.add(new entities.UnfreezeRequestMessage("User " +
+                    this.adminMessages.add(new UnfreezeRequest("User " +
                             this.currUser +" has requested to be unfrozen.", this.currUser));
                     this.userPresenter.unfreezeRequestSent();
                 }
@@ -149,13 +149,13 @@ public class UserMenu {
             }
             // view 3 most recent trades
             else if (userInput.equals("4")) {
-                entities.Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
+                Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
                 // find a better way to do this
                 if(recentTradeHistory[0] == null){
                     this.userPresenter.noRecentTrades();
                 }
                 else {
-                    for(entities.Trade trade : recentTradeHistory) {
+                    for(Trade trade : recentTradeHistory) {
                         if (trade == null) {
                             break;
                         }
@@ -210,7 +210,7 @@ public class UserMenu {
             // if too many incompletes or too many borrows, request Freeze of this account
             if(tooManyIncomplete || tooManyBorrowVLoan) {
                 this.userPresenter.requestFreezeOfUser();
-                entities.FreezeRequestMessage newFreezeRequest = new entities.FreezeRequestMessage("User " + this.currUser +
+                FreezeRequest newFreezeRequest = new FreezeRequest("User " + this.currUser +
                         " should have their account frozen.", this.currUser);
                 this.adminMessages.add(newFreezeRequest);
             }
@@ -225,7 +225,7 @@ public class UserMenu {
      */
     private void confirmIncompleteUserTrades() {
         Scanner input = new Scanner(System.in);
-        ArrayList<entities.Trade> incompletes = this.tradeManager.tradesToConfirm(this.currUser);
+        List<Trade> incompletes = this.tradeManager.tradesToConfirm(this.currUser);
         // check to make sure that the user has unconfirmed trades
         if(incompletes.size() != 0) {
             // instantiate unconfirmed trades
@@ -233,7 +233,7 @@ public class UserMenu {
             String userInput;
             boolean continueCheckingUnconfirmed;
             // go through all unconfirmed trades
-            for(entities.Trade trade : incompletes) {
+            for(Trade trade : incompletes) {
                 this.userPresenter.tradeToString(trade);
                 continueCheckingUnconfirmed = true;
                 // loop through user menu for this particular incomplete trade
@@ -245,27 +245,21 @@ public class UserMenu {
                         this.tradeManager.setConfirm(this.currUser, trade, true);
                         this.userPresenter.unconfirmedTradeSystemResponse(0);
                         // if the trade is a permanent trade
-                        if(trade instanceof entities.PermTrade) {
+                        if(trade instanceof PermTrade) {
                             // remove all traderA items from Global and Personal wishlists if not empty
                             if(trade.getTraderAItemsToTrade().size() != 0) {
-                                for(entities.Item item : trade.getTraderAItemsToTrade()) {
+                                for(Item item : trade.getTraderAItemsToTrade()) {
                                     // check to make sure that this item exists on the global wishlist
                                     if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
-                                        this.userManager.removeFromMultipleUsersWishlists(
-                                                this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
-                                                item.getItemID());
                                         this.globalWishlistManager.removeItem(item.getItemID());
                                     }
                                 }
                             }
                             // remove all tradeB items from Global and Personal wishlists if not empty
                             if(trade.getTraderBItemsToTrade().size() != 0) {
-                                for (entities.Item item : trade.getTraderBItemsToTrade()) {
+                                for (Item item : trade.getTraderBItemsToTrade()) {
                                     // check to make sure item exists in global wishlist
                                     if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
-                                        this.userManager.removeFromMultipleUsersWishlists(
-                                                this.globalWishlistManager.getAllInterestedUsers(item.getItemID()),
-                                                item.getItemID());
                                         this.globalWishlistManager.removeItem(item.getItemID());
                                     }
                                 }
@@ -294,14 +288,15 @@ public class UserMenu {
      */
     private void loanPersonalItemToOtherUsers() {
         // check to see if anything exists in user's personal inventory, if not
-        if(this.userManager.getUserInventory(this.currUser).size() == 0) {
+        ArrayList<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
+        if(userInventory.size() == 0) {
             this.userPresenter.emptyPersonalInventoryWhileLoaning();
         }
         // if user's personal inventory is populated
         else {
             // get an item id and the user id from the global wishlist
             ArrayList<String> itemsToLend =
-                    this.globalWishlistManager.userWhoWants(this.userManager.getUserInventory(this.currUser));
+                    this.globalWishlistManager.userWhoWants(userInventory);
             // if another user has one of this user's items on their wishlist
             if(itemsToLend.size() != 0) {
                 // check to see if user can trade, if yes loan
@@ -311,8 +306,8 @@ public class UserMenu {
                             this.tradeManager.getIncompleteTimes(this.currUser),
                             this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
                         // find the selected item from userInventory
-                        ArrayList<entities.Item> userItem = new ArrayList<>();
-                        for(entities.Item item : this.userManager.getUserInventory(this.currUser)) {
+                        ArrayList<Item> userItem = new ArrayList<>();
+                        for(Item item : userInventory) {
                             if (item.getItemID().equals(itemsToLend.get(0))) {
                                 userItem.add(item);
                                 break;
@@ -320,23 +315,23 @@ public class UserMenu {
                         }
                         // give user choice whether to continue with trade offer or return to main UserMenu
                         Scanner input = new Scanner(System.in);
-                        while(true) {
+                        boolean continueLoanInput = true;
+                        while(continueLoanInput) {
                             this.userPresenter.loanToOtherUserPrompt(userItem.get(0).getName(),
                                     userItem.get(0).getOwnerName());
                             int userLoanInput = input.nextInt();
-                            switch(userLoanInput) {
-                                // yes, continue with the trade offer
-                                case 1:
-                                    controllers.TradeController tradeController = new controllers.TradeController(this.userManager);
-                                    tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
-                                    return;
-                                // no return to main menu
-                                case 2:
-                                    this.userPresenter.returnToMainMenu();
-                                    return;
-                                // input error
-                                default:
-                                    this.userPresenter.inputError();
+                            // yes, continue with the trade offer
+                            if(userLoanInput == 1) {
+                                TradeController tradeController = new TradeController(this.userManager);
+                                tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
+                                continueLoanInput = false;
+                            }
+                            else if(userLoanInput == 2) {
+                                this.userPresenter.returnToMainMenu();
+                                continueLoanInput = false;
+                            }
+                            else {
+                                this.userPresenter.inputError();
                             }
                         }
                     }
@@ -402,7 +397,7 @@ public class UserMenu {
      * Helper...for a helper that allows a user to browse through their personal inventory.
      */
     private void browseThroughUserInventory() {
-        ArrayList<entities.Item> userInventory = this.userManager.getUserInventory(this.currUser);
+        ArrayList<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userInventoryInput = "";
@@ -419,8 +414,7 @@ public class UserMenu {
             // remove the item from the global inventory and the personal inventory
             if(userInventoryInput.equals("1")) {
                 this.globalInventoryManager.removeItem(userInventory.get(index).getItemID());
-                this.userManager.removeItemFromUserInventory(this.currUser, userInventory.get(index).getItemID());
-                userInventory = this.userManager.getUserInventory(this.currUser);
+                userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
                 index = 0;
                 this.userPresenter.itemRemoved();
             }
@@ -457,7 +451,7 @@ public class UserMenu {
      * Helper...for a helper...allows a user to browse through their personal wishlist I swear if wishlist gets deleted
      */
     private void browseThroughUserWishlist() {
-        ArrayList<entities.Item> userWishlist = this.userManager.getUserWishlist(this.currUser);
+        ArrayList<Item> userWishlist = this.userManager.getUserWishlist(this.currUser);
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userWishlistInput = "";
@@ -474,7 +468,6 @@ public class UserMenu {
             // remove the item
             if(userWishlistInput.equals("1")) {
                 this.globalWishlistManager.removeWish(userWishlist.get(index).getItemID(), this.currUser);
-                this.userManager.removeItemFromUserWishlist(this.currUser, userWishlist.get(index).getItemID());
                 userWishlist = this.userManager.getUserWishlist(this.currUser);
                 index = 0;
                 this.userPresenter.itemRemoved();
@@ -507,9 +500,9 @@ public class UserMenu {
                                     this.tradeManager.getLendTimes(this.currUser),
                                     this.tradeManager.getIncompleteTimes(this.currUser),
                                     this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
-                        ArrayList<entities.Item> traderItem = new ArrayList<>();
+                        ArrayList<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
-                        controllers.TradeController tradeController = new TradeController(this.userManager);
+                        TradeController tradeController = new TradeController(this.userManager);
                         tradeController.run(traderItem, this.currUser,
                                 this.tradeManager.getTradeHistory(this.currUser).size());
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());

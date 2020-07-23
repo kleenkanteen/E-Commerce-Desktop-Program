@@ -4,14 +4,13 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
 
-    private String itemID = null;
+    private String itemID = "";
     private final String description;
     private final String name;
     private String ownerName;
-    private String place = null;
-    private enum category{
-        CARBON BASED LIFE FORMS, BOOKS, ELECTRONIC, FURNITURE, GAMES, TOOLS, ClOTHING, OTHER
-    };
+    private String place = "";
+    private Category category = Category.OTHER;
+
 
 
     /**
@@ -28,7 +27,23 @@ public class Item implements Serializable {
 
     }
 
-    public category
+    /**
+     * setter for the value of the category of the Item.
+     * @param category the Category that Item belongs to.
+     */
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    /**
+     * getter for the value of the category of the Item.
+     * @return the value of the category of the Item
+     */
+
+    public Category getCategory() {
+        return category;
+    }
 
     /**
      * setter to set the location that the owner of this item belongs to.

@@ -1,6 +1,6 @@
 package controllers;
 
-import entities.TradeRequestMessage;
+import entities.TradeRequest;
 import presenters.MessageReplyMenu;
 import exceptions.UserFrozenException;
 import use_cases.TradeManager;
@@ -60,8 +60,8 @@ public class UserMessageReplySystem {
             //Going through all the messages the user have
             final ArrayList<entities.Message> loopingMessages =  new ArrayList<entities.Message>(messages);
             for(entities.Message m: loopingMessages){
-                if(m instanceof entities.TradeRequestMessage){
-                    if(!TradeRequestMessageResponse((entities.TradeRequestMessage) m, messages, br))return;
+                if(m instanceof TradeRequest){
+                    if(!TradeRequestMessageResponse((TradeRequest) m, messages, br))return;
                 }
                 else {
                     if (!ContentMessageResponse(m, messages, br)) return;
@@ -77,7 +77,7 @@ public class UserMessageReplySystem {
     }
 
     //Allow the user to edit a trade request
-    private void TradeRequestMessageEdit(entities.TradeRequestMessage m, BufferedReader br){
+    private void TradeRequestMessageEdit(TradeRequest m, BufferedReader br){
         entities.TradeRequest t = m.getTradeContent();
         String username = m.getSender();
         use_cases.TradeRequestManager tempTRM = new use_cases.TradeRequestManager(t);
@@ -141,7 +141,7 @@ public class UserMessageReplySystem {
             }
         }
     }
-    private boolean TradeRequestMessageResponse(TradeRequestMessage m, ArrayList<entities.Message> messages, BufferedReader br)
+    private boolean TradeRequestMessageResponse(TradeRequest m, ArrayList<entities.Message> messages, BufferedReader br)
             throws IOException{
         mm.printDecisionMessagePrompt(m);
         entities.TradeRequest t = m.getTradeContent();

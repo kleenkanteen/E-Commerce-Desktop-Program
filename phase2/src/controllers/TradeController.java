@@ -3,7 +3,6 @@ package controllers;
 import presenters.TradeMenu;
 import entities.Item;
 import entities.TradeRequest;
-import entities.TradeRequestMessage;
 import use_cases.UserManager;
 
 import java.time.LocalDateTime;
@@ -86,7 +85,7 @@ public class TradeController {
      * @param numTrades the num of trades this user has made
      */
     public void run(ArrayList<Item> itemsToTradeB, String userA, int numTrades) {
-        TradeRequestMessage tradeRequestMessage;
+        TradeRequest tradeRequestMessage;
         String userB = itemsToTradeB.get(0).getOwnerName();
 
         // get date/time
@@ -212,8 +211,8 @@ public class TradeController {
         return itemsToTradeA;
     }
 
-    private TradeRequestMessage permTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
-                                                 ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
+    private TradeRequest permTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
+                                          ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
         switch (this.tradeType) {
             // one way
             case "1":
@@ -224,11 +223,11 @@ public class TradeController {
                         itemsToTradeA, true, date, place);
         }
 
-        return new TradeRequestMessage("User " + userA + " wants to trade with you.", this.tradeRequest, userA);
+        return new TradeRequest("User " + userA + " wants to trade with you.", this.tradeRequest, userA);
     }
 
-    private TradeRequestMessage tempTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
-                                                 ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
+    private TradeRequest tempTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
+                                          ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
 
         switch (this.tradeType) {
             // one way
@@ -239,7 +238,7 @@ public class TradeController {
                 this.tradeRequest = new TradeRequest(userA, userB, itemsToTradeB,
                         itemsToTradeA, false, date, place);
         }
-        return new TradeRequestMessage("User " + userA + " wants to trade with you.", this.tradeRequest, userA);
+        return new TradeRequest("User " + userA + " wants to trade with you.", this.tradeRequest, userA);
     }
 
 }

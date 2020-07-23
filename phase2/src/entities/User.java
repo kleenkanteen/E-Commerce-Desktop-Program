@@ -51,11 +51,27 @@ public class User extends Account implements Serializable{
     }
 
     /**
-     * Getter of the status of this class
-     * @return the status of this class
+     * Getter for if the User is frozen
+     * @return whether the User is frozen
      */
-    public Status getStatus(){
-        return status;
+    public boolean getIsFrozen(){
+        return status.equals(Status.FROZEN);
+    }
+
+    /**
+     * Getter for if the User is unfrozen
+     * @return whether the User is unfrozen
+     */
+    public boolean getIsUnfrozen(){
+        return status.equals(Status.UNFROZEN);
+    }
+
+    /**
+     * Getter for if the User is banned
+     * @return whether the User is banned
+     */
+    public boolean getIsBanned(){
+        return status.equals(Status.BANNED);
     }
 
     /**

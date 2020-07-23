@@ -4,70 +4,27 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+public class TradeRequest extends Request implements Serializable {
 
-public class TradeRequest implements Serializable {
-    /**
-     * Creates a one-way trade request that sends to the lander, or creates a two-way trade request to another user
-     */
     private String userA; // username of user who initiate the trade request (borrower in one way trade)
     private String userB; // username of user who gets the trade request (lander in one way trade)
-    private ArrayList<entities.Item> itemA; // userA's items
+    private ArrayList<Item> itemA; // userA's items
     private ArrayList<entities.Item> itemB;  // userB's items
     private boolean perm;
     private LocalDateTime date;
     private String place;
-
-    private boolean confirmationA = true;
-    private boolean confirmationB = false;
     private int numberOfEditA = 3;
     private int numberOfEditB = 3;
 
-    // one way trade request
-
     /**
-     * Generate a one-way trade request
-     * @param userA the username of user who initiate the trade request (borrower in one-way trade)
-     * @param userB the user who gets the trade request (lander in one-way trade)
-     * @param itemB userB's item
-     * @param perm true if this user is requesting a perm trade, false if requesting a temp trade
-     * @param date the date of this trade request meeting date
-     * @param place the place for the meeting
+     * Class constructor.
+     * A message to a User from another user that asks them to make a decision on a trade request
+     * @param content is the content of the message
+     * @param sender is the sender's username
      */
-    public TradeRequest(String userA, String userB, ArrayList<entities.Item> itemB, boolean perm, LocalDateTime date,
-                        String place) {
-        this.userA = userA;
-        this.userB = userB;
-        this.itemB = itemB;
-        itemA = new ArrayList<>();
-        this.perm = perm;
-        this.date = date;
-        this.place = place;
-    }
-
-
-    // two way trade request
-
-    /**
-     * Generate two-way trade request
-     * @param userA the username of user who initiate the trade request (borrower in one-way trade)
-     * @param userB the user who gets the trade request (lander in one-way trade)
-     * @param itemA userA's item
-     * @param itemB userB's item
-     * @param perm true if this user is requesting a perm trade, false if requesting a temp trade
-     * @param date the date of this trade request meeting date
-     * @param place the place for the meeting
-     */
-
-
-    public TradeRequest(String userA, String userB, ArrayList<entities.Item> itemA, ArrayList<entities.Item> itemB, boolean perm,
-                        LocalDateTime date, String place) {
-        this.userA = userA;
-        this.userB = userB;
-        this.itemA = itemA;
-        this.itemB = itemB;
-        this.perm = perm;
-        this.date = date;
-        this.place = place;
+    public TradeRequest(String content, String sender) {
+        super(content, new String[]{"confirm", "deny", "edit"}, sender);
+        this.userA  = sender;
     }
 
     /**
@@ -141,14 +98,6 @@ public class TradeRequest implements Serializable {
         return numberOfEditB;
     }
 
-//    public boolean isConfirmationA() {
-//        return confirmationA;
-//    }
-//
-//    public boolean isConfirmationB() {
-//        return confirmationB;
-//    }
-
     /**
      * set the date of the meeting
      * @param date date of the meeting
@@ -164,23 +113,6 @@ public class TradeRequest implements Serializable {
     public void setPlace(String place) {
         this.place = place;
     }
-
-    /**
-     * set the confirmation state for userA
-     * @param confirmationA true if user confirm, flase if user does not confirm
-     */
-    public void setConfirmationA(boolean confirmationA) {
-        this.confirmationA = confirmationA;
-    }
-
-    /**
-     * set the confirmation state for userB
-     * @param confirmationB true if user confirm, flase if user does not confirm
-     */
-    public void setConfirmationB(boolean confirmationB) {
-        this.confirmationB = confirmationB;
-    }
-
     /**
      * set the number of edits for userA
      * @param numberOfEditA number of edit for userA
@@ -212,36 +144,71 @@ public class TradeRequest implements Serializable {
     }
 
     /**
-     * toString method for trade request
-     * @return a String represents the trade request
+     * set the userB involved in this trade request
+     * @param userB a user
      */
+    public void setUserB(String userB) {
+        this.userB = userB;
+    }
+
+    /**
+     * set to true if this trade request is a permanent trade request, false if this trade request is a
+     * temporary trade request
+     * @param perm
+     */
+    public void setPerm(boolean perm) {
+        this.perm = perm;
+    }
+
+    public void addItemA (Item item){
+        itemA.add(item);
+    }
+
+    public void addItemB (Item item){
+        itemB.add(item);
+    }
+
+    /**
+     * Returns a string representation of the message
+     * @return the content, decisions, and trade request of the message in a string representation
+     */
+
+    @Override
     public String toString(){
         String info = "";
+        String itema = "";
+        String itemb = "";
+        for (int i = 0; i < itemB.size(); i ++){
+            itema += itemA.get(i).getName() + ", ";
+        }
+        for (int i = 0; i < itemB.size(); i ++){
+            itemb += itemB.get(i).getName() + ", ";
+        }
+
         if (itemA.isEmpty()){
             info =  "TraderA (Borrower): " + getUserA() +
                     "\nTraderB: " + getUserB() +
-                    "\nItem from B: " + getItemB().get(0).getName() +
+                    "\nItem from B: " + itemb +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
         }
         else if (itemB.isEmpty()){
             info = "TraderA: " + getUserA() +
                     "\nTraderB (Borrower): " + getUserB() +
-                    "\nItem from A: " + getItemA().get(0).getName() +
+                    "\nItem from A: " +itema +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
         }
         else info = "TraderA: " + getUserA() +
                     "\nTraderB: " + getUserB() +
-                    "\nItem from A: " + getItemA().get(0).getName() +
-                    "\nItem from B: " + getItemB().get(0).getName() +
+                    "\nItem from A: " + itema +
+                    "\nItem from B: " + itemb +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
 
         if(perm) info = info + "\nTrade type: permanent trade";
         else info = info + "\nTrade type: temporary trade";
         return info;
-
-
+        //TO DO: loop over item list to get all the items
     }
 }
