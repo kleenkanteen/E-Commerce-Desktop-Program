@@ -7,7 +7,7 @@ import java.util.*;
 
 public class GlobalInventory implements Serializable {
 
-    private HashMap<String, entities.Item> itemMap;
+    private Map<String, entities.Item> itemMap;
     private List<String> itemIdCollection;
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
@@ -59,24 +59,24 @@ public class GlobalInventory implements Serializable {
         return itemIdCollection;
     }
 
-//    /**
-//     * Getter of Item in GlobalInventory with ItemID been called
-//     * @param itemID is the unique ID of each Item.
-//
-//     * @return Item with itemID been called
-//     * and return null if the itemID is not in the GlobalInventory
-//     */
-//
-//    public Object getItem(String itemID) {
-//        if (itemMap.containsKey(itemID)){
-//            return itemMap.get(itemID);
-//        }
-//        else {
-//            System.out.println("itemID not found");
-//            return null;
-//        }
-//
-//    }
+    /**
+     * Getter of Item in GlobalInventory with ItemID been called
+     * @param itemID is the unique ID of each Item.
+
+     * @return Item with itemID been called
+     * and return null if the itemID is not in the GlobalInventory
+     */
+
+    public Object getItem(String itemID) {
+        if (itemMap.containsKey(itemID)){
+            return itemMap.get(itemID);
+        }
+        else {
+            System.out.println("itemID not found");
+            return null;
+        }
+
+    }
 
     /**
      * Getter of the Item by the index with the order of key stored in itemMap
