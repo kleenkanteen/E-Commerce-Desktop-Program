@@ -7,7 +7,7 @@ import java.util.*;
 
 public class GlobalInventory implements Serializable {
 
-    private Map<String, entities.Item> itemMap;
+    private Map<String, Item> itemMap;
     private List<String> itemIdCollection;
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
