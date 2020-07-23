@@ -4,12 +4,12 @@ import java.io.Serializable;
 
 public class Item implements Serializable {
 
-    private String itemID = null;
+    private String itemID = "";
     private final String description;
     private final String name;
     private String ownerName;
-    private String place = null;
-    private Category category = null;
+    private String place = "";
+    private Category category;
 
 
 
