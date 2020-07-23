@@ -194,15 +194,16 @@ public class TradeRequest extends Request implements Serializable {
     @Override
     public String toString(){
         String info;
-        String itema = "";
-        String itemb = "";
-        for (int i = 0; i < itemB.size(); i ++){
-            itema += itemA.get(i).getName() + ", ";
+        StringBuilder itema = new StringBuilder();
+        StringBuilder itemb = new StringBuilder();
+        for (Item i : itemA){
+            String item = i + ", ";
+            itema.append(item);
         }
-        for (int i = 0; i < itemB.size(); i ++){
-            itemb += itemB.get(i).getName() + ", ";
+        for (Item i : itemB){
+            String item = i + ", ";
+            itema.append(item);
         }
-
         if (itemA.isEmpty()){
             info =  "TraderA (Borrower): " + getUserA() +
                     "\nTraderB: " + getUserB() +
