@@ -25,7 +25,8 @@ public class TradeRequestManager {
         this.t = new TradeRequest(content, sender);
     }
 
-    public TradeRequest setInfo (String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+    public TradeRequest setInfo (String userA, String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+        t.setUserA(userA)
         t.setUserB(userB);
         t.setItemA(itemA);
         t.setItemB(itemB);
