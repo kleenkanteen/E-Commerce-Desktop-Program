@@ -59,7 +59,7 @@ public class UserMessageReplySystem {
 
             //Going through all the messages the user have
             final List<Message> loopingMessages =  new ArrayList<>(messages);
-            for(entities.Message m: loopingMessages){
+            for(Message m: loopingMessages){
                 if(m instanceof TradeRequest){
                     if(!TradeRequestMessageResponse((TradeRequest) m, messages, br))return;
                 }
@@ -141,7 +141,7 @@ public class UserMessageReplySystem {
             }
         }
     }
-    private boolean TradeRequestMessageResponse(TradeRequest m, ArrayList<entities.Message> messages, BufferedReader br)
+    private boolean TradeRequestMessageResponse(TradeRequest m, ArrayList<Message> messages, BufferedReader br)
             throws IOException{
         messageReplyMenu.printRequestPrompt(m);
         String username = m.getSender();
@@ -182,17 +182,17 @@ public class UserMessageReplySystem {
                     }
                     //Confirming the trade
                     messages.remove(m);
-                    entities.Trade trade = temp.setConfirmation();
+                    Trade trade = temp.setConfirmation();
                     //Add trade to both user's trade history
                     tradeManager.addTrade(trade);
 
                     //Removing the items from the GI and personal inventory
-                    ArrayList<entities.Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
-                    for(entities.Item i:list) {
+                    List<Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
+                    for(Item i:list) {
                         globalInventoryManager.removeItem(i.getItemID());
                     }
                     list = new ArrayList<>(trade.getTraderBItemsToTrade());
-                    for(entities.Item i:list) {
+                    for(Item i:list) {
                         globalInventoryManager.removeItem(i.getItemID());
                     }
                     messageReplyMenu.success();
@@ -217,7 +217,7 @@ public class UserMessageReplySystem {
         }while(!done);
         return true;
     }
-    private boolean ContentMessageResponse(entities.Message m, ArrayList<entities.Message> messages,
+    private boolean ContentMessageResponse(Message m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
@@ -239,19 +239,21 @@ public class UserMessageReplySystem {
         }while(!done);
         return true;
     }
-    private boolean cannotTrade(String username, ArrayList<entities.Item> userItem){
+    private boolean cannotTrade(String username, List<Item> userItem){
         //Checking if the user can trade
         try{
-            if(!userManager.getCanTrade(username, tradeManager.getBorrowedTimes(username), tradeManager.getLendTimes(username),
-                    tradeManager.getIncompleteTimes(username), tradeManager.numberOfTradesCreatedThisWeek(username))) return true;
+            if(!userManager.getCanTrade(username, tradeManager.getBorrowedTimes(username),
+                    tradeManager.getLendTimes(username),
+                    tradeManager.getIncompleteTimes(username),
+                    tradeManager.numberOfTradesCreatedThisWeek(username))) return true;
         }catch(UserFrozenException e){
             return true;
         }
         //Checking if the items in the trade is valid aka in the personal inventory and GI
-        for(entities.Item i: userItem){
+        for(Item i: userItem){
             if(!globalInventoryManager.contains(i))return true;
             boolean contain = false;
-            for(entities.Item j: userItem){
+            for(Item j: userItem){
                 if(i.isEqual(j))contain = true;
             }
             if(!contain)return true;
