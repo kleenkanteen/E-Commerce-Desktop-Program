@@ -3,7 +3,7 @@ package use_cases;
 import entities.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.List;
 
 public class TradeRequestManager {
     private TradeRequest tradeRequest;
@@ -25,7 +25,7 @@ public class TradeRequestManager {
         this.tradeRequest = new TradeRequest(content, sender);
     }
 
-    public void setInfo (String userA, String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+    public void setInfo (String userA, String userB, List<Item> itemA, List<Item> itemB, boolean perm){
         tradeRequest.setUserA(userA);
         tradeRequest.setUserB(userB);
         tradeRequest.setItemA(itemA);
