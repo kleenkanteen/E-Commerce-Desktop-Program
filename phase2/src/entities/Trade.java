@@ -3,11 +3,12 @@ package entities;// Written by Thanusun
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Trade implements Serializable {
     private final LocalDateTime startDate;
-    private final ArrayList<entities.Item> traderBItemsToTrade;
-    private final ArrayList<entities.Item> traderAItemstoTrade;
+    private final List<Item> traderBItemsToTrade;
+    private final List<Item> traderAItemstoTrade;
     private final String traderA, traderB;
     private boolean failed = false;
     private int traderAConfirmTimes = 0, traderBConfirmTimes = 0;
@@ -26,7 +27,7 @@ public abstract class Trade implements Serializable {
      * @param startDate           is a LocalDateTime type that indicates the start date of a Trade.
      *                            Note: this is also used to identify the rental process if the trade is temporary.
      */
-    public Trade(String traderA, String traderB, ArrayList<entities.Item> traderAItemsToTrade, ArrayList<entities.Item> traderBItemsToTrade, LocalDateTime startDate) {
+    public Trade(String traderA, String traderB, List<Item> traderAItemsToTrade, List<Item> traderBItemsToTrade, LocalDateTime startDate) {
         this.traderA = traderA;
         this.traderB = traderB;
         this.startDate = startDate;
@@ -106,14 +107,14 @@ public abstract class Trade implements Serializable {
      * Getter for returning traderAItemsToTrade
      * @return an ArrayList that gives traderAItemsToTrade
      */
-    public ArrayList<entities.Item> getTraderAItemsToTrade() {
+    public List<Item> getTraderAItemsToTrade() {
         return traderAItemstoTrade;
     }
     /**
      * Getter for returning traderBItemsToTrade
      * @return an ArrayList that gives traderAItemsToTrade
      */
-    public ArrayList<entities.Item> getTraderBItemsToTrade() {
+    public List<Item> getTraderBItemsToTrade() {
         return traderBItemsToTrade;
     }
     /**
@@ -162,7 +163,7 @@ public abstract class Trade implements Serializable {
         return trader(traderName, traderAItemstoTrade, traderBItemsToTrade);
     }
 
-    private boolean trader(String traderName, ArrayList<entities.Item> traderAItemstoTrade, ArrayList<Item> traderBItemsToTrade) {
+    private boolean trader(String traderName, List<Item> traderAItemstoTrade, List<Item> traderBItemsToTrade) {
         boolean lent = false;
         if (traderName.equals(traderA)) {
             if (!traderAItemstoTrade.isEmpty()) {

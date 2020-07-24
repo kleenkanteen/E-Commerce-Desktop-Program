@@ -3,16 +3,17 @@ package entities;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TradeRequest extends Request implements Serializable {
 
-    private String userA; // username of user who initiate the trade request (borrower in one way trade)
-    private String userB; // username of user who gets the trade request (lander in one way trade)
-    private ArrayList<Item> itemA = new ArrayList<>(); // userA's items
-    private ArrayList<entities.Item> itemB = new ArrayList<>();  // userB's items
+    private String userA = ""; // username of user who initiate the trade request (borrower in one way trade)
+    private String userB = ""; // username of user who gets the trade request (lander in one way trade)
+    private List<Item> itemA = new ArrayList<>(); // userA's items
+    private List<Item> itemB = new ArrayList<>();  // userB's items
     private boolean perm;
     private LocalDateTime date;
-    private String place;
+    private String place = "";
     private int numberOfEditA = 3;
     private int numberOfEditB = 3;
 
@@ -24,7 +25,6 @@ public class TradeRequest extends Request implements Serializable {
      */
     public TradeRequest(String content, String sender) {
         super(content, new String[]{"confirm", "deny", "edit"}, sender);
-        this.userA  = sender;
     }
 
     /**
@@ -47,14 +47,14 @@ public class TradeRequest extends Request implements Serializable {
      * get the items belongs to userA
      * @return list of items involved in this trade request belong to userA
      */
-    public ArrayList<entities.Item> getItemA() {
+    public List<Item> getItemA() {
         return itemA;
     }
     /**
      * get the items belongs to userB
      * @return list of items involved in this trade request belong to userB
      */
-    public ArrayList<Item> getItemB() {
+    public List<Item> getItemB() {
         return itemB;
     }
 
@@ -136,10 +136,10 @@ public class TradeRequest extends Request implements Serializable {
      */
     public String getTradePartner (String user){
         if (user.equals(userA)){
-            return this.userB;
+            return userB;
         }
         else{
-            return this.userA;
+            return userA;
         }
     }
 
@@ -147,11 +147,11 @@ public class TradeRequest extends Request implements Serializable {
         this.userA = userA;
     }
 
-    public void setItemA(ArrayList<Item> itemA) {
+    public void setItemA(List<Item> itemA) {
         this.itemA = itemA;
     }
 
-    public void setItemB(ArrayList<Item> itemB) {
+    public void setItemB(List<Item> itemB) {
         this.itemB = itemB;
     }
 
@@ -171,14 +171,6 @@ public class TradeRequest extends Request implements Serializable {
      */
     public void setPerm(boolean perm) {
         this.perm = perm;
-    }
-
-    public void addItemA (Item item){
-        itemA.add(item);
-    }
-
-    public void addItemB (Item item){
-        itemB.add(item);
     }
 
     /**

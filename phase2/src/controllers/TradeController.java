@@ -2,7 +2,8 @@ package controllers;
 
 import presenters.TradeMenu;
 import entities.Item;
-import entities.TradeRequest;
+import use_cases.GlobalInventoryManager;
+import use_cases.TradeRequestManager;
 import use_cases.UserManager;
 
 import java.time.LocalDateTime;
@@ -18,17 +19,19 @@ public class TradeController {
     private final Scanner input = new Scanner(System.in);
     private final TradeMenu tradeMenu = new TradeMenu();
     private LocalDateTime date;
+    private final GlobalInventoryManager usersInventory;
     private final UserManager allUsers;
     private String tradeType;
-    private TradeRequest tradeRequest;
+    private TradeRequestManager tradeRequestManager;
 
 
     /**
      * Takes in a UserManager in order to search for userA making a trade request to userB.
-     * @param allUsers takes in a UserManager that contains all users that are in the system.
+     * @param usersInventory takes in a GlobalInventoryManager that contains all users that are in the system.
      */
-    public TradeController(UserManager allUsers) {
+    public TradeController(UserManager allUsers, GlobalInventoryManager usersInventory) {
         this.allUsers = allUsers;
+        this.usersInventory = usersInventory;
 
     }
 
@@ -40,7 +43,6 @@ public class TradeController {
      * @param userB is a string that indicates the second trader (userB).
      */
     public void runFromLoan(ArrayList<Item> itemsToTrade, String userA, String userB) {
-        TradeRequest tradeRequest;
 
         // set the date/time
         LocalDateTime date = getDateInput();
@@ -57,17 +59,15 @@ public class TradeController {
             switch (selection) {
                 // perm trade
                 case "1":
-                    tradeRequest = new TradeRequest(userA, userB, itemsToTrade, new ArrayList<>(),
-                            true, date, place);
-                    this.allUsers.createAndAddNewTradeRequestMessage(userB,
-                            "User " + userA + " wants to trade with you.", tradeRequest, userA);
+                    this.tradeRequestManager = new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
+                    this.tradeRequestManager.setInfo(userA, userB, itemsToTrade, new ArrayList<>(), true);
+                    this.tradeRequestManager.setDateAndPlace(userB, date, place);
                     break;
                 // temp trade
                 case "2":
-                    tradeRequest = new TradeRequest(userA, userB, itemsToTrade, new ArrayList<>(),
-                            false, date, place);
-                    this.allUsers.createAndAddNewTradeRequestMessage(userB,
-                            "User " + userA + " wants to trade with you.", tradeRequest, userA);
+                    this.tradeRequestManager = new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
+                    this.tradeRequestManager.setInfo(userA, userB, itemsToTrade, new ArrayList<>(), false);
+                    this.tradeRequestManager.setDateAndPlace(userB, date, place);
                     break;
                 default:
                     tradeMenu.invalidInput();
@@ -85,7 +85,7 @@ public class TradeController {
      * @param numTrades the num of trades this user has made
      */
     public void run(ArrayList<Item> itemsToTradeB, String userA, int numTrades) {
-        TradeRequest tradeRequestMessage;
+        TradeRequestManager tradeRequestMessage;
         String userB = itemsToTradeB.get(0).getOwnerName();
 
         // get date/time
@@ -116,7 +116,7 @@ public class TradeController {
                         return;
                     }
                     tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                    this.allUsers.addUserMessage(userB, tradeRequestMessage);
+                    this.allUsers.addUserMessage(userB, tradeRequestMessage.getTradeRequest());
                     this.tradeMenu.tradeRequestSent(userB);
                     done = true;
                     break;
@@ -132,7 +132,8 @@ public class TradeController {
                         return;
                     }
                     tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                    this.allUsers.addUserMessage(userB, tradeRequestMessage);
+                    usersInventory.getPersonInventory(userB);
+                    this.allUsers.addUserMessage(userB, tradeRequestMessage.getTradeRequest());
                     this.tradeMenu.tradeRequestSent(userB);
                     done = true;
                     break;
@@ -188,7 +189,7 @@ public class TradeController {
                 return new ArrayList<>();
             // two way trade
             case "2":
-                ArrayList<Item> items = this.allUsers.getUserInventory(userA);
+                ArrayList<Item> items = usersInventory.getPersonInventory(userA);
                 boolean done = false;
                 // ask the user what items they want to trade, then add it into itemsToTradeA.
                 while (!done) {
@@ -211,34 +212,43 @@ public class TradeController {
         return itemsToTradeA;
     }
 
-    private TradeRequest permTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
+    private TradeRequestManager permTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
                                           ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
+
+        // userA is current trader.
+        // userB is second trader.
         switch (this.tradeType) {
             // one way
             case "1":
-                this.tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, true, date, place);
+                this.tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
+                this.tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, true);
+                tradeRequestManager.setDateAndPlace(userB, date, place);
             // two way
             case "2":
-                this.tradeRequest = new TradeRequest(userA, userB, itemsToTradeB,
-                        itemsToTradeA, true, date, place);
+                tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
+                tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, true);
+                tradeRequestManager.setDateAndPlace(userB, date, place);
         }
 
-        return new TradeRequest("User " + userA + " wants to trade with you.", this.tradeRequest, userA);
+        return tradeRequestManager;
     }
 
-    private TradeRequest tempTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
+    private TradeRequestManager tempTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
                                           ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
 
-        switch (this.tradeType) {
+        switch (tradeType) {
             // one way
             case "1":
-                this.tradeRequest = new TradeRequest(userA, userB, itemsToTradeB, false, date, place);
+                tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
+                tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, false);
+                tradeRequestManager.setDateAndPlace(userB, date, place);
             // two way
             case "2":
-                this.tradeRequest = new TradeRequest(userA, userB, itemsToTradeB,
-                        itemsToTradeA, false, date, place);
+                tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
+                tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, false);
+                tradeRequestManager.setDateAndPlace(userB, date, place);
         }
-        return new TradeRequest("User " + userA + " wants to trade with you.", this.tradeRequest, userA);
+        return tradeRequestManager;
     }
 
 }
