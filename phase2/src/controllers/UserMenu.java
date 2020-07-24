@@ -326,10 +326,12 @@ public class UserMenu {
                                 tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
                                 continueLoanInput = false;
                             }
+                            // if no, exit and return to main menu
                             else if(userLoanInput == 2) {
                                 this.userPresenter.returnToMainMenu();
                                 continueLoanInput = false;
                             }
+                            // if input error
                             else {
                                 this.userPresenter.inputError();
                             }
@@ -451,12 +453,24 @@ public class UserMenu {
      * Helper...for a helper...allows a user to browse through their personal wishlist I swear if wishlist gets deleted
      */
     private void browseThroughUserWishlist() {
-        ArrayList<Item> userWishlist = this.userManager.getUserWishlist(this.currUser);
+        // get arraylist of itemids in this person's wishlist
+        ArrayList<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
+        ArrayList<Item> userWishlist = new ArrayList<>();
+        // if there are no items in the user's wishlist
+        if(userWishlistIDs.size() == 0) {
+            this.userPresenter.isEmpty("wishlist");
+            return;
+        }
+        // get the arraylist of items using the itemIDs
+        for(String itemID : userWishlistIDs) {
+            userWishlist.add(this.globalInventoryManager.getItemFromGI(itemID));
+        }
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userWishlistInput = "";
         while(!userWishlistInput.equals("exit")) {
             // if the wishlist is empty
+            // this is a second check to check to see if the user has removed all items in their wishlist while running
             if (userWishlist.size() == 0) {
                 this.userPresenter.isEmpty("wishlist");
                 break;
@@ -468,7 +482,7 @@ public class UserMenu {
             // remove the item
             if(userWishlistInput.equals("1")) {
                 this.globalWishlistManager.removeWish(userWishlist.get(index).getItemID(), this.currUser);
-                userWishlist = this.userManager.getUserWishlist(this.currUser);
+                userWishlist.remove(userWishlist.get(index));
                 index = 0;
                 this.userPresenter.itemRemoved();
             }

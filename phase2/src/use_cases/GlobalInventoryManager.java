@@ -116,15 +116,12 @@ public class GlobalInventoryManager implements Serializable {
         return (int) Math.ceil((double) num / 10);
     }
 
-//        /**
-//         * generate an arraylist of Item which has itemName
-//         * @param itemName is the name of item the user want to search
-//         * @return an arraylist of Item which the user want to search
-//         */
-//
-//        public List<Item> searchWithItemName (String itemName){
-//            return gI.searchByItemName(itemName);
-//        }
+    /**
+     * generate an arraylist of Item which has itemName
+     * @param itemName is the name of item the user want to search
+     * @return an arraylist of Item which the user want to search
+     */
+    public List<Item> searchWithItemName (String itemName) { return gI.searchByItemName(itemName); }
 
     /**
      * generate an arraylist of Item belongs to the specific owner
