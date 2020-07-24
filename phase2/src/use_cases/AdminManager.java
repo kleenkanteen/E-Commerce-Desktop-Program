@@ -6,20 +6,22 @@ import exceptions.InvalidUsernameException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class AdminManager{
-    private HashMap<String, Admin> adminHashMap;
-    private ArrayList<Message> adminMessagesArrayList;
+    private Map<String, Admin> adminList;
+    private List<Message> adminMessages;
 
     /**
      * Class constructor.
      * Takes in HashMap of all admin accounts and ArrayList of Messages shared between all of them.
-     * @param adminHashMap HashMap containing all admin accounts.
-     * @param adminMessagesArrayList ArrayList containing all admin Messages.
+     * @param adminList HashMap containing all admin accounts.
+     * @param adminMessages ArrayList containing all admin Messages.
      */
-    public AdminManager(HashMap<String, Admin> adminHashMap, ArrayList<Message> adminMessagesArrayList) {
-        this.adminHashMap = adminHashMap;
-        this.adminMessagesArrayList = adminMessagesArrayList;
+    public AdminManager(Map<String, Admin> adminList, ArrayList<Message> adminMessages) {
+        this.adminList = adminList;
+        this.adminMessages = adminMessages;
     }
 
     /**
@@ -33,12 +35,11 @@ public class AdminManager{
      * @throws InvalidUsernameException username is already taken
      */
 
-    public HashMap<String, Admin> addAdmin (Admin toAdd) throws InvalidUsernameException{
-        if (adminHashMap.containsKey(toAdd.getUsername()))
+    public void addAdmin (Admin toAdd) throws InvalidUsernameException{
+        if (adminList.containsKey(toAdd.getUsername()))
             throw new InvalidUsernameException();
 
-        adminHashMap.put(toAdd.getUsername(), toAdd);
-        return adminHashMap;
+        adminList.put(toAdd.getUsername(), toAdd);
     }
 
     /**
@@ -49,25 +50,25 @@ public class AdminManager{
      *
      */
     public void addAdmin (String username, String password) throws InvalidUsernameException{
-        if (adminHashMap.containsKey(username)){
+        if (adminList.containsKey(username)){
             throw new InvalidUsernameException();}
 
-        adminHashMap.put(username, new Admin(username, password));
+        adminList.put(username, new Admin(username, password));
 
     }
 
     /** Attempts to retrieve Messages shared by all admin accounts.
      * @return ArrayList of all Messages shared by all admin accounts.
      */
-    public ArrayList<Message> getAdminMessagesArrayList() {
-        return adminMessagesArrayList;
+    public List<Message> getAdminMessages() {
+        return adminMessages;
     }
 
     /** Attempts to set shared admin Messages by replacing previous one(s).
-     * @param adminMessagesArrayList shared admin Messages to replace previous one(s).
+     * @param adminMessages shared admin Messages to replace previous one(s).
      */
-    public void setAdminMessagesArrayList(ArrayList<Message> adminMessagesArrayList) {
-        this.adminMessagesArrayList = adminMessagesArrayList;
+    public void setAdminMessages(List<Message> adminMessages) {
+        this.adminMessages = adminMessages;
     }
 
     /**Attempts to change password of a specific admin by getting input of new desired password twice.
@@ -94,7 +95,7 @@ public class AdminManager{
      * @return whether or not a login matches
      */
     public boolean login(String username, String password) {
-        if (adminHashMap.containsKey(username))
+        if (adminList.containsKey(username))
           return (getAdmin(username).getPassword().equals(password));
         return false;
     }
@@ -105,6 +106,6 @@ public class AdminManager{
      * @return the Admin with the specified username
      */
     public Admin getAdmin(String username){
-        return adminHashMap.get(username);
+        return adminList.get(username);
     }
 }
