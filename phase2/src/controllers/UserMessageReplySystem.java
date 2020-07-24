@@ -40,7 +40,7 @@ public class UserMessageReplySystem {
      */
     public void run() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        ArrayList<Message> messages = new ArrayList<>(userManager.getUserMessages(accountUsername));
+        List<Message> messages = new ArrayList<>(userManager.getUserMessages(accountUsername));
 
         //Initial Menu
         if(messages.size() == 0){
@@ -141,7 +141,7 @@ public class UserMessageReplySystem {
             }
         }
     }
-    private boolean TradeRequestMessageResponse(TradeRequest m, ArrayList<Message> messages, BufferedReader br)
+    private boolean TradeRequestMessageResponse(TradeRequest m, List<Message> messages, BufferedReader br)
             throws IOException{
         messageReplyMenu.printRequestPrompt(m);
         String username = m.getSender();
