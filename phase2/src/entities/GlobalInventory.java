@@ -84,7 +84,7 @@ public class GlobalInventory implements Serializable {
      * @return the Item referred by index been called
      */
 
-    public entities.Item getItemByIndex(int index){
+    public Item getItemByIndex(int index){
         Set<String> keys = itemMap.keySet();
         String i = new ArrayList<>(keys).get(index);
         return itemMap.get(i);
@@ -137,15 +137,15 @@ public class GlobalInventory implements Serializable {
      */
 
     public List<Item> searchByItemName(String itemName){
-        ArrayList<Item> banana = new ArrayList<>();
+        ArrayList<Item> result = new ArrayList<>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
             if (itemMap.get(f).getName().equals(itemName)){
-                banana.add(itemMap.get(f));
+                result.add(itemMap.get(f));
             }
         }
-        return banana;
+        return result;
     }
 
     /**
@@ -154,39 +154,20 @@ public class GlobalInventory implements Serializable {
      * @return an arraylist of Item belongs to the User with specific ownerName within GlobalInventory
      */
 
-    public ArrayList<Item> searchByOwnerName(String ownerName){
-        ArrayList<Item> banana = new ArrayList<>();
+    public List<Item> searchByOwnerName(String ownerName){
+        ArrayList<Item> personalInventory = new ArrayList<>();
         for (int i = 0; i < itemMap.size(); i++){
             Set<String> keys = itemMap.keySet();
             String f = new ArrayList<>(keys).get(i);
             if (itemMap.get(f).getOwnerName().equals(ownerName)){
-                banana.add(itemMap.get(f));
+                personalInventory.add(itemMap.get(f));
             }
         }
-        return banana;
+        return personalInventory;
     }
 
-    /**
-     * filter the search results by the place that Item's owner belongs to
-     * @param  place the place that Item's owner belongs to
-     * @return the List of Item with the place that Item's owner belongs to
-     */
 
 
-    public List<Item> filterWithPlace(String place){
-
-        List<Item> omiyage = new ArrayList<>();
-        for (int i = 0; i < itemMap.size(); i++){
-            Set<String> keys = itemMap.keySet();
-            String f = new ArrayList<>(keys).get(i);
-            if (itemMap.get(f).getPlace().equals(place)){
-                omiyage.add(itemMap.get(f));
-            }
-        }
-        return omiyage;
-
-
-    }
 
     /**
      * filter the search results by the category of Item
