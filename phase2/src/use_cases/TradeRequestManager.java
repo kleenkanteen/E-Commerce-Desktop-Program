@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TradeRequestManager {
-    private TradeRequest t;
+    private TradeRequest tradeRequest;
     private Trade trade;
     /**
      * a constructor for TradeRequestManager to edit the traderequet object
      * @param t the traderequest that is been edit
      */
     public TradeRequestManager(TradeRequest t) {
-        this.t = t;
+        this.tradeRequest = t;
     }
 
     /**
@@ -22,16 +22,15 @@ public class TradeRequestManager {
      * @param sender userA who sends the trade request
      */
     public TradeRequestManager(String content, String sender){
-        this.t = new TradeRequest(content, sender);
+        this.tradeRequest = new TradeRequest(content, sender);
     }
 
-    public TradeRequest setInfo (String userA, String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
-        t.setUserA(userA);
-        t.setUserB(userB);
-        t.setItemA(itemA);
-        t.setItemB(itemB);
-        t.setPerm(perm);
-        return t;
+    public void setInfo (String userA, String userB, ArrayList<Item> itemA, ArrayList<Item> itemB, boolean perm){
+        tradeRequest.setUserA(userA);
+        tradeRequest.setUserB(userB);
+        tradeRequest.setItemA(itemA);
+        tradeRequest.setItemB(itemB);
+        tradeRequest.setPerm(perm);
     }
 
     /**
@@ -40,20 +39,18 @@ public class TradeRequestManager {
      * @param date new date of the meeting
      * @param place new place of the meeting
      */
-    public TradeRequest setDateAndPlace(String user, LocalDateTime date, String place){
-        if (user.equals(t.getUserA())){
-            t.setDate(date);
-            t.setPlace(place);
-            t.setNumberOfEditA(t.getNumberOfEditA() - 1);
-            t.setContent("Your trade request has been edited");
-            return t;
+    public void setDateAndPlace(String user, LocalDateTime date, String place){
+        if (user.equals(tradeRequest.getUserA())){
+            tradeRequest.setDate(date);
+            tradeRequest.setPlace(place);
+            tradeRequest.setNumberOfEditA(tradeRequest.getNumberOfEditA() - 1);
+            tradeRequest.setContent("Your trade request has been edited");
         }
         else{
-            t.setDate(date);
-            t.setPlace(place);
-            t.setNumberOfEditB(t.getNumberOfEditB() - 1);
-            t.setContent("Your trade request has been edited");
-            return t;
+            tradeRequest.setDate(date);
+            tradeRequest.setPlace(place);
+            tradeRequest.setNumberOfEditB(tradeRequest.getNumberOfEditB() - 1);
+            tradeRequest.setContent("Your trade request has been edited");
         }
     }
 
@@ -62,12 +59,14 @@ public class TradeRequestManager {
      * @return the trade object that store the involved users, item and meeting date, due date and place of the meeting
      */
     public Trade setConfirmation() {
-        if (t.isPerm()){
-            this.trade = new PermTrade(t.getUserA(), t.getUserB(), t.getItemA() , t.getItemB(), t.getDate());
+        if (tradeRequest.isPerm()){
+            this.trade = new PermTrade(tradeRequest.getUserA(), tradeRequest.getUserB(), tradeRequest.getItemA() ,
+                    tradeRequest.getItemB(), tradeRequest.getDate());
             return this.trade;
         }
         else
-            trade = new TempTrade(t.getUserA(), t.getUserB(), t.getItemA(), t.getItemB(), t.getDate(), t.getDate().plusDays(30));
+            trade = new TempTrade(tradeRequest.getUserA(), tradeRequest.getUserB(), tradeRequest.getItemA(),
+                    tradeRequest.getItemB(), tradeRequest.getDate(), tradeRequest.getDate().plusDays(30));
             return trade;
         // Once both user confirms, create a TemTrade, or entities.PermTrade based on t.isPerm
     }
@@ -77,7 +76,7 @@ public class TradeRequestManager {
      * @return the traderequst object
      */
     public TradeRequest getTradeRequest() {
-        return t;
+        return tradeRequest;
     }
 
     /**
@@ -86,11 +85,11 @@ public class TradeRequestManager {
      * @return true if user can edit, false if user can not edit
      */
     public boolean canEdit (String user){
-        if (user.equals(t.getUserA())){
-            return t.getNumberOfEditA() > 0;
+        if (user.equals(tradeRequest.getUserA())){
+            return tradeRequest.getNumberOfEditA() > 0;
         }
          else {
-            return t.getNumberOfEditB() > 0;
+            return tradeRequest.getNumberOfEditB() > 0;
         }
     }
 
