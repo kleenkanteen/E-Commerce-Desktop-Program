@@ -57,15 +57,15 @@ public class GlobalInventoryController {
                             String selection = inputx.nextLine();
 
                             if (selection.equals("1")) { // adding to wishlist
-                                if (UM.getUserWishlist(user).contains(item)) { // if user already has it in wishlist
+                                if (GW.getPersonWishlist(user).contains(item)) { // if user already has it in wishlist
                                     prompts.alreadyHave();
                                 } else {
-                                    UM.addItemToWishlist(user, item); // user does not have it in wishlit, adding it
+                                    GW.addWish(item.getItemID(), user); // user does not have it in wishlit, adding it
                                     prompts.addedToWishlist(item);
                                     GW.addWish(item.getItemID(), user);
                                 }
                             } else if (selection.equals("2")) { // user selected trade,
-                                controllers.TradeController trademenu = new TradeController(UM);
+                                controllers.TradeController trademenu = new TradeController(UM, gim);
                                 ArrayList<Item> items = new ArrayList<>();
                                 items.add(item);
                                 trademenu.run(items, user, TM.getTradeHistory(user).size());
@@ -75,7 +75,7 @@ public class GlobalInventoryController {
                             String selection1 = inputx.nextLine();
                             if (selection1.equals("1")) {
                                 if (!item.getOwnerName().equals(user)) {
-                                    UM.addItemToWishlist(user, item);
+                                    GW.addWish(item.getItemID(), user);
                                     prompts.addedToWishlist(item);
                                     GW.addWish(item.getItemID(), user);
                                 } else prompts.ownItem();
