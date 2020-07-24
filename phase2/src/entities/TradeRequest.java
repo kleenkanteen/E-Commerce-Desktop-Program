@@ -25,7 +25,6 @@ public class TradeRequest extends Request implements Serializable {
      */
     public TradeRequest(String content, String sender) {
         super(content, new String[]{"confirm", "deny", "edit"}, sender);
-        super.setSenderUsername(sender);
     }
 
     /**
