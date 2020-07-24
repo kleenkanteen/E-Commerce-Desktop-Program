@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class GlobalWishlist implements Serializable {
-    private HashMap<String, ArrayList<String>> wishMap;
+    private Map<String, List<String>> wishMap;
 
     /*
     * Constructor just creates a new empty hashmap.
@@ -84,7 +84,7 @@ public class GlobalWishlist implements Serializable {
      * @param itemid - id of first user that wants the item
      * @return - arraylist of all users who want this item
      */
-    public ArrayList<String> getAllInterestedUsers(String itemid){
+    public List<String> getAllInterestedUsers(String itemid){
         if (isItemWanted(itemid)) {
             return wishMap.get(itemid);
         }
@@ -112,9 +112,9 @@ public class GlobalWishlist implements Serializable {
      * @param userid id of user who's wishlist is wanted
      * @return arraylist of their wishlist
      */
-    public ArrayList<String> getPersonWishlist(String userid){
-        ArrayList<String> wishlist = new ArrayList<>();
-        for (Map.Entry<String, ArrayList<String>> entry : wishMap.entrySet()) {
+    public List<String> getPersonWishlist(String userid){
+        List<String> wishlist = new ArrayList<>();
+        for (Map.Entry<String, List<String>> entry : wishMap.entrySet()) {
             String item = entry.getKey();
             List<String> interestedusers = entry.getValue();
             if (interestedusers.contains(userid)){

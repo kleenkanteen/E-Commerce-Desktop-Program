@@ -58,7 +58,7 @@ public class GlobalWishlistManager implements Serializable {
      * @param itemid - id of first user that wants the item
      * @return - arraylist of all users who want this item
      */
-    public ArrayList<String> getAllInterestedUsers(String itemid){
+    public List<String> getAllInterestedUsers(String itemid){
         return gW.getAllInterestedUsers(itemid);
     }
 
@@ -80,8 +80,8 @@ public class GlobalWishlistManager implements Serializable {
      * who wants the earliest item in the given inventory arraylist. If no match, return empty arraylist.
      */
 
-    public ArrayList<String> userWhoWants (ArrayList<Item> allItems){
-        ArrayList<String> interested = new ArrayList<>();
+    public List<String> userWhoWants (List<Item> allItems){
+        List<String> interested = new ArrayList<>();
         for (Item allItem : allItems) {
             String currentItemid = allItem.getItemID();
             if (gW.isItemWanted(currentItemid)) {
@@ -99,7 +99,7 @@ public class GlobalWishlistManager implements Serializable {
      * @param userid id of user who's wishlist is wanted
      * @return arraylist of their wishlist
      */
-    public ArrayList<String> getPersonWishlist(String userid){
+    public List<String> getPersonWishlist(String userid){
         return gW.getPersonWishlist(userid);
     }
 }
