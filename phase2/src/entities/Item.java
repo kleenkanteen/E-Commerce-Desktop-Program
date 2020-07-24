@@ -8,7 +8,6 @@ public class Item implements Serializable {
     private final String description;
     private final String name;
     private String ownerName;
-    private String place = "";
     private Category category = Category.OTHER;
 
 
@@ -45,25 +44,10 @@ public class Item implements Serializable {
         return category;
     }
 
-    /**
-     * setter to set the location that the owner of this item belongs to.
-     * @param place the location the owner of this Item in.
-     */
-
-    public void setPlace(String place){
-        this.place = place;
-    }
 
 
 
-    /**
-     * getter to the place of the Item
-     * @return return the place of the Item.
-     */
 
-    public String getPlace() {
-        return place;
-    }
 
     /**
      * set the new ownerName to the items that have been traded

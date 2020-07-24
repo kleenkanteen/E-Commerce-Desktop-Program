@@ -1,5 +1,6 @@
 package use_cases;
 
+import entities.Category;
 import entities.Item;
 import entities.GlobalInventory;
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.Random;
 public class GlobalInventoryManager implements Serializable {
 
     // gI is the GlobalInventory we want to modify.
-    private GlobalInventory gI;
+    private GlobalInventory globalInventory;
 
 
 
@@ -21,7 +22,7 @@ public class GlobalInventoryManager implements Serializable {
      * @param gI - the globalInventory it takes in
      */
     public GlobalInventoryManager(GlobalInventory gI) {
-        this.gI = gI;
+        this.globalInventory = gI;
     }
 
     /**
@@ -32,7 +33,7 @@ public class GlobalInventoryManager implements Serializable {
 
 
     public Item getItemFromGI(String itemID){
-        return (Item) gI.getItem(itemID);
+        return (Item) globalInventory.getItem(itemID);
     }
 
 
@@ -40,7 +41,7 @@ public class GlobalInventoryManager implements Serializable {
         Random rand = new Random();
         int id = rand.nextInt(900000000) + 100000000;
         String ID = Integer.toString(id);
-        while (gI.getItemIdCollection().contains(ID)) {
+        while (globalInventory.getItemIdCollection().contains(ID)) {
             id = rand.nextInt(900000000) + 100000000;
             ID = Integer.toString(id);
         }
@@ -59,7 +60,7 @@ public class GlobalInventoryManager implements Serializable {
     public void addItemToHashMap(Item item) {
         if (item.getItemID() != null) {
 
-            gI.addItem(item.getItemID(), item);
+            globalInventory.addItem(item.getItemID(), item);
 
 
         } else {
@@ -67,9 +68,9 @@ public class GlobalInventoryManager implements Serializable {
             String itemID = IdGenerator();
 
             item.setItemID(itemID);
-            gI.addItemIdToCollection(itemID);
+            globalInventory.addItemIdToCollection(itemID);
 
-            gI.addItem(itemID, item);
+            globalInventory.addItem(itemID, item);
 
 
         }
@@ -83,7 +84,7 @@ public class GlobalInventoryManager implements Serializable {
      */
 
     public void removeItem(String itemID) {
-        gI.removeItem(itemID);
+        globalInventory.removeItem(itemID);
     }
 
 
@@ -97,8 +98,8 @@ public class GlobalInventoryManager implements Serializable {
 
     public List<Item> generatePage(int pageNumber) {
         ArrayList<Item> itemList = new ArrayList<>();
-        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < gI.getNumOfItem(); i++) {
-            itemList.add(gI.getItemByIndex(i));
+        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < globalInventory.getNumOfItem(); i++) {
+            itemList.add(globalInventory.getItemByIndex(i));
 
         }
         return itemList;
@@ -112,26 +113,26 @@ public class GlobalInventoryManager implements Serializable {
      */
 
     public int generatePageNumber() {
-        int num = gI.getNumOfItem();
+        int num = globalInventory.getNumOfItem();
         return (int) Math.ceil((double) num / 10);
     }
 
-//        /**
-//         * generate an arraylist of Item which has itemName
-//         * @param itemName is the name of item the user want to search
-//         * @return an arraylist of Item which the user want to search
-//         */
-//
-//        public List<Item> searchWithItemName (String itemName){
-//            return gI.searchByItemName(itemName);
-//        }
+        /**
+         * generate an arraylist of Item which has itemName
+         * @param itemName is the name of item the user want to search
+         * @return an arraylist of Item which the user want to search
+         */
+
+        public List<Item> searchWithItemName (String itemName){
+            return globalInventory.searchByItemName(itemName);
+        }
 
     /**
      * generate an arraylist of Item belongs to the specific owner
      * @param ownerName is the name of item the user want to search
      * @return an arraylist of Item belongs to the specific owner
      */
-    public ArrayList<Item> getPersonInventory (String ownerName){ return gI.searchByOwnerName(ownerName); }
+    public List<Item> getPersonInventory (String ownerName){ return globalInventory.searchByOwnerName(ownerName); }
 
     /**
      * returns whether the global inventory contains an item
@@ -140,8 +141,19 @@ public class GlobalInventoryManager implements Serializable {
      * @return whether the item is in the global inventory
      */
     public boolean contains(Item item) {
-        return gI.containsKey(item.getItemID());
+        return globalInventory.containsKey(item.getItemID());
     }
+
+    /**
+     * return a list with all Item in a specific category
+     * @param category the category of Item that the user wants to search
+     * @return the list with all Item in a specific category
+     */
+
+    public List<Item> searchByCategory(Category category){
+        return globalInventory.filterWithCategory(category);
+    }
+
 
 
     /**
@@ -152,7 +164,7 @@ public class GlobalInventoryManager implements Serializable {
 
 
     public boolean hasNoItem() {
-        return gI.isEmpty();
+        return globalInventory.isEmpty();
 
     }
 
