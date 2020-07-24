@@ -295,8 +295,7 @@ public class UserMenu {
         // if user's personal inventory is populated
         else {
             // get an item id and the user id from the global wishlist
-            ArrayList<String> itemsToLend =
-                    this.globalWishlistManager.userWhoWants(userInventory);
+            List<String> itemsToLend = this.globalWishlistManager.userWhoWants(userInventory);
             // if another user has one of this user's items on their wishlist
             if(itemsToLend.size() != 0) {
                 // check to see if user can trade, if yes loan
@@ -306,7 +305,7 @@ public class UserMenu {
                             this.tradeManager.getIncompleteTimes(this.currUser),
                             this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
                         // find the selected item from userInventory
-                        ArrayList<Item> userItem = new ArrayList<>();
+                        List<Item> userItem = new ArrayList<>();
                         for(Item item : userInventory) {
                             if (item.getItemID().equals(itemsToLend.get(0))) {
                                 userItem.add(item);
@@ -454,14 +453,14 @@ public class UserMenu {
      * Helper...for a helper...allows a user to browse through their personal wishlist I swear if wishlist gets deleted
      */
     private void browseThroughUserWishlist() {
-        // get arraylist of itemids in this person's wishlist
+        // get list of itemids in this person's wishlist
         List<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
         // if there are no items in the user's wishlist
         if(userWishlistIDs.size() == 0) {
             this.userPresenter.isEmpty("wishlist");
             return;
         }
-        // get the arraylist of items using the itemIDs
+        // get the list of items using the itemIDs
         List<Item> userWishlist = new ArrayList<>();
         for(String itemID : userWishlistIDs) {
             userWishlist.add(this.globalInventoryManager.getItemFromGI(itemID));

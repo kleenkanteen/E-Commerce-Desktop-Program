@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.time.LocalDateTime.parse;
@@ -36,13 +37,13 @@ public class TradeController {
     }
 
     /**
-     * Takes an ArrayList and a String that will be used to loan items to userB.
+     * Takes an List and a String that will be used to loan items to userB.
      * This method is similar to run, except it only accomplishes a one way trade temp/perm trade request.
-     * @param itemsToTrade takes in an arraylist of items that represent the items to loan to userB.
+     * @param itemsToTrade takes in an list of items that represent the items to loan to userB.
      * @param userA is a string that indicates the current trader (userA).
      * @param userB is a string that indicates the second trader (userB).
      */
-    public void runFromLoan(ArrayList<Item> itemsToTrade, String userA, String userB) {
+    public void runFromLoan(List<Item> itemsToTrade, String userA, String userB) {
 
         // set the date/time
         LocalDateTime date = getDateInput();
@@ -59,13 +60,15 @@ public class TradeController {
             switch (selection) {
                 // perm trade
                 case "1":
-                    this.tradeRequestManager = new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
+                    this.tradeRequestManager =
+                            new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
                     this.tradeRequestManager.setInfo(userA, userB, itemsToTrade, new ArrayList<>(), true);
                     this.tradeRequestManager.setDateAndPlace(userB, date, place);
                     break;
                 // temp trade
                 case "2":
-                    this.tradeRequestManager = new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
+                    this.tradeRequestManager =
+                            new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
                     this.tradeRequestManager.setInfo(userA, userB, itemsToTrade, new ArrayList<>(), false);
                     this.tradeRequestManager.setDateAndPlace(userB, date, place);
                     break;
@@ -80,11 +83,11 @@ public class TradeController {
     /**
      * Presents a User friendly trade menu that'll allow people to
      * trade different items to add to their collection of items!
-     * @param itemsToTradeB takes in an arraylist of items that represent the items to trade from userB.
+     * @param itemsToTradeB takes in an list of items that represent the items to trade from userB.
      * @param userA is a string that indicates the current user (userA)
      * @param numTrades the num of trades this user has made
      */
-    public void run(ArrayList<Item> itemsToTradeB, String userA, int numTrades) {
+    public void run(List<Item> itemsToTradeB, String userA, int numTrades) {
         TradeRequestManager tradeRequestMessage;
         String userB = itemsToTradeB.get(0).getOwnerName();
 
@@ -96,7 +99,7 @@ public class TradeController {
         String place = this.input.nextLine();
 
 
-        ArrayList<Item> itemsToTradeA = new ArrayList<>();
+        List<Item> itemsToTradeA = new ArrayList<>();
         boolean done = false;
         do {
             // have a presenter that asks for perm trade or temp trade.
@@ -182,14 +185,14 @@ public class TradeController {
         }
     }
 
-    private ArrayList<Item> oneOrTwoWayTrade(String tradeType, String userA, ArrayList<Item> itemsToTradeA) {
+    private List<Item> oneOrTwoWayTrade(String tradeType, String userA, List<Item> itemsToTradeA) {
         switch (tradeType) {
             // one way trade
             case "1":
                 return new ArrayList<>();
             // two way trade
             case "2":
-                ArrayList<Item> items = usersInventory.getPersonInventory(userA);
+                List<Item> items = usersInventory.getPersonInventory(userA);
                 boolean done = false;
                 // ask the user what items they want to trade, then add it into itemsToTradeA.
                 while (!done) {
@@ -212,8 +215,8 @@ public class TradeController {
         return itemsToTradeA;
     }
 
-    private TradeRequestManager permTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
-                                          ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
+    private TradeRequestManager permTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
+                                          List<Item> itemsToTradeB, LocalDateTime date, String place) {
 
         // userA is current trader.
         // userB is second trader.
@@ -233,8 +236,8 @@ public class TradeController {
         return tradeRequestManager;
     }
 
-    private TradeRequestManager tempTradeRequest(String userA, String userB, ArrayList<Item> itemsToTradeA,
-                                          ArrayList<Item> itemsToTradeB, LocalDateTime date, String place) {
+    private TradeRequestManager tempTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
+                                          List<Item> itemsToTradeB, LocalDateTime date, String place) {
 
         switch (tradeType) {
             // one way
