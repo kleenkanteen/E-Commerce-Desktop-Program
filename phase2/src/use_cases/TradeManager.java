@@ -20,6 +20,7 @@ public class TradeManager {
      * @param tradeHistory the trade history of all users in the system
      */
     public TradeManager( Map<String, List<Trade>> tradeHistory) {
+        if(tradeHistory == null) this.tradeHistory = new HashMap<>();
         this.tradeHistory = tradeHistory;
     }
 
