@@ -4,16 +4,16 @@ import entities.*;
 import exceptions.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 public class UserManager {
-    private HashMap<String, User> allUsers;
+    private Map<String, User> allUsers;
 
     /**
      * Constructs a UserManager object
      * @param allUsers the hashmap of all user objects
      */
-    public UserManager(HashMap<String, User> allUsers) {
+    public UserManager(Map<String, User> allUsers) {
         this.allUsers = allUsers;
     }
 
@@ -44,7 +44,7 @@ public class UserManager {
      * @return true if user account successfully created, false if user already exists in system
      * @throws exceptions.InvalidUsernameException if the username already exists in the system
      */
-    public boolean createNewUser(String username, String password, HashMap<String, List<Trade>> tradeHistory)
+    public boolean createNewUser(String username, String password, Map<String, List<Trade>> tradeHistory)
             throws InvalidUsernameException {
         if(this.allUsers.containsKey(username)) {
             throw new exceptions.InvalidUsernameException();
@@ -132,7 +132,7 @@ public class UserManager {
     /**
      * Return a certain user's messages.
      * @param username the user you want
-     * @return arraylist of this user's messages
+     * @return list of this user's messages
      */
     public List<Message> getUserMessages(String username) {
         return this.allUsers.get(username).getMessages();
@@ -141,7 +141,7 @@ public class UserManager {
     /**
      * Allows for setting of a user's messages
      * @param username the user in question
-     * @param message the arrayList of messages to set
+     * @param message the List of messages to set
      */
     public void setUserMessages(String username, List<Message> message) {
         this.allUsers.get(username).setMessages(message);

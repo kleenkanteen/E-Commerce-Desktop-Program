@@ -288,7 +288,7 @@ public class UserMenu {
      */
     private void loanPersonalItemToOtherUsers() {
         // check to see if anything exists in user's personal inventory, if not
-        ArrayList<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
+        List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         if(userInventory.size() == 0) {
             this.userPresenter.emptyPersonalInventoryWhileLoaning();
         }
@@ -322,7 +322,8 @@ public class UserMenu {
                             int userLoanInput = input.nextInt();
                             // yes, continue with the trade offer
                             if(userLoanInput == 1) {
-                                TradeController tradeController = new TradeController(this.userManager);
+                                TradeController tradeController =
+                                        new TradeController(this.userManager, this.globalInventoryManager);
                                 tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
                                 continueLoanInput = false;
                             }
@@ -354,7 +355,7 @@ public class UserMenu {
      * Helper method that will browse through all user trades (assuming user trades is populated)
      */
     private void browseThroughUserTrades() {
-        ArrayList<Trade> userTrades = tradeManager.getTradeHistory(this.currUser);
+        List<Trade> userTrades = tradeManager.getTradeHistory(this.currUser);
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userTradeInput = "";
@@ -399,7 +400,7 @@ public class UserMenu {
      * Helper...for a helper that allows a user to browse through their personal inventory.
      */
     private void browseThroughUserInventory() {
-        ArrayList<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
+        List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userInventoryInput = "";
@@ -454,17 +455,18 @@ public class UserMenu {
      */
     private void browseThroughUserWishlist() {
         // get arraylist of itemids in this person's wishlist
-        ArrayList<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
-        ArrayList<Item> userWishlist = new ArrayList<>();
+        List<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
         // if there are no items in the user's wishlist
         if(userWishlistIDs.size() == 0) {
             this.userPresenter.isEmpty("wishlist");
             return;
         }
         // get the arraylist of items using the itemIDs
+        List<Item> userWishlist = new ArrayList<>();
         for(String itemID : userWishlistIDs) {
             userWishlist.add(this.globalInventoryManager.getItemFromGI(itemID));
         }
+        // begin running through this user's list of items in their wishlist
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userWishlistInput = "";
@@ -514,9 +516,10 @@ public class UserMenu {
                                     this.tradeManager.getLendTimes(this.currUser),
                                     this.tradeManager.getIncompleteTimes(this.currUser),
                                     this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
-                        ArrayList<Item> traderItem = new ArrayList<>();
+                        List<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
-                        TradeController tradeController = new TradeController(this.userManager);
+                        TradeController tradeController = new TradeController(this.userManager,
+                                this.globalInventoryManager);
                         tradeController.run(traderItem, this.currUser,
                                 this.tradeManager.getTradeHistory(this.currUser).size());
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
