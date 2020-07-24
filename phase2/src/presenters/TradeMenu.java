@@ -2,6 +2,7 @@ package presenters;
 
 import entities.Item;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class TradeMenu {
@@ -27,7 +28,7 @@ public class TradeMenu {
      * Presenter for providing all items available to trade.
      * @param personalInventory is an ArrayList that takes in the personal inventory of a trader.
      */
-    public void itemsAvailableToTrade(ArrayList<Item> personalInventory)  {
+    public void itemsAvailableToTrade(List<Item> personalInventory)  {
         int i = 1;
         for (Item item : personalInventory) {
             System.out.println("[" + i + "]" + " " + item.getName());
