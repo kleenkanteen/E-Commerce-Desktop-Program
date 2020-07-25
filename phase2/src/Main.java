@@ -1,10 +1,9 @@
 import controllers.MainMenu;
 
-import java.io.IOException;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) {
         MainMenu menu = new MainMenu();
         menu.run();
     }
