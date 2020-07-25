@@ -4,6 +4,7 @@ import entities.User;
 import exceptions.InvalidUsernameException;
 import gateways.GlobalWishlistGateway;
 import use_cases.GlobalWishlistManager;
+import use_cases.TradeManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -104,7 +105,8 @@ public class MainMenu {
                     } else {
                         // user selected "3" (admin sign-in)
                         if ((r.login(username, pass))) {
-                            controllers.AdminSystem successful = new AdminSystem(r.getAdmin(username), r, attempt, y2);
+                            controllers.AdminSystem successful = new AdminSystem(r.getAdmin(username), r, attempt, y2,
+                                    new TradeManager(utg.getUserTrades()));
                             successful.run();
                         }
                         else mm.wrongLogin();

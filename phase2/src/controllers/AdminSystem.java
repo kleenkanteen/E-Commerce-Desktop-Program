@@ -4,6 +4,7 @@ import presenters.AdminMenu;
 import entities.Admin;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
+import use_cases.TradeManager;
 import use_cases.UserManager;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,14 +13,15 @@ import java.io.InputStreamReader;
 
 public class AdminSystem {
     private Admin admin;
-    private AdminMenu am;
+    private AdminMenu adminMenu;
 
 
     private AdminManager adminManager;
+    private TradeManager tradeManager;
 
 
-    private UserManager um;
-    private GlobalInventoryManager gim;
+    private UserManager userManager;
+    private GlobalInventoryManager globalInventoryManager;
 
     /**
      * Class constructor.
@@ -34,12 +36,13 @@ public class AdminSystem {
 
 
     public AdminSystem(Admin admin, AdminManager adminManager,
-                       UserManager um, GlobalInventoryManager gim) {
+                       UserManager um, GlobalInventoryManager gim, TradeManager tradeManager) {
         this.admin = admin;
-        am = new AdminMenu(admin);
+        adminMenu = new AdminMenu(admin);
         this.adminManager = adminManager;
-        this.um = um;
-        this.gim = gim;
+        this.userManager = um;
+        this.globalInventoryManager = gim;
+        this.tradeManager = tradeManager;
 
 
 
@@ -52,35 +55,40 @@ public class AdminSystem {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
-        am.printMainOption();
-        while (!input.equals("4")) {
+        adminMenu.printMainOption();
+        while (!input.equals("5")) {
             try {
                 input = br.readLine();
                 switch (input) {
                     case "1":
-                        am.goIntoMessageInbox();
-                        controllers.AdminMessageReplySystem amr = new AdminMessageReplySystem(adminManager, gim,
-                                um, admin.getUsername());
-                        amr.run();
-                        am.printMainOption();
+                        adminMenu.goIntoMessageInbox();
+                        AdminMessageReplySystem adminMessageReplySystem = new AdminMessageReplySystem(adminManager, globalInventoryManager,
+                                userManager, admin.getUsername());
+                        adminMessageReplySystem.run();
+                        adminMenu.printMainOption();
                         break;
                     case "2":
-                        controllers.AdminAccountSystem aas = new AdminAccountSystem(admin, adminManager, um);
-                        aas.run();
-                        am.printMainOption();
+                        AdminAccountSystem adminAccountSystem = new AdminAccountSystem(admin, adminManager, userManager);
+                        adminAccountSystem.run();
+                        adminMenu.printMainOption();
                         break;
                     case "3":
-                        controllers.AdminBrowsingUsers abu = new AdminBrowsingUsers(um);
-                        abu.start();
-                        am.printMainOption();
+                        AdminBrowsingUsers adminBrowsingUsers = new AdminBrowsingUsers(userManager);
+                        adminBrowsingUsers.start();
+                        adminMenu.printMainOption();
                         break;
+                    case "4":
+                        TradeUndoSystem tradeUndoSystem = new TradeUndoSystem(tradeManager, userManager);
+                        tradeUndoSystem.run();
+                        break;
+
                 }
 
 
             } catch (IOException e) {
-                am.printErrorOccurred();
+                adminMenu.printErrorOccurred();
             }
         }
-        am.exitPresenter();
+        adminMenu.exitPresenter();
     }
 }
