@@ -6,7 +6,7 @@ import java.util.List;
 public class DemoUser extends Account {
     private List<Item> personalInventory = new ArrayList<>();
     private List<Item> personalWishlist = new ArrayList<>();
-    private List<Message> demoMessages;
+    private List<Message> demoMessages = new ArrayList<>();
 
     /**
      * Constructs a new DemoUser account.

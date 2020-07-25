@@ -19,7 +19,7 @@ public class AdminManager{
      * @param adminList HashMap containing all admin accounts.
      * @param adminMessages ArrayList containing all admin Messages.
      */
-    public AdminManager(Map<String, Admin> adminList, ArrayList<Message> adminMessages) {
+    public AdminManager(Map<String, Admin> adminList, List<Message> adminMessages) {
         this.adminList = adminList;
         this.adminMessages = adminMessages;
     }
@@ -98,6 +98,10 @@ public class AdminManager{
         if (adminList.containsKey(username))
           return (getAdmin(username).getPassword().equals(password));
         return false;
+    }
+
+    public boolean userExist(String username) {
+        return adminList.containsKey(username);
     }
 
     /**
