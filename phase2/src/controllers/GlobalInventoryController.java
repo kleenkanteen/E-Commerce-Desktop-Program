@@ -65,7 +65,7 @@ public class GlobalInventoryController {
                                     GW.addWish(item.getItemID(), user);
                                 }
                             } else if (selection.equals("2")) { // user selected trade,
-                                controllers.TradeController trademenu = new TradeController(UM, gim);
+                                controllers.TradeController trademenu = new TradeController(gim);
                                 ArrayList<Item> items = new ArrayList<>();
                                 items.add(item);
                                 trademenu.run(items, user, TM.getTradeHistory(user).size());
