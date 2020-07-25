@@ -37,6 +37,20 @@ public class GlobalInventoryManager implements Serializable {
     }
 
 
+    public ArrayList<Item> getItemFromGI(ArrayList<String> itemIDList){
+        ArrayList<Item> newList = new ArrayList<>();
+        if (itemIDList.size() == 0){
+            return newList;
+        }
+        for (String s : itemIDList) {
+            newList.add((Item) globalInventory.getItem(s));
+        }
+        return newList;
+    }
+
+
+
+
     private String IdGenerator() {
         Random rand = new Random();
         int id = rand.nextInt(900000000) + 100000000;
@@ -86,6 +100,9 @@ public class GlobalInventoryManager implements Serializable {
     public void removeItem(String itemID) {
         globalInventory.removeItem(itemID);
     }
+
+
+
 
 
     /**
