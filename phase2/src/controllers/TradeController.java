@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.TradeRequest;
 import presenters.TradeMenu;
 import entities.Item;
 import use_cases.GlobalInventoryManager;
@@ -42,7 +43,7 @@ public class TradeController {
      * @param userA is a string that indicates the current trader (userA).
      * @param userB is a string that indicates the second trader (userB).
      */
-    public void runFromLoan(List<Item> itemsToTrade, String userA, String userB) {
+    public TradeRequest runFromLoan(List<Item> itemsToTrade, String userA, String userB) {
 
         // set the date/time
         LocalDateTime date = getDateInput();
@@ -77,6 +78,8 @@ public class TradeController {
             }
         }while(!selection.equals("1")&&!selection.equals("2"));
         tradeMenu.tradeRequestSent(userB);
+
+        return this.tradeRequestManager.getTradeRequest();
     }
 
     /**
@@ -86,7 +89,7 @@ public class TradeController {
      * @param userA is a string that indicates the current user (userA)
      * @param numTrades the num of trades this user has made
      */
-    public TradeRequestManager run(List<Item> itemsToTradeB, String userA, int numTrades) {
+    public TradeRequest run(List<Item> itemsToTradeB, String userA, int numTrades) {
         TradeRequestManager tradeRequestMessage = null;
         String userB = itemsToTradeB.get(0).getOwnerName();
 
@@ -149,7 +152,7 @@ public class TradeController {
             }
 
         }while(!done);
-        return tradeRequestMessage;
+        return tradeRequestMessage.getTradeRequest();
     }
 
 
@@ -269,6 +272,13 @@ public class TradeController {
 //        }
         return this.tradeRequestManager;
     }
+
+//    /**
+//     *
+//     */
+//    private findSuggestedItems() {
+//
+//    }
 
 }
 
