@@ -163,6 +163,10 @@ public abstract class Trade implements Serializable {
         return trader(traderName, traderAItemstoTrade, traderBItemsToTrade);
     }
 
+    public boolean isUnstarted(){
+        return startDate.isAfter(LocalDateTime.now());
+    }
+
     private boolean trader(String traderName, List<Item> traderAItemstoTrade, List<Item> traderBItemsToTrade) {
         boolean lent = false;
         if (traderName.equals(traderA)) {
@@ -247,21 +251,25 @@ public abstract class Trade implements Serializable {
 
 
     public boolean equals(Trade trade) {
-        boolean traderAEqual = this.traderA.equals(trade.traderA);
-        boolean traderBEqual = this.traderB.equals(trade.traderB);
+        if(!traderA.equals(trade.traderA))return false;
+        if(!traderB.equals(trade.traderB))return false;
+
         if(traderAItemstoTrade.size() != trade.traderAItemstoTrade.size()) return false;
-        boolean traderAItemsEqual = true;
-        if(!traderAItemstoTrade.isEmpty())traderAItemsEqual = this.traderAItemstoTrade.get(0).isEqual(trade.traderAItemstoTrade.get(0));
-        if(traderBItemsToTrade.size() != trade.traderBItemsToTrade.size()) return false;
-        boolean traderBItemsEqual = true;
-        if(!traderBItemsToTrade.isEmpty())traderBItemsEqual= this.traderBItemsToTrade.get(0).isEqual(trade.traderBItemsToTrade.get(0));
-        boolean startDateEquals = this.startDate.equals(trade.startDate);
+        if(!traderAItemstoTrade.isEmpty()){
+            for(Item i: traderAItemstoTrade){
+                if(!trade.getTraderAItemsToTrade().contains(i))return false;
+            }
+        }
 
+        if(traderBItemsToTrade.size() != trade.traderAItemstoTrade.size()) return false;
+        if(!traderAItemstoTrade.isEmpty()){
+            for(Item i: traderAItemstoTrade){
+                if(!trade.getTraderAItemsToTrade().contains(i))return false;
+            }
+        }
 
-        return traderAEqual
-                && traderBEqual
-                && traderAItemsEqual
-                && traderBItemsEqual
-                && startDateEquals;
+        if(!startDate.equals(trade.startDate))return false;
+
+        return true;
     }
 }

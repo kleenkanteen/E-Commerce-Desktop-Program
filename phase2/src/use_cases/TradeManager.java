@@ -255,5 +255,23 @@ public class TradeManager {
         }
     }
 
+    public void removeTrade(Trade trade){
+        if(tradeHistory.containsKey(trade.getTraderA())){
+            tradeHistory.get(trade.getTraderA()).remove(trade);
+        }
+        if(tradeHistory.containsKey(trade.getTraderB())){
+            tradeHistory.get(trade.getTraderB()).remove(trade);
+        }
+    }
+
+    public List<Trade> getUnstartTrades(String username){
+        List<Trade> tradeHistory = getTradeHistory(username);
+        List<Trade> unstartTrades = new ArrayList<>();
+        for(Trade t: tradeHistory){
+            if(t.isUnstarted())unstartTrades.add(t);
+        }
+        return unstartTrades;
+    }
+
 
 }

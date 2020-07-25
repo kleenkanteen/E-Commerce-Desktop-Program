@@ -103,4 +103,11 @@ public class TempTrade extends Trade implements Serializable {
     public String toString() {
         return super.toString() + "\n" + "The Object(s) involved in trade had been returned on" + finishDate;
     }
+
+    @Override
+    public boolean equals(Trade trade) {
+        if(!super.equals(trade))return false;
+        if(! (trade instanceof TempTrade)) return false;
+        return finishDate.equals(((TempTrade) trade).finishDate);
+    }
 }
