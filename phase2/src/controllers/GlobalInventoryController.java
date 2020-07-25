@@ -87,15 +87,19 @@ public class GlobalInventoryController {
                                     prompts.traderItem(item);// prints owner inventory
                                     String inputitemselect = inputx.nextLine();
                                     while (!inputitemselect.equals("Exit")) {
-                                        if (items.contains(gim.getPersonInventory(item.getOwnerName())
-                                                .get(Integer.valueOf(inputitemselect)))) {
-                                            prompts.alreadySelected();
-                                        } else {
-                                            items.add(gim.getPersonInventory(item.getOwnerName())
-                                                    .get(Integer.valueOf(inputitemselect)));
-                                        }
-                                        controllers.TradeController trademenu = new TradeController(gim);
-                                        trademenu.run(items, user, TM.getTradeHistory(user).size());
+                                        if (inputitemselect.matches("[0-9]*") &&
+                                                Integer.valueOf(inputitemselect) <=
+                                                        gim.getPersonInventory(item.getOwnerName()).size()) {
+                                            if (items.contains(gim.getPersonInventory(item.getOwnerName())
+                                                    .get(Integer.valueOf(inputitemselect)))) {
+                                                prompts.alreadySelected();
+                                            } else {
+                                                items.add(gim.getPersonInventory(item.getOwnerName())
+                                                        .get(Integer.valueOf(inputitemselect)));
+                                            }
+                                            controllers.TradeController trademenu = new TradeController(gim);
+                                            trademenu.run(items, user, TM.getTradeHistory(user).size());
+                                        }else prompts.invalid();
                                     }
                                 }
                             } else { // if user cant trade, only allow to add to wishlist
