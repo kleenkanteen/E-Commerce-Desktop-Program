@@ -1,71 +1,118 @@
 package controllers;
 
-import java.util.Scanner;
+import presenters.DemoUserPresenter;
 import use_cases.DemoUserManager;
 
+import java.util.Scanner;
+
 public class DemoUserController {
+    private DemoUserPresenter prompts;
 
-    private DemoUserManager demoUserManager;
-    private String username;
-
-    public DemoUserController(String username, String password) {
-        this.username = username;
-        this.demoUserManager = new DemoUserManager(username, password);
-    }
-
-    public void run() {
+    public void run(DemoUserManager DemoUserManager){
         Scanner input = new Scanner(System.in);
-        boolean continueToRun = true;
-        while(continueToRun) {
-            System.out.println("Welcome to this demo! This is what you would see with a standard user account." +
-                    "Note that since you are using a demo account, some features will not be available." +
-                    "Now, what would you like to do today?" +
-                    "\n[1] Access your account information." +
-                    "\n[2] Browse through the global inventory." +
-                    "\n[3] Loan one of your items to another user." +
-                    "\n[4] Look at your message inbox." +
-                    "\n[5] Add a new item to the system." +
-                    "\n[6] Send admins an unfreeze request." +
-                    "\n[7] Exit and log out.");
-            int userInput = input.nextInt();
-            // browse through demo user info
-            if(userInput == 1) {
+        String userInput = "";
 
-            }
-            // browse through the global inventory
-            else if(userInput == 2) {
+        prompts = new DemoUserPresenter(DemoUserManager);
+        prompts.promptUserMenu();
 
+        while (!input.equals("Exit")){
+            prompts.promptUserMenu();
+            userInput= input.nextLine();
+            if (userInput.equals("1")){
+                browseThroughUserInfo();
             }
-            // would loan, but since this is a demo account, would just print demo error
-            else if(userInput == 3) {
-                System.out.println("You are using a demo account and do not have access to this feature.\n");
+            // browse global inventory
+            else if (userInput.equals("2")) {
+                browseThroughGlobalInventory();
             }
-            // browse through user messages
-            else if(userInput == 4) {
-
+            // loan
+            else if (userInput.equals("3")) {
+                prompts.noAccess();
             }
-            // create new item
-            else if(userInput == 5) {
+            // message
+            else if (userInput.equals("4")){
+                DemoUserManager.getUserMessage();
+                //TODO is that how to get the message?
+            }
+            // add item to globalinventory
+            else if (userInput.equals("5")){
                 String demoNameInput;
                 String demoDescriptionInput;
-                System.out.println("Enter in the item's name.");
+                prompts.enterItem();
                 demoNameInput = input.nextLine();
-                System.out.println("Enter the item's description.");
+                prompts.enterItemDescription();
                 demoDescriptionInput = input.nextLine();
-                this.demoUserManager.createNewItem(demoNameInput, demoDescriptionInput);
-                System.out.println("In a standard account, this item would be sent to the admins for approval, " +
-                        "but we'll be nice and simply add it to your account :)");
+                DemoUserManager.createNewItem(demoNameInput, demoDescriptionInput);
+                prompts.adminApproval();
             }
-            // would normally send admins an unfreeze request, but only prints demo error
-            else if(userInput == 6) {
-                System.out.println("You are using a demo account and do not have access to this feature.\n");
+            //send admin unfreeze request
+            else if (userInput.equals("6")){
+                prompts.noAccess();
             }
-            else if(userInput == 7) {
-                continueToRun = false;
+            else if (userInput.equals("7")) {
+                userInput = "exit";
             }
             else {
-                System.out.println("Input not understood, please try again.\n");
+                prompts.inputError();
+            }
+
+        }
+
+    }
+
+    /**
+     * Helper method for run() that allows a user to access their personal information
+     */
+    private void browseThroughUserInfo() {
+        Scanner input = new Scanner(System.in);
+        String userInput = "";
+        while(!userInput.equals("exit")) {
+            prompts.userMenuUserInfoPrompts();
+            userInput = input.nextLine();
+            // view trade history
+            if (userInput.equals("1")) {
+                prompts.noAccess();
+            }
+            // change password
+            else if (userInput.equals("2")) {
+                prompts.noAccess();
+            }
+            // view frequent trading partners
+            else if (userInput.equals("3")) {
+                prompts.noAccess();
+            }
+            // view 3 most recent trades
+            else if (userInput.equals("4")) {
+                prompts.noAccess();
+            }
+            // look at personal inventory
+            else if (userInput.equals("5")) {
+                browseThroughUserInventory();
+            }
+            // look at personal wishlist
+            else if (userInput.equals("6")) {
+                browseThroughUserWishlist();
+            }
+            // exit
+            else if (userInput.equals("7")) {
+                userInput = "exit";
+            }
+            // input error
+            else {
+                prompts.inputError();
             }
         }
+    }
+
+    private void browseThroughUserInventory(){
+        //TODO
+    }
+
+    private void  browseThroughUserWishlist(){
+        //TODO
+    }
+
+    private  void browseThroughGlobalInventory(){
+        //TODO create few items and let user to select, simulate creating traderequest
     }
 }
