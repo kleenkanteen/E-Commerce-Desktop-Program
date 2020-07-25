@@ -80,6 +80,7 @@ public class AdminSystem {
                     case "4":
                         TradeUndoSystem tradeUndoSystem = new TradeUndoSystem(tradeManager, userManager);
                         tradeUndoSystem.run();
+                        adminMenu.printMainOption();
                         break;
 
                 }

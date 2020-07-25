@@ -80,7 +80,10 @@ public class TradeUndoSystem {
                             break;
                     }
                 }
-            }user = re.readLine();
+            }
+            System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                    "Or type 1 to go back to Admin Menu");
+            user = re.readLine();
         }
 
     }
