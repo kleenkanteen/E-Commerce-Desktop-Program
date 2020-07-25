@@ -322,8 +322,10 @@ public class UserMenu {
                             // yes, continue with the trade offer
                             if(userLoanInput == 1) {
                                 TradeController tradeController =
-                                        new TradeController(this.userManager, this.globalInventoryManager);
-                                tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
+                                        new TradeController(this.globalInventoryManager);
+                                TradeRequest newTradeRequest =
+                                        tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
+                                this.userManager.addUserMessage(userItem.get(0).getOwnerName(), newTradeRequest);
                                 continueLoanInput = false;
                             }
                             // if no, exit and return to main menu
@@ -517,8 +519,7 @@ public class UserMenu {
                                     this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
                         List<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
-                        TradeController tradeController = new TradeController(this.userManager,
-                                this.globalInventoryManager);
+                        TradeController tradeController = new TradeController(this.globalInventoryManager);
                         tradeController.run(traderItem, this.currUser,
                                 this.tradeManager.getTradeHistory(this.currUser).size());
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
