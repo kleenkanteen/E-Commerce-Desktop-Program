@@ -35,7 +35,10 @@ public class TradeUndoSystem {
             }
             while (usermanager.isValidUser(user)){
                 List<Trade> trade = tradeManager.getUnstartTrades(user);
-                System.out.println(trade);
+                if (trade.size() == 0){
+                    System.out.println("No trade has been found, gotcha bitch");
+                    break;
+                }
                 String option = re.readLine();
                 boolean finishChoosing = false;
                 int counting = 0;
@@ -46,7 +49,7 @@ public class TradeUndoSystem {
                             "Type 4 to go back");
                     switch (option) {
                         case "1":
-                            if(counting <= trade.size()){
+                            if(counting <= trade.size() - 1){
                             counting += 1;
                             System.out.println(trade.get(counting));
                             option = re.readLine();
@@ -74,6 +77,7 @@ public class TradeUndoSystem {
                         default:
                             System.out.println("Your option makes no sense");
                             option = re.readLine();
+                            break;
                     }
                 }
             }user = re.readLine();
