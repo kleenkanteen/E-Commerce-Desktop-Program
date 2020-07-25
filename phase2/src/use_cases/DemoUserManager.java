@@ -55,13 +55,14 @@ public class DemoUserManager {
      * Create a new item and add it directly to the the demoUser's/Global inventory
      * @param name the name of the item
      * @param description the description of the item
+     * @return the newly created Item
      */
-    public void createNewItem(String name, String description) {
-        //TODO add to DemoGlobalInventory
+    public Item createNewItem(String name, String description) {
         Item demoItem = new Item(name, this.demoName, description);
         demoItem.setItemID(Integer.toString(this.itemID));
         this.itemID++;
         this.demoUser.addPersonalInventory(demoItem);
+        return demoItem;
     }
 
     /**
@@ -95,4 +96,10 @@ public class DemoUserManager {
     public void removeMessage(Message message) {
         this.demoUser.removeMessage(message);
     }
+
+    /**
+     * Set a new password
+     * @param password Sets a new password
+     */
+    public void setPassword(String password) { demoUser.setPassword(password); }
 }

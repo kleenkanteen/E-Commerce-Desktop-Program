@@ -21,8 +21,8 @@ public class DemoUserPresenter {
     }
 
     public void noAccess(){
-        System.out.println("Sorry, Demo user you do not have access to this functionality, please create an account " +
-                "to use our program");
+        System.out.println("Sorry, as a demo user you do not have access to this functionality, \n" +
+                "please create a standard user account to have full access to this program.");
     }
 
     public void userMenuUserInfoPrompts() {
@@ -62,7 +62,7 @@ public class DemoUserPresenter {
      * Reached end of user inventory.
      */
     public void endOfUserInventory() {
-        System.out.println("Reached end of inventory.");
+        System.out.println("Reached the end of your inventory.");
     }
 
     /**
@@ -92,4 +92,15 @@ public class DemoUserPresenter {
                 "but we'll be nice and simply add it to your account :)");
     }
 
+    public void passwordInput() {
+        System.out.println("Enter your new password:");
+    }
+
+    public void itemToString(String itemString) {
+        System.out.println(itemString + "\n");
+    }
+
+    public void itemRemoved() {
+        System.out.println("Item removed.");
+    }
 }
