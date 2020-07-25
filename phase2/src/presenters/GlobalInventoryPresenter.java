@@ -151,4 +151,8 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void seeTraderInventory(){
         System.out.println("Do you want to see this user's inventory to trade more items?\n [1] Yes\n[2] No" );
     }
+
+    public void alreadySelected(){
+        System.out.println("You already selected this item");
+    }
 }

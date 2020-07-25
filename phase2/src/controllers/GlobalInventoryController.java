@@ -80,29 +80,34 @@ public class GlobalInventoryController {
                                 items.add(item);
                                 prompts.seeTraderInventory();
                                 String seeTraderInventorySelection = inputx.nextLine();
-                                if (seeTraderInventorySelection.equals("2")){// just one item trade
+                                if (seeTraderInventorySelection.equals("2")) {// just one item trade
                                     controllers.TradeController trademenu = new TradeController(gim);
                                     trademenu.run(items, user, TM.getTradeHistory(user).size());
-                                } else{
+                                } else {
                                     prompts.traderItem(item);// prints owner inventory
                                     String inputitemselect = inputx.nextLine();
-                                    while (!inputitemselect.equals("Exit")){
-                                        items.add(gim.getPersonInventory(item.getOwnerName())
-                                                .get(Integer.valueOf(inputitemselect)));
+                                    while (!inputitemselect.equals("Exit")) {
+                                        if (items.contains(gim.getPersonInventory(item.getOwnerName())
+                                                .get(Integer.valueOf(inputitemselect)))) {
+                                            prompts.alreadySelected();
+                                        } else {
+                                            items.add(gim.getPersonInventory(item.getOwnerName())
+                                                    .get(Integer.valueOf(inputitemselect)));
+                                        }
+                                        controllers.TradeController trademenu = new TradeController(gim);
+                                        trademenu.run(items, user, TM.getTradeHistory(user).size());
                                     }
-                                    controllers.TradeController trademenu = new TradeController(gim);
-                                    trademenu.run(items, user, TM.getTradeHistory(user).size());
                                 }
-                            }
-                        } else { // if user cant trade, only allow to add to wishlist
-                            prompts.addToWishlist(item);
-                            String selection1 = inputx.nextLine();
-                            if (selection1.equals("1")) {
-                                if (!item.getOwnerName().equals(user)) {
-                                    GW.addWish(item.getItemID(), user);
-                                    prompts.addedToWishlist(item);
-                                    GW.addWish(item.getItemID(), user);
-                                } else prompts.ownItem();
+                            } else { // if user cant trade, only allow to add to wishlist
+                                prompts.addToWishlist(item);
+                                String selection1 = inputx.nextLine();
+                                if (selection1.equals("1")) {
+                                    if (!item.getOwnerName().equals(user)) {
+                                        GW.addWish(item.getItemID(), user);
+                                        prompts.addedToWishlist(item);
+                                        GW.addWish(item.getItemID(), user);
+                                    } else prompts.ownItem();
+                                }
                             }
                         }
                     } catch (UserFrozenException ex) {
