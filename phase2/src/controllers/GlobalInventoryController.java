@@ -32,7 +32,7 @@ public class GlobalInventoryController {
         userManager = UM;
         this.user = user;
         tradeManager = TM;
-        globalWishlistManager = globalWishlistManager;
+        globalWishlistManager = GW;
 
         Scanner inputx = new Scanner(System.in);
         GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
