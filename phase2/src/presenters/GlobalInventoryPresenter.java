@@ -134,4 +134,25 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void FrozenAcc(){
         System.out.println("Your account is frozen, you cannot trade");
     }
+
+    public void traderItem(Item item){
+        // owner inventory
+        String items = "What other item do you want trade with the this user?\n";
+        if (!gim.getPersonInventory(item.getOwnerName()).isEmpty()){
+            for (int k = 0; k < gim.getPersonInventory(item.getOwnerName()).size(); k++) {
+                if (!gim.getPersonInventory(item.getOwnerName()).get(k).equals(item)){
+                    items += "[" + k + "] " + gim.getPersonInventory(item.getOwnerName()).get(k).getName() + "\n" ;
+                }
+            }
+            System.out.println(items + "[e] exit");
+        }
+    }
+
+    public void seeTraderInventory(){
+        System.out.println("Do you want to see this user's inventory to trade more items?\n [1] Yes\n[2] No" );
+    }
+
+    public void alreadySelected(){
+        System.out.println("You already selected this item");
+    }
 }

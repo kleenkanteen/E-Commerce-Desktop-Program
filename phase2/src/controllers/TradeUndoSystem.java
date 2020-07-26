@@ -21,8 +21,6 @@ public class TradeUndoSystem {
         BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
         String user = re.readLine();
         while (! exit){
-            System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
-                    "Or type 1 to go back to Admin Menu");
             if (user.equals("1")){
                 break;
             }
@@ -36,9 +34,11 @@ public class TradeUndoSystem {
             while (usermanager.isValidUser(user)){
                 List<Trade> trade = tradeManager.getUnstartTrades(user);
                 if (trade.size() == 0){
-                    System.out.println("No trade has been found, gotcha bitch");
+                    System.out.println("No trade has been found");
                     break;
                 }
+                System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                        "Or type 1 to go back to Admin Menu");
                 String option = re.readLine();
                 boolean finishChoosing = false;
                 int counting = 0;
@@ -80,7 +80,10 @@ public class TradeUndoSystem {
                             break;
                     }
                 }
-            }user = re.readLine();
+            }
+            System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                    "Or type 1 to go back to Admin Menu");
+            user = re.readLine();
         }
 
     }
