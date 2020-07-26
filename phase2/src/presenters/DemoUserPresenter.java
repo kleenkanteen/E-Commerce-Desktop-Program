@@ -115,10 +115,12 @@ public class DemoUserPresenter {
      * @param page number of page in global inventory
      */
     public void printpage(int page){
-        String items = "Choose your option below: \n";
+        StringBuilder items = new StringBuilder();
+        items.append("Choose your option below: \n");
         if (!globalInventoryManager.generatePage(page).isEmpty()){
             for (int k = 0; k < globalInventoryManager.generatePage(page).size(); k++) {
-                items += "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n" ;
+                String item = "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n";
+                items.append(item) ;
             }
             System.out.println(items + "[n] next page \n[p] previous page \n[e] exit");
         }

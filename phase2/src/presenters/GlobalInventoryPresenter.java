@@ -51,10 +51,12 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
      * @param page number of page in global inventory
      */
     public void printpage(int page){
-        String items = "Choose your option below: \n";
+        StringBuilder items = new StringBuilder();
+        items.append("Choose your option below: \n");
         if (!globalInventoryManager.generatePage(page).isEmpty()){
             for (int k = 0; k < globalInventoryManager.generatePage(page).size(); k++) {
-                items += "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n" ;
+                String item = "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n" ;
+                items.append(item);
             }
             System.out.println(items + "[n] next page \n[p] previous page \n[e] exit");
         }
@@ -137,12 +139,14 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     public void traderItem(Item item){
         // owner inventory
-        String items = "What other item do you want trade with the this user?\n";
+        StringBuilder items = new StringBuilder();
+        items.append("What other item do you want trade with the this user?\n");
         if (!globalInventoryManager.getPersonInventory(item.getOwnerName()).isEmpty()){
             for (int k = 0; k < globalInventoryManager.getPersonInventory(item.getOwnerName()).size(); k++) {
                 if (!globalInventoryManager.getPersonInventory(item.getOwnerName()).get(k).equals(item)){
-                    items += "[" + k + "] " + globalInventoryManager.
+                    String i = "[" + k + "] " + globalInventoryManager.
                             getPersonInventory(item.getOwnerName()).get(k).getName() + "\n" ;
+                    items.append(i);
                 }
             }
             System.out.println(items + "[e] exit");
