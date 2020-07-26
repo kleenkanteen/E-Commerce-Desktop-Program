@@ -62,10 +62,10 @@ public class UserMessageReplySystem {
             final List<Message> loopingMessages =  new ArrayList<>(messages);
             for(Message m: loopingMessages){
                 if(m instanceof TradeRequest){
-                    if(!TradeRequestMessageResponse((TradeRequest) m, messages, br))return;
+                    if(!tradeRequestResponse((TradeRequest) m, messages, br))return;
                 }
                 else if (m instanceof ContentMessage){
-                    if (!ContentMessageResponse((ContentMessage) m, messages, br)) return;
+                    if (!contentMessageResponse((ContentMessage) m, messages, br)) return;
                 }
             }
         }catch(IOException e){
@@ -78,7 +78,7 @@ public class UserMessageReplySystem {
     }
 
     //Allow the user to edit a trade request
-    private void TradeRequestMessageEdit(TradeRequest m, BufferedReader br){
+    private void tradeRequestEdit(TradeRequest m, BufferedReader br){
         String username = m.getSender();
         TradeRequestManager tempTradeRequestManager = new TradeRequestManager(m);
 
@@ -142,7 +142,7 @@ public class UserMessageReplySystem {
             }
         }
     }
-    private boolean TradeRequestMessageResponse(TradeRequest m, List<Message> messages, BufferedReader br)
+    private boolean tradeRequestResponse(TradeRequest m, List<Message> messages, BufferedReader br)
             throws IOException{
         messageReplyMenu.printRequestPrompt(m);
         String username = m.getSender();
@@ -211,7 +211,7 @@ public class UserMessageReplySystem {
                     break;
                 case "3":
                     messages.remove(m);
-                    TradeRequestMessageEdit(m, br);
+                    tradeRequestEdit(m, br);
                     done = true;
                     break;
                 default:
@@ -220,7 +220,7 @@ public class UserMessageReplySystem {
         }while(!done);
         return true;
     }
-    private boolean ContentMessageResponse(Message m, List<Message> messages,
+    private boolean contentMessageResponse(Message m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {

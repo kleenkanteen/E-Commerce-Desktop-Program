@@ -37,7 +37,7 @@ public class UserPresenter {
                 "\n[5] Add a new item to the system." +
                 "\n[6] Send admins an unfreeze request." +
                 "\n[7] Send a private message to another user. " +
-                "\n[8]Exit and log out.");
+                "\n[8] Exit and log out.");
     }
 
     /**

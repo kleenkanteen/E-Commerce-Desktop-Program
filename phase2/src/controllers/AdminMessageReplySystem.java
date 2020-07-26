@@ -59,16 +59,19 @@ public class AdminMessageReplySystem {
  ;          final List<Message> loopingMessages =  new ArrayList<>(messages);
             for(Message m: loopingMessages){
                 if(m instanceof NewItemRequest){
-                    if(!NewItemMessageResponse((NewItemRequest) m, messages, br))return;
+                    if(!newItemRequestResponse((NewItemRequest) m, messages, br))return;
                 }
                 else if(m instanceof FreezeRequest){
-                    if(!FreezeRequestMessageResponse((FreezeRequest) m, messages, br))return;
+                    if(!freezeRequestResponse((FreezeRequest) m, messages, br))return;
                 }
                 else if(m instanceof UnfreezeRequest){
-                    if(!UnfreezeRequestMessageResponse((UnfreezeRequest) m, messages, br))return;
+                    if(!unfreezeRequestResponse((UnfreezeRequest) m, messages, br))return;
                 }
                 else if(m instanceof ContentMessage){
-                    if (!ContentMessageResponse((ContentMessage) m, messages, br)) return;
+                    if (!contentMessageResponse((ContentMessage) m, messages, br)) return;
+                }
+                else if(m instanceof UnbanRequest){
+                    if(!unbanRequestResponse((UnbanRequest) m, messages, br)) return;
                 }
             }
         }catch(IOException e){
@@ -78,7 +81,31 @@ public class AdminMessageReplySystem {
             messageReplyMenu.printExit();
         }
     }
-    private boolean ContentMessageResponse(ContentMessage m, List<Message> messages,
+
+    private boolean unbanRequestResponse(UnbanRequest m, List<Message> messages,
+                                         BufferedReader br) throws IOException{
+        boolean done = false;
+        do{
+            messageReplyMenu.printRequestPrompt(m);
+            String input = br.readLine();
+            if(input.equals("a"))done = true;
+            else if(input.equals("b"))return false;
+            else if(input.equals("1")){
+                messages.remove(m);
+                if(userManager.getUserIsBanned(m.getUser())){
+                    userManager.unFreezeUserAccount(m.getUser());
+                }
+                done = true;
+            }
+            else if(input.equals("2")){
+                messages.remove(m);
+                done = true;
+            }
+        }while(!done);
+        return true;
+
+    }
+    private boolean contentMessageResponse(ContentMessage m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
@@ -100,7 +127,7 @@ public class AdminMessageReplySystem {
         }while(!done);
         return true;
     }
-    private boolean UnfreezeRequestMessageResponse(UnfreezeRequest m, List<Message> messages,
+    private boolean unfreezeRequestResponse(UnfreezeRequest m, List<Message> messages,
                                                    BufferedReader br) throws IOException{
         String u = m.getUser();
         boolean done = false;
@@ -138,7 +165,7 @@ public class AdminMessageReplySystem {
         }while(!done);
         return true;
     }
-    private boolean FreezeRequestMessageResponse(FreezeRequest m, List<Message> messages,
+    private boolean freezeRequestResponse(FreezeRequest m, List<Message> messages,
                                                  BufferedReader br) throws IOException{
         String u = m.getUser();
         boolean done = false;
@@ -174,7 +201,7 @@ public class AdminMessageReplySystem {
         return true;
     }
 
-    private boolean NewItemMessageResponse(NewItemRequest m, List<Message> messages,
+    private boolean newItemRequestResponse(NewItemRequest m, List<Message> messages,
                                            BufferedReader br) throws IOException{
         Item item = m.getNewItem();
         boolean done = false;
