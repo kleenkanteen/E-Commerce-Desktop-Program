@@ -10,15 +10,15 @@ import java.util.NoSuchElementException;
 
 public class GlobalInventoryPresenter implements  Iterator<String>{
     private List<String> properties = new ArrayList<>();
-    public GlobalInventoryManager gim;
+    public GlobalInventoryManager globalInventoryManager;
     private int current = 0;
 
     /**
      * Constructor for GlobalInventoryPresenter
-     * @param gim the GlobalInventoryManager
+     * @param globalInventoryManager the GlobalInventoryManager
      */
-    public GlobalInventoryPresenter(GlobalInventoryManager gim) {
-        this.gim = gim;
+    public GlobalInventoryPresenter(GlobalInventoryManager globalInventoryManager) {
+        this.globalInventoryManager = globalInventoryManager;
     }
 
     /**
@@ -52,9 +52,9 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
      */
     public void printpage(int page){
         String items = "Choose your option below: \n";
-        if (!gim.generatePage(page).isEmpty()){
-            for (int k = 0; k < gim.generatePage(page).size(); k++) {
-                items += "[" + k + "] " + gim.generatePage(page).get(k).getName() + "\n" ;
+        if (!globalInventoryManager.generatePage(page).isEmpty()){
+            for (int k = 0; k < globalInventoryManager.generatePage(page).size(); k++) {
+                items += "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n" ;
             }
             System.out.println(items + "[n] next page \n[p] previous page \n[e] exit");
         }
@@ -138,10 +138,11 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void traderItem(Item item){
         // owner inventory
         String items = "What other item do you want trade with the this user?\n";
-        if (!gim.getPersonInventory(item.getOwnerName()).isEmpty()){
-            for (int k = 0; k < gim.getPersonInventory(item.getOwnerName()).size(); k++) {
-                if (!gim.getPersonInventory(item.getOwnerName()).get(k).equals(item)){
-                    items += "[" + k + "] " + gim.getPersonInventory(item.getOwnerName()).get(k).getName() + "\n" ;
+        if (!globalInventoryManager.getPersonInventory(item.getOwnerName()).isEmpty()){
+            for (int k = 0; k < globalInventoryManager.getPersonInventory(item.getOwnerName()).size(); k++) {
+                if (!globalInventoryManager.getPersonInventory(item.getOwnerName()).get(k).equals(item)){
+                    items += "[" + k + "] " + globalInventoryManager.
+                            getPersonInventory(item.getOwnerName()).get(k).getName() + "\n" ;
                 }
             }
             System.out.println(items + "[e] exit");
@@ -149,7 +150,7 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     }
 
     public void seeTraderInventory(){
-        System.out.println("Do you want to see this user's inventory to trade more items?\n [1] Yes\n[2] No" );
+        System.out.println("Do you want to see this user's inventory to trade more items?\n[1] Yes\n[2] No" );
     }
 
     public void alreadySelected(){

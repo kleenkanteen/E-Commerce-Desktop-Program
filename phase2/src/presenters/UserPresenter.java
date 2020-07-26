@@ -36,7 +36,8 @@ public class UserPresenter {
                 "\n[4] Look at your message inbox." +
                 "\n[5] Add a new item to the system." +
                 "\n[6] Send admins an unfreeze request." +
-                "\n[7] Exit and log out.");
+                "\n[7] Send a private message to another user. " +
+                "\n[8]Exit and log out.");
     }
 
     /**
@@ -300,5 +301,17 @@ public class UserPresenter {
      */
     public void returnToMainMenu() {
         System.out.println("Returning to main menu.");
+    }
+
+    public void userMessagePrompt() {
+        System.out.println("Who would you like to send a message to?");
+    }
+
+    public void userMessagePromptSecundus() {
+        System.out.println("What would you like to say?");
+    }
+
+    public void invalidUsername() {
+        System.out.println("This is not a valid username, please try again.");
     }
 }
