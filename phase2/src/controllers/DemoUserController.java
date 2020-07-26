@@ -1,11 +1,13 @@
 package controllers;
 
+import entities.Item;
+import entities.Message;
 import presenters.DemoUserPresenter;
 import use_cases.DemoUserManager;
-import entities.*;
-import java.util.List;
-import java.util.ArrayList;
+import use_cases.GlobalInventoryManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class DemoUserController {
@@ -13,16 +15,18 @@ public class DemoUserController {
     private DemoUserManager demoUserManager;
     private String username;
     private List<Item> globalInventory;
+    private GlobalInventoryManager  globalInventoryManager;
 
     /**
      * Constructs a DemoUserController object
      * @param username string username
      * @param password string password
      */
-    public DemoUserController(String username, String password) {
+    public DemoUserController(String username, String password, GlobalInventoryManager globalInventoryManager) {
         this.demoUserManager = new DemoUserManager(username, password);
         this.username = username;
         this.globalInventory = new ArrayList<>();
+        this.globalInventoryManager = globalInventoryManager;
     }
 
     /**
@@ -32,7 +36,7 @@ public class DemoUserController {
         Scanner input = new Scanner(System.in);
         String userInput = "";
 
-        this.prompts = new DemoUserPresenter(this.demoUserManager);
+        this.prompts = new DemoUserPresenter(this.demoUserManager, globalInventoryManager);
         this.prompts.promptUserMenu();
 
         while (!userInput.equals("exit")){
@@ -43,7 +47,7 @@ public class DemoUserController {
             }
             // browse global inventory
             else if (userInput.equals("2")) {
-                browseThroughGlobalInventory();
+                browseThroughGlobalInventory(globalInventoryManager);
             }
             // loan
             else if (userInput.equals("3")) {
@@ -236,7 +240,40 @@ public class DemoUserController {
     /**
      * Helper for run that browses through a "global inventory" of predefined objects
      */
-    private  void browseThroughGlobalInventory(){
-        //TODO create few items and let user to select, simulate creating trade request
+    private  void browseThroughGlobalInventory(GlobalInventoryManager globalInventoryManager){
+        Scanner inputx = new Scanner(System.in);
+        int pageNumber = 1;
+        prompts.printpage(pageNumber);
+        String input = inputx.nextLine();
+        while (!input.equals("e")){
+            if (input.equals("n")) {
+                if (pageNumber < globalInventoryManager.generatePageNumber()) {
+                    pageNumber += 1;
+                } else
+                    prompts.emptyPage();
+            }
+            if (input.equals("p")) {
+                if (pageNumber == 1) {
+                    prompts.atfirst();
+                } else {
+                    pageNumber -= 1;
+                }
+            }
+            if (input.matches("[0-9]") &&
+                    Integer.valueOf(input) <= globalInventoryManager.generatePage(pageNumber).size() - 1){
+                prompts.enterDate();
+                inputx.nextLine();
+                prompts.enterPlace();
+                inputx.nextLine();
+                prompts.choosePermTemp();
+                inputx.nextLine();
+                prompts.chooseOneOrTwo();
+                prompts.createAcc();
+            }
+            else prompts.inputError();
+            prompts.printpage(pageNumber);
+            input = inputx.nextLine();
+        }
     }
+
 }

@@ -78,7 +78,7 @@ public class GlobalInventoryController {
                                 } else {
                                     prompts.traderItem(item);// prints owner inventory
                                     String inputitemselect = inputx.nextLine();
-                                    while (!inputitemselect.equals("Exit")) {
+                                    while (!inputitemselect.equals("e")) {
                                         if (inputitemselect.matches("[0-9]*") &&
                                                 Integer.valueOf(inputitemselect) <= globalInventoryManager.
                                                         getPersonInventory(item.getOwnerName()).size()) {
@@ -89,11 +89,14 @@ public class GlobalInventoryController {
                                                 items.add(globalInventoryManager.getPersonInventory(item.getOwnerName())
                                                         .get(Integer.valueOf(inputitemselect)));
                                             }
-                                            controllers.TradeController trademenu =
-                                                    new TradeController(globalInventoryManager, globalWishlistManager);
-                                            trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
-                                        }else prompts.invalid();
+                                        }else{
+                                            prompts.invalid();
+                                            prompts.traderItem(item);// prints owner inventory
+                                        }
                                     }
+                                    controllers.TradeController trademenu =
+                                            new TradeController(globalInventoryManager, globalWishlistManager);
+                                    trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
                                 }
                             } else { // if user cant trade, only allow to add to wishlist
                                 prompts.addToWishlist(item);
