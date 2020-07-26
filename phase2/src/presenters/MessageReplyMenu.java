@@ -55,6 +55,20 @@ public class MessageReplyMenu {
         System.out.println("================================================================");
     }
     /**
+     * Print out a content message and the options they have
+     * @param m the message
+     */
+    public void printUserMessagePrompt(Message m){
+        System.out.println("================================================================");
+        System.out.println(m);
+        System.out.println("Choose your option below:");
+        System.out.println("[1] Delete this message");
+        System.out.println("[2] Skip this message");
+        System.out.println("[3] Delete and Report this message");
+        System.out.println("[4] Exit");
+        System.out.println("================================================================");
+    }
+    /**
      * Print out a decision message and the options they have
      * @param m the message
      */
@@ -159,4 +173,8 @@ public class MessageReplyMenu {
         System.out.println("Enter a date in the future");
     }
 
+    public void promptReasonToReport(){
+        System.out.println("Write in one line what you are reporting this message (examples: Harassment, Ads)");
+        System.out.println("Enter [-1] to stop reporting and skip this message instead");
+    }
 }

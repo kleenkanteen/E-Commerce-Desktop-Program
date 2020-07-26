@@ -83,7 +83,7 @@ public class UserMenu {
             // messages
             else if (userInput.equals("4")) {
                 UserMessageReplySystem messageSystem = new UserMessageReplySystem(this.userManager,
-                        this.globalInventoryManager, this.tradeManager, this.currUser);
+                        this.globalInventoryManager, this.tradeManager, this.currUser, adminManager);
                 messageSystem.run();
             }
             // create a new item for admin approval

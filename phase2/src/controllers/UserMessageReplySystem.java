@@ -17,6 +17,7 @@ public class UserMessageReplySystem {
     private GlobalInventoryManager globalInventoryManager;
     private TradeManager tradeManager;
     private String accountUsername;
+    private AdminManager adminManager;
     private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
     private MessageBuilder messageBuilder = new MessageBuilder();
 
@@ -29,11 +30,12 @@ public class UserMessageReplySystem {
      * @param globalInventoryManager the global inventory manager of the system
      */
     public UserMessageReplySystem(UserManager userManager, GlobalInventoryManager globalInventoryManager,
-                                  TradeManager tradeManager, String accountUsername){
+                                  TradeManager tradeManager, String accountUsername, AdminManager adminManager){
         this.userManager = userManager;
         this.globalInventoryManager = globalInventoryManager;
         this.tradeManager = tradeManager;
         this.accountUsername = accountUsername;
+        this.adminManager = adminManager;
     }
 
     /**
@@ -65,7 +67,12 @@ public class UserMessageReplySystem {
                     if(!tradeRequestResponse((TradeRequest) m, messages, br))return;
                 }
                 else if (m instanceof ContentMessage){
-                    if (!contentMessageResponse((ContentMessage) m, messages, br)) return;
+                    if( m.isSystemMessage()){
+                        if (!systemMessageResponse((ContentMessage) m, messages, br)) return;
+                    }
+                    else{
+                        if (!userMessageResponse((ContentMessage) m, messages, br)) return;
+                    }
                 }
             }
         }catch(IOException e){
@@ -75,6 +82,63 @@ public class UserMessageReplySystem {
             userManager.setUserMessages(accountUsername, messages);
             messageReplyMenu.printExit();
         }
+    }
+    private boolean systemMessageResponse(Message m, List<Message> messages,
+                                           BufferedReader br) throws IOException {
+        boolean done = false;
+        do {
+            messageReplyMenu.printContentMessagePrompt(m);
+            String input = br.readLine();
+            switch (input){
+                case "1":
+                    messages.remove(m);
+                    done = true;
+                    break;
+                case "2":
+                    done = true;
+                    break;
+                case "3":
+                    return false;
+                default:
+                    messageReplyMenu.printInvalidInput();
+            }
+        }while(!done);
+        return true;
+    }
+    private boolean userMessageResponse(Message m, List<Message> messages,
+                                           BufferedReader br) throws IOException {
+        boolean done = false;
+        do {
+            messageReplyMenu.printUserMessagePrompt(m);
+            String input = br.readLine();
+            switch (input){
+                case "1":
+                    messages.remove(m);
+                    done = true;
+                    break;
+                case "2":
+                    done = true;
+                    break;
+                case "3":
+                    messages.remove(m);
+                    report(m, br);
+                    done = true;
+                    break;
+                case "4":
+                    return false;
+                default:
+                    messageReplyMenu.printInvalidInput();
+            }
+        }while(!done);
+        return true;
+    }
+    private void report(Message m, BufferedReader br) throws IOException{
+        messageReplyMenu.promptReasonToReport();
+        String reason = br.readLine();
+        if(reason.equals("-1"))return;
+        Message newMessage = messageBuilder.getReportRequest(reason, accountUsername, m.getContent(), m.getSender());
+        adminManager.addMessage(newMessage);
+        messageReplyMenu.success();
     }
 
     //Allow the user to edit a trade request
@@ -214,28 +278,6 @@ public class UserMessageReplySystem {
                     tradeRequestEdit(m, br);
                     done = true;
                     break;
-                default:
-                    messageReplyMenu.printInvalidInput();
-            }
-        }while(!done);
-        return true;
-    }
-    private boolean contentMessageResponse(Message m, List<Message> messages,
-                                           BufferedReader br) throws IOException {
-        boolean done = false;
-        do {
-            messageReplyMenu.printContentMessagePrompt(m);
-            String input = br.readLine();
-            switch (input){
-                case "1":
-                    messages.remove(m);
-                    done = true;
-                    break;
-                case "2":
-                    done = true;
-                    break;
-                case "3":
-                    return false;
                 default:
                     messageReplyMenu.printInvalidInput();
             }

@@ -50,6 +50,10 @@ public abstract class Message implements Serializable {
         return senderUsername;
     }
 
+    public boolean isSystemMessage() {
+        return senderUsername.equals("System Messages");
+    }
+
     /**
      * Returns a string representation of the message
      * @return the content of the message in a string representation
