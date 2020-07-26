@@ -73,6 +73,9 @@ public class AdminMessageReplySystem {
                 else if(m instanceof UnbanRequest){
                     if(!unbanRequestResponse((UnbanRequest) m, messages, br)) return;
                 }
+                else if(m instanceof ReportRequest){
+                    if(!reportRequestResponse((ReportRequest) m, messages, br)) return;
+                }
             }
         }catch(IOException e){
             messageReplyMenu.printErrorOccurred();
@@ -81,7 +84,37 @@ public class AdminMessageReplySystem {
             messageReplyMenu.printExit();
         }
     }
+    private boolean reportRequestResponse(ReportRequest m, List<Message> messages,
+                                          BufferedReader br) throws IOException{
+        boolean done = false;
+        do{
+            messageReplyMenu.printRequestPrompt(m);
+            String input = br.readLine();
+            if(input.equals("a"))done = true;
+            else if(input.equals("b"))return false;
+            else if(input.equals("1")){
+                messages.remove(m);
+                userManager.banUserAccount(m.getReportedPerson());
+                done = true;
+                messageReplyMenu.success();
+            }
+            else if(input.equals("2")){
+                messages.remove(m);
+                done = true;
+            }
+            else if(input.equals("3")){
+                messages.remove(m);
+                userManager.banUserAccount(m.getReporter());
+                done = true;
+                messageReplyMenu.success();
+            }
+            else{
+                messageReplyMenu.printInvalidInput();
+            }
+        }while(!done);
+        return true;
 
+    }
     private boolean unbanRequestResponse(UnbanRequest m, List<Message> messages,
                                          BufferedReader br) throws IOException{
         boolean done = false;
@@ -96,10 +129,14 @@ public class AdminMessageReplySystem {
                     userManager.unFreezeUserAccount(m.getUser());
                 }
                 done = true;
+                messageReplyMenu.success();
             }
             else if(input.equals("2")){
                 messages.remove(m);
                 done = true;
+            }
+            else{
+                messageReplyMenu.printInvalidInput();
             }
         }while(!done);
         return true;

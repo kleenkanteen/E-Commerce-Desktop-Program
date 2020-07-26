@@ -1,9 +1,9 @@
 package entities;
 
-public class BanRequest extends Request{
+public class ReportRequest extends Request{
     private String contentReported;
     private String reportedPerson;
-    public BanRequest(String content, String sender, String contentReported, String reportedPerson){
+    public ReportRequest(String content, String sender, String contentReported, String reportedPerson){
         super(content, new String[]{"Ban", "Ignore", "Ban Reporter"}, sender);
         this.contentReported = contentReported;
         this.reportedPerson = reportedPerson;
@@ -23,7 +23,8 @@ public class BanRequest extends Request{
 
     @Override
     public String toString() {
-        return String.format("%s\nThe Reported Content: \n%s\nPerson Reported: \n%s\n%s"
-                ,super.toString(),contentReported,reportedPerson,optionsToString());
+        return String.format("Reporting a User\nReason of Reporting: \n%s\nThe Reported Content: " +
+                "\n%s\nPerson being Reported: \n%s\n%s",
+                getContent(),contentReported,reportedPerson,optionsToString());
     }
 }

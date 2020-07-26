@@ -77,7 +77,7 @@ public class GlobalInventoryManager implements Serializable {
 
     public void addItemToHashMap(Item item) {
 
-        if (item.hasID()) {
+        if (!item.hasID()) {
 
             globalInventory.addItem(item.getItemID(), item);
 

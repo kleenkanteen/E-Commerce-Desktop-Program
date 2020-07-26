@@ -113,6 +113,10 @@ public class AdminManager{
         return adminList.get(username);
     }
 
+    public void addMessage(Message message){
+        adminMessages.add(message);
+    }
+
     public Map<String, Admin>  getAdminData(){
         return adminList;
     }

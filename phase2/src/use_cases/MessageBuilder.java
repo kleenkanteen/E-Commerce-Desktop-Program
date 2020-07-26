@@ -72,5 +72,17 @@ public class MessageBuilder {
         return new UnbanRequest(content, username);
     }
 
+    /**
+     * Return a new ReportRequest object
+     * @param content the String content of why the message is reported
+     * @param sender the String username of sender of the
+     * @param contentReported the String content that is being reported
+     * @param reportPerson the person reporting
+     * @return the ReportRequest message
+     */
+    public Message getReportRequest(String content, String sender, String contentReported, String reportPerson) {
+        return new ReportRequest(content, sender, contentReported, reportPerson);
+    }
+
 }
 
