@@ -77,10 +77,11 @@ public class GlobalInventoryController {
                                     trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
                                 } else {
                                     prompts.traderItem(item);// prints owner inventory
-                                    String inputitemselect = inputx.nextLine();
+                                    String inputitemselect = "";
+                                    inputitemselect = inputx.nextLine();
                                     while (!inputitemselect.equals("e")) {
                                         if (inputitemselect.matches("[0-9]*") &&
-                                                Integer.valueOf(inputitemselect) <= globalInventoryManager.
+                                                Integer.valueOf(inputitemselect) < globalInventoryManager.
                                                         getPersonInventory(item.getOwnerName()).size()) {
                                             if (items.contains(globalInventoryManager.getPersonInventory
                                                     (item.getOwnerName()).get(Integer.valueOf(inputitemselect)))) {
@@ -89,9 +90,11 @@ public class GlobalInventoryController {
                                                 items.add(globalInventoryManager.getPersonInventory(item.getOwnerName())
                                                         .get(Integer.valueOf(inputitemselect)));
                                             }
-                                        }else{
+                                        }
+                                        else{
                                             prompts.invalid();
                                             prompts.traderItem(item);// prints owner inventory
+                                            inputitemselect = inputx.nextLine();
                                         }
                                     }
                                     controllers.TradeController trademenu =
