@@ -102,5 +102,9 @@ public class GlobalWishlistManager implements Serializable {
     public List<String> getPersonWishlist(String userid){
         return gW.getPersonWishlist(userid);
     }
+
+    public GlobalWishlist getGlobalWishlistData(){
+        return gW;
+    }
 }
 
