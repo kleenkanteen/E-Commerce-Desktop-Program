@@ -1,7 +1,5 @@
 package controllers;
-import entities.GlobalWishlist;
 import presenters.MainMenuPresenter;
-import entities.User;
 import exceptions.InvalidUsernameException;
 import gateways.*;
 import use_cases.*;

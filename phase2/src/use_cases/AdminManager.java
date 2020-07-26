@@ -117,7 +117,4 @@ public class AdminManager{
         return adminList;
     }
 
-    public List<Message> getAdminMessage(){
-        return adminMessages;
-    }
 }
