@@ -55,10 +55,10 @@ public class AdminBrowsingUsers {
                         option = re.readLine();
                     }
                     // check if admin wants to go back to userid input menu
-                    if (option.equals("5")){
+                    if (option.equals("6")){
                         break;
                     }
-                    else if (option.equals("6")){
+                    else if (option.equals("7")){
                         menu = false;
                         break;
                     }
@@ -75,12 +75,27 @@ public class AdminBrowsingUsers {
                             break;
                         // check if admin wants to change freeze a user
                         case "2":
-                            users.freezeUserAccount(user);
+                            if(users.getUserFrozenStatus(user)){
+                                users.unFreezeUserAccount(user);
+                            }
+                            else{
+                                users.freezeUserAccount(user);
+                            }
                             browse.freezingUser();
+                            break;
+                        // check if admin wants to change ban a user
+                        case "3":
+                            if(users.getUserIsBanned(user)){
+                                users.unFreezeUserAccount(user);
+                            }
+                            else{
+                                users.banUserAccount(user);
+                            }
+                            browse.banUser();
                             break;
                         // check if admin wants to change limit for
                         // trades per week for individual user it selected
-                        case "3":
+                        case "4":
                             browse.tradelimitUser();
                             option = re.readLine();
                             while (!option.matches("[0-9]+")) {
@@ -92,7 +107,7 @@ public class AdminBrowsingUsers {
                             break;
                         // check if admin wants to change limit  incomplete per week
                         // for individual user it selected
-                        case "4":
+                        case "5":
                             browse.incomptradeUser();
                             option = re.readLine();
                             while (!option.matches("[0-9]+")) {
@@ -102,6 +117,7 @@ public class AdminBrowsingUsers {
                             users.setLimitOfIncompleteTradesForOneUser(user, Integer.parseInt(option));
                             browse.successUser();
                             break;
+
                         default:
                             browse.invalidoption();
                             break;
