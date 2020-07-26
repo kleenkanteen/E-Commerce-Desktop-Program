@@ -169,24 +169,7 @@ public class GlobalInventory implements Serializable {
 
 
 
-    /**
-     * filter the search results by the category of Item
-     * @param category the category of Item that the user wants to search
-     * @return the List of Item with the category of Item that the user wants to search
-     */
 
-    public List<Item> filterWithCategory(Category category){
-        List<Item> categoryStuff = new ArrayList<>();
-        for (int i = 0; i < itemMap.size(); i++){
-            Set<String> keys = itemMap.keySet();
-            String f = new ArrayList<>(keys).get(i);
-            if (itemMap.get(f).getCategory().equals(category)){
-                categoryStuff.add(itemMap.get(f));
-            }
-        }
-        return categoryStuff;
-
-    }
 
     /**
      * change the String representation of GlobalInventory.

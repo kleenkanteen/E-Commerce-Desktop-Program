@@ -1,6 +1,6 @@
 package use_cases;
 
-import entities.Category;
+
 import entities.Item;
 import entities.GlobalInventory;
 import java.io.*;
@@ -35,6 +35,10 @@ public class GlobalInventoryManager implements Serializable {
     public Item getItemFromGI(String itemID){
         return (Item) globalInventory.getItem(itemID);
     }
+
+
+
+
 
 
     public ArrayList<Item> getItemFromGI(ArrayList<String> itemIDList){
@@ -73,7 +77,7 @@ public class GlobalInventoryManager implements Serializable {
 
     public void addItemToHashMap(Item item) {
 
-        if (!item.getItemID().equals("")) {
+        if (item.hasID()) {
 
             globalInventory.addItem(item.getItemID(), item);
 
@@ -162,15 +166,7 @@ public class GlobalInventoryManager implements Serializable {
         return globalInventory.containsKey(item.getItemID());
     }
 
-    /**
-     * return a list with all Item in a specific category
-     * @param category the category of Item that the user wants to search
-     * @return the list with all Item in a specific category
-     */
 
-    public List<Item> searchByCategory(Category category){
-        return globalInventory.filterWithCategory(category);
-    }
 
 
 

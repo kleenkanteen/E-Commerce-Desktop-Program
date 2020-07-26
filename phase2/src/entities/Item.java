@@ -8,7 +8,7 @@ public class Item implements Serializable {
     private final String description;
     private final String name;
     private String ownerName;
-    private Category category = Category.OTHER;
+
 
 
 
@@ -26,23 +26,13 @@ public class Item implements Serializable {
 
     }
 
-    /**
-     * setter for the value of the category of the Item.
-     * @param category the Category that Item belongs to.
-     */
-
-    public void setCategory(Category category) {
-        this.category = category;
+    public boolean hasID(){
+        return itemID.equals("");
     }
 
-    /**
-     * getter for the value of the category of the Item.
-     * @return the value of the category of the Item
-     */
 
-    public Category getCategory() {
-        return category;
-    }
+
+
 
 
 
