@@ -1,4 +1,5 @@
 package controllers;
+import entities.GlobalInventory;
 import gateways.*;
 import presenters.MainMenuPresenter;
 import use_cases.*;
@@ -81,9 +82,16 @@ public class MainMenu {
                 input = bufferedReader.readLine();
                 if (input.equals("1")) userLogin(bufferedReader, userManager, tradeManager, adminManager,
                         globalInventoryManager, globalWishlistManager);
-                else if (input.equals("2")) userSignup(bufferedReader, userManager, adminManager);
-                else if (input.equals("3")) adminLogin(bufferedReader, adminManager, userManager,
-                        tradeManager, globalInventoryManager);
+                else if (input.equals("2")){
+                    userSignup(bufferedReader, userManager, adminManager);
+                }
+                else if(input.equals("4")){
+                    startDemo(bufferedReader, globalInventoryManager);
+                }
+                else if (input.equals("3")){
+                    adminLogin(bufferedReader, adminManager, userManager,
+                            tradeManager, globalInventoryManager);
+                }
                 else {
                     mainMenuPresenter.printExit();
                     done = true;
@@ -109,7 +117,20 @@ public class MainMenu {
             mainMenuPresenter.savingError();
         }
     }
+    private void startDemo(BufferedReader bufferedReader, GlobalInventoryManager globalInventoryManager){
+        try {
+            mainMenuPresenter.printLoginPrompt1();
+            String username = bufferedReader.readLine();
+            mainMenuPresenter.printLoginPrompt2();
+            String password = bufferedReader.readLine();
 
+            DemoUserController demo = new DemoUserController(username, password, globalInventoryManager);
+            demo.run();
+        }
+        catch (IOException e) {
+            mainMenuPresenter.inputError();
+        }
+    }
     private void userLogin(BufferedReader bufferedReader, UserManager userManager, TradeManager tradeManager,
                            AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                            GlobalWishlistManager globalWishlistManager) {
@@ -134,7 +155,6 @@ public class MainMenu {
         }
         catch (IOException e) {
             mainMenuPresenter.inputError();
-            mainMenuPresenter.printExit();
         }
     }
 
@@ -160,7 +180,6 @@ public class MainMenu {
         catch (IOException e)
         {
             mainMenuPresenter.inputError();
-            mainMenuPresenter.printExit();
         }
         catch (InvalidUsernameException f){
             mainMenuPresenter.takenUsername();
@@ -184,7 +203,6 @@ public class MainMenu {
         catch (IOException e)
         {
             mainMenuPresenter.inputError();
-            mainMenuPresenter.printExit();
         }
     }
 

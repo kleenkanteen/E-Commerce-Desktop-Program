@@ -31,7 +31,6 @@ public class DemoUserController {
         String userInput = "";
 
         this.prompts = new DemoUserPresenter(this.demoUserManager, this.globalInventoryManager);
-        this.prompts.promptUserMenu();
 
         while (!userInput.equals("exit")){
             this.prompts.promptUserMenu();
