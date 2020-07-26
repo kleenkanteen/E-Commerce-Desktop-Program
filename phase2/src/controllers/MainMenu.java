@@ -85,10 +85,10 @@ public class MainMenu {
                 else if (input.equals("2")){
                     userSignup(bufferedReader, userManager, adminManager);
                 }
-                else if(input.equals("4")){
+                else if(input.equals("3")){
                     startDemo(bufferedReader, globalInventoryManager);
                 }
-                else if (input.equals("3")){
+                else if (input.equals("4")){
                     adminLogin(bufferedReader, adminManager, userManager,
                             tradeManager, globalInventoryManager);
                 }
