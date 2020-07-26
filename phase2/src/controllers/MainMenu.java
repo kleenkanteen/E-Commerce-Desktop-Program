@@ -15,36 +15,45 @@ public class MainMenu {
      * the GlobalWishList, all UserTrades
      * Based on user input and if a successful login is performed, grants access to User/ Admin Menu/ User Acc Creation
      */
-    MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
-
-    String serializedAdmins = "H_ser_file_infos/serializedAdmins.ser";
-    String serializedUsers = "H_ser_file_infos/serializedUsers.ser";
-    String serializedGlobalInventory = "H_ser_file_infos/serializedGlobalInventory.ser";
-    String serializedAdminMessages = "H_ser_file_infos/serializedAdminMessages.ser";
-    String serializedGlobalWishlist = "H_ser_file_infos/serializedGlobalWishlist.ser";
-    String serializedUserTrades = "H_ser_file_infos/serializedUserTrades.ser";
-
-    AdminAccountGateways adminAccountGateways;
-    UserGateway userGateway;
-    GlobalInventoryGateways globalInventoryGateways;
-    UserTradesGateway userTradesGateway;
-    GlobalWishlistGateway globalWishlistGateway;
-    AdminMessageGateway adminMessageGateway;
-
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
 
     public void run() {
+        String adminFilepath = "data/serializedAdmins.ser";
+        String userFilepath = "data/serializedUsers.ser";
+        String globalInventoryFilepath = "data/serializedGlobalInventory.ser";
+        String adminMessagesFilepath = "data/serializedAdminMessages.ser";
+        String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
+        String tradeFilepath = "data/serializedUserTrades.ser";
+
+        AdminAccountGateways adminAccountGateways;
+        UserGateway userGateway;
+        GlobalInventoryGateways globalInventoryGateways;
+        UserTradesGateway userTradesGateway;
+        GlobalWishlistGateway globalWishlistGateway;
+        AdminMessageGateway adminMessageGateway;
         try {
-            // deserialize variables
-            adminAccountGateways = new AdminAccountGateways(serializedAdmins);
-            if (adminAccountGateways.getAdminMap().isEmpty()) {
+            GatewayBuilder gatewayBuilder = new GatewayBuilder();
+            //deserialize admins
+            adminAccountGateways = gatewayBuilder.getAdminAccountGateways(adminFilepath);
+
+            if(adminAccountGateways.getAdminMap().isEmpty()){
                 adminAccountGateways.beginAdminMap();
             }
-            userGateway = new UserGateway(serializedUsers);
-            globalInventoryGateways = new GlobalInventoryGateways(serializedGlobalInventory);
-            userTradesGateway = new UserTradesGateway(serializedUserTrades);
-            globalWishlistGateway = new GlobalWishlistGateway(serializedGlobalWishlist);
-            adminMessageGateway = new AdminMessageGateway(serializedAdminMessages);
+            //deserialize users
+            userGateway = gatewayBuilder.getUserGateway(userFilepath);
+
+            //deserialize global inventory
+            globalInventoryGateways = gatewayBuilder.getGlobalInventoryGateways(globalInventoryFilepath);
+
+            //deserialize all user trades
+            userTradesGateway = gatewayBuilder.getUserTradesGateway(tradeFilepath);
+
+            //deserialize GlobalWishlistGateway
+            globalWishlistGateway = gatewayBuilder.getGlobalWishlistGateway(globalWishlistFilepath);
+
+            //deserialize AdminMessageGateway
+            adminMessageGateway = gatewayBuilder.getAdminMessageGateways(adminMessagesFilepath);
+
         }
         catch(IOException | ClassNotFoundException ex) {
             mainMenuPresenter.readError();
@@ -52,25 +61,29 @@ public class MainMenu {
             return;
         }
         // create managers to pass in serialized data
-        AdminManager adminManager =
-                new AdminManager(adminAccountGateways.getAdminMap(), adminMessageGateway.getMessages());
-        UserManager userManager = new UserManager(userGateway.getMapOfUsers());
-        GlobalInventoryManager globalInventoryManager = new GlobalInventoryManager(globalInventoryGateways.getgI());
-        TradeManager tradeManager = new TradeManager(userTradesGateway.getUserTrades());
+        UseCaseBuilder useCaseBuilder = new UseCaseBuilder();
+        AdminManager adminManager = useCaseBuilder.getAdminManager(adminAccountGateways.getAdminMap(),
+                adminMessageGateway.getMessages());
+        UserManager userManager = useCaseBuilder.getUserManager(userGateway.getMapOfUsers());
+        TradeManager tradeManager =
+                useCaseBuilder.getTradeManager(userTradesGateway.getUserTrades());
+        GlobalInventoryManager globalInventoryManager =
+                useCaseBuilder.getGlobalInventoryManager(globalInventoryGateways.getgI());
         GlobalWishlistManager globalWishlistManager =
-                new GlobalWishlistManager(globalWishlistGateway.getWishlistItems());
+                useCaseBuilder.getGlobalWishlistManager(globalWishlistGateway.getWishlistItems());
 
         String input;
         boolean done = false;
-
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         do {
             mainMenuPresenter.printMenuPrompt();
             try {
                 input = bufferedReader.readLine();
-                if (input.equals("1")) userLogin(userManager, tradeManager, adminManager, globalInventoryManager,
-                        globalWishlistManager);
-                else if (input.equals("2")) userSignup(userManager);
-                else if (input.equals("3")) adminLogin(adminManager, userManager, tradeManager, globalInventoryManager);
+                if (input.equals("1")) userLogin(bufferedReader, userManager, tradeManager, adminManager,
+                        globalInventoryManager, globalWishlistManager);
+                else if (input.equals("2")) userSignup(bufferedReader, userManager, adminManager);
+                else if (input.equals("3")) adminLogin(bufferedReader, adminManager, userManager,
+                        tradeManager, globalInventoryManager);
                 else {
                     mainMenuPresenter.printExit();
                     done = true;
@@ -84,20 +97,22 @@ public class MainMenu {
         } while (!done);
 
         try {
-            userGateway.writeToFile(serializedUsers, userGateway.getMapOfUsers());
-            globalInventoryGateways.writeToFile(globalInventoryGateways.getgI());
-            userTradesGateway.writeToFile(serializedUserTrades, userTradesGateway.getUserTrades());
-            globalWishlistGateway.writeToFile(serializedGlobalWishlist, globalWishlistGateway.getWishlistItems());
-            adminMessageGateway.writeToFile(serializedAdminMessages, adminMessageGateway.getMessages());
-            adminAccountGateways.saveToFile(adminAccountGateways.getAdminMap());
+            userGateway.writeToFile(userFilepath, userManager.getUserData());
+            globalInventoryGateways.writeToFile(globalInventoryManager.getGlobalInventoryData());
+            userTradesGateway.writeToFile(tradeFilepath, tradeManager.getTradeData());
+            globalWishlistGateway.writeToFile(globalWishlistFilepath, globalWishlistManager.getGlobalWishlistData());
+            adminAccountGateways.saveToFile(adminManager.getAdminData());
+            adminMessageGateway.writeToFile(adminMessagesFilepath, adminManager.getAdminMessages());
+            bufferedReader.close();
         }
         catch(IOException e) {
             mainMenuPresenter.savingError();
         }
     }
 
-    private void userLogin(UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
-                           GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager) {
+    private void userLogin(BufferedReader bufferedReader, UserManager userManager, TradeManager tradeManager,
+                           AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
+                           GlobalWishlistManager globalWishlistManager) {
         try {
             mainMenuPresenter.printLoginPrompt1();
             String username = bufferedReader.readLine();
@@ -123,20 +138,20 @@ public class MainMenu {
         }
     }
 
-    private void userSignup(UserManager userManager){
+    private void userSignup(BufferedReader bufferedReader, UserManager userManager, AdminManager adminManager){
         try {
             mainMenuPresenter.printLoginPromptNewUsername();
             String username = bufferedReader.readLine();
             mainMenuPresenter.printLoginPrompt2();
-            String pass = bufferedReader.readLine();
+            String password = bufferedReader.readLine();
 
-            boolean d = userManager.createNewUser(username, pass, userTradesGateway.getUserTrades());
+            boolean d = userManager.createNewUser(username, password);
             if (!d){
                 mainMenuPresenter.usernameTooShort();
             }
             else {
-                if (!(adminAccountGateways.getAdminMap().containsKey(username))) {
-                    userGateway.getMapOfUsers().put(username, new User(username, pass));
+                if (!adminManager.userExist(username)) {
+                    userManager.createNewUser(username, password);
                     mainMenuPresenter.successfulAccountCreation();
                 }
                 else mainMenuPresenter.takenUsername();
@@ -152,8 +167,8 @@ public class MainMenu {
         }
     }
 
-    private void adminLogin(AdminManager adminManager, UserManager userManager, TradeManager tradeManager,
-                            GlobalInventoryManager globalInventoryManager) {
+    private void adminLogin(BufferedReader bufferedReader, AdminManager adminManager, UserManager userManager,
+                            TradeManager tradeManager, GlobalInventoryManager globalInventoryManager) {
         try {
             mainMenuPresenter.printLoginPrompt1();
             String username = bufferedReader.readLine();

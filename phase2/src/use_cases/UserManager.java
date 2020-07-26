@@ -40,18 +40,16 @@ public class UserManager {
      * Returns the HashMap if the user successfully created, throw an error if user already exists.
      * @param username the new username
      * @param password the string password
-     * @param tradeHistory the hashmap of all user trades
      * @return true if user account successfully created, false if user already exists in system
      * @throws exceptions.InvalidUsernameException if the username already exists in the system
      */
-    public boolean createNewUser(String username, String password, Map<String, List<Trade>> tradeHistory)
+    public boolean createNewUser(String username, String password)
             throws InvalidUsernameException {
         if(this.allUsers.containsKey(username)) {
             throw new exceptions.InvalidUsernameException();
         }
         if(!(username.length() < 3)) {
             this.allUsers.put(username, new entities.User(username, password));
-            tradeHistory.put(username, new ArrayList<>());
             return true;
         }
         return false;
