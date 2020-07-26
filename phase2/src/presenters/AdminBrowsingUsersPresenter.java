@@ -22,10 +22,11 @@ public class AdminBrowsingUsersPresenter {
         System.out.println("\n" + info + "\n\n" + "User account info above, choose your option below: \n\n" +
                 "[1] Change lending threshold, how many times user must lend before borrowing \n" +
                 "[2] Freeze/unfreeze User \n" +
-                "[3] Change limit of trades per week \n" +
-                "[4] Change limit of incomplete trades \n" +
-                "[5] Return to user selection \n" +
-                "[6] Return to admin menu");
+                "[3] Ban/unban User \n" +
+                "[4] Change limit of trades per week \n" +
+                "[5] Change limit of incomplete trades \n" +
+                "[6] Return to user selection \n" +
+                "[7] Return to admin menu");
 
     }
 
@@ -50,6 +51,8 @@ public class AdminBrowsingUsersPresenter {
     }
 
     public void freezingUser(){ System.out.println("\nUser freezing state has been changed\n"); }
+
+    public void banUser(){ System.out.println("\nUser banning state has been changed\n"); }
 
     public void error(){ System.out.println("Something went wrong"); }
 
