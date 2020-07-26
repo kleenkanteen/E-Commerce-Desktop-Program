@@ -20,7 +20,8 @@ public class DemoUserPresenter {
                 "\n[4] Look at your message inbox." +
                 "\n[5] Add a new item to the system." +
                 "\n[6] Send admins an unfreeze request." +
-                "\n[7] Exit and log out.");
+                "\n[7] Send a private message to another user." +
+                "\n[8] Exit and log out.");
     }
 
     public void noAccess(){
@@ -92,7 +93,8 @@ public class DemoUserPresenter {
 
     public void adminApproval(){
         System.out.println("In a standard account, this item would be sent to the admins for approval, " +
-                "but we'll be nice and simply add it to your account :)");
+                "but we'll be nice and simply add it to your account :)... " +
+                "\n...but your new item will not be visible on the global inventory. :(");
     }
 
     public void passwordInput() {
@@ -160,6 +162,14 @@ public class DemoUserPresenter {
     }
 
     public void createAcc(){
-        System.out.println("Please create an account to request a real trade");
+        System.out.println("Please create an account to request a real trade.");
+    }
+
+    public void emptyInventory() {
+        System.out.println("Your inventory is empty!");
+    }
+
+    public void emptyWishlist() {
+        System.out.println("Your wishlist is empty.");
     }
 }

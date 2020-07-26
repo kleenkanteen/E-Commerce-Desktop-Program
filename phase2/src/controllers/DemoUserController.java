@@ -13,19 +13,10 @@ import java.util.Scanner;
 public class DemoUserController {
     private DemoUserPresenter prompts;
     private DemoUserManager demoUserManager;
-    private String username;
-    private List<Item> globalInventory;
     private GlobalInventoryManager  globalInventoryManager;
 
-    /**
-     * Constructs a DemoUserController object
-     * @param username string username
-     * @param password string password
-     */
     public DemoUserController(String username, String password, GlobalInventoryManager globalInventoryManager) {
         this.demoUserManager = new DemoUserManager(username, password);
-        this.username = username;
-        this.globalInventory = new ArrayList<>();
         this.globalInventoryManager = globalInventoryManager;
     }
 
@@ -47,7 +38,7 @@ public class DemoUserController {
             }
             // browse global inventory
             else if (userInput.equals("2")) {
-                browseThroughGlobalInventory(globalInventoryManager);
+                browseThroughGlobalInventory();
             }
             // loan
             else if (userInput.equals("3")) {
@@ -55,9 +46,9 @@ public class DemoUserController {
             }
             // message
             else if (userInput.equals("4")){
-                browseThroughUserMessages();
+                this.prompts.noAccess();
             }
-            // add item to global inventory
+            // add item to personal inventory
             else if (userInput.equals("5")){
                 String demoNameInput;
                 String demoDescriptionInput;
@@ -65,14 +56,19 @@ public class DemoUserController {
                 demoNameInput = input.nextLine();
                 this.prompts.enterItemDescription();
                 demoDescriptionInput = input.nextLine();
-                this.globalInventory.add(this.demoUserManager.createNewItem(demoNameInput, demoDescriptionInput));
+                this.demoUserManager.addToInventory(this.demoUserManager.createNewItem(demoNameInput,
+                        demoDescriptionInput));
                 this.prompts.adminApproval();
             }
             //send admin unfreeze request
             else if (userInput.equals("6")){
                 this.prompts.noAccess();
             }
+            // send a private message
             else if (userInput.equals("7")) {
+                this.prompts.noAccess();
+            }
+            else if(userInput.equals("8")) {
                 userInput = "exit";
             }
             else {
@@ -128,15 +124,7 @@ public class DemoUserController {
     }
 
     /**
-     * Helper for run that browses through user messages?
-     */
-    private void browseThroughUserMessages() {
-        List<Message> userMessages = this.demoUserManager.getUserMessage();
-        //TODO humongous pain in the ass oh my god
-    }
-
-    /**
-     * Helper for run that browses through user inventory
+     * Helper for run() that browses through user inventory
      */
     private void browseThroughUserInventory(){
         List<Item> userInventory = this.demoUserManager.getUserInventory();
@@ -145,7 +133,7 @@ public class DemoUserController {
         String userInput = "";
         while(!userInput.equals("exit")) {
             if(userInventory.size() == 0) {
-                System.out.println("Your inventory is empty!");
+                this.prompts.emptyInventory();
                 return;
             }
             this.prompts.itemToString(userInventory.get(index).toString());
@@ -155,7 +143,6 @@ public class DemoUserController {
             if(userInput.equals("1")) {
                 this.demoUserManager.removeFromInventory(userInventory.get(index));
                 userInventory.remove(index);
-                this.globalInventory.remove(index);
                 this.prompts.itemRemoved();
             }
             // go to next item
@@ -188,7 +175,7 @@ public class DemoUserController {
     }
 
     /**
-     * Helper for run that browses through user wishlist
+     * Helper for run() that browses through user wishlist
      */
     private void browseThroughUserWishlist(){
         List<Item> userWishlist = this.demoUserManager.getUserWishlist();
@@ -197,7 +184,7 @@ public class DemoUserController {
         int index = 0;
         while(!userInput.equals("exit")) {
             if(userWishlist.size() == 0) {
-                System.out.println("Your wishlist is empty.");
+                this.prompts.emptyWishlist();
                 return;
             }
             this.prompts.itemToString(userWishlist.get(index).toString());
@@ -238,40 +225,40 @@ public class DemoUserController {
     }
 
     /**
-     * Helper for run that browses through a "global inventory" of predefined objects
+     * Helper for run() that browses through a "global inventory" of predefined objects
      */
-    private  void browseThroughGlobalInventory(GlobalInventoryManager globalInventoryManager){
+    private  void browseThroughGlobalInventory(){
         Scanner inputx = new Scanner(System.in);
         int pageNumber = 1;
-        prompts.printpage(pageNumber);
+        this.prompts.printpage(pageNumber);
         String input = inputx.nextLine();
         while (!input.equals("e")){
             if (input.equals("n")) {
                 if (pageNumber < globalInventoryManager.generatePageNumber()) {
                     pageNumber += 1;
                 } else
-                    prompts.emptyPage();
+                    this.prompts.emptyPage();
             }
             if (input.equals("p")) {
                 if (pageNumber == 1) {
-                    prompts.atfirst();
+                    this.prompts.atfirst();
                 } else {
                     pageNumber -= 1;
                 }
             }
             if (input.matches("[0-9]") &&
                     Integer.valueOf(input) <= globalInventoryManager.generatePage(pageNumber).size() - 1){
-                prompts.enterDate();
+                this.prompts.enterDate();
                 inputx.nextLine();
-                prompts.enterPlace();
+                this.prompts.enterPlace();
                 inputx.nextLine();
-                prompts.choosePermTemp();
+                this.prompts.choosePermTemp();
                 inputx.nextLine();
-                prompts.chooseOneOrTwo();
-                prompts.createAcc();
+                this.prompts.chooseOneOrTwo();
+                this.prompts.createAcc();
             }
-            else prompts.inputError();
-            prompts.printpage(pageNumber);
+            else this.prompts.inputError();
+            this.prompts.printpage(pageNumber);
             input = inputx.nextLine();
         }
     }

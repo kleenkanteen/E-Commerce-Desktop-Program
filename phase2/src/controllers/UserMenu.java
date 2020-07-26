@@ -88,10 +88,12 @@ public class UserMenu {
             }
             // create a new item for admin approval
             else if (userInput.equals("5")) {
+                // prompt user for new item name/description
                 this.userPresenter.createNewItemPrompt(0);
                 String itemName = input.nextLine();
                 this.userPresenter.createNewItemPrompt(1);
                 String itemDescription = input.nextLine();
+                // add this new item request to admin inbox
                 List<Message> adminMessages = this.adminManager.getAdminMessages();
                 adminMessages.add(this.messageBuilder.getNewItemRequest("User " + this.currUser +
                         " has created a new item that requires approval.",
@@ -114,20 +116,25 @@ public class UserMenu {
             }
             // send a private message to a user
             else if (userInput.equals("7")) {
+                // prompt user for the recipient user name
                 boolean continueToRun = true;
                 String user = "";
                 while(continueToRun) {
                     this.userPresenter.userMessagePrompt();
                     user = input.nextLine();
+                    // if the username is invalid
                     if(!this.userManager.isValidUser(user)) {
                         this.userPresenter.invalidUsername();
                     }
+                    // else move on
                     else {
                         continueToRun = false;
                     }
                 }
+                // prompt user for message content
                 this.userPresenter.userMessagePromptSecundus();
                 String message = input.nextLine();
+                // add to recipient inbox
                 this.userManager.addUserMessage(user, this.messageBuilder.getContentMessage(message, this.currUser));
             }
             // exit
