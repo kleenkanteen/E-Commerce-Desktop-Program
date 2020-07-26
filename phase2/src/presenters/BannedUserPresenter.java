@@ -2,14 +2,13 @@ package presenters;
 
 public class BannedUserPresenter {
     public void unBanRequestPrompt() {
-        System.out.println("You are BANNED");
-        System.out.println("Would you like to beg for forgiveness to our glorious overlords? " +
-                "\n[1] Plead for mercy. " +
-                "\n[2] Remain a heretic.");
+        System.out.println("You are banned. Would you like to request an unban?" +
+                "\n[1] Plead for mercy." +
+                "\n[2] Return to main menu.");
     }
 
     public void unbanRequestSent() {
-        System.out.println("Congratulations! You have begged for forgiveness! :)");
+        System.out.println("Unban request sent.");
     }
 
     public void returningToMainMenu() {
