@@ -26,9 +26,7 @@ public class Item implements Serializable {
 
     }
 
-    public boolean hasID(){
-        return itemID.equals("");
-    }
+
 
 
 
