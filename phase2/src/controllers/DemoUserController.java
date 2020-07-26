@@ -40,7 +40,10 @@ public class DemoUserController {
             }
             // browse global inventory
             else if (userInput.equals("2")) {
-                browseThroughGlobalInventory();
+                if (globalInventoryManager.hasNoItem()){
+                    prompts.emptyglobalinventory();
+                }else{
+                browseThroughGlobalInventory();}
             }
             // loan
             else if (userInput.equals("3")) {
@@ -215,8 +218,12 @@ public class DemoUserController {
                     index--;
                 }
             }
+            // send the owner of this item a trade offer
+            else if (userInput.equals("4")){
+                prompts.noAccess();
+            }
             // exit
-            else if(userInput.equals("4")) {
+            else if(userInput.equals("5")) {
                 userInput = "exit";
             }
             // input error
@@ -232,36 +239,47 @@ public class DemoUserController {
     private  void browseThroughGlobalInventory(){
         Scanner inputx = new Scanner(System.in);
         int pageNumber = 1;
-        this.prompts.printpage(pageNumber);
-        String input = inputx.nextLine();
+        String input ="";
         while (!input.equals("e")){
+            this.prompts.printpage(pageNumber);
+            input = inputx.nextLine();
             if (input.equals("n")) {
                 if (pageNumber < this.globalInventoryManager.generatePageNumber()) {
                     pageNumber += 1;
                 } else
                     this.prompts.emptyPage();
             }
-            if (input.equals("p")) {
+            else if (input.equals("p")) {
                 if (pageNumber == 1) {
                     this.prompts.atfirst();
                 } else {
                     pageNumber -= 1;
                 }
             }
-            if (input.matches("[0-9]") &&
+            else if (input.matches("[0-9]") &&
                     Integer.valueOf(input) <= this.globalInventoryManager.generatePage(pageNumber).size() - 1){
-                this.prompts.enterDate();
-                inputx.nextLine();
-                this.prompts.enterPlace();
-                inputx.nextLine();
-                this.prompts.choosePermTemp();
-                inputx.nextLine();
-                this.prompts.chooseOneOrTwo();
-                this.prompts.createAcc();
+                Item item = globalInventoryManager.generatePage(pageNumber).get(Integer.valueOf(input));
+                prompts.addToWishlishandTradeRequest(item);
+                String wishlistOrTradeInput = inputx.nextLine();
+                if (wishlistOrTradeInput.equals("1")){ //add to wishlist
+                    if (demoUserManager.getUserWishlist().contains(item)){
+                        prompts.alreadyHave();
+                    }else{
+                        demoUserManager.addDemoWishlist(item);
+                        prompts.addedToWishlist(item);
+                    }
+                }else{
+                    this.prompts.enterDate();
+                    inputx.nextLine();
+                    this.prompts.enterPlace();
+                    inputx.nextLine();
+                    this.prompts.choosePermTemp();
+                    inputx.nextLine();
+                    this.prompts.chooseOneOrTwo();
+                    this.prompts.createAcc();
+                }
             }
             else this.prompts.inputError();
-            this.prompts.printpage(pageNumber);
-            input = inputx.nextLine();
         }
     }
 

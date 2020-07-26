@@ -1,5 +1,6 @@
 package presenters;
 
+import entities.Item;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
 
@@ -114,10 +115,12 @@ public class DemoUserPresenter {
      * @param page number of page in global inventory
      */
     public void printpage(int page){
-        String items = "Choose your option below: \n";
+        StringBuilder items = new StringBuilder();
+        items.append("Choose your option below: \n");
         if (!globalInventoryManager.generatePage(page).isEmpty()){
             for (int k = 0; k < globalInventoryManager.generatePage(page).size(); k++) {
-                items += "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n" ;
+                String item = "[" + k + "] " + globalInventoryManager.generatePage(page).get(k).getName() + "\n";
+                items.append(item) ;
             }
             System.out.println(items + "[n] next page \n[p] previous page \n[e] exit");
         }
@@ -172,4 +175,30 @@ public class DemoUserPresenter {
     public void emptyWishlist() {
         System.out.println("Your wishlist is empty.");
     }
+
+    public void emptyglobalinventory(){
+        System.out.println("The global inventory is empty");
+    }
+
+    public void addToWishlishandTradeRequest(Item item){
+        System.out.println("Choose your option below: \n[1] Add this item (" + item.getName() +
+                ") to your wish-list \n" +
+                "[2] Request a trade");
+    }
+
+    /**
+     * shows the item successfully added to wish-list
+     * @param item the item
+     */
+    public void addedToWishlist(Item item){
+        System.out.println(item.getName() +  " is added to your wishlist");
+    }
+
+    /**
+     * prints when user adding same item in their wish-list
+     */
+    public void alreadyHave(){
+        System.out.println("This item is already in you wish-list");
+    }
+
 }
