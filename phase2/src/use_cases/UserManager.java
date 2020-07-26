@@ -216,27 +216,6 @@ public class UserManager {
      */
     public void addUserMessage(String username, Message message) { this.allUsers.get(username).addMessages(message); }
 
-    /**
-     * Allows a user to request an admin approve of a new item.
-     * @param username the name of the user requesting approval
-     * @param itemName the name of the new object
-     * @param description description of this object
-     * @return the NewItemMessage to be approved by an admin
-     */
-    public NewItemRequest createNewItem(String username, String itemName, String description) {
-        Item newItem = new Item(itemName, username, description);
-        return new NewItemRequest("User " + username + " has created a new item, requires approval", newItem);
-    }
-
-    /**
-     * Create and add a new message object to a user's list of messages
-     * @param username the user in question
-     * @param content the content of the message to be added to the user's inbox
-     */
-    public void createUserMessage(String username, String content) {
-        addUserMessage(username, new ContentMessage(content, username));
-    }
-
     // ADMIN METHODS
 
     /**

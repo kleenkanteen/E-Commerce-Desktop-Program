@@ -1,8 +1,8 @@
 package use_cases;
 
 import java.util.List;
-import entities.DemoUser;
 import entities.*;
+import use_cases.MessageBuilder;
 
 public class DemoUserManager {
 
@@ -32,16 +32,6 @@ public class DemoUserManager {
      * @return return this user's wishlist
      */
     public List<Item> getUserWishlist() { return this.demoUser.getWishlist(); }
-
-    /**
-     * Return the inbox, composed of a predefined TradeRequest entity and a private message
-     * @return the list of predefined messages
-     */
-    public List<Message> getUserMessage() {
-        // TODO add a trade request
-        // TODO add a private whatever personal message
-        return this.demoUser.getMessages();
-    }
 
     /**
      * Add to the wishlist
@@ -87,14 +77,6 @@ public class DemoUserManager {
      */
     public void removeFromWishlist(Item item) {
         this.demoUser.removeWishlist(item);
-    }
-
-    /**
-     * Remove a message from this user's inbox
-     * @param message the message to be removed
-     */
-    public void removeMessage(Message message) {
-        this.demoUser.removeMessage(message);
     }
 
     /**

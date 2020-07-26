@@ -10,14 +10,15 @@ import java.util.Scanner;
 
 
 public class UserMenu {
-    // TODO admin manager import
+
     private String currUser;
-    private List<Message> adminMessages;
+    private AdminManager adminManager;
     private UserPresenter userPresenter;
     private UserManager userManager;
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
     private TradeManager tradeManager;
+    private MessageBuilder messageBuilder;
 
     /**
      * Instantiates a new UserMenu instance
@@ -26,18 +27,19 @@ public class UserMenu {
      * @param tradeManager the TradeManager object
      * @param globalInventoryManager the GlobalInventoryManager object
      * @param globalWishlistManager the GlobalWishlistManager object
-     * @param adminMessages the AdminMessages object
+     * @param adminManager the AdminManager object
      */
     public UserMenu(String currUser, UserManager userManager, TradeManager tradeManager,
                     GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
-                    List<Message> adminMessages) {
+                    AdminManager adminManager) {
         this.currUser = currUser;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
         this.globalInventoryManager = globalInventoryManager;
         this.globalWishlistManager = globalWishlistManager;
-        this.adminMessages = adminMessages;
+        this.adminManager = adminManager;
         this.userPresenter = new UserPresenter();
+        this.messageBuilder = new MessageBuilder();
     }
 
     /**
@@ -57,8 +59,11 @@ public class UserMenu {
             this.userPresenter.promptUserMenu();
             userInput = input.nextLine();
             // look at/change user information
+            // will call a branching series of subclasses
             if (userInput.equals("1")) {
-                browseThroughUserInfo();
+                BrowseThroughUserInfo browseThroughUserInfo = new BrowseThroughUserInfo(this.currUser,
+                        this.userManager, this.tradeManager, this.globalInventoryManager, this.globalWishlistManager);
+                browseThroughUserInfo.run();
             }
             // look at global inventory
             else if (userInput.equals("2")) {
@@ -83,18 +88,26 @@ public class UserMenu {
             }
             // create a new item for admin approval
             else if (userInput.equals("5")) {
+                // prompt user for new item name/description
                 this.userPresenter.createNewItemPrompt(0);
                 String itemName = input.nextLine();
                 this.userPresenter.createNewItemPrompt(1);
                 String itemDescription = input.nextLine();
-                this.adminMessages.add(this.userManager.createNewItem(this.currUser, itemName, itemDescription));
+                // add this new item request to admin inbox
+                List<Message> adminMessages = this.adminManager.getAdminMessages();
+                adminMessages.add(this.messageBuilder.getNewItemRequest("User " + this.currUser +
+                        " has created a new item that requires approval.",
+                        new Item(itemName, this.currUser, itemDescription)));
+                this.adminManager.setAdminMessages(adminMessages);
                 this.userPresenter.newItemMessageSentToAdmin();
             }
             // send admin an unfreeze request message
             else if (userInput.equals("6")) {
                 if(this.userManager.getUserFrozenStatus(this.currUser)) {
-                    this.adminMessages.add(new UnfreezeRequest("User " +
-                            this.currUser +" has requested to be unfrozen.", this.currUser));
+                    List<Message> adminMessages = this.adminManager.getAdminMessages();
+                    adminMessages.add(this.messageBuilder.getUnfreezeRequest("User " + this.currUser +
+                            " has requested to be unfrozen.", this.currUser));
+                    this.adminManager.setAdminMessages(adminMessages);
                     this.userPresenter.unfreezeRequestSent();
                 }
                 else {
@@ -103,98 +116,31 @@ public class UserMenu {
             }
             // send a private message to a user
             else if (userInput.equals("7")) {
+                // prompt user for the recipient user name
                 boolean continueToRun = true;
-                String user;
+                String user = "";
                 while(continueToRun) {
                     this.userPresenter.userMessagePrompt();
                     user = input.nextLine();
+                    // if the username is invalid
                     if(!this.userManager.isValidUser(user)) {
                         this.userPresenter.invalidUsername();
                     }
+                    // else move on
                     else {
                         continueToRun = false;
                     }
                 }
+                // prompt user for message content
                 this.userPresenter.userMessagePromptSecundus();
                 String message = input.nextLine();
-                // TODO send a message to a user
+                // add to recipient inbox
+                this.userManager.addUserMessage(user, this.messageBuilder.getContentMessage(message, this.currUser));
             }
             // exit
             else if(userInput.equals("8")) {
                 userInput = "exit";
             }
-            else {
-                this.userPresenter.inputError();
-            }
-        }
-    }
-
-    /**
-     * Helper method for run() that allows a user to access their personal information
-     */
-    private void browseThroughUserInfo() {
-        Scanner input = new Scanner(System.in);
-        String userInput = "";
-        while(!userInput.equals("exit")) {
-            this.userPresenter.userMenuUserInfoPrompts();
-            userInput = input.nextLine();
-            // view trade history
-            if (userInput.equals("1")) {
-                browseThroughUserTrades();
-            }
-            // change password
-            else if (userInput.equals("2")) {
-                this.userPresenter.setNewPasswordPrompt();
-                String newPass = input.nextLine();
-                if(!newPass.toLowerCase().equals("exit")) {
-                    this.userManager.changePassword(this.currUser, newPass);
-                }
-            }
-            // view frequent trading partners
-            else if (userInput.equals("3")) {
-                String[] tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
-                // find a better way to do this
-                if(tradingPartners[0] == null) {
-                    this.userPresenter.noTradingPartners();
-                }
-                else {
-                    for (String tradePartner : tradingPartners) {
-                        if (tradePartner == null) {
-                            break;
-                        }
-                        this.userPresenter.printUserTradePartners(tradePartner);
-                    }
-                }
-            }
-            // view 3 most recent trades
-            else if (userInput.equals("4")) {
-                Trade[] recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
-                // find a better way to do this
-                if(recentTradeHistory[0] == null){
-                    this.userPresenter.noRecentTrades();
-                }
-                else {
-                    for(Trade trade : recentTradeHistory) {
-                        if (trade == null) {
-                            break;
-                        }
-                        this.userPresenter.tradeToString(trade);
-                    }
-                }
-            }
-            // look at personal inventory
-            else if (userInput.equals("5")) {
-                browseThroughUserInventory();
-            }
-            // look at personal wishlist
-            else if (userInput.equals("6")) {
-                browseThroughUserWishlist();
-            }
-            // exit
-            else if (userInput.equals("7")) {
-                userInput = "exit";
-            }
-            // input error
             else {
                 this.userPresenter.inputError();
             }
@@ -229,9 +175,10 @@ public class UserMenu {
             // if too many incompletes or too many borrows, request Freeze of this account
             if(tooManyIncomplete || tooManyBorrowVLoan) {
                 this.userPresenter.requestFreezeOfUser();
-                FreezeRequest newFreezeRequest = new FreezeRequest("User " + this.currUser +
-                        " should have their account frozen.", this.currUser);
-                this.adminMessages.add(newFreezeRequest);
+                List<Message> adminMessages = this.adminManager.getAdminMessages();
+                adminMessages.add(this.messageBuilder.getFreezeRequest("User " + this.currUser +
+                        " should have their account frozen.", this.currUser));
+                this.adminManager.setAdminMessages(adminMessages);
             }
         }
         else {
@@ -367,196 +314,6 @@ public class UserMenu {
             // if this user's items do not exist in another user's wishlist
             else {
                 this.userPresenter.itemNotInOtherUsersWishlist();
-            }
-        }
-    }
-
-    /**
-     * Helper method that will browse through all user trades (assuming user trades is populated)
-     */
-    private void browseThroughUserTrades() {
-        List<Trade> userTrades = tradeManager.getTradeHistory(this.currUser);
-        int index = 0;
-        Scanner input = new Scanner(System.in);
-        String userTradeInput = "";
-        while(!userTradeInput.equals("exit")) {
-            if (userTrades.size() == 0) {
-                this.userPresenter.isEmpty("trade history");
-                break;
-            }
-            this.userPresenter.itemToString(userTrades.get(index).toString());
-            this.userPresenter.userTradeHistoryPrompts();
-            userTradeInput = input.nextLine();
-            // next
-            if(userTradeInput.equals("1")) {
-                if(index == userTrades.size() - 1) {
-                    this.userPresenter.userTradeHistoryEndOfIndex();
-                }
-                else{
-                    index++;
-                }
-            }
-            // previous
-            else if(userTradeInput.equals("2")) {
-                if(index == userTrades.size() - 1) {
-                    this.userPresenter.userTradeHistoryEndOfIndex();
-                }
-                else{
-                    index--;
-                }
-            }
-            // exit
-            else if(userTradeInput.equals("3")) {
-                userTradeInput = "exit";
-            }
-            // input error
-            else {
-                this.userPresenter.inputError();
-            }
-        }
-    }
-
-    /**
-     * Helper...for a helper that allows a user to browse through their personal inventory.
-     */
-    private void browseThroughUserInventory() {
-        List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
-        int index = 0;
-        Scanner input = new Scanner(System.in);
-        String userInventoryInput = "";
-        while(!userInventoryInput.equals("exit")) {
-            // check to see if inventory is empty or not
-            if (userInventory.size() == 0) {
-                this.userPresenter.isEmpty("inventory");
-                break;
-            }
-            this.userPresenter.itemToString(userInventory.get(index).toString());
-            // prompt user on what to do with this item
-            this.userPresenter.userInventoryPrompts();
-            userInventoryInput = input.nextLine();
-            // remove the item from the global inventory and the personal inventory
-            if(userInventoryInput.equals("1")) {
-                this.globalInventoryManager.removeItem(userInventory.get(index).getItemID());
-                userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
-                index = 0;
-                this.userPresenter.itemRemoved();
-            }
-            // next
-            else if(userInventoryInput.equals("2")) {
-                if(index == userInventory.size() - 1) {
-                    this.userPresenter.endOfUserInventory();
-                }
-                else{
-                    index++;
-                }
-            }
-            // back
-            else if(userInventoryInput.equals("3")) {
-                if(index == 0) {
-                    this.userPresenter.endOfUserInventory();
-                }
-                else {
-                    index--;
-                }
-            }
-            // exit
-            else if(userInventoryInput.equals("4")) {
-                userInventoryInput = "exit";
-            }
-            // if the user puts in something weird
-            else {
-                this.userPresenter.inputError();
-            }
-        }
-    }
-
-    /**
-     * Helper...for a helper...allows a user to browse through their personal wishlist I swear if wishlist gets deleted
-     */
-    private void browseThroughUserWishlist() {
-        // get list of itemids in this person's wishlist
-        List<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
-        // if there are no items in the user's wishlist
-        if(userWishlistIDs.size() == 0) {
-            this.userPresenter.isEmpty("wishlist");
-            return;
-        }
-        // get the list of items using the itemIDs
-        List<Item> userWishlist = new ArrayList<>();
-        for(String itemID : userWishlistIDs) {
-            userWishlist.add(this.globalInventoryManager.getItemFromGI(itemID));
-        }
-        // begin running through this user's list of items in their wishlist
-        int index = 0;
-        Scanner input = new Scanner(System.in);
-        String userWishlistInput = "";
-        while(!userWishlistInput.equals("exit")) {
-            // if the wishlist is empty
-            // this is a second check to check to see if the user has removed all items in their wishlist while running
-            if (userWishlist.size() == 0) {
-                this.userPresenter.isEmpty("wishlist");
-                break;
-            }
-            this.userPresenter.itemToString(userWishlist.get(index).toString());
-            // prompt user on what to do with this item
-            this.userPresenter.userWishlistPrompts();
-            userWishlistInput = input.nextLine();
-            // remove the item
-            if(userWishlistInput.equals("1")) {
-                this.globalWishlistManager.removeWish(userWishlist.get(index).getItemID(), this.currUser);
-                userWishlist.remove(userWishlist.get(index));
-                index = 0;
-                this.userPresenter.itemRemoved();
-            }
-            // next
-            else if(userWishlistInput.equals("2")) {
-                if(index == userWishlist.size() - 1) {
-                    this.userPresenter.endOfUserWishlist();
-                }
-                else{
-                    index++;
-                }
-            }
-            // back
-            else if(userWishlistInput.equals("3")) {
-                if(index == 0) {
-                    this.userPresenter.endOfUserWishlist();
-                }
-                else {
-                    index--;
-                }
-            }
-            // send a trade request
-            else if(userWishlistInput.equals("4")) {
-                try {
-                    // make sure the item isn't the user's own item and that they can trade
-                    if(!userWishlist.get(index).getOwnerName().equals(this.currUser) &&
-                            this.userManager.getCanTrade(this.currUser,
-                                    this.tradeManager.getBorrowedTimes(this.currUser),
-                                    this.tradeManager.getLendTimes(this.currUser),
-                                    this.tradeManager.getIncompleteTimes(this.currUser),
-                                    this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
-                        List<Item> traderItem = new ArrayList<>();
-                        traderItem.add(userWishlist.get(index));
-                        TradeController tradeController =
-                                new TradeController(this.globalInventoryManager, this.globalWishlistManager);
-                        tradeController.run(traderItem, this.currUser,
-                                this.tradeManager.getTradeHistory(this.currUser).size());
-                        this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
-                    }
-                }
-                // if frozen
-                catch (UserFrozenException ex) {
-                    this.userPresenter.userAccountFrozen();
-                }
-            }
-            // exit
-            else if(userWishlistInput.equals("5")) {
-                userWishlistInput = "exit";
-            }
-            // if the user puts in something weird
-            else {
-                this.userPresenter.inputError();
             }
         }
     }
