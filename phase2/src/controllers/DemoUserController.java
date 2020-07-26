@@ -276,6 +276,7 @@ public class DemoUserController {
                     this.prompts.choosePermTemp();
                     inputx.nextLine();
                     this.prompts.chooseOneOrTwo();
+                    inputx.nextLine();
                     this.prompts.createAcc();
                 }
             }
