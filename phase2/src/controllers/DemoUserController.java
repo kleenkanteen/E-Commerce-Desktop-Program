@@ -1,12 +1,9 @@
 package controllers;
 
 import entities.Item;
-import entities.Message;
 import presenters.DemoUserPresenter;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,6 +12,12 @@ public class DemoUserController {
     private DemoUserManager demoUserManager;
     private GlobalInventoryManager  globalInventoryManager;
 
+    /**
+     * Constructs a DemoUserController object
+     * @param username the String username
+     * @param password the String password
+     * @param globalInventoryManager the GlobalInventoryManager object
+     */
     public DemoUserController(String username, String password, GlobalInventoryManager globalInventoryManager) {
         this.demoUserManager = new DemoUserManager(username, password);
         this.globalInventoryManager = globalInventoryManager;
@@ -27,7 +30,7 @@ public class DemoUserController {
         Scanner input = new Scanner(System.in);
         String userInput = "";
 
-        this.prompts = new DemoUserPresenter(this.demoUserManager, globalInventoryManager);
+        this.prompts = new DemoUserPresenter(this.demoUserManager, this.globalInventoryManager);
         this.prompts.promptUserMenu();
 
         while (!userInput.equals("exit")){
@@ -234,7 +237,7 @@ public class DemoUserController {
         String input = inputx.nextLine();
         while (!input.equals("e")){
             if (input.equals("n")) {
-                if (pageNumber < globalInventoryManager.generatePageNumber()) {
+                if (pageNumber < this.globalInventoryManager.generatePageNumber()) {
                     pageNumber += 1;
                 } else
                     this.prompts.emptyPage();
@@ -247,7 +250,7 @@ public class DemoUserController {
                 }
             }
             if (input.matches("[0-9]") &&
-                    Integer.valueOf(input) <= globalInventoryManager.generatePage(pageNumber).size() - 1){
+                    Integer.valueOf(input) <= this.globalInventoryManager.generatePage(pageNumber).size() - 1){
                 this.prompts.enterDate();
                 inputx.nextLine();
                 this.prompts.enterPlace();
