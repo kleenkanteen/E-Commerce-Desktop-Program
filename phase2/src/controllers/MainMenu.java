@@ -147,7 +147,7 @@ public class MainMenu {
             globalInventoryGateways.writeToFile(globalInventoryGateways.getgI());
             userTradesGateway.writeToFile(tradeFilepath, userTradesGateway.getUserTrades());
             globalWishlistGateway.writeToFile(globalWishlistFilepath, globalWishlistGateway.getWishlistItems());
-            adminMessageGateway.writeToFile(adminMessagesFilepath, adminMessageGateway.getMessages());
+            adminMessageGateway.writeToFile(adminMessagesFilepath, adminManager.getAdminMessages());
             adminAccountGateways.saveToFile(adminAccountGateways.getAdminMap());
         }catch(IOException e){
             mm.savingError();

@@ -4,9 +4,10 @@ import entities.User;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class UserGateway {
-    private HashMap<String, User> mapOfUsers;
+    private Map<String, User> mapOfUsers;
 
     /**
      * Creates a new gateway that loads in the HashMap of user objects for an .ser file.
@@ -32,15 +33,15 @@ public class UserGateway {
      * @throws IOException If the file cannot be read
      * @throws ClassNotFoundException If the class cannot be found
      */
-    public HashMap<String, User> readFromFile(String filepath) throws IOException, ClassNotFoundException{
-        HashMap<String, User> userObjects = new HashMap<>();
+    public Map<String, User> readFromFile(String filepath) throws IOException, ClassNotFoundException{
+        Map<String, User> userObjects;
         // load in the objects
         InputStream file = new FileInputStream(filepath);
         InputStream buffer = new BufferedInputStream(file);
         ObjectInput input = new ObjectInputStream(buffer);
 
         // deserialize the hashmap of user objects
-        userObjects = (HashMap<String, User>) input.readObject();
+        userObjects = (Map<String, User>) input.readObject();
         input.close();
         return userObjects;
     }
@@ -51,7 +52,7 @@ public class UserGateway {
      * @param userObjects HashMap with Users and their respective usernames that we want to serialize.
      * @throws IOException when an error occur when serializing
      */
-    public void writeToFile(String filepath, HashMap<String, User> userObjects) throws IOException{
+    public void writeToFile(String filepath, Map<String, User> userObjects) throws IOException{
         // load allUsers onto the file at designed path
         FileOutputStream file = new FileOutputStream(filepath);
         OutputStream buffer = new BufferedOutputStream(file);
@@ -67,5 +68,5 @@ public class UserGateway {
      * Returns the now deserialized map of user objects
      * @return the HashMap of user objects
      */
-    public HashMap<String, User> getMapOfUsers() { return this.mapOfUsers; }
+    public Map<String, User> getMapOfUsers() { return this.mapOfUsers; }
 }

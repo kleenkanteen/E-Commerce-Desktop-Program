@@ -4,10 +4,11 @@ import entities.Admin;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Map;
 
 public class AdminAccountGateways {
     private String filePath;
-    private HashMap<String, Admin> adminMap = new HashMap<>();
+    private Map<String, Admin> adminMap = new HashMap<>();
 
     /**
      * create a gateways that loads a HashMap of Admin with UserName as key.
@@ -41,7 +42,7 @@ public class AdminAccountGateways {
         InputStream buffer = new BufferedInputStream(file);
         ObjectInput input = new ObjectInputStream(buffer);
 
-        adminMap = (HashMap<String, Admin>) input.readObject();
+        adminMap = (Map<String, Admin>) input.readObject();
         input.close();
     }
 
@@ -51,7 +52,7 @@ public class AdminAccountGateways {
      * @throws IOException when an error occur when serializing
      */
 
-    public void saveToFile(HashMap<String, Admin> adminMap) throws IOException {
+    public void saveToFile(Map<String, Admin> adminMap) throws IOException {
         OutputStream file = new FileOutputStream(filePath);
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
@@ -67,7 +68,7 @@ public class AdminAccountGateways {
      * @return the HashMap of Admin that stored in .ser file.
      */
 
-    public HashMap<String, Admin> getAdminMap() {
+    public Map<String, Admin> getAdminMap() {
         return adminMap;
     }
 

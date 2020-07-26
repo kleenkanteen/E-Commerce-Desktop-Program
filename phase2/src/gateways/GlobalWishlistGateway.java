@@ -5,7 +5,7 @@ import entities.GlobalWishlist;
 import java.io.*;
 public class GlobalWishlistGateway implements Serializable{
 
-    entities.GlobalWishlist wishlist;
+    GlobalWishlist wishlist;
 
     /**
      * Creates a new gateway that loads in the GlobalWishlist stored in a .ser file
@@ -18,11 +18,11 @@ public class GlobalWishlistGateway implements Serializable{
         if (file.exists()) {
             wishlist = readFromFile(filepath);
             if(wishlist == null) {
-                wishlist = new entities.GlobalWishlist();
+                wishlist = new GlobalWishlist();
             }
         } else {
             file.createNewFile();
-            wishlist = new entities.GlobalWishlist();
+            wishlist = new GlobalWishlist();
         }
     }
     /**
@@ -32,8 +32,8 @@ public class GlobalWishlistGateway implements Serializable{
      * @throws IOException If the file cannot be read
      * @throws ClassNotFoundException If the class cannot be found
      */
-    public entities.GlobalWishlist readFromFile(String filepath) throws IOException, ClassNotFoundException{
-        entities.GlobalWishlist wishItems = new entities.GlobalWishlist();
+    public GlobalWishlist readFromFile(String filepath) throws IOException, ClassNotFoundException{
+        GlobalWishlist wishItems;
 
         // load in the objects
         InputStream file = new FileInputStream(filepath);
@@ -41,7 +41,7 @@ public class GlobalWishlistGateway implements Serializable{
         ObjectInput input = new ObjectInputStream(buffer);
 
         // deserialize the hashmap of user objects
-        wishItems = (entities.GlobalWishlist) input.readObject();
+        wishItems = (GlobalWishlist) input.readObject();
         input.close();
         return wishItems;
     }
@@ -52,7 +52,7 @@ public class GlobalWishlistGateway implements Serializable{
      * @param wishlistItems2 new GlobalWishList to overwrite previous one during saving.
      * @throws IOException when an error occur when serializing
      */
-    public void writeToFile(String filepath, entities.GlobalWishlist wishlistItems2) throws IOException{
+    public void writeToFile(String filepath, GlobalWishlist wishlistItems2) throws IOException{
         // load allUsers onto the file at designed path
         FileOutputStream file = new FileOutputStream(filepath);
         OutputStream buffer = new BufferedOutputStream(file);
