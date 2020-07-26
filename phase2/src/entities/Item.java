@@ -116,6 +116,10 @@ public class Item implements Serializable {
         return ownerName;
     }
 
+    public boolean hasID() {
+        return itemID.equals("");
+    }
+
     /**
      * To determine if two items are identical
      * @param item is the Item we want to compare with
