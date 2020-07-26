@@ -18,6 +18,7 @@ public class UserMessageReplySystem {
     private TradeManager tradeManager;
     private String accountUsername;
     private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
+    private MessageBuilder messageBuilder = new MessageBuilder();
 
     /**
      * Class constructor.
@@ -84,8 +85,8 @@ public class UserMessageReplySystem {
         //warning the user that their trade request is cancelled due to too much edits
         if(!tempTradeRequestManager.canEdit(accountUsername)&&!tempTradeRequestManager.canEdit(username)){
             messageReplyMenu.tradeRequestCancel();
-            userManager.createUserMessage(username, "Your trade request:"+m.toString()+
-                    "\n is cancelled due to too much edits");
+            userManager.addUserMessage(username, messageBuilder.getContentMessage("Your trade request:"+m.toString()+
+                    "\n is cancelled due to too much edits"));
         }
         //Allow the user to edit a trade request
         else{
@@ -170,10 +171,11 @@ public class UserMessageReplySystem {
                                 messages.remove(m);
                                 //Tell the other trader that the trade could not be created at this time and
                                 //the trade request is deleted
-                                userManager.createUserMessage(username, "You or the other trader cannot create a " +
+                                userManager.addUserMessage(username,
+                                        messageBuilder.getContentMessage("You or the other trader cannot create a " +
                                         "new trade at this time or the items involved or not for trade at this time. " +
                                         "The other trader has chosen to delete this trade request.\n"+
-                                        "Trade Request: "+m.toString());
+                                        "Trade Request: "+m.toString()));
                                 done = true;
                             }
                             else messageReplyMenu.printInvalidInput();
@@ -201,8 +203,9 @@ public class UserMessageReplySystem {
                 case "2":
                     //Removing and informing the other trade that the request is rejected
                     messages.remove(m);
-                    userManager.createUserMessage(username, "Your trade request:"+m.toString()+"\n is rejected by "+
-                            accountUsername);
+                    userManager.addUserMessage(username,
+                            messageBuilder.getContentMessage("Your trade request:"+m.toString()+"\n is rejected by "+
+                                    accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;

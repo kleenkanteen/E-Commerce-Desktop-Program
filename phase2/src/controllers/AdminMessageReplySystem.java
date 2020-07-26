@@ -15,7 +15,8 @@ public class AdminMessageReplySystem {
     private GlobalInventoryManager globalInventoryManager;
     private UserManager userManager;
     private String accountUsername;
-    private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();;
+    private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
+    private MessageBuilder messageBuilder = new MessageBuilder();
 
     /**
      * Class constructor.
@@ -117,7 +118,8 @@ public class AdminMessageReplySystem {
                     userManager.unFreezeUserAccount(u);
                     messages.remove(m);
                     //Informing the other user
-                    userManager.createUserMessage(u, "Your account is unfrozen by the Admin "+accountUsername);
+                    userManager.addUserMessage(u,
+                            messageBuilder.getContentMessage("Your account is unfrozen by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -125,7 +127,8 @@ public class AdminMessageReplySystem {
                     //Ignoring the message
                     messages.remove(m);
                     //Informing the other user
-                    userManager.createUserMessage(u, "Your request is rejected by the Admin "+accountUsername);
+                    userManager.addUserMessage(u,
+                            messageBuilder.getContentMessage("Your request is rejected by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -153,7 +156,8 @@ public class AdminMessageReplySystem {
                     userManager.freezeUserAccount(u);
                     messages.remove(m);
                     //informing the other user
-                    userManager.createUserMessage(u, "Your account is frozen by the Admin "+accountUsername);
+                    userManager.addUserMessage(u,
+                            messageBuilder.getContentMessage("Your account is frozen by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -190,8 +194,9 @@ public class AdminMessageReplySystem {
                     globalInventoryManager.addItemToHashMap(item);
                     messages.remove(m);
                     //Informing the other user
-                    userManager.createUserMessage(item.getOwnerName(), "Your Item: "+item+
-                            "\n has been successfully added to the system by the Admin "+accountUsername);
+                    userManager.addUserMessage(item.getOwnerName(),
+                            messageBuilder.getContentMessage("Your Item: "+item+
+                                    "\n has been successfully added to the system by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -199,8 +204,9 @@ public class AdminMessageReplySystem {
                     //Denying the new item
                     messages.remove(m);
                     //Informing the other user
-                    userManager.createUserMessage(item.getOwnerName(), "Your Item: "+item+
-                            "\n has been rejected by the Admin "+accountUsername);
+                    userManager.addUserMessage(item.getOwnerName(),
+                            messageBuilder.getContentMessage("Your Item: "+item+
+                                    "\n has been rejected by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
