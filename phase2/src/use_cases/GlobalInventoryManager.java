@@ -218,6 +218,10 @@ public class GlobalInventoryManager implements Serializable {
 //        int num = lst.size();
 //        return (int) Math.ceil((double) num / 10);
 //    }
+
+    public GlobalInventory getGlobalInventoryData(){
+        return globalInventory;
+    }
 }
 
 

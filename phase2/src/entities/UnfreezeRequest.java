@@ -3,7 +3,6 @@ package entities;
 import java.io.Serializable;
 
 public class UnfreezeRequest extends Request implements Serializable {
-    private String username;
 
     /**
      * Class constructor.
@@ -13,14 +12,13 @@ public class UnfreezeRequest extends Request implements Serializable {
      */
     public UnfreezeRequest(String content, String username) {
         super(content, new String[]{"Unfreeze", "Ignore"}, username);
-        this.username = username;
     }
 
     /**
      * Getter for the user that wanted to be unfrozen's usename
      * @return the user's username
      */
-    public String getUser(){ return username; }
+    public String getUser(){ return super.getSender(); }
 
     /**
      * Returns a string representation of the message
@@ -28,6 +26,6 @@ public class UnfreezeRequest extends Request implements Serializable {
      */
     @Override
     public String toString() {
-        return super.toString() + "\nThe User's username: \n"+username+"\n"+optionsToString();
+        return super.toString() + "\nThe User's username: \n"+super.getSender()+"\n"+optionsToString();
     }
 }

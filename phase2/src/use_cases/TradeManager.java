@@ -273,5 +273,9 @@ public class TradeManager {
         return unstartTrades;
     }
 
+    public Map<String, List<Trade>> getTradeData(){
+        return tradeHistory;
+    }
+
 
 }

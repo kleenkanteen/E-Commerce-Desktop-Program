@@ -327,4 +327,8 @@ public class UserManager {
     public void setNewThresholdForOneUser(String username, int newThreshold) {
         this.allUsers.get(username).setThreshold(newThreshold);
     }
+
+    public Map<String, User> getUserData(){
+        return allUsers;
+    }
 }

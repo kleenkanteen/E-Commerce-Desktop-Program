@@ -12,30 +12,20 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GlobalInventoryController {
-    private GlobalInventoryManager globalInventoryManager;
-    private UserManager userManager;
-    private String user;
-    private TradeManager tradeManager;
-    private GlobalWishlistManager globalWishlistManager;
 
     /**
      * runs the global inventory browsing menu
-     * @param gim the GlobalInventoryManager object
-     * @param UM the UserManager object
+     * @param globalInventoryManager the GlobalInventoryManager object
+     * @param userManager the UserManager object
      * @param user the username for current user
-     * @param TM the TradeManager object
-     * @param GW the GlobalWishlistManager object
+     * @param tradeManager the TradeManager object
+     * @param globalWishlistManager the GlobalWishlistManager object
      */
-    public void run(GlobalInventoryManager gim, UserManager UM, String user, TradeManager TM,
-                    GlobalWishlistManager GW) {
-        globalInventoryManager = gim;
-        userManager = UM;
-        this.user = user;
-        tradeManager = TM;
-        globalWishlistManager = GW;
+    public void run(GlobalInventoryManager globalInventoryManager, UserManager userManager, String user,
+                    TradeManager tradeManager, GlobalWishlistManager globalWishlistManager) {
 
         Scanner inputx = new Scanner(System.in);
-        GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(gim);
+        GlobalInventoryPresenter prompts = new GlobalInventoryPresenter(globalInventoryManager);
 
 
         int pageNumber = 1;
@@ -45,11 +35,10 @@ public class GlobalInventoryController {
         String input = inputx.nextLine();
         while (!input.equals("e")) { // != compares memory addresses.
             if (input.equals("n")) {
-                if (pageNumber < gim.generatePageNumber()) {
+                if (pageNumber < globalInventoryManager.generatePageNumber()) {
                     pageNumber += 1;
                 } else
                     prompts.emptyPage();
-
             }
             if (input.equals("p")) {
                 if (pageNumber == 1) {
@@ -58,22 +47,24 @@ public class GlobalInventoryController {
                     pageNumber -= 1;
                 }
             }
-            if (input.matches("[0-9]") && Integer.valueOf(input) <= gim.generatePage(pageNumber).size() - 1) {
-                item = gim.generatePage(pageNumber).get(Integer.parseInt(input)); //user have selected one item
+            if (input.matches("[0-9]") &&
+                    Integer.valueOf(input) <= globalInventoryManager.generatePage(pageNumber).size() - 1) {
+                item = globalInventoryManager.generatePage(pageNumber).get(Integer.parseInt(input)); //user have selected one item
                 if (!item.getOwnerName().equals(user)) {
                     try {
-                        if (UM.getCanTrade(user, TM.getBorrowedTimes(user), TM.getLendTimes(user),
-                                TM.getIncompleteTimes(user), TM.numberOfTradesCreatedThisWeek(user))) {
+                        if (userManager.getCanTrade(user, tradeManager.getBorrowedTimes(user),
+                                tradeManager.getLendTimes(user), tradeManager.getIncompleteTimes(user),
+                                tradeManager.numberOfTradesCreatedThisWeek(user))) {
                             prompts.addToWishlishandTradeRequest(item);
                             String selection = inputx.nextLine();
 
                             if (selection.equals("1")) { // adding to wishlist
-                                if (GW.getPersonWishlist(user).contains(item)) { // if user already has it in wishlist
+                                if (globalWishlistManager.getPersonWishlist(user).contains(item)) { // if user already has it in wishlist
                                     prompts.alreadyHave();
                                 } else {
-                                    GW.addWish(item.getItemID(), user); // user does not have it in wishlit, adding it
+                                    globalWishlistManager.addWish(item.getItemID(), user); // user does not have it in wishlit, adding it
                                     prompts.addedToWishlist(item);
-                                    GW.addWish(item.getItemID(), user);
+                                    globalWishlistManager.addWish(item.getItemID(), user);
                                 }
                             } else if (selection.equals("2")) { // user selected trade,
                                 ArrayList<Item> items = new ArrayList<>();
@@ -81,35 +72,40 @@ public class GlobalInventoryController {
                                 prompts.seeTraderInventory();
                                 String seeTraderInventorySelection = inputx.nextLine();
                                 if (seeTraderInventorySelection.equals("2")) {// just one item trade
-                                    controllers.TradeController trademenu = new TradeController(gim);
-                                    trademenu.run(items, user, TM.getTradeHistory(user).size());
+                                    controllers.TradeController trademenu = new TradeController(globalInventoryManager,
+                                            globalWishlistManager);
+                                    trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
                                 } else {
                                     prompts.traderItem(item);// prints owner inventory
                                     String inputitemselect = inputx.nextLine();
-                                    while (!inputitemselect.equals("Exit")) {
+                                    while (!inputitemselect.equals("e")) {
                                         if (inputitemselect.matches("[0-9]*") &&
-                                                Integer.valueOf(inputitemselect) <=
-                                                        gim.getPersonInventory(item.getOwnerName()).size()) {
-                                            if (items.contains(gim.getPersonInventory(item.getOwnerName())
-                                                    .get(Integer.valueOf(inputitemselect)))) {
+                                                Integer.valueOf(inputitemselect) <= globalInventoryManager.
+                                                        getPersonInventory(item.getOwnerName()).size()) {
+                                            if (items.contains(globalInventoryManager.getPersonInventory
+                                                    (item.getOwnerName()).get(Integer.valueOf(inputitemselect)))) {
                                                 prompts.alreadySelected();
                                             } else {
-                                                items.add(gim.getPersonInventory(item.getOwnerName())
+                                                items.add(globalInventoryManager.getPersonInventory(item.getOwnerName())
                                                         .get(Integer.valueOf(inputitemselect)));
                                             }
-                                            controllers.TradeController trademenu = new TradeController(gim);
-                                            trademenu.run(items, user, TM.getTradeHistory(user).size());
-                                        }else prompts.invalid();
+                                        }else{
+                                            prompts.invalid();
+                                            prompts.traderItem(item);// prints owner inventory
+                                        }
                                     }
+                                    controllers.TradeController trademenu =
+                                            new TradeController(globalInventoryManager, globalWishlistManager);
+                                    trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
                                 }
                             } else { // if user cant trade, only allow to add to wishlist
                                 prompts.addToWishlist(item);
                                 String selection1 = inputx.nextLine();
                                 if (selection1.equals("1")) {
                                     if (!item.getOwnerName().equals(user)) {
-                                        GW.addWish(item.getItemID(), user);
+                                        globalWishlistManager.addWish(item.getItemID(), user);
                                         prompts.addedToWishlist(item);
-                                        GW.addWish(item.getItemID(), user);
+                                        globalWishlistManager.addWish(item.getItemID(), user);
                                     } else prompts.ownItem();
                                 }
                             }
@@ -118,7 +114,7 @@ public class GlobalInventoryController {
                         prompts.FrozenAcc();
                     }
                     if (input.matches("[0-9]") &&
-                            Integer.valueOf(input) > gim.generatePage(pageNumber).size() - 1) {
+                            Integer.valueOf(input) > globalInventoryManager.generatePage(pageNumber).size() - 1) {
                         prompts.invalid();
                     }
                 }

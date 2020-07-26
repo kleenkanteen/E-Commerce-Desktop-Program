@@ -4,9 +4,10 @@ import entities.Message;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminMessageGateway {
-    ArrayList<Message> messages;
+   List<Message> messages;
 
     /**
      * Creates a new gateway that loads in the Arraylist of Message objects in a .ser file
@@ -34,15 +35,15 @@ public class AdminMessageGateway {
      * @throws IOException If the file cannot be read
      * @throws ClassNotFoundException If the class cannot be found
      */
-    public ArrayList<Message> readFromFile(String filepath) throws IOException, ClassNotFoundException{
-        ArrayList<Message> messages2 = new ArrayList<>();
+    public List<Message> readFromFile(String filepath) throws IOException, ClassNotFoundException{
+        List<Message> messages2;
         // load in the objects
         InputStream file = new FileInputStream(filepath);
         InputStream buffer = new BufferedInputStream(file);
         ObjectInput input = new ObjectInputStream(buffer);
 
         // deserialize the hashmap of user objects
-        messages2 = (ArrayList<Message>) input.readObject();
+        messages2 = (List<Message>) input.readObject();
         input.close();
         return messages2;
     }
@@ -53,7 +54,7 @@ public class AdminMessageGateway {
      * @param adminMessages ArrayList of Messages that the Admin must still respond to
      * @throws IOException when an error occur when serializing
      */
-    public void writeToFile(String filepath, ArrayList <Message> adminMessages) throws IOException {
+    public void writeToFile(String filepath, List <Message> adminMessages) throws IOException {
         // load allUsers onto the file at designed path
         FileOutputStream file = new FileOutputStream(filepath);
         OutputStream buffer = new BufferedOutputStream(file);
@@ -69,5 +70,5 @@ public class AdminMessageGateway {
      * Returns all messages of the logged in Admin.
      * @return return messages presently saved in the .ser file of a particular Admin.
      */
-    public ArrayList<Message> getMessages() { return this.messages; }
+    public List<Message> getMessages() { return this.messages; }
 }

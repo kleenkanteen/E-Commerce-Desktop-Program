@@ -1,6 +1,5 @@
 package controllers;
 import presenters.MainMenuPresenter;
-import entities.User;
 import exceptions.InvalidUsernameException;
 import gateways.*;
 import use_cases.*;
@@ -65,6 +64,12 @@ public class MainMenu {
         AdminManager adminManager = useCaseBuilder.getAdminManager(adminAccountGateways.getAdminMap(),
                 adminMessageGateway.getMessages());
         UserManager userManager = useCaseBuilder.getUserManager(userGateway.getMapOfUsers());
+        TradeManager tradeManager =
+                useCaseBuilder.getTradeManager(userTradesGateway.getUserTrades());
+        GlobalInventoryManager globalInventoryManager =
+                useCaseBuilder.getGlobalInventoryManager(globalInventoryGateways.getgI());
+        GlobalWishlistManager globalWishlistManager =
+                useCaseBuilder.getGlobalWishlistManager(globalWishlistGateway.getWishlistItems());
 
         //create UserManager x
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -88,13 +93,6 @@ public class MainMenu {
                         if (input.equals("1")) {
                             // user selected "1" (user sign-in)
                             if(userManager.login(username, pass)) {
-                                TradeManager tradeManager =
-                                        useCaseBuilder.getTradeManager(userTradesGateway.getUserTrades());
-                                GlobalInventoryManager globalInventoryManager =
-                                        useCaseBuilder.getGlobalInventoryManager(globalInventoryGateways.getgI());
-                                GlobalWishlistManager globalWishlistManager =
-                                        useCaseBuilder.getGlobalWishlistManager(globalWishlistGateway.getWishlistItems());
-
                                 UserMenu um = new UserMenu(username, userManager, tradeManager, globalInventoryManager
                                         , globalWishlistManager, adminManager.getAdminMessages());
                                 um.run();
@@ -117,12 +115,7 @@ public class MainMenu {
                     } else {
                         // user selected "3" (admin sign-in)
                         if ((adminManager.login(username, pass))) {
-                            GlobalInventoryManager globalInventoryManager =
-                                    useCaseBuilder.getGlobalInventoryManager(globalInventoryGateways.getgI());
-                            TradeManager tradeManager =
-                                    useCaseBuilder.getTradeManager(userTradesGateway.getUserTrades());
-
-                            controllers.AdminSystem successful = new AdminSystem(adminManager.getAdmin(username),
+                            AdminSystem successful = new AdminSystem(adminManager.getAdmin(username),
                                     adminManager, userManager, globalInventoryManager,
                                     tradeManager);
                             successful.run();
@@ -143,12 +136,12 @@ public class MainMenu {
             }
         } while(!done);
         try {
-            userGateway.writeToFile(userFilepath, userGateway.getMapOfUsers());
-            globalInventoryGateways.writeToFile(globalInventoryGateways.getgI());
-            userTradesGateway.writeToFile(tradeFilepath, userTradesGateway.getUserTrades());
-            globalWishlistGateway.writeToFile(globalWishlistFilepath, globalWishlistGateway.getWishlistItems());
-            adminMessageGateway.writeToFile(adminMessagesFilepath, adminMessageGateway.getMessages());
-            adminAccountGateways.saveToFile(adminAccountGateways.getAdminMap());
+            userGateway.writeToFile(userFilepath, userManager.getUserData());
+            globalInventoryGateways.writeToFile(globalInventoryManager.getGlobalInventoryData());
+            userTradesGateway.writeToFile(tradeFilepath, tradeManager.getTradeData());
+            globalWishlistGateway.writeToFile(globalWishlistFilepath, globalWishlistManager.getGlobalWishlistData());
+            adminMessageGateway.writeToFile(adminMessagesFilepath, adminManager.getAdminMessages());
+            adminAccountGateways.saveToFile(adminManager.getAdminData());
         }catch(IOException e){
             mm.savingError();
         }

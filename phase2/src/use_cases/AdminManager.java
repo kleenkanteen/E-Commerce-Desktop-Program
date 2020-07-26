@@ -112,4 +112,9 @@ public class AdminManager{
     public Admin getAdmin(String username){
         return adminList.get(username);
     }
+
+    public Map<String, Admin>  getAdminData(){
+        return adminList;
+    }
+
 }

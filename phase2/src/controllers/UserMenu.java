@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 
 public class UserMenu {
+    // TODO admin manager import
     private String currUser;
     private List<Message> adminMessages;
     private UserPresenter userPresenter;
@@ -100,8 +101,26 @@ public class UserMenu {
                     this.userPresenter.userNotFrozen();
                 }
             }
-            // exit
+            // send a private message to a user
             else if (userInput.equals("7")) {
+                boolean continueToRun = true;
+                String user;
+                while(continueToRun) {
+                    this.userPresenter.userMessagePrompt();
+                    user = input.nextLine();
+                    if(!this.userManager.isValidUser(user)) {
+                        this.userPresenter.invalidUsername();
+                    }
+                    else {
+                        continueToRun = false;
+                    }
+                }
+                this.userPresenter.userMessagePromptSecundus();
+                String message = input.nextLine();
+                // TODO send a message to a user
+            }
+            // exit
+            else if(userInput.equals("8")) {
                 userInput = "exit";
             }
             else {
@@ -322,7 +341,7 @@ public class UserMenu {
                             // yes, continue with the trade offer
                             if(userLoanInput == 1) {
                                 TradeController tradeController =
-                                        new TradeController(this.globalInventoryManager);
+                                        new TradeController(this.globalInventoryManager, this.globalWishlistManager);
                                 TradeRequest newTradeRequest =
                                         tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
                                 this.userManager.addUserMessage(userItem.get(0).getOwnerName(), newTradeRequest);
@@ -519,7 +538,8 @@ public class UserMenu {
                                     this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
                         List<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
-                        TradeController tradeController = new TradeController(this.globalInventoryManager);
+                        TradeController tradeController =
+                                new TradeController(this.globalInventoryManager, this.globalWishlistManager);
                         tradeController.run(traderItem, this.currUser,
                                 this.tradeManager.getTradeHistory(this.currUser).size());
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
