@@ -17,6 +17,8 @@ public class TradeUndoSystem {
         this.tradeManager = tradeManager;
     }
     public void run() throws IOException {
+        System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                "Or type 1 to go back to Admin Menu");
         boolean exit = false;
         BufferedReader re = new BufferedReader(new InputStreamReader(System.in));
         String user = re.readLine();
@@ -35,18 +37,19 @@ public class TradeUndoSystem {
                 List<Trade> trade = tradeManager.getUnstartTrades(user);
                 if (trade.size() == 0){
                     System.out.println("No trade has been found");
+                    System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                            "Or type 1 to go back to Admin Menu");
+                    user = re.readLine();
                     break;
                 }
-                System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
-                        "Or type 1 to go back to Admin Menu");
+                System.out.println("Type 1 if you want to reach the next trade\n" +
+                        "Type 2 to go back to the previous trade\n" +
+                        "Type 3 to confirm the deletion of the Trade\n" +
+                        "Type 4 to go back");
                 String option = re.readLine();
                 boolean finishChoosing = false;
                 int counting = 0;
                 while (!finishChoosing){
-                    System.out.println("Type 1 if you want to reach the next trade\n" +
-                            "Type 2 to go back to the previous trade\n" +
-                            "Type 3 to confirm the deletion of the Trade\n" +
-                            "Type 4 to go back");
                     switch (option) {
                         case "1":
                             if(counting <= trade.size() - 1){
@@ -70,9 +73,16 @@ public class TradeUndoSystem {
                         case "3":
                             tradeManager.removeTrade(trade.get(counting));
                             finishChoosing = true;
+                            System.out.println("The Trade has been removed\n");
+                            System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                                    "Or type 1 to go back to Admin Menu");
+                            user = re.readLine();
                             break;
                         case "4":
                             finishChoosing = true;
+                            System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                                    "Or type 1 to go back to Admin Menu");
+                            user = re.readLine();
                             break;
                         default:
                             System.out.println("Your option makes no sense");
@@ -80,10 +90,9 @@ public class TradeUndoSystem {
                             break;
                     }
                 }
+
             }
-            System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
-                    "Or type 1 to go back to Admin Menu");
-            user = re.readLine();
+
         }
 
     }
