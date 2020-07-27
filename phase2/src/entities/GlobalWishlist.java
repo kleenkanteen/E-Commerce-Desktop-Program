@@ -65,7 +65,7 @@ public class GlobalWishlist implements Serializable {
       * @return Whether or not anyone wants the item
      */
     public boolean isItemWanted(String itemid){
-        return wishMap.get(itemid) != null;
+        return wishMap.containsKey(itemid);
     }
 
 
@@ -123,5 +123,23 @@ public class GlobalWishlist implements Serializable {
             }
         return wishlist;
         }
+
+    /**
+     * Return all itemids of the items that are in userB's wishlist
+     * Make sure you ALWAYS call isValidUser() before calling this.
+     * @param allItems items in question
+     * @param userB the user in question
+     * @return list of itemids of all the items that userB wants
+     */
+    public List<String> getInterestedItems(List<Item> allItems, String userB){
+        List<String> interested = new ArrayList<>();
+        for (Item allItem : allItems) {
+            String currentItemid = allItem.getItemID();
+            if (wishMap.containsKey(currentItemid)) {
+                if (wishMap.get(currentItemid).contains(userB)){ interested.add(currentItemid); }
+            }
+        }
+        return interested;
+    }
 }
 

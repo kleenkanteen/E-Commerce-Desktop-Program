@@ -106,5 +106,17 @@ public class GlobalWishlistManager implements Serializable {
     public GlobalWishlist getGlobalWishlistData(){
         return gW;
     }
+
+    /**
+     * Return all itemids of the items that are in userB's wishlist
+     * Make sure you ALWAYS call isValidUser() before calling this.
+     * @param allItems items in question
+     * @param userB the user in question
+     * @return list of itemids of all the items that userB wants
+     */
+    public List<String> getInterestedItems(List<Item> allItems, String userB){
+        return gW.getInterestedItems(allItems, userB);
+    }
+
 }
 

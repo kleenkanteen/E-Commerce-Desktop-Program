@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Item;
+import entities.TradeRequest;
 import exceptions.UserFrozenException;
 import presenters.GlobalInventoryPresenter;
 import use_cases.GlobalInventoryManager;
@@ -74,7 +75,9 @@ public class GlobalInventoryController {
                                 if (seeTraderInventorySelection.equals("2")) {// just one item trade
                                     controllers.TradeController trademenu = new TradeController(globalInventoryManager,
                                             globalWishlistManager);
-                                    trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
+                                    TradeRequest request = trademenu.run
+                                            (items, user, tradeManager.getTradeHistory(user).size());
+                                    userManager.addUserMessage(item.getOwnerName(), request);
                                 } else {
                                     prompts.traderItem(item);// prints owner inventory
                                     String inputitemselect = "";
@@ -99,7 +102,8 @@ public class GlobalInventoryController {
                                     }
                                     controllers.TradeController trademenu =
                                             new TradeController(globalInventoryManager, globalWishlistManager);
-                                    trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
+                                    TradeRequest request = trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
+                                    userManager.addUserMessage(item.getOwnerName(), request);
                                 }
                             } else { // if user cant trade, only allow to add to wishlist
                                 prompts.addToWishlist(item);
