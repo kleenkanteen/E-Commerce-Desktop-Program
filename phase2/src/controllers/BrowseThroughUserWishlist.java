@@ -4,6 +4,7 @@ import entities.Item;
 import exceptions.UserFrozenException;
 import presenters.UserPresenter;
 import use_cases.*;
+import entities.TradeRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -106,8 +107,9 @@ public class BrowseThroughUserWishlist {
                         traderItem.add(userWishlist.get(index));
                         TradeController tradeController =
                                 new TradeController(this.globalInventoryManager, this.globalWishlistManager);
-                        tradeController.run(traderItem, this.currUser,
+                        TradeRequest newTradeRequest = tradeController.run(traderItem, this.currUser,
                                 this.tradeManager.getTradeHistory(this.currUser).size());
+                        this.userManager.addUserMessage(userWishlist.get(index).getOwnerName(), newTradeRequest);
                         this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
                     }
                 }
