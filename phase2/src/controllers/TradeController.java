@@ -212,11 +212,17 @@ public class TradeController {
                 return new ArrayList<>();
             // two way trade
             case "2":
-                List<Item> items = usersInventory.getPersonInventory(userA);
+                List<Item> userAInventory = usersInventory.getPersonInventory(userA);
+                ArrayList<Item> itemsAvailableToTrade = (ArrayList<Item>) userAInventory;
                 boolean done = false;
                 // ask the user what items they want to trade, then add it into itemsToTradeA.
                 while (!done) {
-                    this.tradeMenu.itemsAvailableToTrade(items);
+                    // inform the user there's no more items to trade and return back to previous screen.
+                    if (itemsAvailableToTrade.isEmpty()) {
+                        this.tradeMenu.noMoreItems();
+                        done = true;
+                    }
+                    this.tradeMenu.itemsAvailableToTrade(itemsAvailableToTrade);
                     // choose the items you want to trade to the other user.
                     this.tradeMenu.itemsWantToTrade();
 
@@ -235,8 +241,10 @@ public class TradeController {
                     }
 
                     // add user input offered items
-                    else if (choice > 0 && choice <= items.size()) {
-                        itemsToTradeA.add(items.get(choice - 1));
+                    else if (choice > 0 && choice <= itemsAvailableToTrade.size()) {
+                        itemsToTradeA.add(itemsAvailableToTrade.get(choice - 1));
+                        itemsAvailableToTrade.remove(choice - 1);
+                        tradeMenu.addedItem();
                     }
                 }
         }
@@ -256,19 +264,7 @@ public class TradeController {
 
         // userA is current trader.
         // userB is second trader.
-//        switch (this.tradeType) {
-//            // one way
-//            case "1":
         this.tradeRequestManager = templateTradeRequest(userA,userB,itemsToTradeA,itemsToTradeB,date,place,true);
-//                this.tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
-//                this.tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, true);
-//                this.tradeRequestManager.setDateAndPlace(userB, date, place);
-//            // two way
-//            case "2":
-//                tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
-//                tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, true);
-//                tradeRequestManager.setDateAndPlace(userB, date, place);
-        //}
 
         return this.tradeRequestManager;
     }
@@ -276,23 +272,13 @@ public class TradeController {
     private TradeRequestManager tempTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
                                           List<Item> itemsToTradeB, LocalDateTime date, String place) {
 
-//        switch (tradeType) {
-//            // one way
-//            case "1":
         this.tradeRequestManager = templateTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place, false);
-//                tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
-//                tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, false);
-//                tradeRequestManager.setDateAndPlace(userB, date, place);
-//            // two way
-//            case "2":
-//                tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
-//                tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, false);
-//                tradeRequestManager.setDateAndPlace(userB, date, place);
-//        }
+
         return this.tradeRequestManager;
     }
 
     // TODO demo trade controller.
+    // TODO findSuggestedItems after Lending suggestion is implemented by sabih
     /*
     reuse run method,
      */
