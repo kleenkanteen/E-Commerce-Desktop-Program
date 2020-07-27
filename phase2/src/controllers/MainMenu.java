@@ -19,12 +19,12 @@ public class MainMenu {
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
 
     public void run() {
-        String adminFilepath = "data/serializedAdmins.ser";
-        String userFilepath = "data/serializedUsers.ser";
-        String globalInventoryFilepath = "data/serializedGlobalInventory.ser";
-        String adminMessagesFilepath = "data/serializedAdminMessages.ser";
-        String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
-        String tradeFilepath = "data/serializedUserTrades.ser";
+        final String adminFilepath = "data/serializedAdmins.ser";
+        final String userFilepath = "data/serializedUsers.ser";
+        final String globalInventoryFilepath = "data/serializedGlobalInventory.ser";
+        final String adminMessagesFilepath = "data/serializedAdminMessages.ser";
+        final String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
+        final String tradeFilepath = "data/serializedUserTrades.ser";
 
         AdminAccountGateways adminAccountGateways;
         UserGateway userGateway;

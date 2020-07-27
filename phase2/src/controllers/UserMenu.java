@@ -193,56 +193,65 @@ public class UserMenu {
         Scanner input = new Scanner(System.in);
         List<Trade> incompletes = this.tradeManager.tradesToConfirm(this.currUser);
         // check to make sure that the user has unconfirmed trades
-        if(incompletes.size() != 0) {
-            // instantiate unconfirmed trades
-            this.userPresenter.promptUserToConfirmTrades();
-            String userInput;
-            boolean continueCheckingUnconfirmed;
-            // go through all unconfirmed trades
-            for(Trade trade : incompletes) {
-                this.userPresenter.tradeToString(trade);
-                continueCheckingUnconfirmed = true;
-                // loop through user menu for this particular incomplete trade
-                while(continueCheckingUnconfirmed) {
-                    this.userPresenter.checkUnconfirmedTradesPrompts();
-                    userInput = input.nextLine();
-                    // confirm meeting
-                    if(userInput.equals("1")) {
-                        this.tradeManager.setConfirm(this.currUser, trade, true);
-                        this.userPresenter.unconfirmedTradeSystemResponse(0);
-                        // if the trade is a permanent trade
-                        if(trade instanceof PermTrade) {
-                            // remove all traderA items from Global and Personal wishlists if not empty
-                            if(trade.getTraderAItemsToTrade().size() != 0) {
-                                for(Item item : trade.getTraderAItemsToTrade()) {
-                                    // check to make sure that this item exists on the global wishlist
-                                    if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
-                                        this.globalWishlistManager.removeItem(item.getItemID());
-                                    }
-                                }
-                            }
-                            // remove all tradeB items from Global and Personal wishlists if not empty
-                            if(trade.getTraderBItemsToTrade().size() != 0) {
-                                for (Item item : trade.getTraderBItemsToTrade()) {
-                                    // check to make sure item exists in global wishlist
-                                    if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
-                                        this.globalWishlistManager.removeItem(item.getItemID());
-                                    }
-                                }
-                            }
-                        }
-                        continueCheckingUnconfirmed = false;
+        if (incompletes.size() == 0) {
+            return;
+        }
+        // instantiate unconfirmed trades
+        this.userPresenter.promptUserToConfirmTrades();
+        String userInput;
+        boolean continueCheckingUnconfirmed;
+        // go through all unconfirmed trades
+        for (Trade trade : incompletes) {
+            this.userPresenter.tradeToString(trade);
+            continueCheckingUnconfirmed = true;
+            // loop through user menu for this particular incomplete trade
+            while (continueCheckingUnconfirmed) {
+                this.userPresenter.checkUnconfirmedTradesPrompts();
+                userInput = input.nextLine();
+                // confirm meeting
+                if (userInput.equals("1")) {
+                    this.tradeManager.setConfirm(this.currUser, trade, true);
+                    this.userPresenter.unconfirmedTradeSystemResponse(0);
+                    // if the trade is a permanent trade
+                    if (trade instanceof PermTrade) {
+                        // remove all traderA items from Global wishlist if not empty
+                        removeTradingItemsFromWishlist(trade);
                     }
-                    // deny
-                    else if(userInput.equals("2")) {
-                        this.tradeManager.setConfirm(this.currUser, trade, false);
-                        this.userPresenter.unconfirmedTradeSystemResponse(1);
-                        continueCheckingUnconfirmed = false;
-                    }
-                    // input error
-                    else {
-                        this.userPresenter.inputError();
-                    }
+                    continueCheckingUnconfirmed = false;
+                }
+                // deny
+                else if (userInput.equals("2")) {
+                    this.tradeManager.setConfirm(this.currUser, trade, false);
+                    this.userPresenter.unconfirmedTradeSystemResponse(1);
+                    continueCheckingUnconfirmed = false;
+                }
+                // input error
+                else {
+                    this.userPresenter.inputError();
+                }
+            }
+        }
+    }
+
+    /**
+     * Helper for confirmIncompleteUserTrades to remove the items from the global wishlist if necessary
+     * @param trade the Trade item to use
+     */
+    private void removeTradingItemsFromWishlist(Trade trade) {
+        if(trade.getTraderAItemsToTrade().size() != 0) {
+            for(Item item : trade.getTraderAItemsToTrade()) {
+                // check to make sure that this item exists on the global wishlist
+                if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
+                    this.globalWishlistManager.removeItem(item.getItemID());
+                }
+            }
+        }
+        // remove all tradeB items from Global and Personal wishlists if not empty
+        if(trade.getTraderBItemsToTrade().size() != 0) {
+            for (Item item : trade.getTraderBItemsToTrade()) {
+                // check to make sure item exists in global wishlist
+                if(this.globalWishlistManager.isItemWanted(item.getItemID())) {
+                    this.globalWishlistManager.removeItem(item.getItemID());
                 }
             }
         }
@@ -275,7 +284,6 @@ public class UserMenu {
                         for(Item item : userInventory) {
                             if (item.getItemID().equals(itemsToLend.get(0))) {
                                 userItem.add(item);
-                                break;
                             }
                         }
                         // give user choice whether to continue with trade offer or return to main UserMenu
