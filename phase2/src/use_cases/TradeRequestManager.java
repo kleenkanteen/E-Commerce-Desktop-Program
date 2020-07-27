@@ -19,19 +19,23 @@ public class TradeRequestManager {
     /**
      * a constructor of TradeRequestManager to generate the new traderequest object
      * @param content trade request message content
-     * @param sender userA who sends the trade request
+     * @param userA userA who sends the trade request
      */
-    public TradeRequestManager(String content, String sender){
+    public TradeRequestManager(String content, String userA, String userB,  List<Item> itemA,
+                               List<Item> itemB, boolean perm){
         MessageBuilder temp = new MessageBuilder();
-        this.tradeRequest = (TradeRequest) temp.getTradeRequest(content, sender);
-    }
-
-    public void setInfo (String userA, String userB, List<Item> itemA, List<Item> itemB, boolean perm){
+        this.tradeRequest = (TradeRequest) temp.getTradeRequest(content, userA);
         tradeRequest.setUserA(userA);
         tradeRequest.setUserB(userB);
         tradeRequest.setItemA(itemA);
         tradeRequest.setItemB(itemB);
         tradeRequest.setPerm(perm);
+    }
+
+
+    public void setDateAndPlaceFirst(LocalDateTime date, String place ){
+        tradeRequest.setDate(date);
+        tradeRequest.setPlace(place);
     }
 
     /**
