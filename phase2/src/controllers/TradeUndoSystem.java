@@ -10,8 +10,8 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class TradeUndoSystem {
-    UserManager usermanager;
-    TradeManager tradeManager;
+    private UserManager usermanager;
+    private TradeManager tradeManager;
     TradeUndoSystem(TradeManager tradeManager, UserManager userManager){
         this.usermanager = userManager;
         this.tradeManager = tradeManager;
