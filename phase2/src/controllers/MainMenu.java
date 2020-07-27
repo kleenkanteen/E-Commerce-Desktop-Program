@@ -1,9 +1,7 @@
 package controllers;
-import entities.GlobalInventory;
 import gateways.*;
 import presenters.MainMenuPresenter;
 import use_cases.*;
-import entities.User;
 import exceptions.InvalidUsernameException;
 
 import java.io.BufferedReader;
@@ -69,7 +67,7 @@ public class MainMenu {
         TradeManager tradeManager =
                 useCaseBuilder.getTradeManager(userTradesGateway.getUserTrades());
         GlobalInventoryManager globalInventoryManager =
-                useCaseBuilder.getGlobalInventoryManager(globalInventoryGateways.getgI());
+                useCaseBuilder.getGlobalInventoryManager(globalInventoryGateways.getGlobalInventory());
         GlobalWishlistManager globalWishlistManager =
                 useCaseBuilder.getGlobalWishlistManager(globalWishlistGateway.getWishlistItems());
 

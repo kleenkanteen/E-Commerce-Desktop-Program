@@ -28,20 +28,20 @@ public class AdminSystem {
      * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
      * @param admin the admin of the currently logged in.
      * @param adminManager the AdminManager will be used to change account information
-     * @param um the UserManager will be used to change user account information
-     * @param gim the GlobalInventory will be used to change item in GlobalInventory
+     * @param userManager the UserManager will be used to change user account information
+     * @param globalInventoryManager the GlobalInventory will be used to change item in GlobalInventory
      */
 
 
 
 
     public AdminSystem(Admin admin, AdminManager adminManager,
-                       UserManager um, GlobalInventoryManager gim, TradeManager tradeManager) {
+                       UserManager userManager, GlobalInventoryManager globalInventoryManager, TradeManager tradeManager) {
         this.admin = admin;
         adminMenu = new AdminMenu(admin);
         this.adminManager = adminManager;
-        this.userManager = um;
-        this.globalInventoryManager = gim;
+        this.userManager = userManager;
+        this.globalInventoryManager = globalInventoryManager;
         this.tradeManager = tradeManager;
 
 

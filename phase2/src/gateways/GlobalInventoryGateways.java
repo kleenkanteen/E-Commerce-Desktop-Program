@@ -8,7 +8,7 @@ import java.io.*;
 public class GlobalInventoryGateways implements Serializable{
     private String filePath;
     private GlobalInventoryManager gIManager;
-    private GlobalInventory gI;
+    private GlobalInventory globalInventory;
 
     /**
      * Creates a new gateway that loads GlobalInventory in a .ser file\
@@ -22,15 +22,15 @@ public class GlobalInventoryGateways implements Serializable{
         File file = new File(filePath);
         if (file.exists()) {
             readFromFile();
-            if(gI == null) {
-                gI = new GlobalInventory();
+            if(globalInventory == null) {
+                globalInventory = new GlobalInventory();
             };
         } else {
             file.createNewFile();
-            gI = new GlobalInventory();
+            globalInventory = new GlobalInventory();
 
         }
-        gIManager = new GlobalInventoryManager(gI);
+        gIManager = new GlobalInventoryManager(globalInventory);
     }
 
     /**
@@ -45,7 +45,7 @@ public class GlobalInventoryGateways implements Serializable{
         ObjectInput input = new ObjectInputStream(buffer);
 
         // deserialize the Map
-        gI = (GlobalInventory) input.readObject();
+        globalInventory = (GlobalInventory) input.readObject();
         input.close();
     }
 
@@ -61,7 +61,7 @@ public class GlobalInventoryGateways implements Serializable{
         OutputStream buffer = new BufferedOutputStream(file);
         ObjectOutput output = new ObjectOutputStream(buffer);
 
-        gI = gi;
+        globalInventory = gi;
         output.writeObject(gi);
         output.close();
     }
@@ -70,8 +70,8 @@ public class GlobalInventoryGateways implements Serializable{
      * Getter for GlobalInventory that stored in .ser file.
      * @return the globalInventory that stored in .ser file.
      */
-    public GlobalInventory getgI() {
-        return gI;
+    public GlobalInventory getGlobalInventory() {
+        return globalInventory;
     }
 }
 
