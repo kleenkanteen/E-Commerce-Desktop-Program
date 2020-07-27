@@ -94,4 +94,18 @@ public class TradeMenu {
     public void unavailableChoice() {
         System.out.println("Sorry, this selection is not available for you! :-( Make a two way trade or a lend first");
     }
+
+    /**
+     * Presenter for adding an item as an item to trade by a user.
+     */
+    public void addedItem() {
+        System.out.println("Item has been added!");
+    }
+
+    /**
+     * Presenter for telling the user they have no more items to put up for trade.
+     */
+    public void noMoreItems() {
+        System.out.println("Uh Oh! :O Looks like you don't have any items to trade! Bummer :-(\nExiting you from adding more items.");
+    }
 }
