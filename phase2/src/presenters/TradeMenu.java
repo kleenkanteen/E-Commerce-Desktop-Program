@@ -108,4 +108,13 @@ public class TradeMenu {
     public void noMoreItems() {
         System.out.println("Uh Oh! :O Looks like you don't have any items to trade! Bummer :-(\nExiting you from adding more items.");
     }
+
+    public void showSuggestedItems(List<String> suggestedItems) {
+        System.out.println("Here's a list of suggested items you should try trading to the other person:");
+        int i = 1;
+        for (String item : suggestedItems) {
+            System.out.println("[" + i + "]" + " " + item);
+            i++;
+        }
+    }
 }

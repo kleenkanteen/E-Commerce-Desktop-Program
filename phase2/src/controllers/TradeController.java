@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.TradeRequest;
+import exceptions.IncompleteTradeException;
 import presenters.TradeMenu;
 import entities.Item;
 import use_cases.GlobalInventoryManager;
@@ -23,10 +24,7 @@ public class TradeController {
     private final Scanner input = new Scanner(System.in);
     private final TradeMenu tradeMenu = new TradeMenu();
     private final GlobalWishlistManager usersWishlist;
-    private LocalDateTime date;
     private final GlobalInventoryManager usersInventory;
-    private String tradeType;
-    private TradeRequestManager tradeRequestManager;
 
 
     /**
@@ -44,8 +42,9 @@ public class TradeController {
      * @param itemsToTrade takes in an list of items that represent the items to loan to userB.
      * @param userA is a string that indicates the current trader (userA).
      * @param userB is a string that indicates the second trader (userB).
+     * @return a TradeRequest if a successful trade is achieved. Otherwise, null is returned.
      */
-    public TradeRequest runFromLoan(List<Item> itemsToTrade, String userA, String userB) {
+    public TradeRequest runFromLoan(List<Item> itemsToTrade, String userA, String userB) throws IncompleteTradeException {
 
         // set the date/time
         LocalDateTime date = getDateInput();
@@ -55,6 +54,7 @@ public class TradeController {
         String place = this.input.nextLine();
 
         String selection;
+        TradeRequestManager tradeRequestMessage = null;
         do {
             // have a presenter that asks for perm trade or temp trade.
             this.tradeMenu.choosePermTemp();
@@ -65,28 +65,21 @@ public class TradeController {
                 switch (selection) {
                     // perm trade
                     case "1":
-                        this.tradeRequestManager =
-                                new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
-                        this.tradeRequestManager.setInfo(userA, userB, itemsToTrade, new ArrayList<>(), true);
-                        this.tradeRequestManager.setDateAndPlace(userB, date, place);
+                        tradeRequestMessage = templateTradeRequest(userA, userB, itemsToTrade, new ArrayList<>(), date, place, true);
                         break;
                     // temp trade
                     case "2":
-                        this.tradeRequestManager =
-                                new TradeRequestManager("User " + userA + "wants to trade with you.", userA);
-                        this.tradeRequestManager.setInfo(userA, userB, itemsToTrade, new ArrayList<>(), false);
-                        this.tradeRequestManager.setDateAndPlace(userB, date, place);
+                        tradeRequestMessage = templateTradeRequest(userA, userB, itemsToTrade, new ArrayList<>(), date, place, false);
                         break;
                     default:
                         tradeMenu.invalidInput();
-
                 }
             }
 
         }while(!selection.equals("1")&&!selection.equals("2"));
         tradeMenu.tradeRequestSent(userB);
 
-        return this.tradeRequestManager.getTradeRequest();
+        return tradeRequestMessage.getTradeRequest();
     }
 
     /**
@@ -95,8 +88,10 @@ public class TradeController {
      * @param itemsToTradeB takes in an list of items that represent the items to trade from userB.
      * @param userA is a string that indicates the current user (userA)
      * @param numTrades the num of trades this user has made
+     * @return a TradeRequest when all the information is given by the user.
+     * @throws IncompleteTradeException if a person doesn't complete a trade.
      */
-    public TradeRequest run(List<Item> itemsToTradeB, String userA, int numTrades) {
+    public TradeRequest run(List<Item> itemsToTradeB, String userA, int numTrades) throws IncompleteTradeException {
         TradeRequestManager tradeRequestMessage = null;
         String userB = itemsToTradeB.get(0).getOwnerName();
 
@@ -110,6 +105,8 @@ public class TradeController {
 
         List<Item> itemsToTradeA = new ArrayList<>();
         boolean done = false;
+        String tradeType = "";
+
         do {
             // have a presenter that asks for perm trade or temp trade.
             this.tradeMenu.choosePermTemp();
@@ -123,32 +120,31 @@ public class TradeController {
                     case "1":
                         // ask the user if its one way or two way trade.
                         this.tradeMenu.chooseOneOrTwo();
-                        this.tradeType = this.input.nextLine();
-                        invalidTradeTypeChoice();
-                        itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
+                        tradeType = this.input.nextLine();
+                        invalidTradeTypeChoice(tradeType);
+                        itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, userB, itemsToTradeA);
                         if(itemsToTradeA.isEmpty() && numTrades == 0){
                             tradeMenu.unavailableChoice();
                             break;
+                        } else {
+                            tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
+                            this.tradeMenu.tradeRequestSent(userB);
                         }
-                        tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                        this.tradeMenu.tradeRequestSent(userB);
                         done = true;
                         break;
                     // temp trade
                     case "2":
                         // ask the user if its one way or two way trade.
                         this.tradeMenu.chooseOneOrTwo();
-                        this.tradeType = this.input.nextLine();
-                        invalidTradeTypeChoice();
-                        itemsToTradeA = oneOrTwoWayTrade(this.tradeType, userA, itemsToTradeA);
+                        tradeType = this.input.nextLine();
+                        invalidTradeTypeChoice(tradeType);
+                        itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, userB, itemsToTradeA);
                         if(itemsToTradeA.isEmpty() && numTrades == 0){
                             tradeMenu.unavailableChoice();
-                            done = true;
-                            break;
+                        } else {
+                            tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
+                            this.tradeMenu.tradeRequestSent(userB);
                         }
-                        tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
-                        usersInventory.getPersonInventory(userB);
-                        this.tradeMenu.tradeRequestSent(userB);
                         done = true;
                         break;
                     default:
@@ -158,15 +154,20 @@ public class TradeController {
             } else {
                 this.tradeMenu.invalidInput();
             }
-
         }while(!done);
-        return tradeRequestMessage.getTradeRequest();
+
+        if (tradeRequestMessage == null) {
+            throw new IncompleteTradeException();
+        } else {
+            return tradeRequestMessage.getTradeRequest();
+        }
     }
 
 
 
     private LocalDateTime getDateInput() {
         // tell user that it has to be a specific format.
+        LocalDateTime date = null;
         String datePattern = "yyyy-MM-ddH:mm";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
 
@@ -178,10 +179,10 @@ public class TradeController {
                 String dateInput = this.input.nextLine();
                 // asks for date
                 dateInput = dateInput.replaceAll("\\s+", "");
-                this.date = parse(dateInput, formatter);
+                date = parse(dateInput, formatter);
                 LocalDateTime today = LocalDateTime.now();
                 // checks if the date inputted is not before today's date.
-                if (this.date.isBefore(today)) {
+                if (date.isBefore(today)) {
                     this.tradeMenu.enteredPastDate();
                 } else {
                     dateGiven = true;
@@ -194,15 +195,15 @@ public class TradeController {
         return date;
     }
 
-    private void invalidTradeTypeChoice() {
-        while(!this.tradeType.equals("1") && !this.tradeType.equals("2")){
+    private void invalidTradeTypeChoice(String tradeType) {
+        while(!tradeType.equals("1") && !tradeType.equals("2")){
             this.tradeMenu.invalidInput();
             this.tradeMenu.chooseOneOrTwo();
-            this.tradeType = this.input.nextLine();
+            tradeType = this.input.nextLine();
         }
     }
 
-    private List<Item> oneOrTwoWayTrade(String tradeType, String userA, List<Item> itemsToTradeA) {
+    private List<Item> oneOrTwoWayTrade(String tradeType, String userA, String userB, List<Item> itemsToTradeA) {
         int choice = 0;
         String choiceString;
         boolean isValid;
@@ -213,38 +214,40 @@ public class TradeController {
             // two way trade
             case "2":
                 List<Item> userAInventory = usersInventory.getPersonInventory(userA);
-                ArrayList<Item> itemsAvailableToTrade = (ArrayList<Item>) userAInventory;
+                ArrayList<Item> items = (ArrayList<Item>) userAInventory;
                 boolean done = false;
                 // ask the user what items they want to trade, then add it into itemsToTradeA.
                 while (!done) {
                     // inform the user there's no more items to trade and return back to previous screen.
-                    if (itemsAvailableToTrade.isEmpty()) {
+                    if (items.isEmpty()) {
                         this.tradeMenu.noMoreItems();
                         done = true;
-                    }
-                    this.tradeMenu.itemsAvailableToTrade(itemsAvailableToTrade);
-                    // choose the items you want to trade to the other user.
-                    this.tradeMenu.itemsWantToTrade();
-
-                    choiceString = this.input.nextLine();
-                    isValid = choiceString.matches("\\d");
-                    // check if the choice is valid.
-                    if (!isValid) {
-                        this.tradeMenu.invalidInput();
                     } else {
-                        choice = Integer.parseInt(choiceString);
-                    }
+                        // show suggested items along with the items available to trade.
+                        this.tradeMenu.showSuggestedItems(findSuggestedItems(userA, userB));
+                        this.tradeMenu.itemsAvailableToTrade(items);
+                        this.tradeMenu.itemsWantToTrade();
 
-                    // time to exit :-)
-                    if (choice == -1) {
-                        done = true;
-                    }
+                        choiceString = this.input.nextLine();
+                        isValid = choiceString.matches("-?\\d");
+                        // check if the choice is valid.
+                        if (!isValid) {                                                 
+                            this.tradeMenu.invalidInput();
+                        } else {
+                            choice = Integer.parseInt(choiceString);
+                        }
 
-                    // add user input offered items
-                    else if (choice > 0 && choice <= itemsAvailableToTrade.size()) {
-                        itemsToTradeA.add(itemsAvailableToTrade.get(choice - 1));
-                        itemsAvailableToTrade.remove(choice - 1);
-                        tradeMenu.addedItem();
+                        // time to exit :-)
+                        if (choice == -1) {
+                            done = true;
+                        }
+
+                        // add user input offered items
+                        else if (choice > 0 && choice <= items.size()) {
+                            itemsToTradeA.add(items.get(choice - 1));
+                            items.remove(choice - 1);
+                            this.tradeMenu.addedItem();
+                        }
                     }
                 }
         }
@@ -253,28 +256,21 @@ public class TradeController {
 
     private TradeRequestManager templateTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
                                                      List<Item> itemsToTradeB, LocalDateTime date, String place, boolean perm) {
-        this.tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA);
-        this.tradeRequestManager.setInfo(userA, userB, itemsToTradeB, itemsToTradeA, perm);
-        this.tradeRequestManager.setDateAndPlace(userB, date, place);
-        return this.tradeRequestManager;
+        TradeRequestManager tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userB, itemsToTradeB, itemsToTradeA, perm);
+        tradeRequestManager.setDateAndPlaceFirst(date, place);
+        return tradeRequestManager;
     }
 
     private TradeRequestManager permTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
                                           List<Item> itemsToTradeB, LocalDateTime date, String place) {
 
-        // userA is current trader.
-        // userB is second trader.
-        this.tradeRequestManager = templateTradeRequest(userA,userB,itemsToTradeA,itemsToTradeB,date,place,true);
-
-        return this.tradeRequestManager;
+        return templateTradeRequest(userA,userB,itemsToTradeA,itemsToTradeB,date,place,true);
     }
 
     private TradeRequestManager tempTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
                                           List<Item> itemsToTradeB, LocalDateTime date, String place) {
 
-        this.tradeRequestManager = templateTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place, false);
-
-        return this.tradeRequestManager;
+        return templateTradeRequest(userA, userB, itemsToTradeA, itemsToTradeB, date, place, false);
     }
 
     // TODO demo trade controller.
@@ -283,27 +279,11 @@ public class TradeController {
     reuse run method,
      */
 
-//    private List<Item> findSuggestedItems(String userA, String userB) {
-//        List<Item> suggestedItems = new ArrayList<Item>();
-//
-//        List<Item> userAInventory = this.usersInventory.getPersonInventory(userA);
-//        List<String> userAWishlist = this.usersWishlist.getPersonWishlist(userB);
-//
-//        int inventoryAIndex = userAInventory.size()-1;
-//        int wishlistBIndex = userAWishlist.size()-1;
-//
-//        while (inventoryAIndex > 0 && wishlistBIndex > 0) {
-//            this.usersInventory.getItemFromGI(userAWishlist.get(wishlistBIndex));
-//            // if the users' item is the same as the other users' item,
-//            if (userAInventory.get(inventoryAIndex).equals(userAWishlist.get(wishlistBIndex))) {
-//                // mark it as a suggestion for the user.
-//
-//            }
-//            inventoryAIndex--;
-//            wishlistBIndex--;
-//        }
-//        return suggestedItems;
-//    }
+    private List<String> findSuggestedItems(String userA, String userB) {
+        List<Item> userAInventory = this.usersInventory.getPersonInventory(userA);
+
+        return this.usersWishlist.getInterestedItems(userAInventory, userB);
+    }
 
 }
 
