@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.*;
+import exceptions.IncompleteTradeException;
 import presenters.UserPresenter;
 import exceptions.UserFrozenException;
 import use_cases.*;
@@ -297,9 +298,14 @@ public class UserMenu {
                             if(userLoanInput == 1) {
                                 TradeController tradeController =
                                         new TradeController(this.globalInventoryManager, this.globalWishlistManager);
-                                TradeRequest newTradeRequest =
-                                        tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
-                                this.userManager.addUserMessage(userItem.get(0).getOwnerName(), newTradeRequest);
+                                try {
+                                    TradeRequest newTradeRequest =
+                                            tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
+                                    this.userManager.addUserMessage(userItem.get(0).getOwnerName(), newTradeRequest);
+                                }
+                                catch(IncompleteTradeException ex) {
+                                    this.userPresenter.tradeOfferCreationCancelled();
+                                }
                                 continueLoanInput = false;
                             }
                             // if no, exit and return to main menu

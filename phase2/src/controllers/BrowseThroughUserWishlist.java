@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.Item;
+import exceptions.IncompleteTradeException;
 import exceptions.UserFrozenException;
 import presenters.UserPresenter;
 import use_cases.*;
@@ -97,20 +98,24 @@ public class BrowseThroughUserWishlist {
             else if(userWishlistInput.equals("4")) {
                 try {
                     // make sure the item isn't the user's own item and that they can trade
-                    if(!userWishlist.get(index).getOwnerName().equals(this.currUser) &&
-                            this.userManager.getCanTrade(this.currUser,
-                                    this.tradeManager.getBorrowedTimes(this.currUser),
-                                    this.tradeManager.getLendTimes(this.currUser),
-                                    this.tradeManager.getIncompleteTimes(this.currUser),
-                                    this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
+                    if(this.userManager.getCanTrade(this.currUser, this.tradeManager.getBorrowedTimes(this.currUser),
+                            this.tradeManager.getLendTimes(this.currUser),
+                            this.tradeManager.getIncompleteTimes(this.currUser),
+                            this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
                         List<Item> traderItem = new ArrayList<>();
                         traderItem.add(userWishlist.get(index));
                         TradeController tradeController =
                                 new TradeController(this.globalInventoryManager, this.globalWishlistManager);
-                        TradeRequest newTradeRequest = tradeController.run(traderItem, this.currUser,
-                                this.tradeManager.getTradeHistory(this.currUser).size());
-                        this.userManager.addUserMessage(userWishlist.get(index).getOwnerName(), newTradeRequest);
-                        this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
+                        // try-catch in case the user exists halfway through trade offer creation
+                        try {
+                            TradeRequest newTradeRequest = tradeController.run(traderItem, this.currUser,
+                                    this.tradeManager.getTradeHistory(this.currUser).size());
+                            this.userManager.addUserMessage(userWishlist.get(index).getOwnerName(), newTradeRequest);
+                            this.userPresenter.tradeRequestSent(userWishlist.get(index).getOwnerName());
+                        }
+                        catch(IncompleteTradeException ex) {
+                            this.userPresenter.tradeOfferCreationCancelled();
+                        }
                     }
                 }
                 // if frozen
@@ -127,5 +132,9 @@ public class BrowseThroughUserWishlist {
                 this.userPresenter.inputError();
             }
         }
+    }
+
+    private void sendTradeRequest(String trader) {
+
     }
 }

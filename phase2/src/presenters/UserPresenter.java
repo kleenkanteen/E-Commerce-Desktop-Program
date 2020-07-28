@@ -95,7 +95,7 @@ public class UserPresenter {
                 "\n [1] Remove this Item. " +
                 "\n [2] Go to next Item. " +
                 "\n [3] Return to previous Item. " +
-                "\n [4] Send the owner of this item a trade offer." +
+                "\n [4] Send the owner of this item a trade offer (can only ask to borrow this single item!)." +
                 "\n [5] Exit.");
     }
 
@@ -313,5 +313,9 @@ public class UserPresenter {
 
     public void invalidUsername() {
         System.out.println("This is not a valid username, please try again.");
+    }
+
+    public void tradeOfferCreationCancelled() {
+        System.out.println("Trade offer creation cancelled.");
     }
 }
