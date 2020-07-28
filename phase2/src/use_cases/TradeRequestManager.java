@@ -24,12 +24,7 @@ public class TradeRequestManager {
     public TradeRequestManager(String content, String userA, String userB,  List<Item> itemA,
                                List<Item> itemB, boolean perm){
         MessageBuilder temp = new MessageBuilder();
-        this.tradeRequest = (TradeRequest) temp.getTradeRequest(content, userA);
-        tradeRequest.setUserA(userA);
-        tradeRequest.setUserB(userB);
-        tradeRequest.setItemA(itemA);
-        tradeRequest.setItemB(itemB);
-        tradeRequest.setPerm(perm);
+        this.tradeRequest = (TradeRequest) temp.getTradeRequest(content, userA, userA, userB, itemA, itemB, perm);
     }
 
 

@@ -23,8 +23,14 @@ public class TradeRequest extends Request implements Serializable {
      * @param content is the content of the message
      * @param sender is the sender's username
      */
-    public TradeRequest(String content, String sender) {
+    public TradeRequest(String content, String sender, String userA, String userB,  List<Item> itemA,
+                        List<Item> itemB, boolean perm) {
         super(content, new String[]{"confirm", "deny", "edit"}, sender);
+        this.userA = userA;
+        this.userB = userB;
+        this.itemA = itemA;
+        this.itemB = itemB;
+        this.perm = perm;
     }
 
     /**
@@ -143,35 +149,6 @@ public class TradeRequest extends Request implements Serializable {
         }
     }
 
-    public void setUserA(String userA) {
-        this.userA = userA;
-    }
-
-    public void setItemA(List<Item> itemA) {
-        this.itemA = itemA;
-    }
-
-    public void setItemB(List<Item> itemB) {
-        this.itemB = itemB;
-    }
-
-    /**
-     * set the userB involved in this trade request
-     * @param userB a user
-     */
-    public void setUserB(String userB) {
-        this.userB = userB;
-    }
-
-    /**
-     * set to true if this trade request is a permanent trade request, false if this trade request is a
-     * temporary trade request
-     * @param perm true if this trade request is a permanent trade request, false if this trade request is a
-     *      temporary trade request
-     */
-    public void setPerm(boolean perm) {
-        this.perm = perm;
-    }
 
     /**
      * Returns a string representation of the message
