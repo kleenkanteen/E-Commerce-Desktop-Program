@@ -160,4 +160,8 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void alreadySelected(){
         System.out.println("You already selected this item");
     }
+
+    public void incompleteTrade(){
+        System.out.println("You did not complete the trade");
+    }
 }

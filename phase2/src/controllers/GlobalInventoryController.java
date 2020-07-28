@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Item;
 import entities.TradeRequest;
+import exceptions.IncompleteTradeException;
 import exceptions.UserFrozenException;
 import presenters.GlobalInventoryPresenter;
 import use_cases.GlobalInventoryManager;
@@ -68,6 +69,7 @@ public class GlobalInventoryController {
                                     globalWishlistManager.addWish(item.getItemID(), user);
                                 }
                             } else if (selection.equals("2")) { // user selected trade,
+                                try{
                                 ArrayList<Item> items = new ArrayList<>();
                                 items.add(item);
                                 prompts.seeTraderInventory();
@@ -104,6 +106,9 @@ public class GlobalInventoryController {
                                             new TradeController(globalInventoryManager, globalWishlistManager);
                                     TradeRequest request = trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
                                     userManager.addUserMessage(item.getOwnerName(), request);
+                                }
+                                } catch (IncompleteTradeException e){
+                                    prompts.incompleteTrade();
                                 }
                             } else { // if user cant trade, only allow to add to wishlist
                                 prompts.addToWishlist(item);
