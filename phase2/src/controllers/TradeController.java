@@ -256,7 +256,7 @@ public class TradeController {
 
     private TradeRequestManager templateTradeRequest(String userA, String userB, List<Item> itemsToTradeA,
                                                      List<Item> itemsToTradeB, LocalDateTime date, String place, boolean perm) {
-        TradeRequestManager tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userB, itemsToTradeB, itemsToTradeA, perm);
+        TradeRequestManager tradeRequestManager = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, itemsToTradeA, perm);
         tradeRequestManager.setDateAndPlaceFirst(date, place);
         return tradeRequestManager;
     }
