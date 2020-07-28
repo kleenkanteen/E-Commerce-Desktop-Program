@@ -12,31 +12,31 @@ import java.io.InputStreamReader;
 public class AdminAccountSystem {
     private Admin admin;
 
-    private AdminAccountPresenter aap;
+    private AdminAccountPresenter adminAccountPresenter;
 
 
 
-    private UserManager um;
+    private UserManager userManager;
 
-    private AdminManager am;
+    private AdminManager adminManager;
 
 
     /**
      * Class constructor.
      * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
      * @param admin the admin of the currently logged in.
-     * @param am the AdminManager will be used to change account information
+     * @param adminManager the AdminManager will be used to change account information
 
-     * @param um the UserManager used to check account information
+     * @param userManager the UserManager used to check account information
      */
 
 
-    AdminAccountSystem(Admin admin, AdminManager am,
-                       UserManager um){
+    AdminAccountSystem(Admin admin, AdminManager adminManager,
+                       UserManager userManager){
         this.admin = admin;
-        aap = new AdminAccountPresenter(admin);
-        this.am = am;
-        this.um = um;
+        adminAccountPresenter = new AdminAccountPresenter(admin);
+        this.adminManager = adminManager;
+        this.userManager = userManager;
 
 
 
@@ -49,7 +49,7 @@ public class AdminAccountSystem {
 
 
     public void run(){
-        aap.printMainMenu();
+        adminAccountPresenter.printMainMenu();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String input = "";
         while (!input.equals("3")) {
@@ -57,42 +57,42 @@ public class AdminAccountSystem {
             try {
                 input = br.readLine();
                 if (input.equals("1")) {
-                    aap.askForNewPassword();
+                    adminAccountPresenter.askForNewPassword();
                     String password1 = br.readLine();
-                    aap.askToConfirmPassword();
+                    adminAccountPresenter.askToConfirmPassword();
                     String password2 = br.readLine();
-                    if (am.addNewPassWord(password1,password2, admin)){
-                        aap.passwordChanged();
+                    if (adminManager.addNewPassWord(password1,password2, admin)){
+                        adminAccountPresenter.passwordChanged();
                     }
                     else {
-                        aap.failToChangePassword();
+                        adminAccountPresenter.failToChangePassword();
                     }
-                    aap.printMainMenu();
+                    adminAccountPresenter.printMainMenu();
                 } else if (input.equals("2")) {
-                    aap.newAdminUserName();
+                    adminAccountPresenter.newAdminUserName();
                     String newUsername = br.readLine();
-                    aap.newAdminPassword();
+                    adminAccountPresenter.newAdminPassword();
                     String newPassword = br.readLine();
-                    if(um.isValidUser(newUsername)){
-                        aap.failToCreateNewAdmin();
+                    if(userManager.isValidUser(newUsername)){
+                        adminAccountPresenter.failToCreateNewAdmin();
                     }
                     else {
                     try {
-                        am.addAdmin(newUsername, newPassword);
-                        aap.successadmin();
+                        adminManager.addAdmin(newUsername, newPassword);
+                        adminAccountPresenter.successadmin();
                   }
                     catch (InvalidUsernameException e) {
-                        aap.failToCreateNewAdmin();
+                        adminAccountPresenter.failToCreateNewAdmin();
                     }
                     }
-                    aap.printMainMenu();
+                    adminAccountPresenter.printMainMenu();
 
                 }
             } catch (IOException e) {
-                aap.printErrorOccurred();
+                adminAccountPresenter.printErrorOccurred();
             }
         }
-        aap.exitMenu();
+        adminAccountPresenter.exitMenu();
     }
 
 }

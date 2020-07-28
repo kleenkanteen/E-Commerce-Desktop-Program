@@ -19,10 +19,10 @@ public class GlobalInventoryManager implements Serializable {
     /**
      * construct the Use Case class to do some changes on globalinventory.
      *
-     * @param gI - the globalInventory it takes in
+     * @param globalInventory - the globalInventory it takes in
      */
-    public GlobalInventoryManager(GlobalInventory gI) {
-        this.globalInventory = gI;
+    public GlobalInventoryManager(GlobalInventory globalInventory) {
+        this.globalInventory = globalInventory;
     }
 
     /**
