@@ -21,10 +21,10 @@ public class TradeRequestManager {
      * @param content trade request message content
      * @param userA userA who sends the trade request
      */
-    public TradeRequestManager(String content, String userA, String userB,  List<Item> itemA,
+    public TradeRequestManager(String content, String sender, String userA, String userB,  List<Item> itemA,
                                List<Item> itemB, boolean perm){
         MessageBuilder temp = new MessageBuilder();
-        this.tradeRequest = (TradeRequest) temp.getTradeRequest(content, userA, userA, userB, itemA, itemB, perm);
+        this.tradeRequest = (TradeRequest) temp.getTradeRequest(content, sender, userA, userB, itemA, itemB, perm);
     }
 
 

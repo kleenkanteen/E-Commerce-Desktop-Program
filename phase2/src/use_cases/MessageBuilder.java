@@ -1,6 +1,8 @@
 package use_cases;
 import entities.*;
 
+import java.util.List;
+
 public class MessageBuilder {
 
     /**
@@ -48,8 +50,9 @@ public class MessageBuilder {
      * @param sender the String username of the sender
      * @return a new TradeRequest message
      */
-    public Message getTradeRequest(String content, String sender){
-        return new TradeRequest(content, sender);
+    public Message getTradeRequest(String content, String sender, String userA, String userB,  List<Item> itemA,
+                                   List<Item> itemB, boolean perm){
+        return new TradeRequest(content, sender, userA, userB, itemA, itemB, perm);
     }
 
     /**
