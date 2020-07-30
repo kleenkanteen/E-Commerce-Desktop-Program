@@ -42,6 +42,7 @@ public class TradeUndoSystem {
                     user = re.readLine();
                     break;
                 }
+                System.out.println(trade.get(0));
                 System.out.println("Type 1 if you want to reach the next trade\n" +
                         "Type 2 to go back to the previous trade\n" +
                         "Type 3 to confirm the deletion of the Trade\n" +
@@ -52,7 +53,7 @@ public class TradeUndoSystem {
                 while (!finishChoosing){
                     switch (option) {
                         case "1":
-                            if(counting <= trade.size() - 1){
+                            if(counting < trade.size() - 1){
                             counting += 1;
                             System.out.println(trade.get(counting));
                             option = re.readLine();
