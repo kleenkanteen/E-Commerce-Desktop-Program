@@ -67,14 +67,10 @@ public class GlobalInventory implements Serializable {
      * and return null if the itemID is not in the GlobalInventory
      */
 
-    public Object getItem(String itemID) {
-        if (itemMap.containsKey(itemID)){
+    public Item getItem(String itemID) {
+
             return itemMap.get(itemID);
-        }
-        else {
-            System.out.println("itemID not found");
-            return null;
-        }
+
 
     }
 
