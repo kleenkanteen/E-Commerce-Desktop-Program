@@ -41,13 +41,13 @@ public class GlobalInventoryManager implements Serializable {
 
 
 
-    public ArrayList<Item> getItemFromGI(ArrayList<String> itemIDList){
-        ArrayList<Item> newList = new ArrayList<>();
+    public List<Item> getItemFromGI(ArrayList<String> itemIDList){
+        List<Item> newList = new ArrayList<>();
         if (itemIDList.size() == 0){
             return newList;
         }
         for (String s : itemIDList) {
-            newList.add((Item) globalInventory.getItem(s));
+            newList.add(globalInventory.getItem(s));
         }
         return newList;
     }
