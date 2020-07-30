@@ -37,12 +37,13 @@ public class TradeUndoSystem {
                 List<Trade> trade = tradeManager.getUnstartTrades(user);
                 if (trade.size() == 0){
                     System.out.println("No trade has been found");
-                    System.out.println("Type the User Name of the User whom you want to undo the trade\n" +
+                    System.out.println("\nType the User Name of the User whom you want to undo the trade\n" +
                             "Or type 1 to go back to Admin Menu");
                     user = re.readLine();
                     break;
                 }
-                System.out.println("Type 1 if you want to reach the next trade\n" +
+                System.out.println(trade.get(0));
+                System.out.println("\nType 1 to you want to reach the next trade\n" +
                         "Type 2 to go back to the previous trade\n" +
                         "Type 3 to confirm the deletion of the Trade\n" +
                         "Type 4 to go back");
@@ -52,22 +53,34 @@ public class TradeUndoSystem {
                 while (!finishChoosing){
                     switch (option) {
                         case "1":
-                            if(counting <= trade.size() - 1){
+                            if(counting < trade.size() - 1){
                             counting += 1;
                             System.out.println(trade.get(counting));
-                            option = re.readLine();
+
                             }
                             else {
                                 System.out.println("NO more trade can be shown");
+                                System.out.println(trade.get(counting));
+
+                                System.out.println("\nType 1 to you want to reach the next trade\n" +
+                                        "Type 2 to go back to the previous trade\n" +
+                                        "Type 3 to confirm the deletion of the Trade\n" +
+                                        "Type 4 to go back");
                             }
+                            option = re.readLine();
                             break;
                         case "2":
                             if (counting >= 1) {
                                 counting -= 1;
                             } else {
                                 System.out.println("You have already reached the first trade");
+                                System.out.println(trade.get(counting));
+                                System.out.println("\nType 1 to you want to reach the next trade\n" +
+                                        "Type 2 to go back to the previous trade\n" +
+                                        "Type 3 to confirm the deletion of the Trade\n" +
+                                        "Type 4 to go back");
                             }
-                            System.out.println(trade.get(counting));
+
                             option = re.readLine();
                             break;
                         case "3":

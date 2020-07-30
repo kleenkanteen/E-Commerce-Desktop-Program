@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="D_presenters.guiSample">
+   <children>
+      <Label layoutX="229.0" layoutY="81.0" text="Choose your option below:" />
+      <Button fx:id="userLogin" layoutX="264.0" layoutY="116.0" mnemonicParsing="false" onAction="#goToUserMenu" text="User Login" />
+      <Button fx:id="userAccountCreation" layoutX="233.0" layoutY="151.0" mnemonicParsing="false" onAction="#goToUserAccountCreation" text="User Account Creation" />
+      <Button fx:id="adminLogin" layoutX="258.0" layoutY="188.0" mnemonicParsing="false" onAction="#goToAdminLogin" text="Admin Login" />
+   </children>
+</AnchorPane>

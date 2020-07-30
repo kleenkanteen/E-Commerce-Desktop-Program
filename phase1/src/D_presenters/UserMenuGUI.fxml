@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="D_presenters.UserMenuGUI">
+   <children>
+      <PasswordField layoutX="233.0" layoutY="200.0" />
+      <TextField layoutX="233.0" layoutY="157.0" />
+      <Text layoutX="281.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login boi." />
+      <Button layoutX="282.0" layoutY="236.0" mnemonicParsing="false" text="Login" />
+   </children>
+</AnchorPane>
