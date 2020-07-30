@@ -279,10 +279,17 @@ public class TradeController {
     reuse run method,
      */
 
-    private List<String> findSuggestedItems(String userA, String userB) {
+    private List<Item> findSuggestedItems(String userA, String userB) {
         List<Item> userAInventory = this.usersInventory.getPersonInventory(userA);
+        List<Item> suggestedItems = new ArrayList<Item>();
+        List<String> interestedItemIDs = this.usersWishlist.getInterestedItems(userAInventory, userB);
 
-        return this.usersWishlist.getInterestedItems(userAInventory, userB);
+        // converting itemIDs into Items.
+        for (String itemID : interestedItemIDs) {
+            suggestedItems.add(this.usersInventory.getItemFromGI(itemID));
+        }
+
+        return suggestedItems;
     }
 
 }
