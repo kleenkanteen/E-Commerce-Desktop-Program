@@ -298,6 +298,7 @@ public class UserMenu {
                             if(userLoanInput == 1) {
                                 TradeController tradeController =
                                         new TradeController(this.globalInventoryManager, this.globalWishlistManager);
+                                // try-catch in case user cancels trade offer creation midway
                                 try {
                                     TradeRequest newTradeRequest =
                                             tradeController.runFromLoan(userItem, this.currUser, itemsToLend.get(1));
