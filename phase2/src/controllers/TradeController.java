@@ -284,11 +284,12 @@ public class TradeController {
         List<Item> suggestedItems = new ArrayList<Item>();
         List<String> interestedItemIDs = this.usersWishlist.getInterestedItems(userAInventory, userB);
 
-        // converting itemIDs into Items.
-        for (String itemID : interestedItemIDs) {
-            suggestedItems.add(this.usersInventory.getItemFromGI(itemID));
+        if (!interestedItemIDs.isEmpty()) {
+            // converting itemIDs into Items.
+            for (String itemID : interestedItemIDs) {
+                suggestedItems.add(this.usersInventory.getItemFromGI(itemID));
+            }
         }
-
         return suggestedItems;
     }
 
