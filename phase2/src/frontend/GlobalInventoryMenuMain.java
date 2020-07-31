@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class GlobalInventoryMenuListener extends Application {
+public class GlobalInventoryMenuMain extends Application {
 
     public static void main(String[] args) {
         launch(args);
