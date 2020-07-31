@@ -24,7 +24,7 @@ public class MessageGUI implements Initializable{
     @FXML private ButtonBar buttonBar;
     private List<Message> messageList = new ArrayList<>();
     private int counter = 0;
-    private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
+    //private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
 
     public void setMessageList(){
         messageList = new ArrayList<>();
@@ -38,14 +38,19 @@ public class MessageGUI implements Initializable{
 
         if(messageList.size() <= counter) {
             //messageContent.setText(messageReplyMenu.printNoMessages());
+            messageContent.setText("You have no messages to look through");
             Button button1 = new Button("Exit");
             button1.setOnAction(e ->
                     ((Stage) (((Button) e.getSource()).getScene().getWindow())).close());
             buttonBar.getButtons().add(button1);
         }
         else{
-            String[] s = new String[4];
             //String[] s = messageReplyMenu.printContentMessagePrompt(messageList.get(counter));
+            String[] s = new String[4];
+            s[0] = messageList.get(counter).toString();
+            s[1] = "Delete";
+            s[2] = "Skip";
+            s[3] = "Exit";
             messageContent.setText(s[0]);
             Button button1 = new Button(s[1]);
             //button1.setOnAction(
