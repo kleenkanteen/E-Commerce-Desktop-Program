@@ -10,7 +10,7 @@ public class TradeMenu {
      * Presenter for choosing permanent trade or temporary trade.
      */
     public void choosePermTemp() {
-        System.out.println("What trade would you like to complete today?" +
+        System.out.println("What trade would you like to complete today? Type '-1' if you want to exit the trade." +
                 "\n[1] Start a permanent transaction with a user." +
                 "\n[2] Start a temporary transaction with a user.");
     }
@@ -109,8 +109,13 @@ public class TradeMenu {
         System.out.println("Uh Oh! :O Looks like you don't have any items to trade! Bummer :-(\nExiting you from adding more items.");
     }
 
+    // TODO test this.
     public void showSuggestedItems(List<Item> suggestedItems) {
         System.out.println("Here's a list of suggested items you should try trading to the other person:");
-        this.itemsAvailableToTrade(suggestedItems);
+        int i = 1;
+        for (Item item : suggestedItems) {
+            System.out.println(item.getName());
+            i++;
+        }
     }
 }

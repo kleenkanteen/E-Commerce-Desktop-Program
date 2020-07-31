@@ -55,31 +55,40 @@ public class TradeController {
 
         String selection;
         TradeRequestManager tradeRequestMessage = null;
+        boolean done = false;
         do {
             // have a presenter that asks for perm trade or temp trade.
             this.tradeMenu.choosePermTemp();
             selection = this.input.nextLine();
             if (selection.equals("-1")) {
-                System.out.println("this would exit");
+                done = true;
             } else {
                 switch (selection) {
                     // perm trade
                     case "1":
                         tradeRequestMessage = templateTradeRequest(userA, userB, itemsToTrade, new ArrayList<>(), date, place, true);
+                        done = true;
                         break;
                     // temp trade
                     case "2":
                         tradeRequestMessage = templateTradeRequest(userA, userB, itemsToTrade, new ArrayList<>(), date, place, false);
+                        done = true;
                         break;
                     default:
                         tradeMenu.invalidInput();
+                        break;
                 }
             }
 
-        }while(!selection.equals("1")&&!selection.equals("2"));
-        tradeMenu.tradeRequestSent(userB);
+        }while(!done);
 
-        return tradeRequestMessage.getTradeRequest();
+
+        if (tradeRequestMessage == null) {
+            throw new IncompleteTradeException();
+        } else {
+            tradeMenu.tradeRequestSent(userB);
+            return tradeRequestMessage.getTradeRequest();
+        }
     }
 
     /**
@@ -105,13 +114,14 @@ public class TradeController {
 
         List<Item> itemsToTradeA = new ArrayList<>();
         boolean done = false;
+        boolean exit = false;
         String tradeType = "";
 
         do {
             // have a presenter that asks for perm trade or temp trade.
             this.tradeMenu.choosePermTemp();
             String selection = this.input.nextLine();
-            boolean isInteger = Pattern.matches("\\d", selection);
+            boolean isInteger = Pattern.matches("-?\\d", selection);
 
             // allows for integer input only.
             if (isInteger) {
@@ -123,14 +133,19 @@ public class TradeController {
                         tradeType = this.input.nextLine();
                         invalidTradeTypeChoice(tradeType);
                         itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, userB, itemsToTradeA);
-                        if(itemsToTradeA.isEmpty() && numTrades == 0){
-                            tradeMenu.unavailableChoice();
-                            break;
+                        // if a two way trade cannot be made.
+                        if (itemsToTradeA == null) {
+                            // then its incomplete.
+                            throw new IncompleteTradeException();
+                        // otherwise, if there's nothing to give and there is no history of trades.
+                        } else if (itemsToTradeA.isEmpty() && numTrades == 0) {
+                            this.tradeMenu.unavailableChoice();
+                        // otherwise, send the trade request.
                         } else {
                             tradeRequestMessage = permTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
                             this.tradeMenu.tradeRequestSent(userB);
+                            done = true;
                         }
-                        done = true;
                         break;
                     // temp trade
                     case "2":
@@ -139,12 +154,21 @@ public class TradeController {
                         tradeType = this.input.nextLine();
                         invalidTradeTypeChoice(tradeType);
                         itemsToTradeA = oneOrTwoWayTrade(tradeType, userA, userB, itemsToTradeA);
-                        if(itemsToTradeA.isEmpty() && numTrades == 0){
-                            tradeMenu.unavailableChoice();
+                        if (itemsToTradeA == null) {
+                            // then its incomplete.
+                            throw new IncompleteTradeException();
+                        // otherwise, if there's nothing to give and there is no history of trades.
+                        } else if (itemsToTradeA.isEmpty() && numTrades == 0) {
+                            this.tradeMenu.unavailableChoice();
+                        // otherwise, send the tradeRequest.
                         } else {
                             tradeRequestMessage = tempTradeRequest(userA, userB, itemsToTradeB, itemsToTradeA, date, place);
                             this.tradeMenu.tradeRequestSent(userB);
+                            done = true;
                         }
+                        break;
+                    // to exit the trade screen
+                    case "-1":
                         done = true;
                         break;
                     default:
@@ -210,7 +234,8 @@ public class TradeController {
         switch (tradeType) {
             // one way trade
             case "1":
-                return new ArrayList<>();
+                itemsToTradeA = new ArrayList<>();
+                break;
             // two way trade
             case "2":
                 List<Item> userAInventory = usersInventory.getPersonInventory(userA);
@@ -221,6 +246,7 @@ public class TradeController {
                     // inform the user there's no more items to trade and return back to previous screen.
                     if (items.isEmpty()) {
                         this.tradeMenu.noMoreItems();
+                        itemsToTradeA = null;
                         done = true;
                     } else {
                         // show suggested items along with the items available to trade.
@@ -250,6 +276,7 @@ public class TradeController {
                         }
                     }
                 }
+                break;
         }
         return itemsToTradeA;
     }
