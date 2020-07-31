@@ -66,58 +66,61 @@ public class GlobalInventoryController {
                                 } else {
                                     globalWishlistManager.addWish(item.getItemID(), user); // user does not have it in wishlit, adding it
                                     prompts.addedToWishlist(item);
-                                    globalWishlistManager.addWish(item.getItemID(), user);
                                 }
                             } else if (selection.equals("2")) { // user selected trade,
-                                try{
                                 ArrayList<Item> items = new ArrayList<>();
                                 items.add(item);
-                                prompts.seeTraderInventory();
-                                String seeTraderInventorySelection = inputx.nextLine();
-                                if (seeTraderInventorySelection.equals("2")) {// just one item trade
-                                    controllers.TradeController trademenu = new TradeController(globalInventoryManager,
-                                            globalWishlistManager);
-                                    TradeRequest request = trademenu.run
-                                            (items, user, tradeManager.getTradeHistory(user).size());
-                                    userManager.addUserMessage(item.getOwnerName(), request);
-                                } else {
-                                    if (globalInventoryManager.getPersonInventory(item.getOwnerName()).size() <= 1){
-                                        prompts.noMoreItem();
-                                    }else{
-                                    }// prints owner inventory}
-                                    String inputitemselect = "";
-                                    while (!inputitemselect.equals("e")) {
-                                        prompts.traderItem(item);
-                                        inputitemselect = inputx.nextLine();
-                                        if (inputitemselect.matches("[0-9]*") &&
-                                                Integer.valueOf(inputitemselect) < globalInventoryManager.
-                                                        getPersonInventory(item.getOwnerName()).size()) {
-                                            if (items.contains(globalInventoryManager.getPersonInventory
-                                                    (item.getOwnerName()).get(Integer.valueOf(inputitemselect)))) {
-                                                prompts.alreadySelected();
-                                            } else {
-                                                items.add(globalInventoryManager.getPersonInventory(item.getOwnerName())
-                                                        .get(Integer.valueOf(inputitemselect)));
+                                String seeTraderInventorySelection = "";
+                                while (!seeTraderInventorySelection.equals("1") ||!seeTraderInventorySelection.equals("2")){
+                                    try {
+                                        prompts.seeTraderInventory();
+                                        seeTraderInventorySelection = inputx.nextLine();
+                                        if (seeTraderInventorySelection.equals("2")) {// just one item trade
+                                            controllers.TradeController trademenu = new TradeController(globalInventoryManager,
+                                                    globalWishlistManager);
+                                            TradeRequest request = trademenu.run
+                                                    (items, user, tradeManager.getTradeHistory(user).size());
+                                            userManager.addUserMessage(item.getOwnerName(), request);
+                                        } else if (seeTraderInventorySelection.equals("1")) {
+                                            if (globalInventoryManager.getPersonInventory(item.getOwnerName()).size() <= 1) {
+                                                prompts.noMoreItem();
                                             }
-                                        }
-                                        else if (inputitemselect.equals("e")){
-                                            break;
-                                        }
-                                        else{
+                                            else{// prints owner inventory}
+                                            String inputitemselect = "";
+                                            while (!inputitemselect.equals("e")) {
+                                                prompts.traderItem(item);
+                                                inputitemselect = inputx.nextLine();
+                                                if (inputitemselect.matches("[0-9]*") &&
+                                                        Integer.valueOf(inputitemselect) < globalInventoryManager.
+                                                                getPersonInventory(item.getOwnerName()).size()) {
+                                                    if (items.contains(globalInventoryManager.getPersonInventory
+                                                            (item.getOwnerName()).get(Integer.valueOf(inputitemselect)))) {
+                                                        prompts.alreadySelected();
+                                                    } else {
+                                                        items.add(globalInventoryManager.getPersonInventory(item.getOwnerName())
+                                                                .get(Integer.valueOf(inputitemselect)));
+                                                        prompts.addedToTrade(globalInventoryManager.getPersonInventory(item.getOwnerName())
+                                                                .get(Integer.valueOf(inputitemselect)));
+                                                    }
+                                                } else if (inputitemselect.equals("e")) {
+                                                    break;
+                                                } else {
+                                                    prompts.invalid();
+                                                }
+                                            } }
+                                            controllers.TradeController trademenu =
+                                                    new TradeController(globalInventoryManager, globalWishlistManager);
+                                            TradeRequest request = trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
+                                            userManager.addUserMessage(item.getOwnerName(), request);
+                                        } else
                                             prompts.invalid();
-                                            prompts.traderItem(item);// prints owner inventory
-                                            inputitemselect = inputx.nextLine();
-                                        }
+
+                                    } catch (IncompleteTradeException e) {
+                                        prompts.incompleteTrade();
                                     }
-                                    controllers.TradeController trademenu =
-                                            new TradeController(globalInventoryManager, globalWishlistManager);
-                                    TradeRequest request = trademenu.run(items, user, tradeManager.getTradeHistory(user).size());
-                                    userManager.addUserMessage(item.getOwnerName(), request);
                                 }
-                                } catch (IncompleteTradeException e){
-                                    prompts.incompleteTrade();
-                                }
-                            } else { // if user cant trade, only allow to add to wishlist
+                            } else prompts.invalid();
+                        } else { // if user cant trade, only allow to add to wishlist
                                 prompts.addToWishlist(item);
                                 String selection1 = inputx.nextLine();
                                 if (selection1.equals("1")) {
@@ -129,20 +132,19 @@ public class GlobalInventoryController {
                                 }
                             }
                         }
-                    } catch (UserFrozenException ex) {
+                    catch (UserFrozenException ex) {
                         prompts.FrozenAcc();
                     }
-                    if (input.matches("[0-9]") &&
-                            Integer.valueOf(input) > globalInventoryManager.generatePage(pageNumber).size() - 1) {
-                        prompts.invalid();
-                    }
-                }
-                else prompts.ownItem();
+                } else prompts.ownItem();
+            }
+            else if (input.matches("[0-9]") &&
+                    Integer.valueOf(input) > globalInventoryManager.generatePage(pageNumber).size() - 1) {
+                prompts.invalid();
             }
             prompts.printpage(pageNumber);
             input = inputx.nextLine();
         }
 
-    }
+        }
 
-}
+    }

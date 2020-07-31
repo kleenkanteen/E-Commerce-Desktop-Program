@@ -166,6 +166,8 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
     public void noMoreItem(){
         System.out.println("This user does not have other items to trade. Please exit and continue with your trade!"+
                 "\n[e] exit");
-
+    }
+    public void addedToTrade(Item item){
+        System.out.println(item.getName() + " is added to trade request ");
     }
 }
