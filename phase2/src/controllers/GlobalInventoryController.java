@@ -81,10 +81,14 @@ public class GlobalInventoryController {
                                             (items, user, tradeManager.getTradeHistory(user).size());
                                     userManager.addUserMessage(item.getOwnerName(), request);
                                 } else {
-                                    prompts.traderItem(item);// prints owner inventory
+                                    if (globalInventoryManager.getPersonInventory(item.getOwnerName()).size() <= 1){
+                                        prompts.noMoreItem();
+                                    }else{
+                                    }// prints owner inventory}
                                     String inputitemselect = "";
-                                    inputitemselect = inputx.nextLine();
                                     while (!inputitemselect.equals("e")) {
+                                        prompts.traderItem(item);
+                                        inputitemselect = inputx.nextLine();
                                         if (inputitemselect.matches("[0-9]*") &&
                                                 Integer.valueOf(inputitemselect) < globalInventoryManager.
                                                         getPersonInventory(item.getOwnerName()).size()) {
@@ -95,6 +99,9 @@ public class GlobalInventoryController {
                                                 items.add(globalInventoryManager.getPersonInventory(item.getOwnerName())
                                                         .get(Integer.valueOf(inputitemselect)));
                                             }
+                                        }
+                                        else if (inputitemselect.equals("e")){
+                                            break;
                                         }
                                         else{
                                             prompts.invalid();

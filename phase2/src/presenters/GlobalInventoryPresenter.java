@@ -143,11 +143,9 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
         items.append("What other item do you want trade with the this user?\n");
         if (!globalInventoryManager.getPersonInventory(item.getOwnerName()).isEmpty()){
             for (int k = 0; k < globalInventoryManager.getPersonInventory(item.getOwnerName()).size(); k++) {
-                if (!globalInventoryManager.getPersonInventory(item.getOwnerName()).get(k).equals(item)){
                     String i = "[" + k + "] " + globalInventoryManager.
                             getPersonInventory(item.getOwnerName()).get(k).getName() + "\n" ;
                     items.append(i);
-                }
             }
             System.out.println(items + "[e] exit");
         }
@@ -163,5 +161,11 @@ public class GlobalInventoryPresenter implements  Iterator<String>{
 
     public void incompleteTrade(){
         System.out.println("You did not complete the trade");
+    }
+
+    public void noMoreItem(){
+        System.out.println("This user does not have other items to trade. Please exit and continue with your trade!"+
+                "\n[e] exit");
+
     }
 }
