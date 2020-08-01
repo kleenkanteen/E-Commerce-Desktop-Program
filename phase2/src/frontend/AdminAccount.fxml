@@ -10,9 +10,9 @@
       <VBox alignment="CENTER" layoutX="127.0" layoutY="25.0" prefHeight="355.0" prefWidth="353.0" rotate="90.0" spacing="10.0">
          <children>
             <Label text="You have some options with Admin accounts" textAlignment="CENTER" />
-            <Button mnemonicParsing="false" onAction="#ChangePassWordButtonPushed" prefHeight="80.0" prefWidth="200.0" text="Change your password" />
-            <Button mnemonicParsing="false" onAction="#AdminCreationButtonPushed" prefHeight="80.0" prefWidth="200.0" text="Add a new admin account" />
-          <Button mnemonicParsing="false" onAction="#ExitButtonPushed" prefHeight="80.0" prefWidth="200.0" text="Exit to admin menu" />
+            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#ChangePassWordButtonPushed" prefHeight="80.0" prefWidth="200.0" text="Change your password" />
+            <Button fx:id="adminCreationButton" mnemonicParsing="false" onAction="#AdminCreationButtonPushed" prefHeight="80.0" prefWidth="200.0" text="Add a new admin account" />
+          <Button fx:id="exitButton" mnemonicParsing="false" onAction="#ExitButtonPushed" prefHeight="80.0" prefWidth="200.0" text="Exit to admin menu" />
          </children>
       </VBox>
    </children>
