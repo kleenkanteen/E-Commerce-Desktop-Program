@@ -24,7 +24,6 @@ public class AdminAccountController implements Initializable {
     @FXML private Button backFromChangePasswordButton;
     @FXML private Label resultOfPasswordChangeLabel;
     @FXML private Label resultOfCreationLabel;
-    @FXML private Button changePasswordButton;
     @FXML private Button addNewPasswordButton;
     @FXML private Button addNewAdminButton;
     @FXML private TextField newPasswordTextField;
@@ -68,18 +67,28 @@ public class AdminAccountController implements Initializable {
     }
 
     public void addNewPasswordButtonPushed(ActionEvent actionEvent){
-        String newPassword = newPasswordTextField.getAccessibleText();
-        String confirmPassword = confirmNewPasswordField.getAccessibleText();
+        resultOfPasswordChangeLabel.setText("");
+        String newPassword = newPasswordTextField.getText();
+        String confirmPassword = confirmNewPasswordField.getText();
         if (newPassword.equals(confirmPassword)){
-            this.resultOfPasswordChangeLabel.setText("Your new password is saved");
+            resultOfPasswordChangeLabel.setText("Your new password is saved");
         }
         else {
-            this.resultOfPasswordChangeLabel.setText("Two passwords don't match, failed to change your password");
+            resultOfPasswordChangeLabel.setText("Two passwords don't match, failed to change your password");
         }
 
     }
 
     public void addNewAdminButtonPushed(ActionEvent actionEvent){
+        resultOfCreationLabel.setText("");
+        String userName = newAdminUserNameTextField.getText();
+        String password = newAdminPasswordTextField.getText();
+        if (userName.equals(password)){
+            resultOfCreationLabel.setText("New admin has been created!");
+        }
+        else {
+            resultOfCreationLabel.setText("the userName has been taken or unavailable");
+        }
 
     }
 
@@ -87,8 +96,7 @@ public class AdminAccountController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        resultOfCreationLabel.setText("");
-         resultOfPasswordChangeLabel.setText("");
+
 
 
     }
