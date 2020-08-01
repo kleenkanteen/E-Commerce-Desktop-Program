@@ -5,19 +5,23 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presenters.UndoUnstartedTradeMenu">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.UndoUnstartedTradeMenuController">
    <children>
-      <TableView layoutX="48.0" layoutY="14.0" prefHeight="300.0" prefWidth="504.0">
+      <TableView fx:id="tableView" layoutX="51.0" layoutY="57.0" prefHeight="432.0" prefWidth="702.0">
         <columns>
-          <TableColumn prefWidth="112.0" text="Trader A" />
-          <TableColumn prefWidth="85.0" text="Trader B" />
-            <TableColumn prefWidth="99.0" text="Item Involved" />
-            <TableColumn prefWidth="207.0" text="Date" />
+          <TableColumn fx:id="column1" prefWidth="112.0" text="Trader A" />
+          <TableColumn fx:id="column2" prefWidth="113.85089111328125" text="Trader B" />
+            <TableColumn fx:id="column3" prefWidth="152.0" text="Item From Trader A" />
+            <TableColumn fx:id="column4" prefWidth="170.0" text="Item From Trader B" />
+            <TableColumn fx:id="column5" prefWidth="153.0" text="Date" />
         </columns>
       </TableView>
-    <Button layoutX="413.0" layoutY="328.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="139.0" text="Delete Trade" />
-      <Label layoutX="51.0" layoutY="328.0" prefHeight="44.0" prefWidth="347.0" text="You can select and delete the Trade one at a time.          Be Careful! Don't get it Wrong!" textFill="#c90808" wrapText="true" />
+    <Button fx:id="deleteTrade" layoutX="584.0" layoutY="508.0" mnemonicParsing="false" onAction="#deleteTradeButtonPushed" prefHeight="59.0" prefWidth="160.0" text="Delete Trade" />
+      <Label layoutX="51.0" layoutY="507.0" prefHeight="63.0" prefWidth="568.0" text="You can select and delete the Trade one at a time.          Be Careful! Don't get it Wrong!" textFill="#c90808" wrapText="true">
+         <font>
+            <Font size="21.0" />
+         </font></Label>
    </children>
 </AnchorPane>
