@@ -1,12 +1,12 @@
 package entities;
 
-public class ContentMessage extends Message {
+public class PrivateMessage extends Message {
     /**
      * Class constructor
      * A message sent by the system with only information/a content
      * @param content is the content of the message
      */
-    public ContentMessage(String content){
+    public PrivateMessage(String content){
         super(content);
     }
 
@@ -16,7 +16,7 @@ public class ContentMessage extends Message {
      * @param content is the content of the message
      * @param username is the sender of this message's username
      */
-    public ContentMessage(String content, String username){
+    public PrivateMessage(String content, String username){
         super(content, username);
     }
 

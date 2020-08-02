@@ -66,12 +66,12 @@ public class UserMessageReplySystem {
                 if(m instanceof TradeRequest){
                     if(!tradeRequestResponse((TradeRequest) m, messages, br))return;
                 }
-                else if (m instanceof ContentMessage){
+                else if (m instanceof SystemMessage){
                     if( m.isSystemMessage()){
-                        if (!systemMessageResponse((ContentMessage) m, messages, br)) return;
+                        if (!systemMessageResponse((SystemMessage) m, messages, br)) return;
                     }
                     else{
-                        if (!userMessageResponse((ContentMessage) m, messages, br)) return;
+                        if (!userMessageResponse((PrivateMessage) m, messages, br)) return;
                     }
                 }
             }
@@ -83,7 +83,7 @@ public class UserMessageReplySystem {
             messageReplyMenu.printExit();
         }
     }
-    private boolean systemMessageResponse(Message m, List<Message> messages,
+    private boolean systemMessageResponse(SystemMessage m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
@@ -105,7 +105,7 @@ public class UserMessageReplySystem {
         }while(!done);
         return true;
     }
-    private boolean userMessageResponse(Message m, List<Message> messages,
+    private boolean userMessageResponse(PrivateMessage m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
@@ -149,7 +149,7 @@ public class UserMessageReplySystem {
         //warning the user that their trade request is cancelled due to too much edits
         if(!tempTradeRequestManager.canEdit(accountUsername)&&!tempTradeRequestManager.canEdit(username)){
             messageReplyMenu.tradeRequestCancel();
-            userManager.addUserMessage(username, messageBuilder.getContentMessage("Your trade request:"+m.toString()+
+            userManager.addUserMessage(username, messageBuilder.getSystemMessage("Your trade request:"+m.toString()+
                     "\n is cancelled due to too much edits"));
         }
         //Allow the user to edit a trade request
@@ -236,7 +236,7 @@ public class UserMessageReplySystem {
                                 //Tell the other trader that the trade could not be created at this time and
                                 //the trade request is deleted
                                 userManager.addUserMessage(username,
-                                        messageBuilder.getContentMessage("You or the other trader cannot create a " +
+                                        messageBuilder.getSystemMessage("You or the other trader cannot create a " +
                                         "new trade at this time or the items involved or not for trade at this time. " +
                                         "The other trader has chosen to delete this trade request.\n"+
                                         "Trade Request: "+m.toString()));
@@ -268,7 +268,7 @@ public class UserMessageReplySystem {
                     //Removing and informing the other trade that the request is rejected
                     messages.remove(m);
                     userManager.addUserMessage(username,
-                            messageBuilder.getContentMessage("Your trade request:"+m.toString()+"\n is rejected by "+
+                            messageBuilder.getSystemMessage("Your trade request:"+m.toString()+"\n is rejected by "+
                                     accountUsername));
                     messageReplyMenu.success();
                     done = true;

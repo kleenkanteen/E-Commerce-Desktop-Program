@@ -11,8 +11,8 @@ public class MessageBuilder {
      * @param sender the String username
      * @return the ContentMessage
      */
-    public Message getContentMessage(String content, String sender){
-        return new ContentMessage(content, sender);
+    public Message getPrivateMessage(String content, String sender){
+        return new PrivateMessage(content, sender);
     }
 
     /**
@@ -20,8 +20,8 @@ public class MessageBuilder {
      * @param content the String content
      * @return the ContentMessage message
      */
-    public Message getContentMessage(String content){
-        return new ContentMessage(content);
+    public Message getSystemMessage(String content){
+        return new SystemMessage(content);
     }
 
     /**

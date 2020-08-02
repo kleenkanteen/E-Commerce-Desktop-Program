@@ -67,8 +67,8 @@ public class AdminMessageReplySystem {
                 else if(m instanceof UnfreezeRequest){
                     if(!unfreezeRequestResponse((UnfreezeRequest) m, messages, br))return;
                 }
-                else if(m instanceof ContentMessage){
-                    if (!contentMessageResponse((ContentMessage) m, messages, br)) return;
+                else if(m instanceof SystemMessage){
+                    if (!systemMessageResponse((SystemMessage) m, messages, br)) return;
                 }
                 else if(m instanceof UnbanRequest){
                     if(!unbanRequestResponse((UnbanRequest) m, messages, br)) return;
@@ -142,7 +142,7 @@ public class AdminMessageReplySystem {
         return true;
 
     }
-    private boolean contentMessageResponse(ContentMessage m, List<Message> messages,
+    private boolean systemMessageResponse(SystemMessage m, List<Message> messages,
                                            BufferedReader br) throws IOException {
         boolean done = false;
         do {
@@ -183,7 +183,7 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     //Informing the other user
                     userManager.addUserMessage(u,
-                            messageBuilder.getContentMessage("Your account is unfrozen by the Admin "+accountUsername));
+                            messageBuilder.getSystemMessage("Your account is unfrozen by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -192,7 +192,7 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     //Informing the other user
                     userManager.addUserMessage(u,
-                            messageBuilder.getContentMessage("Your request is rejected by the Admin "+accountUsername));
+                            messageBuilder.getSystemMessage("Your request is rejected by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -221,7 +221,7 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     //informing the other user
                     userManager.addUserMessage(u,
-                            messageBuilder.getContentMessage("Your account is frozen by the Admin "+accountUsername));
+                            messageBuilder.getSystemMessage("Your account is frozen by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
                     break;
@@ -259,7 +259,7 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     //Informing the other user
                     userManager.addUserMessage(item.getOwnerName(),
-                            messageBuilder.getContentMessage("Your Item: "+item+
+                            messageBuilder.getSystemMessage("Your Item: "+item+
                                     "\n has been successfully added to the system by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;
@@ -269,7 +269,7 @@ public class AdminMessageReplySystem {
                     messages.remove(m);
                     //Informing the other user
                     userManager.addUserMessage(item.getOwnerName(),
-                            messageBuilder.getContentMessage("Your Item: "+item+
+                            messageBuilder.getSystemMessage("Your Item: "+item+
                                     "\n has been rejected by the Admin "+accountUsername));
                     messageReplyMenu.success();
                     done = true;

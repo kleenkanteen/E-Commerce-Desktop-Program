@@ -28,8 +28,8 @@ public class MessageGUI implements Initializable{
 
     public void setMessageList(){
         messageList = new ArrayList<>();
-        messageList.add(new ContentMessage("Hi"));
-        messageList.add(new ContentMessage("nice day"));
+        //messageList.add(new ContentMessage("Hi"));
+        //messageList.add(new ContentMessage("nice day"));
         counter = 0;
     }
 

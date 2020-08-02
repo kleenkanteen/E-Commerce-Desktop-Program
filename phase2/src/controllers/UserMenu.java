@@ -136,7 +136,7 @@ public class UserMenu {
                 this.userPresenter.userMessagePromptSecundus();
                 String message = input.nextLine();
                 // add to recipient inbox
-                this.userManager.addUserMessage(user, this.messageBuilder.getContentMessage(message, this.currUser));
+                this.userManager.addUserMessage(user, this.messageBuilder.getPrivateMessage(message, this.currUser));
             }
             // exit
             else if(userInput.equals("8")) {
