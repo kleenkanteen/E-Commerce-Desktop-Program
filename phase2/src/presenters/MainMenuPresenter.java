@@ -74,4 +74,21 @@ public class MainMenuPresenter {
      */
     public void successfulAccountCreation(){ System.out.println("New user account created."); }
 
+    public String userLoginOption(){
+        return "User Log In";
+    }
+
+    public String userSignUpOption(){
+        return "User Sign Up";
+    }
+    public String adminLoginOption(){
+        return "Admin Login";
+    }
+    public String demoLoginOption(){
+        return "Program Demo";
+    }
+    public String exitOption(){
+        return "Exit";
+    }
+
 }

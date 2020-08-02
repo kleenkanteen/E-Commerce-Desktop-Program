@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            >
    <children>
-      <PasswordField layoutX="233.0" layoutY="200.0" />
-      <TextField layoutX="233.0" layoutY="157.0" />
-      <Text layoutX="281.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login boi." />
-      <Button layoutX="282.0" layoutY="236.0" mnemonicParsing="false" text="Login" />
+      <VBox alignment="CENTER" layoutX="84.0" layoutY="50.0" prefHeight="200.0" prefWidth="233.0" spacing="15.0">
+         <children>
+            <TextField fx:id = "username" promptText="Username" />
+            <TextField promptText="Password" />
+            <Button fx:id = "loginButton" mnemonicParsing="false" text="Login" />
+            <Button fx:id = "exitButton" mnemonicParsing="false"  text="Back To Main Menu" />
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>
