@@ -1,7 +1,6 @@
-package frontend;
+package frontend.UserGUI;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class TradeMenuMain extends Application {
+public class DemoUserMenu extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -17,12 +16,12 @@ public class TradeMenuMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TradeMenu.fxml"));
-        loader.setController(new TradeMenuMainController());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DemoUserMenu.fxml"));
+        loader.setController(new DemoUserMenuGUI());
         Parent root = loader.load();
-        primaryStage.setTitle("Trade");
-        Scene tradeScene = new Scene(root, 400, 300);
-        primaryStage.setScene(tradeScene);
+        //Parent root = FXMLLoader.load(getClass().getResource("DemoUserMenu.fxml"));
+        primaryStage.setTitle("DemoUserMenu");
+        primaryStage.setScene(new Scene(root, 400, 500) );
         primaryStage.show();
     }
 }

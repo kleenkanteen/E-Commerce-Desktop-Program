@@ -1,5 +1,6 @@
 package presenters;
 
+import entities.DemoUser;
 import entities.Item;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
@@ -7,6 +8,10 @@ import use_cases.GlobalInventoryManager;
 public class DemoUserPresenter {
     private DemoUserManager demousermanager;
     private GlobalInventoryManager globalInventoryManager;
+
+    public DemoUserPresenter(){
+
+    }
 
     public DemoUserPresenter(DemoUserManager demousermanager, GlobalInventoryManager globalInventoryManager) {
         this.demousermanager = demousermanager;
@@ -25,9 +30,9 @@ public class DemoUserPresenter {
                 "\n[8] Exit and log out.");
     }
 
-    public void noAccess(){
-        System.out.println("Sorry, as a demo user you do not have access to this functionality, \n" +
-                "please create a standard user account to have full access to this program.");
+    public String noAccess(){
+        return "Sorry, as a demo user you do not have access to this functionality, \n" +
+                "please create a standard user account to have full access to this program.";
     }
 
     public void userMenuUserInfoPrompts() {
@@ -176,8 +181,8 @@ public class DemoUserPresenter {
         System.out.println("Your wishlist is empty.");
     }
 
-    public void emptyglobalinventory(){
-        System.out.println("The global inventory is empty");
+    public String emptyglobalinventory(){
+        return "The global inventory is empty";
     }
 
     public void addToWishlishandTradeRequest(Item item){
@@ -200,5 +205,37 @@ public class DemoUserPresenter {
     public void alreadyHave(){
         System.out.println("This item is already in you wish-list");
     }
+
+    public String accInfo(){
+        return "Access your account information";
+    }
+
+    public String browse(){
+        return "Browse through the global inventory";
+    }
+
+    public String loan(){
+        return "Loan one of your items to another user";
+    }
+    public String inbox(){
+        return "Look at your message inbox";
+    }
+
+    public String addItem(){
+        return "Add a new item to the system";
+    }
+
+    public String unfreeze(){
+        return "Send admins an unfreeze request";
+    }
+
+    public String pm (){
+        return "Send a private message to another user";
+    }
+
+    public String exit(){
+        return "Exit and log out";
+    }
+
 
 }
