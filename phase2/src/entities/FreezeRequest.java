@@ -22,13 +22,6 @@ public class FreezeRequest extends Request implements Serializable {
      */
     public String getUser(){ return username; }
 
-    /**
-     * Returns a string representation of the message
-     * @return the content, decisions, and user of the message in a string representation
-     */
-    public String toStringWithOptions() {
-        return this.toString()+"\n"+optionsToString();
-    }
 
     /**
      * Returns a string representation of the message

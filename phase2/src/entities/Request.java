@@ -29,21 +29,6 @@ public abstract class Request extends Message implements Serializable {
         this.options = options;
     }
 
-    /**
-     * Returns a string representation of the message's option
-     * @return the decisions of the message in a string representation
-     */
-    String optionsToString() {
-        String optionsToString = "Choose your option below:\n";
-        for(int i=0; i<options.length; i++){
-            if(i != 0) optionsToString = optionsToString+"\n";
-            optionsToString = optionsToString+"["+Integer.toString(i+1)+"] "+options[i];
-        }
-        return optionsToString;
-    }
-
-    public abstract String toStringWithOptions();
-
     public String[] getOptions(){
         return options;
     }

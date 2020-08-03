@@ -194,7 +194,4 @@ public class TradeRequest extends Request implements Serializable {
         return info;
         //TO DO: loop over item list to get all the items
     }
-    public String toStringWithOptions(){
-        return this.toString()+"\n"+optionsToString();
-    }
 }

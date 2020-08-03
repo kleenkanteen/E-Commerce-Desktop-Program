@@ -11,9 +11,5 @@ public class UnbanRequest extends Request {
     public String toString() {
         return String.format("%s\nThe User's username: \n%s", super.toString(), getUser());
     }
-
-    public String toStringWithOptions() {
-        return String.format("%s\n%s", this.toString(), optionsToString());
-    }
 }
 
