@@ -1,9 +1,8 @@
-package frontend;
+package frontend.MainMenuGUI;
 
-import controllers.GatewayBuilder;
-import controllers.UseCaseBuilder;
+import controllers.*;
+import frontend.MainMenuGUI.LoginController;
 import gateways.*;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,9 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import javax.swing.*;
 import javafx.scene.control.*;
-import presenters.MainMenuPresenter;
+import presenters.*;
 import use_cases.*;
 
 import java.io.IOException;
@@ -28,6 +26,7 @@ public class MainMenuController implements Initializable {
     @FXML private Button adminLoginButton;
     @FXML private Button demoLoginButton;
     @FXML private Button exitButton;
+    @FXML private Label errorMessage;
 
     private AdminManager adminManager;
     private UserManager userManager;
@@ -35,19 +34,34 @@ public class MainMenuController implements Initializable {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
 
-    //private final String userLoginFXMLFile = "UserLogin.fxml";
-    //private final String userSignUpFXMLFile = "UserSignUp.fxml";
-    //private final String adminLoginFXMLFile = "AdminLogin.fxml";
-    //private final String demoLoginFXMLFile = "DemoLogin.fxml";
     private final String loginFXMLFile = "Login.fxml";
+
+    private final String adminFilepath = "data/serializedAdmins.ser";
+    private final String userFilepath = "data/serializedUsers.ser";
+    private final String globalInventoryFilepath = "data/serializedGlobalInventory.ser";
+    private final String adminMessagesFilepath = "data/serializedAdminMessages.ser";
+    private final String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
+    private final String tradeFilepath = "data/serializedUserTrades.ser";
+
+    AdminAccountGateways adminAccountGateways;
+    UserGateway userGateway;
+    GlobalInventoryGateways globalInventoryGateways;
+    UserTradesGateway userTradesGateway;
+    GlobalWishlistGateway globalWishlistGateway;
+    AdminMessageGateway adminMessageGateway;
+
+    private enum SelectedOption {
+        USER_LOGIN, USER_SIGNUP, ADMIN_LOGIN, DEMO_LOGIN
+    }
 
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
-    public void goToOtherScene(ActionEvent actionEvent, String otherScene, String type) throws IOException {
+    public void goToOtherScene(ActionEvent actionEvent, String otherScene, SelectedOption selectedOption) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
-        loader.setController(new LoginController(type, userManager)); //pass in all use case
+        loader.setController(new LoginController(selectedOption.name(), userManager, tradeManager, adminManager,
+                globalInventoryManager, globalWishlistManager));
 
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
@@ -59,26 +73,26 @@ public class MainMenuController implements Initializable {
     }
 
     public void userLoginButtonPressed (ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile, "USER_LOGIN"); //change to enum
+        goToOtherScene(actionEvent, loginFXMLFile, SelectedOption.USER_LOGIN); //change to enum
     }
 
     public void userSignUpButtonPressed(ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile, "USER_SIGNUP");
+        goToOtherScene(actionEvent, loginFXMLFile, SelectedOption.USER_SIGNUP);
     }
 
     public void adminLoginButtonPressed(ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile, "ADMIN_LOGIN");
+        goToOtherScene(actionEvent, loginFXMLFile, SelectedOption.ADMIN_LOGIN);
     }
 
     public void programDemoButtonPressed(ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile,"DEMO_LOGIN");
+        goToOtherScene(actionEvent, loginFXMLFile,SelectedOption.DEMO_LOGIN);
     }
 
     // code for method closeButtonIsPushed is similar to: https://www.youtube.com/watch?v=i4Fk10U7Sks
     public void closeButtonIsPushed(ActionEvent actionEvent) {
         Stage s = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         s.close();
-        //call the serializing here
+        serialize();
     }
 
     @Override
@@ -92,19 +106,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void deserialize(){
-        final String adminFilepath = "data/serializedAdmins.ser";
-        final String userFilepath = "data/serializedUsers.ser";
-        final String globalInventoryFilepath = "data/serializedGlobalInventory.ser";
-        final String adminMessagesFilepath = "data/serializedAdminMessages.ser";
-        final String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
-        final String tradeFilepath = "data/serializedUserTrades.ser";
 
-        AdminAccountGateways adminAccountGateways;
-        UserGateway userGateway;
-        GlobalInventoryGateways globalInventoryGateways;
-        UserTradesGateway userTradesGateway;
-        GlobalWishlistGateway globalWishlistGateway;
-        AdminMessageGateway adminMessageGateway;
         try {
             GatewayBuilder gatewayBuilder = new GatewayBuilder();
             //deserialize admins
@@ -130,9 +132,8 @@ public class MainMenuController implements Initializable {
 
         }
         catch(IOException | ClassNotFoundException ex) {
-            mainMenuPresenter.readError();
-            mainMenuPresenter.printExit();
-            return;
+            errorMessage.setText("Could not read file, exiting you from the program");
+            // ? exitButton.fire();
         }
         // create managers to pass in serialized data
         UseCaseBuilder useCaseBuilder = new UseCaseBuilder();
@@ -146,5 +147,21 @@ public class MainMenuController implements Initializable {
         globalWishlistManager =
                 useCaseBuilder.getGlobalWishlistManager(globalWishlistGateway.getWishlistItems());
     }
-    //do serializing
+
+    public void serialize() {
+        try {
+            userGateway.writeToFile(userFilepath, userManager.getUserData());
+            globalInventoryGateways.writeToFile(globalInventoryManager.getGlobalInventoryData());
+            userTradesGateway.writeToFile(tradeFilepath, tradeManager.getTradeData());
+            globalWishlistGateway.writeToFile(globalWishlistFilepath, globalWishlistManager.getGlobalWishlistData());
+            adminAccountGateways.saveToFile(adminManager.getAdminData());
+            adminMessageGateway.writeToFile(adminMessagesFilepath, adminManager.getAdminMessages());
+        }
+        catch (IOException e) {
+            //TODO: print error pop up or something
+            errorMessage.setText("An error has occurred with saving.");
+        }
+    }
+
+
 }

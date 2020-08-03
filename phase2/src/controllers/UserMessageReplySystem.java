@@ -18,6 +18,7 @@ public class UserMessageReplySystem {
     private TradeManager tradeManager;
     private String accountUsername;
     private AdminManager adminManager;
+
     private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
     private MessageBuilder messageBuilder = new MessageBuilder();
 

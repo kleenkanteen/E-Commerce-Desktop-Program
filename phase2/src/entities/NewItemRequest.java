@@ -30,6 +30,6 @@ public class NewItemRequest extends Request implements Serializable {
      */
     @Override
     public String toString() {
-        return super.toString() +  "\nThe item: \n"+newItem+"\n"+optionsToString();
+        return super.toString() +  "\nThe item: \n"+newItem;
     }
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+   <children>
+      <VBox alignment="CENTER" layoutX="84.0" layoutY="43.0" prefHeight="200.0" prefWidth="233.0" spacing="15.0">
+         <children>
+            <Label fx:id="errorMessage" />
+            <TextField fx:id="username" promptText="Username" />
+            <TextField fx:id="password" promptText="Password" />
+            <Button fx:id="loginButton" mnemonicParsing="false" />
+            <Button fx:id="exitButton" mnemonicParsing="false" />
+         </children>
+         <padding>
+            <Insets top="5.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -15,6 +15,7 @@ public class AdminMessageReplySystem {
     private GlobalInventoryManager globalInventoryManager;
     private UserManager userManager;
     private String accountUsername;
+
     private MessageReplyMenu messageReplyMenu = new MessageReplyMenu();
     private MessageBuilder messageBuilder = new MessageBuilder();
 

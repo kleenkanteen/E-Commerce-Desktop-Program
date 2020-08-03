@@ -26,6 +26,6 @@ public class UnfreezeRequest extends Request implements Serializable {
      */
     @Override
     public String toString() {
-        return super.toString() + "\nThe User's username: \n"+super.getSender()+"\n"+optionsToString();
+        return super.toString() + "\nThe User's username: \n"+super.getSender();
     }
 }

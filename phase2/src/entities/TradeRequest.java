@@ -23,7 +23,7 @@ public class TradeRequest extends Request implements Serializable {
      * @param content is the content of the message
      * @param sender is the sender's username
      */
-    public TradeRequest(String content, String sender, String userA, String userB,  List<Item> itemA,
+    public TradeRequest(String content, String sender, String userA, String userB, List<Item> itemA,
                         List<Item> itemB, boolean perm) {
         super(content, new String[]{"confirm", "deny", "edit"}, sender);
         this.userA = userA;

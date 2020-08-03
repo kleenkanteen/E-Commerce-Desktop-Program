@@ -24,7 +24,7 @@ public class ReportRequest extends Request{
     @Override
     public String toString() {
         return String.format("Reporting a User\nReason of Reporting: \n%s\nThe Reported Content: " +
-                "\n%s\nPerson being Reported: \n%s\n%s",
-                getContent(),contentReported,reportedPerson,optionsToString());
+                        "\n%s\nPerson being Reported: \n%s",
+                getContent(),contentReported,reportedPerson);
     }
 }

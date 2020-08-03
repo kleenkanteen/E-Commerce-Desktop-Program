@@ -60,6 +60,6 @@ public abstract class Message implements Serializable {
      */
     @Override
     public String toString() {
-        return "From " + senderUsername+": "+content;
+        return "From " + senderUsername+":\n "+content;
     }
 }

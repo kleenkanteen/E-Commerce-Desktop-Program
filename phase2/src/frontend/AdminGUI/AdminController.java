@@ -56,7 +56,7 @@ public class AdminController extends Application  implements Initializable{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("adminMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("AdminMenu.fxml"));
         Scene scene = new Scene(root,600,500);
         primaryStage.setTitle("AdminMenu");
         primaryStage.setScene(scene );
