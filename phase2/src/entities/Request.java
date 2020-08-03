@@ -1,5 +1,6 @@
 package entities;
 
+
 import java.io.Serializable;
 
 public abstract class Request extends Message implements Serializable {
@@ -39,5 +40,11 @@ public abstract class Request extends Message implements Serializable {
             optionsToString = optionsToString+"["+Integer.toString(i+1)+"] "+options[i];
         }
         return optionsToString;
+    }
+
+    public abstract String toStringWithOptions();
+
+    public String[] getOptions(){
+        return options;
     }
 }

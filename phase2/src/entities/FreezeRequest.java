@@ -26,8 +26,16 @@ public class FreezeRequest extends Request implements Serializable {
      * Returns a string representation of the message
      * @return the content, decisions, and user of the message in a string representation
      */
+    public String toStringWithOptions() {
+        return this.toString()+"\n"+optionsToString();
+    }
+
+    /**
+     * Returns a string representation of the message
+     * @return the content, decisions, and user of the message in a string representation
+     */
     @Override
     public String toString() {
-        return super.toString() + "\nThe User's username: \n"+username+"\n"+optionsToString();
+        return super.toString() + "\nThe User's username: \n"+username;
     }
 }
