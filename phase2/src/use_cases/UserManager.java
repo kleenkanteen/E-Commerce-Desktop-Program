@@ -65,12 +65,12 @@ public class UserManager {
     }
 
     /**
-     * Checks to see if this username exists in the system of users.
+     * Checks to see if this username exists in the system of users and that the username is greater than 3 characters.
      * @param username The username to check
-     * @return Returns true if the user does exist in the system, false if otherwise.
+     * @return Returns true if the user does exist in the system and is >= 3 characters, false if otherwise.
      */
     public boolean isValidUser(String username) {
-        return this.allUsers.containsKey(username);
+        return this.allUsers.containsKey(username) && username.length() >= 3;
     }
 
     /**
