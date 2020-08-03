@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import use_cases.TradeManager;
+import use_cases.UserManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,6 +20,14 @@ import java.util.ResourceBundle;
 public class TradeUndoController implements Initializable {
     @FXML private Button searchUserButton;
     @FXML private Button goBackButton;
+
+    private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu";
+    private UserManager usermanager;
+    private TradeManager tradeManager;
+    TradeUndoController(TradeManager tradeManager, UserManager userManager){
+        this.usermanager = userManager;
+        this.tradeManager = tradeManager;
+    }
 
 
     public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
@@ -34,11 +44,21 @@ public class TradeUndoController implements Initializable {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("User's Unstarted Trades");
         window.setMinWidth(800);
-        Parent root = FXMLLoader.load(getClass().getResource("UndoUnstartedTradeMenu.fxml"));
-        Scene newScene= new Scene(root);
-        window.setScene(newScene);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(UndoUnstartedTradeMenuFXML));
+
+        loader.setController(new UndoUnstartedTradeMenuController(tradeManager, usermanager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+        window.setScene(scene);
+
         window.showAndWait();
     }
+
+
 
 
 
@@ -57,11 +77,9 @@ public class TradeUndoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        if(location.toString().matches("UndoUnstartedTradeMenu.fxml")){
-//        column1.setCellValueFactory(new PropertyValueFactory<Trade, String>("TraderA"));
-//        column2.setCellValueFactory(new PropertyValueFactory<Trade, String>("TraderB"));
-//        column3.setCellValueFactory(new PropertyValueFactory<Trade, LocalDateTime>("startDate"));
-//        tableView.setItems(getTrade());}
+        searchUserButton.setText("Search");
+        goBackButton.setText("Back to Admin Menu");
+
 
     }
 }
