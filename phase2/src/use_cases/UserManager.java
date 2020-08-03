@@ -70,7 +70,7 @@ public class UserManager {
      * @return Returns true if the user does exist in the system and is >= 3 characters, false if otherwise.
      */
     public boolean isValidUser(String username) {
-        return this.allUsers.containsKey(username) && username.length() >= 3;
+        return !this.allUsers.containsKey(username) && username.length() >= 3;
     }
 
     /**

@@ -106,16 +106,11 @@ public class LoginController implements Initializable {
             String username = this.username.getText();
             String password = this.password.getText();
 
-            boolean d = userManager.createNewUser(username, password);
-            if (!d){
-                mainMenuPresenter.usernameTooShort();
-            }
+            boolean d =(userManager.isValidUser(username) && !adminManager.userExist(username));
+            if (!d) errorMessage.setText("Username too short, taken or invalid.");
             else {
-                if (!adminManager.userExist(username)) {
-                    userManager.createNewUser(username, password);
-                    mainMenuPresenter.successfulAccountCreation();
-                }
-                else errorMessage.setText("Your username is taken or invalid, try again.");
+                userManager.createNewUser(username, password);
+                errorMessage.setText("New account successfully created");
             }
         }
         catch (InvalidUsernameException f){
