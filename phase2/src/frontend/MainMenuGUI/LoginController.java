@@ -47,7 +47,7 @@ public class LoginController implements Initializable {
     // code for method changeScreenButtonPushed is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
     public void changeScreenButtonPushed(ActionEvent actionEvent)  {
         try {
-            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenuGUI/MainMenu.fxml"));
+            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
             Scene mainMenuScene = new Scene(mainMenuParent);
 
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

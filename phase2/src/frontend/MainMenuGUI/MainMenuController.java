@@ -97,17 +97,20 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deserialize();
         userLoginButton.setText(mainMenuPresenter.userLoginOption());
         userSignUpButton.setText(mainMenuPresenter.userSignUpOption());
         adminLoginButton.setText(mainMenuPresenter.adminLoginOption());
         demoLoginButton.setText(mainMenuPresenter.demoLoginOption());
         exitButton.setText(mainMenuPresenter.exitOption());
+
+        deserialize();
+        serialize();
     }
 
     public void deserialize(){
 
         try {
+
             GatewayBuilder gatewayBuilder = new GatewayBuilder();
             //deserialize admins
             adminAccountGateways = gatewayBuilder.getAdminAccountGateways(adminFilepath);
@@ -129,7 +132,6 @@ public class MainMenuController implements Initializable {
 
             //deserialize AdminMessageGateway
             adminMessageGateway = gatewayBuilder.getAdminMessageGateways(adminMessagesFilepath);
-
         }
         catch(IOException | ClassNotFoundException ex) {
             errorMessage.setText("Could not read file, exiting you from the program");
