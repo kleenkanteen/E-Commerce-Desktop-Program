@@ -1,5 +1,6 @@
 package frontend.AdminGUI;
 import entities.Admin;
+import frontend.MainMenuGUI.LoginController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presenters.AdminMenu;
 import use_cases.AdminManager;
@@ -46,6 +48,8 @@ public class AdminController extends Application  implements Initializable{
      * @param globalInventoryManager the GlobalInventory will be used to change item in GlobalInventory
      */
 
+    private String AdminAccountFXML = "AdminAccount.fxml";
+    private String TradeUndoFXML = "TradeUndoMenu.fxml";
 
 
 
@@ -63,12 +67,16 @@ public class AdminController extends Application  implements Initializable{
     }
 
     public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fileName));
-        Scene newScene= new Scene(root);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fileName));
+
+        loader.setController(new AdminController(admin, adminManager,userManager, globalInventoryManager, tradeManager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
 
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 
-        window.setScene(newScene);
+        window.setScene(scene);
         window.show();
     }
 
@@ -78,7 +86,22 @@ public class AdminController extends Application  implements Initializable{
     }
 
     public void manageAdminAccountButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "AdminAccount.fxml");
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Admin Account Management");
+        window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
+
+        loader.setController(new AdminAccountController(admin, adminManager, userManager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+        window.setScene(scene);
+
+        window.showAndWait();
 
     }
 
@@ -87,7 +110,22 @@ public class AdminController extends Application  implements Initializable{
     }
 
     public void tradeUndoButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "TradeUndoMenu.fxml");
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("User's Unstarted Trades");
+        window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
+
+        loader.setController(new TradeUndoController(tradeManager, userManager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+        window.setScene(scene);
+
+        window.showAndWait();
 
     }
 
@@ -112,6 +150,7 @@ public class AdminController extends Application  implements Initializable{
         manageAdminAccountButton.setText("Manage Admin account" );
         UserBrowsingButton.setText("Access the information of Users");
         TradeUndoButton.setText("Undo the trade of Users");
+
 
     }
 }

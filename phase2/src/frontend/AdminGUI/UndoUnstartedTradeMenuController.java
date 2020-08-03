@@ -12,6 +12,8 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import use_cases.TradeManager;
+import use_cases.UserManager;
 
 import java.awt.event.ActionEvent;
 import java.net.URL;
@@ -30,6 +32,13 @@ public class UndoUnstartedTradeMenuController implements Initializable {
     @FXML private TableColumn<Trade, ArrayList<Item>> column3;
     @FXML private TableColumn<Trade, ArrayList<Item>> column4;
     @FXML private TableColumn<Trade, LocalDateTime> column5;
+
+    private UserManager usermanager;
+    private TradeManager tradeManager;
+    UndoUnstartedTradeMenuController(TradeManager tradeManager, UserManager userManager){
+        this.usermanager = userManager;
+        this.tradeManager = tradeManager;
+    }
 
 
     public void deleteTradeButtonPushed(){

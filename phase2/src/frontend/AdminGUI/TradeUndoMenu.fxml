@@ -7,9 +7,9 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminGUI.TradeUndoController">
    <children>
-    <Button fx:id="goBackButton" layoutX="426.0" layoutY="340.0" mnemonicParsing="false" text="Back to Admin Menu" />
+    <Button fx:id="goBackButton" layoutX="426.0" layoutY="340.0" mnemonicParsing="false" />
       <Label layoutX="37.0" layoutY="171.0" text="Type the User Name of the User whom you want to undo the trade" />
       <TextField layoutX="37.0" layoutY="241.0" prefHeight="42.0" prefWidth="301.0" />
-      <Button fx:id="searchUserButton" layoutX="360.0" layoutY="241.0" mnemonicParsing="false" onAction="#searchUserButtonPushed" prefHeight="42.0" prefWidth="85.0" text="Search" />
+      <Button fx:id="searchUserButton" layoutX="360.0" layoutY="241.0" mnemonicParsing="false" onAction="#searchUserButtonPushed" prefHeight="42.0" prefWidth="85.0" />
    </children>
 </AnchorPane>
