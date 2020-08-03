@@ -1,5 +1,6 @@
 package presenters;
 
+import entities.DemoUser;
 import entities.Item;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
@@ -7,6 +8,10 @@ import use_cases.GlobalInventoryManager;
 public class DemoUserPresenter {
     private DemoUserManager demousermanager;
     private GlobalInventoryManager globalInventoryManager;
+
+    public DemoUserPresenter(){
+
+    }
 
     public DemoUserPresenter(DemoUserManager demousermanager, GlobalInventoryManager globalInventoryManager) {
         this.demousermanager = demousermanager;

@@ -16,7 +16,10 @@ public class DemoUserMenu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("DemoUserMenuGUI.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("DemoUserMenu.fxml"));
+        loader.setController(new DemoUserMenuGUI());
+        Parent root = loader.load();
+        //Parent root = FXMLLoader.load(getClass().getResource("DemoUserMenu.fxml"));
         primaryStage.setTitle("DemoUserMenu");
         primaryStage.setScene(new Scene(root, 400, 500) );
         primaryStage.show();

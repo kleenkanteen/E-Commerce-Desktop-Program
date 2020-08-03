@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
 
 public class DemoUserMenuGUI  implements Initializable {
     private DemoUserManager demoUserManager;
-    private DemoUserPresenter demoUserPresenter;
+    private DemoUserPresenter demoUserPresenter = new DemoUserPresenter();
     private GlobalInventoryManager globalInventoryManager;
 
     @FXML private Label systemMessage;
@@ -27,6 +27,7 @@ public class DemoUserMenuGUI  implements Initializable {
     @FXML private Button logout;
 
     //TODO: use presenter to set the text on screen
+    public DemoUserMenuGUI(){}
 
     public DemoUserMenuGUI(DemoUserManager demoUserManager, DemoUserPresenter demoUserPresenter,
                            GlobalInventoryManager globalInventoryManager) {
