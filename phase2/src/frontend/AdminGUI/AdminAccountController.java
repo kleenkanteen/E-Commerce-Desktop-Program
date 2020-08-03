@@ -1,4 +1,4 @@
-package frontend;
+package frontend.AdminGUI;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
