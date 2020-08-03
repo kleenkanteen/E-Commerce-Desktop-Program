@@ -1,4 +1,4 @@
-package frontend;
+package frontend.AdminGUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,6 +67,10 @@ public class AdminController extends Application  implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        messageInboxButton.setText("Check your message inbox");
+        manageAdminAccountButton.setText("Manage Admin account" );
+        UserBrowsingButton.setText("Access the information of Users");
+        TradeUndoButton.setText("Undo the trade of Users");
 
     }
 }

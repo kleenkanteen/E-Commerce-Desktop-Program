@@ -1,4 +1,4 @@
-package frontend;
+package frontend.AdminGUI;
 
 import entities.Item;
 import entities.PermTrade;
