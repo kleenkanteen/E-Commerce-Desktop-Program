@@ -1,4 +1,5 @@
 package frontend.AdminGUI;
+import entities.Admin;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import presenters.AdminMenu;
+import use_cases.AdminManager;
+import use_cases.GlobalInventoryManager;
+import use_cases.TradeManager;
+import use_cases.UserManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +26,41 @@ public class AdminController extends Application  implements Initializable{
     @FXML private Button manageAdminAccountButton;
     @FXML private Button UserBrowsingButton;
     @FXML private Button TradeUndoButton;
+    private Admin admin;
+    private AdminMenu adminMenu;
+
+
+    private AdminManager adminManager;
+    private TradeManager tradeManager;
+
+
+    private UserManager userManager;
+    private GlobalInventoryManager globalInventoryManager;
+
+    /**
+     * Class constructor.
+     * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
+     * @param admin the admin of the currently logged in.
+     * @param adminManager the AdminManager will be used to change account information
+     * @param userManager the UserManager will be used to change user account information
+     * @param globalInventoryManager the GlobalInventory will be used to change item in GlobalInventory
+     */
+
+
+
+
+    public AdminController(Admin admin, AdminManager adminManager,
+                       UserManager userManager, GlobalInventoryManager globalInventoryManager, TradeManager tradeManager) {
+        this.admin = admin;
+        adminMenu = new AdminMenu(admin);
+        this.adminManager = adminManager;
+        this.userManager = userManager;
+        this.globalInventoryManager = globalInventoryManager;
+        this.tradeManager = tradeManager;
+
+
+
+    }
 
     public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fileName));

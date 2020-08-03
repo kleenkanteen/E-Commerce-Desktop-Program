@@ -92,4 +92,27 @@ public class AdminAccountPresenter {
         System.out.println("Something went wrong\n");
     }
 
+    // for new controller
+
+    public String newPasswordCreated(){
+        return "Congrats! your password has been changed to " + admin.getPassword();
+    }
+
+    public String newAdminCreated(){ return "Success, admin account created";
+
+    }
+
+    public String AdminCreationFailed(){
+        return "Failed to create new admin because the Username has been taken";
+    }
+
+    public String newPasswordNotSaved(){
+        return "Congrats! your password has been changed to " + admin.getPassword();
+    }
+
+
+
 }
+
+
+

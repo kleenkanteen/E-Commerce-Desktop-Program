@@ -1,5 +1,7 @@
 package frontend.AdminGUI;
 
+import entities.Admin;
+import exceptions.InvalidUsernameException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import presenters.AdminAccountPresenter;
+import use_cases.AdminManager;
+import use_cases.UserManager;
 
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +35,38 @@ public class AdminAccountController implements Initializable {
     @FXML private TextField confirmNewPasswordField;
     @FXML private TextField newAdminUserNameTextField;
     @FXML private TextField newAdminPasswordTextField;
+
+    private Admin admin;
+
+    private AdminAccountPresenter adminAccountPresenter;
+
+
+
+    private UserManager userManager;
+
+    private AdminManager adminManager;
+
+
+    /**
+     * Class constructor.
+     * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
+     * @param admin the admin of the currently logged in.
+     * @param adminManager the AdminManager will be used to change account information
+
+     * @param userManager the UserManager used to check account information
+     */
+
+
+    AdminAccountController(Admin admin, AdminManager adminManager,
+                       UserManager userManager){
+        this.admin = admin;
+        adminAccountPresenter = new AdminAccountPresenter(admin);
+        this.adminManager = adminManager;
+        this.userManager = userManager;
+
+
+
+    }
 
     public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fileName));
@@ -67,30 +104,42 @@ public class AdminAccountController implements Initializable {
     }
 
     public void addNewPasswordButtonPushed(ActionEvent actionEvent){
-        resultOfPasswordChangeLabel.setText("");
-        String newPassword = newPasswordTextField.getText();
-        String confirmPassword = confirmNewPasswordField.getText();
-        if (newPassword.equals(confirmPassword)){
-            resultOfPasswordChangeLabel.setText("Your new password is saved");
+
+        String password1 = newPasswordTextField.getText();
+
+        String password2 = confirmNewPasswordField.getText();
+        if (adminManager.addNewPassWord(password1,password2, admin)){
+            resultOfPasswordChangeLabel.setText(adminAccountPresenter.newPasswordCreated());
         }
         else {
-            resultOfPasswordChangeLabel.setText("Two passwords don't match, failed to change your password");
+            resultOfPasswordChangeLabel.setText(adminAccountPresenter.newPasswordNotSaved());
         }
+
 
     }
 
     public void addNewAdminButtonPushed(ActionEvent actionEvent){
-        resultOfCreationLabel.setText("");
-        String userName = newAdminUserNameTextField.getText();
-        String password = newAdminPasswordTextField.getText();
-        if (userName.equals(password)){
-            resultOfCreationLabel.setText("New admin has been created!");
+
+        String newUsername = newAdminUserNameTextField.getText();
+
+        String newPassword = newAdminPasswordTextField.getText();
+        if(userManager.isValidUser(newUsername)){
+            resultOfCreationLabel.setText(adminAccountPresenter.AdminCreationFailed());
         }
         else {
-            resultOfCreationLabel.setText("the userName has been taken or unavailable");
+            try {
+                adminManager.addAdmin(newUsername, newPassword);
+                resultOfCreationLabel.setText(adminAccountPresenter.newAdminCreated());
+            }
+            catch (InvalidUsernameException e) {
+                resultOfCreationLabel.setText(adminAccountPresenter.AdminCreationFailed());
+            }
         }
 
+
     }
+
+
 
 
 
