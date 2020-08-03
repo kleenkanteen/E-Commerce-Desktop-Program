@@ -193,9 +193,9 @@ public class MainMenu {
             String pass = bufferedReader.readLine();
 
             if ((adminManager.login(username, pass))) {
-                AdminSystem successful = new AdminSystem(adminManager.getAdmin(username), adminManager, userManager,
+                AdminSystem successfulLogin = new AdminSystem(adminManager.getAdmin(username), adminManager, userManager,
                         globalInventoryManager, tradeManager);
-                successful.run();
+                successfulLogin.run();
             } else mainMenuPresenter.wrongLogin();
         }
         catch (IOException e)
