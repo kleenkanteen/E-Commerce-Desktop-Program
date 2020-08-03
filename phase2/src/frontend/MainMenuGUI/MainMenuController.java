@@ -1,6 +1,7 @@
-package frontend;
+package frontend.MainMenuGUI;
 
 import controllers.*;
+import frontend.MainMenuGUI.LoginController;
 import gateways.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -131,9 +132,8 @@ public class MainMenuController implements Initializable {
 
         }
         catch(IOException | ClassNotFoundException ex) {
-            mainMenuPresenter.readError();
-            mainMenuPresenter.printExit();
-            return;
+            errorMessage.setText("Could not read file, exiting you from the program");
+            // ? exitButton.fire();
         }
         // create managers to pass in serialized data
         UseCaseBuilder useCaseBuilder = new UseCaseBuilder();

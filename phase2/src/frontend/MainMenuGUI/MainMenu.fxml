@@ -6,7 +6,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
             prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.MainMenuController">
+            fx:controller="frontend.MainMenuGUI.MainMenuController">
     <children>
         <VBox alignment="CENTER" layoutX="119.0" layoutY="14.0" prefHeight="200.0" prefWidth="163.0" spacing="15.0">
             <children>

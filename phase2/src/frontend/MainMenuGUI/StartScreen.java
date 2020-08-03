@@ -1,4 +1,4 @@
-package frontend;
+package frontend.MainMenuGUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

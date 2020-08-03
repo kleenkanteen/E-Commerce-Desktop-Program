@@ -1,11 +1,10 @@
-package frontend;
+package frontend.MainMenuGUI;
 
 import controllers.AdminSystem;
 import controllers.BannedUserController;
 import controllers.DemoUserController;
 import controllers.UserMenu;
 import exceptions.InvalidUsernameException;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Node;
@@ -14,15 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import presenters.MainMenuPresenter;
-import presenters.TradeMenu;
-import frontend.MainMenuController;
 import use_cases.*;
 
-import javax.xml.soap.Text;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -53,7 +47,7 @@ public class LoginController implements Initializable {
     // code for method changeScreenButtonPushed is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
     public void changeScreenButtonPushed(ActionEvent actionEvent)  {
         try {
-            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenuGUI/MainMenu.fxml"));
             Scene mainMenuScene = new Scene(mainMenuParent);
 
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
