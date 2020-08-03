@@ -4,65 +4,60 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.UserMenuGUI">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.UserGUI.AccountInfoMenu">
    <children>
-      <Label text="What would you like to do today?">
+      <Label text="What would you like to do with your account today?">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Label>
-      <Button fx:id="accountInfo" mnemonicParsing="false" onAction="#getAccountInfo" prefWidth="250.0" text="Access your account information">
+      <Button fx:id="tradeHistory" mnemonicParsing="false" onAction="#viewTradeHistory" prefWidth="300.0" text="View your trade history">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="globalInventory" mnemonicParsing="false" onAction="#getGlobalInventory" prefWidth="250.0" text="Browse through the global inventory">
+      <Button fx:id="newPassword" mnemonicParsing="false" onAction="#setNewPassword" prefWidth="300.0" text="Set new password">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="loanItem" mnemonicParsing="false" onAction="#getLoanMenu" prefWidth="250.0" text="Loan one of your items to another user">
+      <Button fx:id="tradePartners" mnemonicParsing="false" onAction="#viewTradePartners" prefWidth="300.0" text="View your three most frequent Trading Partners">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="messageInbox" mnemonicParsing="false" onAction="#getInbox" prefWidth="250.0" text="Look at your message inbox">
+      <Button fx:id="recentTrades" mnemonicParsing="false" onAction="#viewRecentTrades" prefWidth="300.0" text="View your three most recent trades">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="newItem" mnemonicParsing="false" onAction="#getNewItemMenu" prefWidth="250.0" text="Add a new item to the system">
+      <Button fx:id="inventory" mnemonicParsing="false" onAction="#viewInventory" prefWidth="300.0" text="View your inventory">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="unfreezeRequest" mnemonicParsing="false" onAction="#getUnfreezeRequest" prefWidth="250.0" text="Send admins an unfreeze request">
+      <Button fx:id="wishlist" mnemonicParsing="false" onAction="#viewWishlist" prefWidth="300.0" text="View your wishlist">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="privateMessage" mnemonicParsing="false" onAction="#getPrivateMessageMenu" prefWidth="250.0" text="Send a private message to another user">
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding></Button>
-      <Button fx:id="logout" mnemonicParsing="false" onAction="#logoff" text="Exit and log out">
+      <Button fx:id="exit" mnemonicParsing="false" onAction="#returnToMainMenu" text="Return to main menu">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>

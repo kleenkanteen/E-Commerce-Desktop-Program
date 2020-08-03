@@ -7,22 +7,22 @@ public class UserPresenter {
     /**
      * If an account is frozen, print the message that a freeze request has been sent.
      */
-    public void requestFreezeOfUser() {
-        System.out.println("A request for your account to be frozen has been sent.\n");
+    public String requestFreezeOfUser() {
+        return "A request for your account to be frozen has been sent.\n";
     }
 
     /**
      * Print user is frozen message.
      */
-    public void userAccountFrozen() {
-        System.out.println("Your account has been frozen, and you are unable to trade.\n");
+    public String userAccountFrozen() {
+        return "Your account has been frozen, and you are unable to trade.\n";
     }
 
     /**
      * Prompt for the Unconfirmed trades menu.
      */
-    public void promptUserToConfirmTrades() {
-        System.out.println("Here are all of your unconfirmed trades. Please confirm any that are complete.\n");
+    public String promptUserToConfirmTrades() {
+        return "Here are all of your unconfirmed trades. Please confirm any that are complete.\n";
     }
 
     /**
@@ -44,37 +44,33 @@ public class UserPresenter {
      * The prompt for new item prompt.
      * @param select 0 for item name input prompt, 1 for item's description prompt.
      */
-    public void createNewItemPrompt(int select) {
+    public String createNewItemPrompt(int select) {
         if(select == 0) {
-            System.out.println("Enter in the item's name.");
+            return "Enter in the item's name.";
         }
         else {
-            System.out.println("Enter the item's description.");
+            return "Enter the item's description.";
         }
     }
 
     /**
      * Input error prompt.
      */
-    public void inputError() {
-        System.out.println("Input not understood, please try again.\n");
-    }
+    public String inputError() { return "Input not understood, please try again.\n"; }
 
     /**
      * Prompt for setting a new password.
      */
-    public void setNewPasswordPrompt() {
-        System.out.println("Enter in your new password." +
-                "\nEnter 'exit' to exit.");
+    public String setNewPasswordPrompt() {
+        return "Enter in your new password." +
+                "\nEnter 'exit' to exit.";
     }
 
     /**
      * Print this user's trade partner for get frequent trade partners.
      * @param tradePartner String username of trade partner
      */
-    public void printUserTradePartners(String tradePartner) {
-        System.out.println(tradePartner + " ");
-    }
+    public String printUserTradePartners(String tradePartner) { return tradePartner + " "; }
 
     /**
      * User Inventory Prompts.
@@ -102,59 +98,59 @@ public class UserPresenter {
     /**
      * Reached end of user inventory.
      */
-    public void endOfUserInventory() {
-        System.out.println("Reached end of inventory.");
+    public String endOfUserInventory() {
+        return "Reached end of inventory.";
     }
 
     /**
      * Reached end of user wishlist.
      */
-    public void endOfUserWishlist() {
-        System.out.println("Reached the end of your wishlist.");
+    public String endOfUserWishlist() {
+        return "Reached the end of your wishlist.";
     }
 
     /**
      * Prints that a collection (inventory, wishlist, etc.) is empty
      * @param collection the collection name
      */
-    public void isEmpty(String collection) {
-        System.out.println("Your " + collection + " is empty!\n");
+    public String isEmpty(String collection) {
+        return "Your " + collection + " is empty!\n";
     }
 
     /**
      * Prompt for item removal
      */
-    public void itemRemoved() {
-        System.out.println("Item removed.\n");
+    public String itemRemoved() {
+        return "Item removed.\n";
     }
 
     /**
      * Prompt for too many incomplete trades.
      */
-    public void tooManyIncompleteTrades() {
-        System.out.println("You have too many incomplete trades.\n");
+    public String tooManyIncompleteTrades() {
+        return "You have too many incomplete trades.\n";
     }
 
     /**
      * Prompt for too many borrows and loans.
      * @param difference the difference of borrows - loans
      */
-    public void tooManyBorrowsVLoans(int difference) {
-        System.out.println("You have " + difference +  " more borrows than loans!\n");
+    public String tooManyBorrowsVLoans(int difference) {
+        return "You have " + difference +  " more borrows than loans!\n";
     }
 
     /**
      * Prompt for too many trade offers made this week.
      */
-    public void tooManyTradesThisWeek() {
-        System.out.println("You made too many trade offers this week! You can trade again next week.\n");
+    public String tooManyTradesThisWeek() {
+        return "You made too many trade offers this week! You can trade again next week.\n";
     }
 
     /**
      * Prompt for no trading partners.
      */
-    public void noTradingPartners() {
-        System.out.println("You don't have any frequent trading partners yet!\n");
+    public String noTradingPartners() {
+        return "You don't have any frequent trading partners yet!\n";
     }
 
     /**
@@ -174,24 +170,24 @@ public class UserPresenter {
     /**
      * Prompt for a new item message successfully sent to admins.
      */
-    public void newItemMessageSentToAdmin() {
-        System.out.println("A request for an admin to approve of your item has been sent.\n");
+    public String newItemMessageSentToAdmin() {
+        return "A request for an admin to approve of your item has been sent.\n";
     }
 
     /**
      * Prompt for confirmation of trade request sending
      * @param username the username of the other person invovled in the trade request
      */
-    public void tradeRequestSent(String username) {
-        System.out.println("Trade request sent to user " + username + "!\n");
+    public String tradeRequestSent(String username) {
+        return "Trade request sent to user " + username + "!\n";
     }
 
     /**
      * Print the trade toString.
      * @param trade the trade object to print the toString of
      */
-    public void tradeToString(Trade trade) {
-        System.out.println(trade.toString() + "\n");
+    public String tradeToString(Trade trade) {
+        return trade.toString() + "\n";
     }
 
     /**
@@ -207,12 +203,12 @@ public class UserPresenter {
      * Prompt for a successful operation in confirming incomplete user trades
      * @param response 0 if the trade was confirmed, any other int if the trade was marked as a failure
      */
-    public void unconfirmedTradeSystemResponse(int response) {
+    public String unconfirmedTradeSystemResponse(int response) {
         if(response == 0) {
-            System.out.println("Trade confirmed.\n");
+            return "Trade confirmed.\n";
         }
         else {
-            System.out.println("Trade marked as failed.\n");
+            return "Trade marked as failed.\n";
         }
     }
 
@@ -220,43 +216,43 @@ public class UserPresenter {
      * Return the toString of an item
      * @param item the Item object to be printed
      */
-    public void itemToString(String item) {
-        System.out.println(item + "\n");
+    public String itemToString(String item) {
+        return item + "\n";
     }
 
     /**
      * Prompt to tell user that they have no recent trades.
      */
-    public void noRecentTrades() {
-        System.out.println("You have no recent trades!" + "\n");
+    public String noRecentTrades() {
+        return "You have no recent trades!" + "\n";
     }
 
     /**
      * Confirmation of unfreeze request message success.
      */
-    public void unfreezeRequestSent() {
-        System.out.println("Admins have been sent an unfreeze request!\n");
+    public String unfreezeRequestSent() {
+        return "Admins have been sent an unfreeze request!\n";
     }
 
     /**
      * Confirm that the user is not frozen.
      */
-    public void userNotFrozen() {
-        System.out.println("You are not frozen right now.\n");
+    public String userNotFrozen() {
+        return "You are not frozen right now.\n";
     }
 
     /**
      * If user attempts to loan but has not items in personal inventory
      */
-    public void emptyPersonalInventoryWhileLoaning() {
-        System.out.println("You have nothing to lend!\n");
+    public String emptyPersonalInventoryWhileLoaning() {
+        return "You have nothing to lend!\n";
     }
 
     /**
      * If none of the user's items are wanted by others
      */
-    public void itemNotInOtherUsersWishlist() {
-        System.out.println("None of your items exists in another user's wishlist. :(\n");
+    public String itemNotInOtherUsersWishlist() {
+        return "None of your items exists in another user's wishlist. :(\n";
     }
 
     /**
@@ -272,15 +268,15 @@ public class UserPresenter {
     /**
      * Reached end of trades
      */
-    public void userTradeHistoryEndOfIndex() {
-        System.out.println("Reached end of user trades");
+    public String userTradeHistoryEndOfIndex() {
+        return "Reached end of user trades";
     }
 
     /**
      * If the global inventory is empty.
      */
-    public void emptyGlobalInventory() {
-        System.out.println("There are no items in the global inventory! Add some of your own! :)");
+    public String emptyGlobalInventory() {
+        return "There are no items in the global inventory! Add some of your own! :)";
     }
 
     /**
@@ -299,23 +295,23 @@ public class UserPresenter {
     /**
      * Notify user on return to main menu.
      */
-    public void returnToMainMenu() {
-        System.out.println("Returning to main menu.");
+    public String returnToMainMenu() {
+        return "Returning to main menu.";
     }
 
-    public void userMessagePrompt() {
-        System.out.println("Who would you like to send a message to?");
+    public String userMessagePrompt() {
+        return "Who would you like to send a message to?";
     }
 
-    public void userMessagePromptSecundus() {
-        System.out.println("What would you like to say?");
+    public String userMessagePromptSecundus() {
+        return "What would you like to say?";
     }
 
-    public void invalidUsername() {
-        System.out.println("This is not a valid username, please try again.");
+    public String invalidUsername() {
+        return "This is not a valid username, please try again.";
     }
 
-    public void tradeOfferCreationCancelled() {
-        System.out.println("Trade offer creation cancelled.");
+    public String tradeOfferCreationCancelled() {
+        return "Trade offer creation cancelled.";
     }
 }

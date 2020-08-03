@@ -292,7 +292,7 @@ public class UserMenu {
                         boolean continueLoanInput = true;
                         while(continueLoanInput) {
                             this.userPresenter.loanToOtherUserPrompt(userItem.get(0).getName(),
-                                    userItem.get(0).getOwnerName());
+                                    itemsToLend.get(1));
                             int userLoanInput = input.nextInt();
                             // yes, continue with the trade offer
                             if(userLoanInput == 1) {
