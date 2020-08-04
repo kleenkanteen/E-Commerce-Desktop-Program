@@ -37,7 +37,7 @@ public class LoginController implements Initializable {
     private GlobalWishlistManager globalWishlistManager;
 
     private final String userMenuGUIFile = "src/frontend/UserGUI/UserMenuGUI.fxml";
-    private final String adminMenuGUIFile = "src/frontend/AdminGUI/AdminController.fxml";
+    private final String adminMenuGUIFile = "src/frontend/AdminGUI/AdminMenu.fxml";
 
     private enum OpenMenu {
         USER_MENU, ADMIN_MENU, DEMO_MENU
