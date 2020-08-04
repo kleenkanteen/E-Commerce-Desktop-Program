@@ -3,8 +3,10 @@ package frontend.MessageReplySystem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
@@ -28,15 +30,15 @@ public abstract class MessageReplyGUI implements Initializable{
     @FXML private ButtonBar buttonBar;
 
     UserManager userManager;
-    private GlobalInventoryManager globalInventoryManager;
-    private TradeManager tradeManager;
+    //private GlobalInventoryManager globalInventoryManager;
+   // private TradeManager tradeManager;
     AdminManager adminManager;
     String accountUsername;
 
     private List<Message> messageList;
     private int counter = 0;
 
-    private List<Message> saveMessageList;
+    //private List<Message> saveMessageList;
 
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private MessageResponseFactory factory;
@@ -49,25 +51,14 @@ public abstract class MessageReplyGUI implements Initializable{
     MessageReplyGUI(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                            TradeManager tradeManager, UserManager userManager, String accountUsername){
         this.adminManager = adminManager;
-        this.globalInventoryManager = globalInventoryManager;
-        this.tradeManager = tradeManager;
+        //this.globalInventoryManager = globalInventoryManager;
+        //this.tradeManager = tradeManager;
         this.userManager = userManager;
         this.accountUsername = accountUsername;
         factory = new MessageResponseFactory(adminManager, globalInventoryManager, tradeManager,
-                userManager, saveMessageList, accountUsername);
-        messageList = new ArrayList<>(getMessage());
-        saveMessageList = new ArrayList<>(getMessage());
-
+                userManager, accountUsername);
+        setMessageDate();
     }
-
-//    private void setMessageList(){
-//        messageList = new ArrayList<>();
-//        messageList.add(new SystemMessage("Hi"));
-//        messageList.add(new SystemMessage("nice day"));
-//        messageList.add(new PrivateMessage("Hi it's me again", "Max"));
-//        messageList.add(new FreezeRequest("You should freeze this person", "Max"));
-//        counter = 0;
-//    }
 
     public abstract List<Message> getMessage();
 
@@ -80,13 +71,15 @@ public abstract class MessageReplyGUI implements Initializable{
             messageContent.setText(messageReplyPresenter.printNoMessages());
             Button button1 = new Button("Exit");
             button1.setOnAction(e ->
-                    ((Stage) (((Button) e.getSource()).getScene().getWindow())).close());
+                    exitGUI(e));
             buttonBar.getButtons().add(button1);
         }
         else{
             messageResponse = factory.getMessageResponse(messageList.get(counter));
             String[] s = messageResponse.getActions();
             messageContent.setText(messageReplyPresenter.messageString(messageList.get(counter)));
+
+            messageContent.setWrapText(true);
 
             Button[] buttons = new Button[s.length+2];
 
@@ -95,6 +88,9 @@ public abstract class MessageReplyGUI implements Initializable{
                buttons[i] = new Button(action);
                buttons[i].setOnAction(e -> {
                    messageResponse.doAction(action);
+                   counter++;
+                   setUp();
+
                });
            }
 
@@ -112,13 +108,18 @@ public abstract class MessageReplyGUI implements Initializable{
         //Update message list
     }
     private void exitGUI(ActionEvent e){
-        saveMessage(saveMessageList);
-        ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
+        saveMessage(factory.getMessageList());
+        ((Stage) (((Node) e.getSource()).getScene().getWindow())).close();
     }
+
+    private void setMessageDate(){
+        messageList = new ArrayList<>(getMessage());
+        factory.setMessageList(new ArrayList<>(messageList));
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        messageList = new ArrayList<>(getMessage());
-        //change to setMessage();
+        setMessageDate();
         setUp();
     }
 }
