@@ -5,6 +5,7 @@ import exceptions.*;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import exceptions.InvalidUsernameException;
 
 public class UserManager {
     private Map<String, User> allUsers;
@@ -41,12 +42,12 @@ public class UserManager {
      * @param username the new username
      * @param password the string password
      * @return true if user account successfully created, false if user already exists in system
-     * @throws exceptions.InvalidUsernameException if the username already exists in the system
+     * @throws InvalidUsernameException if the username already exists in the system
      */
     public boolean createNewUser(String username, String password)
             throws InvalidUsernameException {
         if(this.allUsers.containsKey(username)) {
-            throw new exceptions.InvalidUsernameException();
+            throw new InvalidUsernameException();
         }
         if(!(username.length() < 3)) {
             this.allUsers.put(username, new entities.User(username, password));
@@ -70,7 +71,7 @@ public class UserManager {
      * @return Returns true if the user does exist in the system and is >= 3 characters, false if otherwise.
      */
     public boolean isValidUser(String username) {
-        return !this.allUsers.containsKey(username) && username.length() >= 3;
+        return this.allUsers.containsKey(username) && username.length() >= 3;
     }
 
     /**

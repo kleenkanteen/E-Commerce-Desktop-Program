@@ -22,7 +22,7 @@ import presenters.UserPresenter;
 import use_cases.*;
 import entities.*;
 
-public class UserMenuGUI extends Application implements Initializable {
+public class UserMenuGUI implements Initializable {
 
     @FXML private Button accountInfo;
     @FXML private Button globalInventory;
@@ -46,8 +46,12 @@ public class UserMenuGUI extends Application implements Initializable {
     private final String accountFXML = "AccountInfoGUI.fxml";
     private final String loanFXML = "LoanMenuGUI.fxml";
     private final String privateMessageFXML = "PrivateMessageMenuGUI.fxml";
+    private final String newItemFXML = "NewItemMenuGUI.fxml";
+    private final String globalInventoryFXML = "";
+    private final String userMessagesFXML = "";
     private final String userFXML = "UserMenuGUI.fxml";
 
+    private Type type;
 
     /**
      * Instantiates a new UserMenu instance
@@ -71,66 +75,102 @@ public class UserMenuGUI extends Application implements Initializable {
         this.messageBuilder = new MessageBuilder();
     }
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        
+    enum Type {
+        ACCOUNT_INFO, GLOBAL_INVENTORY, USER_MESSAGES, LOAN_MENU, NEW_ITEM, PRIVATE_MESSAGES
     }
 
     // set up button text here when I get around to setting up the presenter properly
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // call getUserStatus/confirmIncompleteUserTrades here?
+
+        // set button text
+        this.accountInfo.setText(this.userPresenter.userMenuPromptAccountInfo());
+        this.globalInventory.setText(this.userPresenter.userMenuPromptGlobalInventory());
+        this.loanItem.setText(this.userPresenter.userMenuPromptLoanMenu());
+        this.messageInbox.setText(this.userPresenter.userMenuPromptMessageMenu());
+        this.newItem.setText(this.userPresenter.userMenuPromptNewItem());
+        this.unfreezeRequest.setText(this.userPresenter.userMenuPromptUnfreeze());
+        this.privateMessage.setText(this.userPresenter.userMenuPromptPrivateMessage());
+        this.logout.setText(this.userPresenter.userMenuPromptLogout());
+
+        // set up button functionality
+        this.accountInfo.setOnAction(e -> getAccountInfo());
+        this.globalInventory.setOnAction(e -> getGlobalInventory());
+        this.loanItem.setOnAction(e -> getLoanMenu());
+        this.messageInbox.setOnAction(e -> getInbox());
+        this.newItem.setOnAction(e -> getNewItemMenu());
+        this.unfreezeRequest.setOnAction(e -> getUnfreezeRequest());
+        this.privateMessage.setOnAction(e -> getPrivateMessageMenu());
+        this.logout.setOnAction(this::logoff);
     }
 
     /**
      * Switches the scene being viewed
-     * @param actionEvent the ActionEvent
      * @param filename the filename of the .fxml file to be loaded
      * @throws IOException for a funky input
      */
-    public void switchScene(ActionEvent actionEvent, String filename, String type) throws IOException {
+    public void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         // access account info
-        if(type.equals("ACCOUNT_INFO")) {
-            loader.setController(new Object());
-        }
-        // access global inventory
-        else if(type.equals("GLOBAL_INVENTORY")) {
-            loader.setController(new Object());
-        }
-        // access loan menu
-        else if(type.equals("LOAN_MENU")) {
-            loader.setController(new Object());
-        }
-        // access user messages
-        else if(type.equals("USER_MESSAGES")) {
-            loader.setController(new Object());
-        }
-        // access new item menu
-        else if(type.equals("NEW_ITEM")) {
-            loader.setController(new Object());
-        }
-        // access private messages
-        else if(type.equals("PRIVATE_MESSAGES")) {
-            loader.setController(new PrivateMessageMenu(this.userManager, this.currUser));
+        switch (this.type) {
+            case ACCOUNT_INFO:
+                loader.setController(new AccountInfoMenu(this.currUser, this.userManager, this.tradeManager,
+                        this.globalInventoryManager, this.globalWishlistManager));
+                break;
+            // access global inventory
+            case GLOBAL_INVENTORY:
+                // loader.setController(new Object());
+                break;
+            // access loan menu
+            case LOAN_MENU:
+                List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
+                loader.setController(new LoanMenu(userInventory, this.globalWishlistManager.userWhoWants(userInventory),
+                        this.currUser, this.userManager, this.tradeManager, this.globalWishlistManager,
+                        this.globalInventoryManager));
+                break;
+            // access user messages
+            case USER_MESSAGES:
+                // loader.setController(new Object());
+                break;
+            // access new item menu
+            case NEW_ITEM:
+                loader.setController(new NewItemMenu(this.currUser, this.adminManager));
+                break;
+            // access private messages
+            case PRIVATE_MESSAGES:
+                loader.setController(new PrivateMessageMenu(this.userManager, this.currUser));
+                break;
         }
         Parent root = loader.load();
         Scene newScene= new Scene(root);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage window = new Stage();
         window.setScene(newScene);
         window.show();
     }
 
     // switch to the Account info menu scene
-    @FXML
-    public void getAccountInfo() { }
+    public void getAccountInfo() {
+        try {
+            this.type = Type.ACCOUNT_INFO;
+            switchScene(this.accountFXML);
+        }
+        catch (IOException ex) {
+            // some kind of error message?
+        }
+    }
 
     // switch to the GlobalInventory scene
-    @FXML
     public void getGlobalInventory() {
         if(!this.globalInventoryManager.hasNoItem()) {
-            // something something something
+
+            try {
+                this.type = Type.GLOBAL_INVENTORY;
+                switchScene(this.globalInventoryFXML);
+            }
+            catch(IOException ex) {
+                // some kind of error message
+            }
         }
         else {
             this.systemMessage.setText(this.userPresenter.emptyGlobalInventory());
@@ -138,9 +178,8 @@ public class UserMenuGUI extends Application implements Initializable {
     }
 
     // switch to the loan menu scene
-    @FXML
     public void getLoanMenu() {
-        // get this user's inventory
+        // get this user's inventory, the user that wants something and the item that this user wants
         List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         List<String> itemsToLend = this.globalWishlistManager.userWhoWants(userInventory);
         // check to see if they have anything in it
@@ -148,17 +187,27 @@ public class UserMenuGUI extends Application implements Initializable {
             // set a label to this text
             this.systemMessage.setText(this.userPresenter.emptyPersonalInventoryWhileLoaning());
         }
+        // see if anyone is interested in this user's items
         else if(itemsToLend.size() != 0) {
             this.systemMessage.setText(this.userPresenter.itemNotInOtherUsersWishlist());
         }
         else {
             try {
+                // this user can trade, switch scene to loan menu
                 if(this.userManager.getCanTradeIgnoreBorrowsLoans(this.currUser,
                         this.tradeManager.getIncompleteTimes(this.currUser),
                         this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
-                    // switchScene to LoanMenu
+                    try {
+                        this.type = Type.LOAN_MENU;
+                        switchScene(this.loanFXML);
+                    }
+                    catch(IOException ex) {
+                        // some error message idk
+                    }
+
                 }
             }
+            // if this user is frozen
             catch(UserFrozenException ex) {
                 this.systemMessage.setText(this.userPresenter.userAccountFrozen());
             }
@@ -166,15 +215,20 @@ public class UserMenuGUI extends Application implements Initializable {
     }
 
     // switch to the user message system scene
-    @FXML
     public void getInbox() { }
 
     // switch to the new item scene
-    @FXML
-    public void getNewItemMenu() { }
+    public void getNewItemMenu() {
+        try {
+            this.type = Type.NEW_ITEM;
+            switchScene(this.newItemFXML);
+        }
+        catch (IOException ex) {
+            // some error message
+        }
+    }
 
     // switch to the unfreeze request scene
-    @FXML
     public void getUnfreezeRequest() {
         if(this.userManager.getUserFrozenStatus(this.currUser)) {
             List<Message> adminMessages = this.adminManager.getAdminMessages();
@@ -189,12 +243,19 @@ public class UserMenuGUI extends Application implements Initializable {
     }
 
     // switch to the private message sending scene
-    @FXML
     public void getPrivateMessageMenu() {
-
+        try {
+            this.type = Type.PRIVATE_MESSAGES;
+            switchScene(this.privateMessageFXML);
+        }
+        catch (IOException ex) {
+            // some kind of error message?
+        }
     }
 
-    // exit somehow?
-    @FXML
-    public void logoff() { }
+    // exit
+    public void logoff(ActionEvent actionEvent) {
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
+    }
 }

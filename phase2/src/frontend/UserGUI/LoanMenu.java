@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class LoanMenu extends Application implements Initializable {
+public class LoanMenu implements Initializable {
 
     private List<Item> userInventory;
     private List<String> itemsToLend;
@@ -32,7 +32,9 @@ public class LoanMenu extends Application implements Initializable {
     private UserPresenter userPresenter;
     private GlobalInventoryManager globalInventoryManager;
 
-    @FXML private Label itemName;
+    @FXML private Label itemPrompt;
+    @FXML private Label recipientPrompt;
+    @FXML private Label userItem;
     @FXML private Label recipientUser;
     @FXML private Button confirmTrade;
     @FXML private Button denyTrade;
@@ -50,32 +52,19 @@ public class LoanMenu extends Application implements Initializable {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // set up buttons here
+        // set text
         List<Item> userItem = setUpTradeOptions();
-        this.itemName.setText(userItem.get(0).getName());
+        this.userItem.setText(userItem.get(0).getName());
         this.recipientUser.setText(this.itemsToLend.get(1));
-    }
+        this.itemPrompt.setText(this.userPresenter.userLoanPromptOfferedItemLabel());
+        this.recipientPrompt.setText(this.userPresenter.userLoanPromptRecipientLabel());
+        this.confirmTrade.setText(this.userPresenter.userLoanPromptConfirm());
+        this.denyTrade.setText(this.userPresenter.userLoanPromptCancel());
 
-    /**
-     * Switches the scene being viewed
-     * @param actionEvent the ActionEvent
-     * @param filename the filename of the .fxml file to be loaded
-     * @throws IOException for a funky input
-     */
-    public void switchScene(ActionEvent actionEvent, String filename) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(filename));
-        Scene newScene= new Scene(root);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
-        window.setScene(newScene);
-        window.show();
+        // set button function
+        this.confirmTrade.setOnAction(e -> sendTradeRequest());
+        this.denyTrade.setOnAction(this::returnToMainMenu);
     }
 
     private List<Item> setUpTradeOptions() {
@@ -89,12 +78,13 @@ public class LoanMenu extends Application implements Initializable {
     }
 
     @FXML
-    public void sendTradeRequest() {
+    private void sendTradeRequest() {
         // trade controller call
     }
 
     @FXML
-    public void returnToMainMenu() {
-        // some way to return to main menu
+    private void returnToMainMenu(ActionEvent actionEvent) {
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
     }
 }

@@ -40,6 +40,38 @@ public class UserPresenter {
                 "\n[8] Exit and log out.");
     }
 
+    public String userMenuPromptAccountInfo() {
+        return "Access your account information";
+    }
+
+    public String userMenuPromptGlobalInventory() {
+        return "Browse through the global inventory";
+    }
+
+    public String userMenuPromptLoanMenu() {
+        return "Loan one of your items to another user";
+    }
+
+    public String userMenuPromptMessageMenu() {
+        return "Look at your message inbox";
+    }
+
+    public String userMenuPromptNewItem() {
+        return "Add a new item to the system";
+    }
+
+    public String userMenuPromptUnfreeze() {
+        return "Send admins an unfreeze request";
+    }
+
+    public String userMenuPromptPrivateMessage() {
+        return "Send a private message to another user";
+    }
+
+    public String userMenuPromptLogout() {
+        return "Exit and log out";
+    }
+
     /**
      * The prompt for new item prompt.
      * @param select 0 for item name input prompt, 1 for item's description prompt.
@@ -62,8 +94,7 @@ public class UserPresenter {
      * Prompt for setting a new password.
      */
     public String setNewPasswordPrompt() {
-        return "Enter in your new password." +
-                "\nEnter 'exit' to exit.";
+        return "Enter in your new password.";
     }
 
     /**
@@ -83,6 +114,22 @@ public class UserPresenter {
                 "\n [4] Exit.");
     }
 
+    public String menuPromptRemove() {
+        return "Remove this Item";
+    }
+
+    public String menuPromptNext() {
+        return "Go to next item";
+    }
+
+    public String menuPromptPrevious() {
+        return "Return to the previous item";
+    }
+
+    public String menuPromptExit() {
+        return "Exit";
+    }
+
     /**
      * User wishlist prompts.
      */
@@ -93,6 +140,10 @@ public class UserPresenter {
                 "\n [3] Return to previous Item. " +
                 "\n [4] Send the owner of this item a trade offer (can only ask to borrow this single item!)." +
                 "\n [5] Exit.");
+    }
+
+    public String wishlistPromptTradeOffer() {
+        return "Send a trade offer to this user";
     }
 
     /**
@@ -167,11 +218,35 @@ public class UserPresenter {
                 "\n[7] Exit.");
     }
 
+    public String accountInfoPromptTradeHistory() {
+        return "View your trade history";
+    }
+
+    public String accountInfoPromptPassword() {
+        return "Set new password";
+    }
+
+    public String accountInfoPromptTradingPartners() {
+        return "View your three most frequent trading partners";
+    }
+
+    public String accountInfoPromptRecentTrades() {
+        return "View your three most recent trades";
+    }
+
+    public String accountInfoPromptInventory() {
+        return "View your inventory";
+    }
+
+    public String accountInfoPromptWishlist() {
+        return "View your wishlist";
+    }
+
     /**
      * Prompt for a new item message successfully sent to admins.
      */
     public String newItemMessageSentToAdmin() {
-        return "A request for an admin to approve of your item has been sent.\n";
+        return "Item approval request sent. You can exit now.\n";
     }
 
     /**
@@ -197,6 +272,18 @@ public class UserPresenter {
         System.out.println("Can you confirm that this meeting happened? " +
                 "\n[1] The meeting happened. " +
                 "\n[2] The meeting did not happen.");
+    }
+
+    public String checkUnconfirmedTradesPrompt() {
+        return "Can you confirm that this meeting happened?";
+    }
+
+    public String confirmMeetingPrompt() {
+        return "This meeting happened";
+    }
+
+    public String denyMeetingPrompt() {
+        return "This meeting did not happen";
     }
 
     /**
@@ -265,6 +352,18 @@ public class UserPresenter {
                 "\n[3] Exit");
     }
 
+    public String tradeMenuPrompt() {
+        return "What would you like to see in your trade history?";
+    }
+
+    public String nextTradePrompt() {
+        return "Next Trade";
+    }
+
+    public String previousTradePrompt() {
+        return "Previous Trade";
+    }
+
     /**
      * Reached end of trades
      */
@@ -290,6 +389,26 @@ public class UserPresenter {
                 "\nDo you wish to finish sending this user a trade offer? " +
                 "\n[1] Yes" +
                 "\n[2] No, and take me back to the main menu.");
+    }
+
+    public String userLoanPromptOfferedItemLabel() {
+        return "Your offered item:";
+    }
+
+    public String userLoanPromptRecipientLabel() {
+        return "Recipient User:";
+    }
+
+    public String userLoanPromptConfirm() {
+        return "Confirm.";
+    }
+
+    public String userLoanPromptCancel() {
+        return "Cancel.";
+    }
+
+    public String userPrivateMessageConfirmation() {
+        return "Message sent. It is safe to exit.";
     }
 
     /**

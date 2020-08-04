@@ -3,14 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.UserGUI.NewItemMenu">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="confirm" layoutX="239.0" layoutY="319.0" mnemonicParsing="false" onAction="#sendNewItemRequest" text="Send." />
-      <Button fx:id="cancel" layoutX="311.0" layoutY="319.0" mnemonicParsing="false" onAction="#returnToMainMenu" text="Cancel." />
-      <Label fx:id="namePrompt" layoutX="155.0" layoutY="89.0" text="PLACEHOLDER" />
-      <Label fx:id="descriptionPrompt" layoutX="155.0" layoutY="146.0" text="PLACEHOLDER" />
+      <Button fx:id="confirm" layoutX="239.0" layoutY="319.0" mnemonicParsing="false" />
+      <Button fx:id="cancel" layoutX="311.0" layoutY="319.0" mnemonicParsing="false" />
+      <Label fx:id="namePrompt" layoutX="155.0" layoutY="89.0" />
+      <Label fx:id="descriptionPrompt" layoutX="155.0" layoutY="146.0" />
       <TextArea fx:id="descriptionInput" layoutX="155.0" layoutY="164.0" prefHeight="134.0" prefWidth="290.0" promptText="Item Description" />
       <TextField fx:id="nameInput" layoutX="155.0" layoutY="107.0" prefHeight="26.0" prefWidth="290.0" promptText="Item Name" />
-      <Label fx:id="errorMessage" layoutX="156.0" layoutY="357.0" prefHeight="18.0" prefWidth="290.0" text="errorPlaceholder" textAlignment="CENTER" textFill="#ff0000" />
+      <Label fx:id="errorMessage" layoutX="155.0" layoutY="345.0" prefHeight="18.0" prefWidth="290.0" textAlignment="CENTER" textFill="#ff0000" />
+      <Label fx:id="confirmation" layoutX="170.0" layoutY="367.0" prefHeight="18.0" prefWidth="259.0" textAlignment="CENTER" textFill="#14972f" />
    </children>
 </AnchorPane>

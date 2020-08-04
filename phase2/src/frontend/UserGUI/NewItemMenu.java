@@ -3,8 +3,10 @@ package frontend.UserGUI;
 import entities.Item;
 import entities.Message;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -18,7 +20,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class NewItemMenu extends Application implements Initializable {
+public class NewItemMenu implements Initializable {
 
     private UserPresenter userPresenter;
     private AdminManager adminManager;
@@ -32,6 +34,7 @@ public class NewItemMenu extends Application implements Initializable {
     @FXML private TextField nameInput;
     @FXML private TextArea descriptionInput;
     @FXML private Label errorMessage;
+    @FXML private Label confirmation;
 
     public NewItemMenu(String currUser, AdminManager adminManager) {
         this.currUser = currUser;
@@ -41,23 +44,27 @@ public class NewItemMenu extends Application implements Initializable {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-
-    }
-
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // set text
         this.namePrompt.setText(this.userPresenter.createNewItemPrompt(0));
         this.descriptionPrompt.setText(this.userPresenter.createNewItemPrompt(1));
+        this.confirm.setText(this.userPresenter.userLoanPromptConfirm());
+        this.cancel.setText(this.userPresenter.menuPromptExit());
+
+        // set button function
+        this.confirm.setOnAction(e -> sendNewItemRequest());
+        this.cancel.setOnAction(this::returnToMainMenu);
     }
 
     @FXML
     public void sendNewItemRequest() {
         String itemName = this.nameInput.getText();
         String itemDescription = this.descriptionInput.getText();
+        // if user input is wack
         if(itemName.length() == 0 || itemDescription.length() == 0) {
             this.errorMessage.setText("Please fill out both the name and description inputs.");
         }
+        // if user correctly filled out inputs
         else {
             List<Message> adminMessages = this.adminManager.getAdminMessages();
             adminMessages.add(this.messageBuilder.getNewItemRequest("User " + this.currUser +
@@ -65,12 +72,14 @@ public class NewItemMenu extends Application implements Initializable {
                     new Item(itemName, this.currUser, itemDescription)));
             this.adminManager.setAdminMessages(adminMessages);
             this.userPresenter.newItemMessageSentToAdmin();
-            // return to the user menu
+            // tell user that it is safe to exit now
+            this.confirmation.setText(this.userPresenter.newItemMessageSentToAdmin());
         }
     }
 
     @FXML
-    public void returnToMainMenu() {
-
+    public void returnToMainMenu(ActionEvent actionEvent) {
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
     }
 }

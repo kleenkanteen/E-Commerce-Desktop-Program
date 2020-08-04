@@ -6,7 +6,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.UserGUI.AccountInfoMenu">
+      xmlns:fx="http://javafx.com/fxml/1" >
    <children>
       <Label text="What would you like to do with your account today?">
          <VBox.margin>
@@ -15,49 +15,49 @@
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Label>
-      <Button fx:id="tradeHistory" mnemonicParsing="false" onAction="#viewTradeHistory" prefWidth="300.0" text="View your trade history">
+      <Button fx:id="tradeHistory" mnemonicParsing="false" prefWidth="300.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="newPassword" mnemonicParsing="false" onAction="#setNewPassword" prefWidth="300.0" text="Set new password">
+      <Button fx:id="newPassword" mnemonicParsing="false" prefWidth="300.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="tradePartners" mnemonicParsing="false" onAction="#viewTradePartners" prefWidth="300.0" text="View your three most frequent Trading Partners">
+      <Button fx:id="tradePartners" mnemonicParsing="false" prefWidth="300.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="recentTrades" mnemonicParsing="false" onAction="#viewRecentTrades" prefWidth="300.0" text="View your three most recent trades">
+      <Button fx:id="recentTrades" mnemonicParsing="false" prefWidth="300.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="inventory" mnemonicParsing="false" onAction="#viewInventory" prefWidth="300.0" text="View your inventory">
+      <Button fx:id="inventory" mnemonicParsing="false" prefWidth="300.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="wishlist" mnemonicParsing="false" onAction="#viewWishlist" prefWidth="300.0" text="View your wishlist">
+      <Button fx:id="wishlist" mnemonicParsing="false" prefWidth="300.0">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding></Button>
-      <Button fx:id="exit" mnemonicParsing="false" onAction="#returnToMainMenu" text="Return to main menu">
+      <Button fx:id="exit" mnemonicParsing="false">
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>

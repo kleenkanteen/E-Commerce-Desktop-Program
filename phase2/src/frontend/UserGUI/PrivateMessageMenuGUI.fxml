@@ -3,14 +3,15 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.UserGUI.PrivateMessageMenu">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField fx:id="usernameInput" layoutX="120.0" layoutY="61.0" prefHeight="26.0" prefWidth="338.0" />
-      <TextArea fx:id="messageInput" layoutX="121.0" layoutY="126.0" prefHeight="200.0" prefWidth="338.0" />
-      <Label fx:id="usernamePrompt" layoutX="121.0" layoutY="43.0" prefHeight="18.0" prefWidth="338.0" text="PLACEHOLDER" />
-      <Label fx:id="messagePrompt" layoutX="120.0" layoutY="108.0" prefHeight="18.0" prefWidth="338.0" text="PLACEHOLDER" />
-      <Button fx:id="send" layoutX="121.0" layoutY="354.0" mnemonicParsing="false" onAction="#sendMessage" prefHeight="26.0" prefWidth="80.0" text="Send" />
-      <Button fx:id="cancel" layoutX="386.0" layoutY="354.0" mnemonicParsing="false" onAction="#returnToMenu" prefHeight="26.0" prefWidth="74.0" text="Cancel" />
-      <Label fx:id="usernameError" layoutX="120.0" layoutY="326.0" prefHeight="18.0" prefWidth="338.0" text="PLACEHOLDER" textAlignment="CENTER" textFill="#ff0303" />
+      <TextField fx:id="usernameInput" layoutX="120.0" layoutY="61.0" prefHeight="26.0" prefWidth="338.0" promptText="Username" />
+      <TextArea fx:id="messageInput" layoutX="121.0" layoutY="126.0" prefHeight="200.0" prefWidth="338.0" promptText="Message" />
+      <Label fx:id="usernamePrompt" layoutX="121.0" layoutY="43.0" prefHeight="18.0" prefWidth="338.0" />
+      <Label fx:id="messagePrompt" layoutX="120.0" layoutY="108.0" prefHeight="18.0" prefWidth="338.0" />
+      <Button fx:id="send" layoutX="203.0" layoutY="367.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="80.0" />
+      <Button fx:id="cancel" layoutX="300.0" layoutY="367.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" />
+      <Label fx:id="usernameError" layoutX="120.0" layoutY="326.0" prefHeight="18.0" prefWidth="338.0" textAlignment="CENTER" textFill="#ff0303" />
+      <Label fx:id="confirmation" layoutX="121.0" layoutY="344.0" prefHeight="18.0" prefWidth="338.0" text="Label" textAlignment="CENTER" textFill="#35a21f" />
    </children>
 </AnchorPane>

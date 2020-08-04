@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PrivateMessageMenu extends Application implements Initializable {
+public class PrivateMessageMenu implements Initializable {
 
     @FXML private TextField usernameInput;
     @FXML private TextArea messageInput;
@@ -29,6 +29,7 @@ public class PrivateMessageMenu extends Application implements Initializable {
     @FXML private Label usernameError;
     @FXML private Button send;
     @FXML private Button cancel;
+    @FXML private Label confirmation;
 
     private UserPresenter userPresenter;
     private MessageBuilder messageBuilder;
@@ -42,52 +43,37 @@ public class PrivateMessageMenu extends Application implements Initializable {
         this.currUser = currUser;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // set text
         this.usernamePrompt.setText(this.userPresenter.userMessagePrompt());
         this.messagePrompt.setText(this.userPresenter.userMessagePromptSecundus());
-    }
+        this.send.setText(this.userPresenter.userLoanPromptConfirm());
+        this.cancel.setText(this.userPresenter.userLoanPromptCancel());
 
-    /**
-     * Switches the scene being viewed
-     * @param actionEvent the ActionEvent
-     * @param filename the filename of the .fxml file to be loaded
-     * @throws IOException for a funky input
-     */
-    public void switchScene(ActionEvent actionEvent, String filename) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(filename));
-        Scene newScene= new Scene(root);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
-        window.setScene(newScene);
-        window.show();
+        // set button functionality
+        this.send.setOnAction(e -> sendMessage());
+        this.cancel.setOnAction(this::returnToMenu);
     }
 
     @FXML
     public void sendMessage() {
         String user = this.usernameInput.getText();
+        // if the username is not in the system
         if(!this.userManager.isValidUser(user)) {
             this.usernameError.setText(this.userPresenter.invalidUsername());
         }
+        // otherwise
         else {
-            String message = this.messageInput.getText();
-            this.userManager.addUserMessage(user, this.messageBuilder.getPrivateMessage(message, this.currUser));
-            // return to main menu somehow?
+            this.userManager.addUserMessage(user,
+                    this.messageBuilder.getPrivateMessage(this.messageInput.getText(), this.currUser));
+            this.confirmation.setText(this.userPresenter.userPrivateMessageConfirmation());
         }
     }
 
     @FXML
-    public void returnToMenu() {
-        // cancel somehow?
+    public void returnToMenu(ActionEvent actionEvent) {
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
     }
 }
