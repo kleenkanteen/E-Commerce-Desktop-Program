@@ -18,7 +18,7 @@
             <TableColumn fx:id="column5" prefWidth="153.0" text="Date" />
         </columns>
       </TableView>
-    <Button fx:id="deleteTrade" layoutX="584.0" layoutY="508.0" mnemonicParsing="false" onAction="#deleteTradeButtonPushed" prefHeight="59.0" prefWidth="160.0" text="Delete Trade" />
+    <Button fx:id="deleteTradeButton" layoutX="584.0" layoutY="508.0" mnemonicParsing="false" onAction="#deleteTradeButtonPushed" prefHeight="59.0" prefWidth="160.0" />
       <Label layoutX="51.0" layoutY="507.0" prefHeight="63.0" prefWidth="568.0" text="You can select and delete the Trade one at a time.          Be Careful! Don't get it Wrong!" textFill="#c90808" wrapText="true">
          <font>
             <Font size="21.0" />

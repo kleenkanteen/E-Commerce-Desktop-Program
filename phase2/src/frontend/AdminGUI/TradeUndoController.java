@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.TradeManager;
@@ -20,6 +21,7 @@ import java.util.ResourceBundle;
 public class TradeUndoController implements Initializable {
     @FXML private Button searchUserButton;
     @FXML private Button goBackButton;
+    @FXML private TextField userNameField;
 
     private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu";
     private UserManager usermanager;
@@ -46,7 +48,7 @@ public class TradeUndoController implements Initializable {
         window.setMinWidth(800);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(UndoUnstartedTradeMenuFXML));
 
-        loader.setController(new UndoUnstartedTradeMenuController(tradeManager, usermanager));
+        loader.setController(new UndoUnstartedTradeMenuController(userNameField.getText(), tradeManager, usermanager));
 
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
@@ -67,7 +69,10 @@ public class TradeUndoController implements Initializable {
 
 
     public void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
-        openTradeWindow(actionEvent);
+        if(usermanager.isValidUser(userNameField.getText())){
+            openTradeWindow(actionEvent);
+        }
+
 
     }
 

@@ -3,6 +3,7 @@ package frontend.AdminGUI;
 import entities.Item;
 import entities.PermTrade;
 import entities.Trade;
+import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,7 +25,7 @@ import java.util.ResourceBundle;
 
 
 public class UndoUnstartedTradeMenuController implements Initializable {
-    @FXML private Button deleteTrade;
+    @FXML private Button deleteTradeButton;
     @FXML
     private TableView<Trade> tableView;
     @FXML private TableColumn<Trade, String> column1;
@@ -32,10 +33,12 @@ public class UndoUnstartedTradeMenuController implements Initializable {
     @FXML private TableColumn<Trade, ArrayList<Item>> column3;
     @FXML private TableColumn<Trade, ArrayList<Item>> column4;
     @FXML private TableColumn<Trade, LocalDateTime> column5;
+    String currentUserName;
 
     private UserManager usermanager;
     private TradeManager tradeManager;
-    UndoUnstartedTradeMenuController(TradeManager tradeManager, UserManager userManager){
+    UndoUnstartedTradeMenuController(String currentUserName, TradeManager tradeManager, UserManager userManager){
+        this.currentUserName = currentUserName;
         this.usermanager = userManager;
         this.tradeManager = tradeManager;
     }
@@ -49,9 +52,11 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         selectedRow = tableView.getSelectionModel().getSelectedItem();
 
         allTrades.remove(selectedRow);
+        tradeManager.removeTrade(selectedRow);
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        deleteTradeButton.setText("delete selected Trade!");
         column1.setCellValueFactory(new PropertyValueFactory<Trade, String>("TraderA"));
         column2.setCellValueFactory(new PropertyValueFactory<Trade, String>("TraderB"));
         column3.setCellValueFactory(new PropertyValueFactory<Trade, ArrayList<Item>>("traderAItemsToTrade"));
@@ -61,25 +66,27 @@ public class UndoUnstartedTradeMenuController implements Initializable {
 
     }
     public ObservableList<Trade> getTrade(){
-        ObservableList<Trade> demo = FXCollections.observableArrayList();
-        Item item1 = new Item("blood", "leo", "suck it");
-        Item item2 = new Item("blood", "leo", "suck it");
-        Item item3 = new Item("blood", "clara", "suck it");
-        Item item4 = new Item("blood", "clara", "suck it");
-        ArrayList<Item> iList = new ArrayList<>();
-        ArrayList<Item> uList = new ArrayList<>();
-        iList.add(item1);
-        iList.add(item2);
-        uList.add(item3);
-        uList.add(item4);
-        LocalDateTime a = LocalDateTime.now();
-        Trade trade1 = new PermTrade("Leo", "clara", iList, uList, a);
-        Trade trade2 = new PermTrade("Leo", "clara", iList, uList, a);
-        Trade trade3 = new PermTrade("Leo", "clara", iList, uList, a);
-        Trade trade4 = new PermTrade("Leo", "clara", iList, uList, a);
-        demo.add(trade1);
-        demo.add(trade2);
-        demo.add(trade3);
-        demo.add(trade4);
-        return demo;}
-}
+        ObservableList<Trade> unstartedTrade = FXCollections.observableArrayList();
+        unstartedTrade.addAll(tradeManager.getUnstartTrades(currentUserName));
+        return unstartedTrade;
+//        Item item1 = new Item("blood", "leo", "suck it");
+//        Item item2 = new Item("blood", "leo", "suck it");
+//        Item item3 = new Item("blood", "clara", "suck it");
+//        Item item4 = new Item("blood", "clara", "suck it");
+//        ArrayList<Item> iList = new ArrayList<>();
+//        ArrayList<Item> uList = new ArrayList<>();
+//        iList.add(item1);
+//        iList.add(item2);
+//        uList.add(item3);
+//        uList.add(item4);
+//        LocalDateTime a = LocalDateTime.now();
+//        Trade trade1 = new PermTrade("Leo", "clara", iList, uList, a);
+//        Trade trade2 = new PermTrade("Leo", "clara", iList, uList, a);
+//        Trade trade3 = new PermTrade("Leo", "clara", iList, uList, a);
+//        Trade trade4 = new PermTrade("Leo", "clara", iList, uList, a);
+//        demo.add(trade1);
+//        demo.add(trade2);
+//        demo.add(trade3);
+//        demo.add(trade4);
+//        return demo;}
+}}

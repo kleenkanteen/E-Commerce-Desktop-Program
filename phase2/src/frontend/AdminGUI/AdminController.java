@@ -1,6 +1,7 @@
 package frontend.AdminGUI;
 import entities.Admin;
 import frontend.MainMenuGUI.LoginController;
+import frontend.MessageReplySystem.AdminMessageReplyGUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,6 +51,7 @@ public class AdminController extends Application  implements Initializable{
 
     private String AdminAccountFXML = "AdminAccount.fxml";
     private String TradeUndoFXML = "TradeUndoMenu.fxml";
+    private String AdminMessageGUI = "AdminMessageReplyGUI.fxml";
 
 
 
@@ -81,6 +83,10 @@ public class AdminController extends Application  implements Initializable{
     }
 
     public void messageInboxButtonPushed(ActionEvent actionEvent){
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Admin Account Management");
+        window.setMinWidth(800);
 
 
     }
@@ -112,11 +118,12 @@ public class AdminController extends Application  implements Initializable{
     public void tradeUndoButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("User's Unstarted Trades");
+        window.setTitle("Admin Message Inbox");
         window.setMinWidth(800);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminMessageGUI));
 
-        loader.setController(new TradeUndoController(tradeManager, userManager));
+        loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
+                userManager, admin.getUsername()));
 
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
