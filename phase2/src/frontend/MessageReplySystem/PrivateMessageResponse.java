@@ -88,6 +88,10 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
         Message m = messageBuilder.getReportRequest(reason, accountName, message.getContent(), message.getSender());
         adminManager.addMessage(m);
         messageList.remove(message);
+
+        title.setText(messageReplyPresenter.success());
+        messageContent.setText(messageReplyPresenter.reportSuccess());
+        button2.setOnAction(e -> title.setText(messageReplyPresenter.reportCompleted()));
     }
 
 }

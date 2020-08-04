@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
@@ -59,15 +60,6 @@ public abstract class MessageReplyGUI implements Initializable{
         setMessageDate();
     }
 
-//    private void setMessageList(){
-//        messageList = new ArrayList<>();
-//        messageList.add(new SystemMessage("Hi"));
-//        messageList.add(new SystemMessage("nice day"));
-//        messageList.add(new PrivateMessage("Hi it's me again", "Max"));
-//        messageList.add(new FreezeRequest("You should freeze this person", "Max"));
-//        counter = 0;
-//    }
-
     public abstract List<Message> getMessage();
 
     public abstract void saveMessage(List<Message> messages);
@@ -79,13 +71,15 @@ public abstract class MessageReplyGUI implements Initializable{
             messageContent.setText(messageReplyPresenter.printNoMessages());
             Button button1 = new Button("Exit");
             button1.setOnAction(e ->
-                    ((Stage) (((Button) e.getSource()).getScene().getWindow())).close());
+                    exitGUI(e));
             buttonBar.getButtons().add(button1);
         }
         else{
             messageResponse = factory.getMessageResponse(messageList.get(counter));
             String[] s = messageResponse.getActions();
             messageContent.setText(messageReplyPresenter.messageString(messageList.get(counter)));
+
+            messageContent.setWrapText(true);
 
             Button[] buttons = new Button[s.length+2];
 

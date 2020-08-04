@@ -2,6 +2,7 @@ package frontend.MessageReplySystem;
 
 import entities.Admin;
 import entities.GlobalInventory;
+import entities.Message;
 import entities.User;
 import frontend.ErrorPopUp.ErrorPopUp;
 import javafx.application.Application;
@@ -13,6 +14,7 @@ import use_cases.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class TestMessageMain extends Application{
 
@@ -31,6 +33,8 @@ public class TestMessageMain extends Application{
         String username = "Max";
 
         userManager.createNewUser("Max", "123");
+        userManager.createNewUser("Hello", "123");
+        userManager.setUserMessages("Max", setMessageList());
 
         UserMessageReplyGUI userMessageReplyGUI = new UserMessageReplyGUI(adminManager, globalInventoryManager,
                 tradeManager, userManager,username);
@@ -43,6 +47,17 @@ public class TestMessageMain extends Application{
         primaryStage.show();
 //        initStyle(StageStyle.UNDECORATED);
 //        new ErrorPopUp();
+    }
+
+    private List<Message> setMessageList(){
+        List<Message> messageList = new ArrayList<>();
+        MessageBuilder messageBuilder = new MessageBuilder();
+        messageList.add(messageBuilder.getSystemMessage("Hi iueoqiueiqwueoiqwueiqwouiequwoeiuqwioeuqwioueiqw" +
+                "qweoiqwueioqwueiquwoeqw qwieuqwioeuqiwoe eiqwoueqiowueoiwqueiqow e qiweuqwioeuwqoe quiweuqwieouqwo"));
+        messageList.add(messageBuilder.getSystemMessage("nice day"));
+        messageList.add(messageBuilder.getPrivateMessage("Hi it's me again", "Hello"));
+        //messageList.add(new FreezeRequest("You should freeze this person", "Max"));
+        return messageList;
     }
 
 }

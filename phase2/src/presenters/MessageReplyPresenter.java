@@ -53,7 +53,9 @@ public class MessageReplyPresenter {
         return "Skip";
     }
 
-
+    public String success(){
+        return "Success";
+    }
 
 
 
@@ -72,5 +74,13 @@ public class MessageReplyPresenter {
 
     public String reportTitle(){
         return "Report System";
+    }
+
+    public String reportCompleted(){
+        return "Report already made";
+    }
+
+    public String reportSuccess(){
+        return "Your report has been sent to the Admin.";
     }
 }
