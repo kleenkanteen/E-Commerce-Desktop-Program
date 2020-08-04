@@ -63,6 +63,7 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         column4.setCellValueFactory(new PropertyValueFactory<Trade, ArrayList<Item>>("traderBItemsToTrade"));
         column5.setCellValueFactory(new PropertyValueFactory<Trade, LocalDateTime>("startDate"));
         tableView.setItems(getTrade());
+        deleteTradeButton.setOnAction(e -> deleteTradeButtonPushed());
 
     }
     public ObservableList<Trade> getTrade(){

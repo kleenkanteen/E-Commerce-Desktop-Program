@@ -83,6 +83,13 @@ public class TradeUndoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         searchUserButton.setText("Search");
+        searchUserButton.setOnAction(e -> {
+            try {
+                searchUserButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
         goBackButton.setText("Back to Admin Menu");
 
 
