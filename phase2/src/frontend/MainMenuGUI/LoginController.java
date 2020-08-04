@@ -36,15 +36,12 @@ public class LoginController implements Initializable {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
 
-    private final String userMenuGUIFile = "frontend/UserGUI/UserMenuGUI.fxml";
-    private final String adminMenuGUIFile = "frontend/AdminGUI/AdminController.fxml";
+    private final String userMenuGUIFile = "src/frontend/UserGUI/UserMenuGUI.fxml";
+    private final String adminMenuGUIFile = "src/frontend/AdminGUI/AdminController.fxml";
 
     private enum OpenMenu {
         USER_MENU, ADMIN_MENU, DEMO_MENU
     }
-
-    private final String userMenuGUIFXMLFile = "UserMenuGUI.fxml";
-
     public LoginController(String type, UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
                            GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager){
         this.type = type;
@@ -76,11 +73,7 @@ public class LoginController implements Initializable {
     }
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
-    /*
-    (String currUser, UserManager userManager, TradeManager tradeManager,
-                       GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager,
-                       AdminManager adminManager
-     */
+
     private void goToOtherScene(String otherScene, String MenuToOpen, String username) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
