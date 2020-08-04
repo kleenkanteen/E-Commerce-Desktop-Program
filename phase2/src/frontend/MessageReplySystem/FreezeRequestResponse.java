@@ -13,7 +13,7 @@ public class FreezeRequestResponse implements MessageResponse {
     }
     @Override
     public String[] getActions() {
-        return messageReplyPresenter.requestActionPrompt((Request) message);
+        return messageReplyPresenter.requestAction((Request) message);
     }
 
     @Override

@@ -14,11 +14,11 @@ public class UserMessageReplyGUI extends MessageReplyGUI{
         super(adminManager, globalInventoryManager, tradeManager, userManager, accountUsername);
     }
 
-    public void setMessage(){
-        userManager.getUserMessages(accountUsername);
+    public List<Message> getMessage(){
+        return userManager.getUserMessages(accountUsername);
     }
 
-    public void saveMessage(List<Message> m){
-        userManager.setUserMessages(accountUsername, m);
+    public void saveMessage(List<Message> messages){
+        userManager.setUserMessages(accountUsername, messages);
     }
 }

@@ -21,30 +21,32 @@ import use_cases.TradeManager;
 import use_cases.UserManager;
 
 //make abstract later
-public class MessageReplyGUI implements Initializable{
+public abstract class MessageReplyGUI implements Initializable{
 //    private Stage window;
 //    private Scene scene1, scene2;
     @FXML private Label messageContent;
     @FXML private ButtonBar buttonBar;
 
-     UserManager userManager;
+    UserManager userManager;
     private GlobalInventoryManager globalInventoryManager;
     private TradeManager tradeManager;
-     AdminManager adminManager;
+    AdminManager adminManager;
     String accountUsername;
 
-    private List<Message> messageList = new ArrayList<>();
+    private List<Message> messageList;
     private int counter = 0;
+
+    private List<Message> saveMessageList;
 
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private MessageResponseFactory factory;
     private MessageResponse messageResponse;
 
-    public MessageReplyGUI(){
-        MessageResponseFactory factory = new MessageResponseFactory();
-    }
+    //public MessageReplyGUI(){
+   //     MessageResponseFactory factory = new MessageResponseFactory();
+    //}
 
-    public MessageReplyGUI(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
+    MessageReplyGUI(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                            TradeManager tradeManager, UserManager userManager, String accountUsername){
         this.adminManager = adminManager;
         this.globalInventoryManager = globalInventoryManager;
@@ -52,23 +54,24 @@ public class MessageReplyGUI implements Initializable{
         this.userManager = userManager;
         this.accountUsername = accountUsername;
         factory = new MessageResponseFactory(adminManager, globalInventoryManager, tradeManager,
-                userManager, accountUsername);
-        setMessageList();
+                userManager, saveMessageList, accountUsername);
+        messageList = new ArrayList<>(getMessage());
+        saveMessageList = new ArrayList<>(getMessage());
 
     }
 
-    private void setMessageList(){
-        messageList = new ArrayList<>();
-        messageList.add(new SystemMessage("Hi"));
-        messageList.add(new SystemMessage("nice day"));
-        messageList.add(new PrivateMessage("Hi it's me again", "Max"));
-        messageList.add(new FreezeRequest("You should freeze this person", "Max"));
-        counter = 0;
-    }
+//    private void setMessageList(){
+//        messageList = new ArrayList<>();
+//        messageList.add(new SystemMessage("Hi"));
+//        messageList.add(new SystemMessage("nice day"));
+//        messageList.add(new PrivateMessage("Hi it's me again", "Max"));
+//        messageList.add(new FreezeRequest("You should freeze this person", "Max"));
+//        counter = 0;
+//    }
 
-    //public abstract void setMessage();
+    public abstract List<Message> getMessage();
 
-    //public abstract void saveMessage();
+    public abstract void saveMessage(List<Message> messages);
 
     public void setUp(){
         buttonBar.getButtons().clear();
@@ -83,7 +86,7 @@ public class MessageReplyGUI implements Initializable{
         else{
             messageResponse = factory.getMessageResponse(messageList.get(counter));
             String[] s = messageResponse.getActions();
-            messageContent.setText(messageList.get(counter).toString());
+            messageContent.setText(messageReplyPresenter.messageString(messageList.get(counter)));
 
             Button[] buttons = new Button[s.length+2];
 
@@ -95,12 +98,12 @@ public class MessageReplyGUI implements Initializable{
                });
            }
 
-            buttons[s.length] = new Button(messageReplyPresenter.returnSkipPrompt());
+            buttons[s.length] = new Button(messageReplyPresenter.skip());
             buttons[s.length].setOnAction(e ->{
                 counter++;
                 setUp();});
 
-            buttons[s.length+1] = new Button(messageReplyPresenter.returnExitPrompt());
+            buttons[s.length+1] = new Button(messageReplyPresenter.exit());
             buttons[s.length+1].setOnAction(e ->
                     exitGUI(e));
 
@@ -109,12 +112,12 @@ public class MessageReplyGUI implements Initializable{
         //Update message list
     }
     private void exitGUI(ActionEvent e){
-        //saveMessage();
+        saveMessage(saveMessageList);
         ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setMessageList();
+        messageList = new ArrayList<>(getMessage());
         //change to setMessage();
         setUp();
     }

@@ -8,18 +8,20 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.List;
 
 import presenters.MessageReplyPresenter;
 import entities.Message;
+import use_cases.AdminManager;
+import use_cases.MessageBuilder;
 
 public class PrivateMessageResponse implements  MessageResponse, Initializable {
-    private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
-    private Message message;
     @FXML private Label title;
     @FXML private Label messageContent;
     @FXML private Button button1;
@@ -27,30 +29,41 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
     @FXML private TextField userInput;
     private Stage window;
 
-    PrivateMessageResponse(Message message){
+    private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
+    private Message message;
+    private List<Message> messageList;
+    private AdminManager adminManager;
+    private String accountName;
+
+
+    PrivateMessageResponse(Message message, AdminManager adminManager, List<Message> messageList, String accountName){
         this.message = message;
+        this.adminManager = adminManager;
+        this.messageList = messageList;
+        this.accountName = accountName;
     }
 
     @Override
     public String[] getActions() {
-        return messageReplyPresenter.privateMessageActionPrompt(message);
+        return messageReplyPresenter.privateMessageAction(message);
     }
 
     @Override
     public void doAction(String action){
         String[]validActions = getActions();
         if(action.equals(validActions[0])){
-            System.out.println("Delete");
+            messageList.remove(message);
         }
         else if(action.equals(validActions[1])){
-            System.out.println("Report");
             try {
                 window = new Stage();
                 FXMLLoader reportLoader = new FXMLLoader(getClass().getResource("MakeReport.fxml"));
                 reportLoader.setController(this);
                 Parent root = reportLoader.load();
 
+                window.initModality(Modality.APPLICATION_MODAL);
                 window.setScene(new Scene(root));
+                window.setTitle(messageReplyPresenter.reportTitle());
                 window.show();
             }catch(IOException e){
                 System.out.println("Error");
@@ -60,16 +73,19 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        title.setText("Write your report:");
-        messageContent.setText(message.getContent());
-        button1.setText("Exit");
+        title.setText(messageReplyPresenter.reportPrompt());
+        messageContent.setText(messageReplyPresenter.messageContent(message));
+        button1.setText(messageReplyPresenter.exit());
         button1.setOnAction(e -> window.close());
-        button2.setText("Report");
+        button2.setText(messageReplyPresenter.report());
         button2.setOnAction(e -> makeReport());
     }
 
-    public void makeReport(){
-        System.out.println(userInput.getText());
+    private void makeReport(){
+        MessageBuilder messageBuilder = new MessageBuilder();
+        String reason = userInput.getText();
+        Message m = messageBuilder.getReportRequest(reason, accountName, message.getContent(), message.getSender());
+        adminManager.addMessage(m);
     }
 
 }
