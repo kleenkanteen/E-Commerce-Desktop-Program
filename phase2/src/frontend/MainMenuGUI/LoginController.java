@@ -22,11 +22,11 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    @FXML TextField username;
-    @FXML TextField password;
-    @FXML Button loginButton;
-    @FXML Button exitButton;
-    @FXML Label errorMessage;
+    @FXML private TextField username;
+    @FXML private TextField password;
+    @FXML private Button loginButton;
+    @FXML private Button exitButton;
+    @FXML private Label errorMessage;
 
     private String type; //change to ENUM
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
@@ -36,8 +36,8 @@ public class LoginController implements Initializable {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
 
-    private final String userMenuGUIFile = "src/frontend/UserGUI/UserMenuGUI.fxml";
-    private final String adminMenuGUIFile = "src/frontend/AdminGUI/AdminMenu.fxml";
+    private final String userMenuGUIFile = "/frontend/UserGUI/UserMenuGUI.fxml";
+    private final String adminMenuGUIFile = "/frontend/AdminGUI/AdminMenu.fxml";
 
     private enum OpenMenu {
         USER_MENU, ADMIN_MENU, DEMO_MENU
