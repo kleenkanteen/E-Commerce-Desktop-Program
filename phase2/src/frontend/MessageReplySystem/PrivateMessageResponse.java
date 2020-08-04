@@ -1,6 +1,6 @@
 package frontend.MessageReplySystem;
 
-import frontend.ErrorPopUp.ErrorPopUp;
+import frontend.PopUp.PopUp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -67,7 +67,7 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
                 window.setTitle(messageReplyPresenter.reportTitle());
                 window.show();
             }catch(IOException e){
-                new ErrorPopUp();
+                new PopUp("Error");
             }
         }
     }

@@ -37,6 +37,16 @@ public class MessageReplyPresenter {
         s[1] = "Report";
         return s;
     }
+
+    public String tradeRequestWarning(){
+        return "Warning, you and the other trader has reached the max number of edits,\nselecting edit means " +
+                "you will cancel this trade request";
+    }
+
+    public String tradeRequestCancel(){
+        return "Trade request cancelled due to too much edits";
+    }
+
     /**
      * Print out a decision message and the options they have
      * @param m the message

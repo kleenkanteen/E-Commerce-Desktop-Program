@@ -43,12 +43,12 @@ public class MainMenuController implements Initializable {
     private final String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
     private final String tradeFilepath = "data/serializedUserTrades.ser";
 
-    AdminAccountGateways adminAccountGateways;
-    UserGateway userGateway;
-    GlobalInventoryGateways globalInventoryGateways;
-    UserTradesGateway userTradesGateway;
-    GlobalWishlistGateway globalWishlistGateway;
-    AdminMessageGateway adminMessageGateway;
+    private AdminAccountGateways adminAccountGateways;
+    private UserGateway userGateway;
+    private GlobalInventoryGateways globalInventoryGateways;
+    private UserTradesGateway userTradesGateway;
+    private GlobalWishlistGateway globalWishlistGateway;
+    private AdminMessageGateway adminMessageGateway;
 
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
 

@@ -1,10 +1,7 @@
 package frontend.MessageReplySystem;
 
-import entities.Admin;
 import entities.GlobalInventory;
 import entities.Message;
-import entities.User;
-import frontend.ErrorPopUp.ErrorPopUp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -41,12 +38,9 @@ public class TestMessageMain extends Application{
 
         loader.setController(userMessageReplyGUI);
         Parent root = loader.load();
-        //Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
 
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-//        initStyle(StageStyle.UNDECORATED);
-//        new ErrorPopUp();
     }
 
     private List<Message> setMessageList(){

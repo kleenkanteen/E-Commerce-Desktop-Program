@@ -1,21 +1,23 @@
 package frontend.MessageReplySystem;
 
-import entities.GlobalInventory;
-import entities.Item;
-import entities.TradeRequest;
+import entities.*;
 import exceptions.UserFrozenException;
+import frontend.PopUp.PopUp;
 import presenters.MessageReplyPresenter;
-import entities.Message;
-import use_cases.GlobalInventoryManager;
-import use_cases.MessageBuilder;
-import use_cases.TradeManager;
-import use_cases.UserManager;
+import use_cases.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TradeRequestResponse implements MessageResponse {
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private TradeRequest message;
+    private TradeRequestManager tradeRequestManager;
     private List<Message> messageList;
     private UserManager userManager;
     private TradeManager tradeManager;
@@ -30,6 +32,12 @@ public class TradeRequestResponse implements MessageResponse {
         this.tradeManager = tradeManager;
         this.globalInventoryManager = globalInventoryManager;
         accountUsername = accountName;
+
+        tradeRequestManager = new TradeRequestManager(message);
+
+        if(!tradeRequestManager.canEdit(accountName)&&!tradeRequestManager.canEdit(message.getSender())){
+            new PopUp(messageReplyPresenter.tradeRequestWarning());
+        }
     }
     @Override
     public String[] getActions() {
@@ -40,7 +48,7 @@ public class TradeRequestResponse implements MessageResponse {
     public void doAction(String action) {
         String[]validActions = getActions();
         if(action.equals(validActions[0])){
-            //TODO
+            confirmTrade();
         }
         else if(action.equals(validActions[1])){
             messageList.remove(message);
@@ -50,11 +58,56 @@ public class TradeRequestResponse implements MessageResponse {
                     messageBuilder.getSystemMessage("Your trade request:"+message.toString()+
                             "\n is rejected by "+ accountUsername));
         }
+        else if(action.equals(validActions[2])){
+            if(!tradeRequestManager.canEdit(accountUsername)&&!tradeRequestManager.canEdit(message.getSender())){
+                new PopUp(messageReplyPresenter.tradeRequestCancel());
+            }
+        }
     }
 
 
 
     //----------------Helpers----------------//
+    private void confirmTrade(){
+        if(cannotTrade(message.getUserA(),message.getItemA())||cannotTrade(message.getUserB(), message.getItemB())){
+            //Tell the user that their trade cannot be created at this time
+            //messageReplyMenu.printCannotTradePrompt();
+//            do {
+//                input = br.readLine();
+//                if(input.equals("2"))done = true;
+//                else if(input.equals("1")) {
+//                    messages.remove(m);
+//                    //Tell the other trader that the trade could not be created at this time and
+//                    //the trade request is deleted
+//                    userManager.addUserMessage(username,
+//                            messageBuilder.getSystemMessage("You or the other trader cannot create a " +
+//                                    "new trade at this time or the items involved or not for trade at this time. " +
+//                                    "The other trader has chosen to delete this trade request.\n"+
+//                                    "Trade Request: "+m.toString()));
+//                    done = true;
+//                }
+//                else messageReplyMenu.printInvalidInput();
+//            }while(!done);
+//            return true;
+            //TODO
+        }
+        //Confirming the trade
+        messageList.remove(message);
+        Trade trade = tradeRequestManager.setConfirmation();
+        //Add trade to both user's trade history
+        tradeManager.addTrade(trade);
+
+        //Removing the items from the GI and personal inventory
+        List<Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
+        for(Item i:list) {
+            globalInventoryManager.removeItem(i.getItemID());
+        }
+        list = new ArrayList<>(trade.getTraderBItemsToTrade());
+        for(Item i:list) {
+            globalInventoryManager.removeItem(i.getItemID());
+        }
+        new PopUp("Success");
+    }
 
     private boolean cannotTrade(String username, List<Item> userItem){
         //Checking if the user can trade
@@ -76,5 +129,9 @@ public class TradeRequestResponse implements MessageResponse {
             if(!contain)return true;
         }
         return false;
+    }
+
+    private void tradeRequestEdit(TradeRequest m, BufferedReader br){
+
     }
 }

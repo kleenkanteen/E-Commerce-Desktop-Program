@@ -70,8 +70,7 @@ public abstract class MessageReplyGUI implements Initializable{
         if(messageList.size() <= counter) {
             messageContent.setText(messageReplyPresenter.printNoMessages());
             Button button1 = new Button("Exit");
-            button1.setOnAction(e ->
-                    exitGUI(e));
+            button1.setOnAction(this::exitGUI);
             buttonBar.getButtons().add(button1);
         }
         else{
@@ -100,8 +99,7 @@ public abstract class MessageReplyGUI implements Initializable{
                 setUp();});
 
             buttons[s.length+1] = new Button(messageReplyPresenter.exit());
-            buttons[s.length+1].setOnAction(e ->
-                    exitGUI(e));
+            buttons[s.length+1].setOnAction(this::exitGUI);
 
             buttonBar.getButtons().addAll(buttons);
         }
