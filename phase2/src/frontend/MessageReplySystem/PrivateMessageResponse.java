@@ -1,5 +1,6 @@
 package frontend.MessageReplySystem;
 
+import frontend.ErrorPopUp.ErrorPopUp;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -66,7 +67,7 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
                 window.setTitle(messageReplyPresenter.reportTitle());
                 window.show();
             }catch(IOException e){
-                System.out.println("Error");
+                new ErrorPopUp();
             }
         }
     }
@@ -86,6 +87,7 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
         String reason = userInput.getText();
         Message m = messageBuilder.getReportRequest(reason, accountName, message.getContent(), message.getSender());
         adminManager.addMessage(m);
+        messageList.remove(message);
     }
 
 }

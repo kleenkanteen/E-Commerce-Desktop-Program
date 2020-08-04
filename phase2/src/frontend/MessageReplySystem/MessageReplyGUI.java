@@ -95,6 +95,9 @@ public abstract class MessageReplyGUI implements Initializable{
                buttons[i] = new Button(action);
                buttons[i].setOnAction(e -> {
                    messageResponse.doAction(action);
+                   counter++;
+                   setUp();
+
                });
            }
 

@@ -1,20 +1,21 @@
 package frontend.MessageReplySystem;
 
-import entities.FreezeRequest;
+import entities.UnfreezeRequest;
 import presenters.MessageReplyPresenter;
 import entities.Message;
+import entities.Request;
 import use_cases.MessageBuilder;
 import use_cases.UserManager;
 
 import java.util.List;
 
-public class FreezeRequestResponse implements MessageResponse {
+public class UnfreezeRequestResponse implements MessageResponse {
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
-    private FreezeRequest message;
+    private UnfreezeRequest message;
     private List<Message> messageList;
     private UserManager userManager;
 
-    FreezeRequestResponse(FreezeRequest message, List<Message> messageList, UserManager userManager){
+    UnfreezeRequestResponse(UnfreezeRequest message, List<Message> messageList, UserManager userManager){
         this.message = message;
         this.messageList = messageList;
         this.userManager = userManager;
@@ -28,16 +29,24 @@ public class FreezeRequestResponse implements MessageResponse {
     public void doAction(String action) {
         String[]validActions = getActions();
         if(action.equals(validActions[0])){
+            messageList.remove(message);
+
             String username = message.getUser();
             MessageBuilder messageBuilder = new MessageBuilder();
             userManager.freezeUserAccount(username);
-            messageList.remove(message);
             //informing the other user
             userManager.addUserMessage(username,
-                    messageBuilder.getSystemMessage("Your account is frozen"));
+                    messageBuilder.getSystemMessage("Your account is unfrozen"));
         }
         else if(action.equals(validActions[1])){
             messageList.remove(message);
+
+            String username = message.getUser();
+            MessageBuilder messageBuilder = new MessageBuilder();
+            //Informing the other user
+            userManager.addUserMessage(username,
+                    messageBuilder.getSystemMessage("Your request is rejected"));
+
         }
     }
 }
