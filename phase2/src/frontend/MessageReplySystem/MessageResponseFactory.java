@@ -18,13 +18,20 @@ public class MessageResponseFactory {
 
     MessageResponseFactory(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                                   TradeManager tradeManager, UserManager userManager,
-                                  List<Message> messageList, String accountUsername){
+                                  String accountUsername){
         this.adminManager = adminManager;
         this.globalInventoryManager = globalInventoryManager;
         this.tradeManager = tradeManager;
         this.userManager = userManager;
         this.accountUsername = accountUsername;
+    }
+
+    void setMessageList(List<Message> messageList){
         this.messageList = messageList;
+    }
+
+    List<Message> getMessageList(){
+        return messageList;
     }
 
     MessageResponse getMessageResponse(Message message){
@@ -34,8 +41,21 @@ public class MessageResponseFactory {
         else if(message instanceof PrivateMessage){
             return new PrivateMessageResponse(message, adminManager, messageList, accountUsername);
         }
-        else{
-            return new FreezeRequestResponse(message);
+        else if(message instanceof FreezeRequest){
+            return new FreezeRequestResponse((FreezeRequest) message, messageList, userManager);
+        }
+        else if(message instanceof UnfreezeRequest){
+            return new UnfreezeRequestResponse((UnfreezeRequest) message, messageList, userManager);
+        }
+        else if(message instanceof ReportRequest){
+            return new ReportRequestResponse((ReportRequest) message, messageList, userManager);
+        }
+        else if(message instanceof UnbanRequest){
+            return new UnbanRequestResponse((UnbanRequest) message, messageList, userManager);
+        }
+        else {
+            return new TradeRequestResponse((TradeRequest)message, messageList, userManager, globalInventoryManager,
+                    tradeManager, accountUsername);
         }
     }
 }

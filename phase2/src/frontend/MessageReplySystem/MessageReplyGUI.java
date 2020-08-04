@@ -3,6 +3,7 @@ package frontend.MessageReplySystem;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -28,15 +29,15 @@ public abstract class MessageReplyGUI implements Initializable{
     @FXML private ButtonBar buttonBar;
 
     UserManager userManager;
-    private GlobalInventoryManager globalInventoryManager;
-    private TradeManager tradeManager;
+    //private GlobalInventoryManager globalInventoryManager;
+   // private TradeManager tradeManager;
     AdminManager adminManager;
     String accountUsername;
 
     private List<Message> messageList;
     private int counter = 0;
 
-    private List<Message> saveMessageList;
+    //private List<Message> saveMessageList;
 
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private MessageResponseFactory factory;
@@ -49,15 +50,13 @@ public abstract class MessageReplyGUI implements Initializable{
     MessageReplyGUI(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                            TradeManager tradeManager, UserManager userManager, String accountUsername){
         this.adminManager = adminManager;
-        this.globalInventoryManager = globalInventoryManager;
-        this.tradeManager = tradeManager;
+        //this.globalInventoryManager = globalInventoryManager;
+        //this.tradeManager = tradeManager;
         this.userManager = userManager;
         this.accountUsername = accountUsername;
         factory = new MessageResponseFactory(adminManager, globalInventoryManager, tradeManager,
-                userManager, saveMessageList, accountUsername);
-        messageList = new ArrayList<>(getMessage());
-        saveMessageList = new ArrayList<>(getMessage());
-
+                userManager, accountUsername);
+        setMessageDate();
     }
 
 //    private void setMessageList(){
@@ -115,13 +114,18 @@ public abstract class MessageReplyGUI implements Initializable{
         //Update message list
     }
     private void exitGUI(ActionEvent e){
-        saveMessage(saveMessageList);
-        ((Stage) (((Button) e.getSource()).getScene().getWindow())).close();
+        saveMessage(factory.getMessageList());
+        ((Stage) (((Node) e.getSource()).getScene().getWindow())).close();
     }
+
+    private void setMessageDate(){
+        messageList = new ArrayList<>(getMessage());
+        factory.setMessageList(new ArrayList<>(messageList));
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        messageList = new ArrayList<>(getMessage());
-        //change to setMessage();
+        setMessageDate();
         setUp();
     }
 }

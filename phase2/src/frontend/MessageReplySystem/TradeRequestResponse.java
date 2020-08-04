@@ -40,7 +40,7 @@ public class TradeRequestResponse implements MessageResponse {
     public void doAction(String action) {
         String[]validActions = getActions();
         if(action.equals(validActions[0])){
-            //1
+            //TODO
         }
         else if(action.equals(validActions[1])){
             messageList.remove(message);
