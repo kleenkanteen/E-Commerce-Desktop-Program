@@ -149,6 +149,7 @@ public class AdminController extends Application  implements Initializable{
         primaryStage.show();
 
 
+
     }
 
     @Override
@@ -157,6 +158,22 @@ public class AdminController extends Application  implements Initializable{
         manageAdminAccountButton.setText("Manage Admin account" );
         UserBrowsingButton.setText("Access the information of Users");
         TradeUndoButton.setText("Undo the trade of Users");
+        messageInboxButton.setOnAction(this::messageInboxButtonPushed);
+        manageAdminAccountButton.setOnAction(e -> {
+            try {
+                manageAdminAccountButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        TradeUndoButton.setOnAction(e -> {
+            try {
+                tradeUndoButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
 
 
     }

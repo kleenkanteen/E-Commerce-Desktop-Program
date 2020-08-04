@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presenters.AdminAccountPresenter;
 import use_cases.AdminManager;
@@ -24,17 +25,12 @@ import java.util.ResourceBundle;
 public class AdminAccountController implements Initializable {
     @FXML private Button changePassWordButton;
     @FXML private Button adminCreationButton;
-    @FXML private Button exitButton;
-    @FXML private Button backFromCreationButton;
-    @FXML private Button backFromChangePasswordButton;
-    @FXML private Label resultOfPasswordChangeLabel;
-    @FXML private Label resultOfCreationLabel;
-    @FXML private Button addNewPasswordButton;
-    @FXML private Button addNewAdminButton;
-    @FXML private TextField newPasswordTextField;
-    @FXML private TextField confirmNewPasswordField;
-    @FXML private TextField newAdminUserNameTextField;
-    @FXML private TextField newAdminPasswordTextField;
+
+    private String NewPasswordFXML = "AdminNewPasswordController";
+    private String NewAdminFXML = "AdminNewAdminController";
+
+
+
 
     private Admin admin;
 
@@ -66,76 +62,48 @@ public class AdminAccountController implements Initializable {
 
     }
 
-    public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fileName));
-        Scene newScene= new Scene(root);
 
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
-        window.setScene(newScene);
-        window.show();
-    }
     public void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "AdminChangePassword.fxml");
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Go set a new password!");
+        window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(NewPasswordFXML));
+
+        loader.setController(new AdminNewPasswordController(admin, adminManager, userManager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+        window.setScene(scene);
+
+        window.showAndWait();
 
 
     }
     public void AdminCreationButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "AdminCreation.fxml");
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Go create a new pal!");
+        window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(NewAdminFXML));
 
+        loader.setController(new AdminNewAdminController(admin, adminManager, userManager));
 
-    }
-    public void ExitButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "AdminMenu.fxml");
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
 
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 
-    }
-    public void BackFromCreationButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "AdminAccount.fxml");
+        window.setScene(scene);
 
-
-    }
-    public void BackFromChangePasswordButtonPushed(ActionEvent actionEvent) throws IOException {
-        switchScene(actionEvent, "AdminAccount.fxml");
-
-
-    }
-
-    public void addNewPasswordButtonPushed(ActionEvent actionEvent){
-
-        String password1 = newPasswordTextField.getText();
-
-        String password2 = confirmNewPasswordField.getText();
-        if (adminManager.addNewPassWord(password1,password2, admin)){
-            resultOfPasswordChangeLabel.setText(adminAccountPresenter.newPasswordCreated());
-        }
-        else {
-            resultOfPasswordChangeLabel.setText(adminAccountPresenter.newPasswordNotSaved());
-        }
+        window.showAndWait();
 
 
     }
 
-    public void addNewAdminButtonPushed(ActionEvent actionEvent){
-
-        String newUsername = newAdminUserNameTextField.getText();
-
-        String newPassword = newAdminPasswordTextField.getText();
-        if(userManager.isValidUser(newUsername)){
-            resultOfCreationLabel.setText(adminAccountPresenter.AdminCreationFailed());
-        }
-        else {
-            try {
-                adminManager.addAdmin(newUsername, newPassword);
-                resultOfCreationLabel.setText(adminAccountPresenter.newAdminCreated());
-            }
-            catch (InvalidUsernameException e) {
-                resultOfCreationLabel.setText(adminAccountPresenter.AdminCreationFailed());
-            }
-        }
-
-
-    }
 
 
 
@@ -143,6 +111,23 @@ public class AdminAccountController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        changePassWordButton.setText("Change your password");
+        adminCreationButton.setText("Add a new admin account");
+        changePassWordButton.setOnAction(e -> {
+            try {
+                ChangePassWordButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        adminCreationButton.setText("Add a new admin account");
+        adminCreationButton.setOnAction(e -> {
+            try {
+                AdminCreationButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
 
 
 
