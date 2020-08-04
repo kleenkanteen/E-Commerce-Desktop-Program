@@ -40,8 +40,6 @@ public class AdminAccountController implements Initializable {
 
     private AdminAccountPresenter adminAccountPresenter;
 
-
-
     private UserManager userManager;
 
     private AdminManager adminManager;

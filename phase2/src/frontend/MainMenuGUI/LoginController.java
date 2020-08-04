@@ -5,6 +5,8 @@ import controllers.BannedUserController;
 import controllers.DemoUserController;
 import controllers.UserMenu;
 import exceptions.InvalidUsernameException;
+import frontend.UserGUI.UserMenuGUI;
+import frontend.AdminGUI.AdminController;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Node;
@@ -34,6 +36,12 @@ public class LoginController implements Initializable {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
 
+    private final String userMenuGUIFile = "src/frontend/UserGUI/UserMenuGUI.fxml";
+    private final String adminMenuGUIFile = "src/frontend/AdminGUI/AdminMenu.fxml";
+
+    private enum OpenMenu {
+        USER_MENU, ADMIN_MENU, DEMO_MENU
+    }
     public LoginController(String type, UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
                            GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager){
         this.type = type;
@@ -45,9 +53,9 @@ public class LoginController implements Initializable {
     }
 
     // code for method changeScreenButtonPushed is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
-    public void changeScreenButtonPushed(ActionEvent actionEvent)  {
-        try {
-            Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
+    private void changeScreenButtonPushed(ActionEvent actionEvent)  {
+       /* try {
+           Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
             Scene mainMenuScene = new Scene(mainMenuParent);
 
             Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -58,6 +66,37 @@ public class LoginController implements Initializable {
             // TODO: print error pop up or something
             errorMessage.setText("File you are returning to was not found");
         }
+
+          */
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.close();
+    }
+
+    // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
+
+    private void goToOtherScene(String otherScene, String MenuToOpen, String username) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
+
+        if (MenuToOpen.equals("USER_MENU")) {
+            loader.setController(new UserMenuGUI(username, userManager, tradeManager,
+                    globalInventoryManager, globalWishlistManager, adminManager));
+        }
+
+       if (MenuToOpen.equals("ADMIN_MENU")) {
+            loader.setController(new AdminController(adminManager.getAdmin(username), adminManager,
+                    userManager, globalInventoryManager, tradeManager));
+        }
+
+       /* if (MenuToOpen.equals("DEMO_MENU")) {
+            loader.setController(new UserMenuGUI(selectedOption.name(), userManager, tradeManager, adminManager,
+                    globalInventoryManager, globalWishlistManager));
+        */
+
+        Stage window = new Stage();
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        window.setScene(scene);
+        window.show();
     }
 
     @Override
@@ -68,7 +107,13 @@ public class LoginController implements Initializable {
 
         if(type.equals("USER_LOGIN")){
             loginButton.setText("Log In");
-            loginButton.setOnAction(e -> userLogin());
+            loginButton.setOnAction(e -> {
+                try {
+                    userLogin();
+                } catch (IOException ioException) {
+                    errorMessage.setText("Failed to log in.");
+                }
+            });
         }
         else if(type.equals("USER_SIGNUP")){
             loginButton.setText("Sign Up");
@@ -76,7 +121,13 @@ public class LoginController implements Initializable {
         }
         else if(type.equals("ADMIN_LOGIN")){
             loginButton.setText("Log In");
-            loginButton.setOnAction(e -> adminLogin());
+            loginButton.setOnAction(e -> {
+                try {
+                    adminLogin();
+                } catch (IOException ioException) {
+                    errorMessage.setText("Failed to log in.");
+                }
+            });
         }
         else {
             loginButton.setText("Log In");
@@ -84,14 +135,12 @@ public class LoginController implements Initializable {
         }
     }
 
-    private void userLogin(){
+    private void userLogin() throws IOException {
         String username = this.username.getText();
         String password = this.password.getText();
         if(userManager.login(username, password)) {
             if (!userManager.getUserIsBanned(username)) {
-                UserMenu userMenu = new UserMenu(username, userManager, tradeManager, globalInventoryManager,
-                        globalWishlistManager, adminManager);
-                userMenu.run();
+                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username);
             }
             else {
                 BannedUserController bannedUserController = new BannedUserController(username, adminManager);
@@ -105,27 +154,22 @@ public class LoginController implements Initializable {
         try {
             String username = this.username.getText();
             String password = this.password.getText();
-
-            boolean d =(userManager.isValidUser(username) && !adminManager.userExist(username));
-            if (!d) errorMessage.setText("Username too short, taken or invalid.");
-            else {
-                userManager.createNewUser(username, password);
-                errorMessage.setText("New account successfully created");
-            }
+                if (userManager.createNewUser(username, password) && !adminManager.userExist(username)) {
+                    errorMessage.setText("New account successfully created");
+                }
+                else errorMessage.setText("Your username is taken or invalid, try again.");
         }
         catch (InvalidUsernameException f){
             errorMessage.setText("Your username is taken or invalid, try again.");
         }
     }
 
-    private void adminLogin(){
+    private void adminLogin() throws IOException {
         String username = this.username.getText();
         String password = this.password.getText();
 
         if ((adminManager.login(username, password))) {
-            AdminSystem successfulLogin = new AdminSystem(adminManager.getAdmin(username), adminManager, userManager,
-                    globalInventoryManager, tradeManager);
-            successfulLogin.run();
+            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username);
         }
         else errorMessage.setText("Wrong login, try again.");
     }

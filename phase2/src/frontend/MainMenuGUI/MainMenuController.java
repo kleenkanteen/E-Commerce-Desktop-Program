@@ -57,35 +57,33 @@ public class MainMenuController implements Initializable {
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
-    public void goToOtherScene(ActionEvent actionEvent, String otherScene, SelectedOption selectedOption) throws IOException {
+    public void goToOtherScene(String otherScene, SelectedOption selectedOption) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
         loader.setController(new LoginController(selectedOption.name(), userManager, tradeManager, adminManager,
                 globalInventoryManager, globalWishlistManager));
 
-        Parent parent = loader.load();
-        Scene scene = new Scene(parent);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
+        Stage window = new Stage();
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
         window.setScene(scene);
         window.show();
     }
 
-    public void userLoginButtonPressed (ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile, SelectedOption.USER_LOGIN); //change to enum
+    public void userLoginButtonPressed () throws IOException {
+        goToOtherScene(loginFXMLFile, SelectedOption.USER_LOGIN); //change to enum
     }
 
-    public void userSignUpButtonPressed(ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile, SelectedOption.USER_SIGNUP);
+    public void userSignUpButtonPressed() throws IOException {
+        goToOtherScene(loginFXMLFile, SelectedOption.USER_SIGNUP);
     }
 
-    public void adminLoginButtonPressed(ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile, SelectedOption.ADMIN_LOGIN);
+    public void adminLoginButtonPressed() throws IOException {
+        goToOtherScene(loginFXMLFile, SelectedOption.ADMIN_LOGIN);
     }
 
-    public void programDemoButtonPressed(ActionEvent actionEvent) throws IOException {
-        goToOtherScene(actionEvent, loginFXMLFile,SelectedOption.DEMO_LOGIN);
+    public void programDemoButtonPressed() throws IOException {
+        goToOtherScene(loginFXMLFile,SelectedOption.DEMO_LOGIN);
     }
 
     // code for method closeButtonIsPushed is similar to: https://www.youtube.com/watch?v=i4Fk10U7Sks
