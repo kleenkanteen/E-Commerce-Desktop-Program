@@ -50,17 +50,13 @@ public class MainMenuController implements Initializable {
     GlobalWishlistGateway globalWishlistGateway;
     AdminMessageGateway adminMessageGateway;
 
-    private enum SelectedOption {
-        USER_LOGIN, USER_SIGNUP, ADMIN_LOGIN, DEMO_LOGIN
-    }
-
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
     public void goToOtherScene(String otherScene, SelectedOption selectedOption) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
-        loader.setController(new LoginController(selectedOption.name(), userManager, tradeManager, adminManager,
+        loader.setController(new LoginController(selectedOption, userManager, tradeManager, adminManager,
                 globalInventoryManager, globalWishlistManager));
 
         Stage window = new Stage();

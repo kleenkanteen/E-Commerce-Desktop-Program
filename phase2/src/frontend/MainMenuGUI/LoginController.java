@@ -22,13 +22,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    @FXML TextField username;
-    @FXML TextField password;
-    @FXML Button loginButton;
-    @FXML Button exitButton;
-    @FXML Label errorMessage;
+    @FXML private TextField username;
+    @FXML private TextField password;
+    @FXML private Button loginButton;
+    @FXML private Button exitButton;
+    @FXML private Label errorMessage;
 
-    private String type; //change to ENUM
+    private SelectedOption type; //change to ENUM
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
     private UserManager userManager;
     private TradeManager tradeManager;
@@ -36,13 +36,13 @@ public class LoginController implements Initializable {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
 
-    private final String userMenuGUIFile = "src/frontend/UserGUI/UserMenuGUI.fxml";
-    private final String adminMenuGUIFile = "src/frontend/AdminGUI/AdminMenu.fxml";
+    private final String userMenuGUIFile = "/frontend/UserGUI/UserMenuGUI.fxml";
+    private final String adminMenuGUIFile = "/frontend/AdminGUI/AdminMenu.fxml";
 
     private enum OpenMenu {
         USER_MENU, ADMIN_MENU, DEMO_MENU
     }
-    public LoginController(String type, UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
+    public LoginController(SelectedOption type, UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
                            GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager){
         this.type = type;
         this.userManager = userManager;
@@ -105,7 +105,7 @@ public class LoginController implements Initializable {
         exitButton.setText("Return to Main Menu");
         exitButton.setOnAction(e -> changeScreenButtonPushed(e));
 
-        if(type.equals("USER_LOGIN")){
+        if(type.equals(SelectedOption.USER_LOGIN)){
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
@@ -115,11 +115,11 @@ public class LoginController implements Initializable {
                 }
             });
         }
-        else if(type.equals("USER_SIGNUP")){
+        else if(type.equals(SelectedOption.USER_SIGNUP)){
             loginButton.setText("Sign Up");
             loginButton.setOnAction(e -> userSignUp());
         }
-        else if(type.equals("ADMIN_LOGIN")){
+        else if(type.equals(SelectedOption.ADMIN_LOGIN)){
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
