@@ -7,9 +7,19 @@ public class BannedUserPresenter {
                 "\n[2] Return to main menu.");
     }
 
-    public void unbanRequestSent() {
-        System.out.println("Unban request sent.");
+    public String unbanPrompt() {
+        return "You are banned. Would you like to request an unban?";
     }
+
+    public String unbanConfirm() {
+        return "Plead for mercy.";
+    }
+
+    public String unbanCancel() {
+        return "Cancel.";
+    }
+
+    public String unbanRequestSent() { return "Unban request sent."; }
 
     public void returningToMainMenu() {
         System.out.println("Returning you to main menu.");

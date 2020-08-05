@@ -59,7 +59,11 @@ public class AccountInfoMenu implements Initializable {
         TRADE_HISTORY, PASSWORD, TRADE_PARTNERS, RECENT_TRADES, INVENTORY, WISHLIST
     }
 
-    // set  button text when I get the presenter properly set
+    /**
+     * Sets up button text/functionality
+     * @param location ¯\_(ツ)_/¯
+     * @param resources ¯\_(ツ)_/¯
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set text
@@ -121,25 +125,40 @@ public class AccountInfoMenu implements Initializable {
         window.show();
     }
 
-    @FXML
+    /**
+     * Accesses tradeHistory menu
+     */
     public void viewTradeHistory() { }
 
-    @FXML
+    /**
+     * Accesses new password menu
+     */
     public void setNewPassword() { }
 
-    @FXML
+    /**
+     * Accesses trade Partners menu
+     */
     public void viewTradePartners() { }
 
-    @FXML
+    /**
+     * Accesses recent trades menu
+     */
     public void viewRecentTrades() { }
 
-    @FXML
+    /**
+     * Accesses viewInventory menu
+     */
     public void viewInventory() { }
 
-    @FXML
+    /**
+     * Accesses viewWishlist menu
+     */
     public void viewWishlist() { }
 
-    @FXML
+    /**
+     * Returns to main Menu
+     * @param actionEvent the ActionEvent object
+     */
     public void returnToMainMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();

@@ -36,6 +36,11 @@ public class PrivateMessageMenu implements Initializable {
     private UserManager userManager;
     private String currUser;
 
+    /**
+     * Constructs a new PrivateMessageMenu listener
+     * @param userManager the UserManager object
+     * @param currUser the currently logged in user
+     */
     public PrivateMessageMenu(UserManager userManager, String currUser) {
         this.userManager = userManager;
         this.userPresenter = new UserPresenter();
@@ -43,6 +48,11 @@ public class PrivateMessageMenu implements Initializable {
         this.currUser = currUser;
     }
 
+    /**
+     * Set up button functionality/text
+     * @param location ¯\_(ツ)_/¯
+     * @param resources ¯\_(ツ)_/¯
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set text
@@ -56,22 +66,37 @@ public class PrivateMessageMenu implements Initializable {
         this.cancel.setOnAction(this::returnToMenu);
     }
 
-    @FXML
+    /**
+     * Sends a private message
+     */
     public void sendMessage() {
         String user = this.usernameInput.getText();
-        // if the username is not in the system
-        if(!this.userManager.isValidUser(user)) {
+        // if either username/description not filled out
+        if(this.usernameInput.getLength() == 0 || this.messageInput.getLength() == 0) {
+            this.usernameError.setVisible(true);
+            this.confirmation.setVisible(false);
+            this.usernameError.setText(this.userPresenter.invalidMessageInput());
+        }
+        // if the username is not in the system and if the user is sending a message to themselves
+        else if(!this.userManager.isValidUser(user) && !user.equals(this.currUser)) {
+            this.usernameError.setVisible(true);
+            this.confirmation.setVisible(false);
             this.usernameError.setText(this.userPresenter.invalidUsername());
         }
         // otherwise
         else {
             this.userManager.addUserMessage(user,
                     this.messageBuilder.getPrivateMessage(this.messageInput.getText(), this.currUser));
+            this.usernameError.setVisible(false);
+            this.confirmation.setVisible(true);
             this.confirmation.setText(this.userPresenter.userPrivateMessageConfirmation());
         }
     }
 
-    @FXML
+    /**
+     * Return to main menu
+     * @param actionEvent the ActionEvent object
+     */
     public void returnToMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();

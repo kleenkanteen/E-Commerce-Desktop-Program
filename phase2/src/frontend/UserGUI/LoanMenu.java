@@ -39,6 +39,16 @@ public class LoanMenu implements Initializable {
     @FXML private Button confirmTrade;
     @FXML private Button denyTrade;
 
+    /**
+     * Instantiates a LoanMenu listener
+     * @param userInventory the UserInventory object
+     * @param itemsToLend the String list of [this user's item's itemID, recipient username]
+     * @param currUser the current user
+     * @param userManager the UserManager object
+     * @param tradeManager the TradeManager object
+     * @param globalWishlistManager the GlobalWishlistManager object
+     * @param globalInventoryManager the GlobalInventoryManager object
+     */
     public LoanMenu(List<Item> userInventory, List<String> itemsToLend, String currUser, UserManager userManager,
                     TradeManager tradeManager, GlobalWishlistManager globalWishlistManager,
                     GlobalInventoryManager globalInventoryManager) {
@@ -51,6 +61,11 @@ public class LoanMenu implements Initializable {
         this.globalInventoryManager = globalInventoryManager;
     }
 
+    /**
+     * Sets up button functionality/text
+     * @param location ¯\_(ツ)_/¯
+     * @param resources ¯\_(ツ)_/¯
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set text
@@ -67,6 +82,10 @@ public class LoanMenu implements Initializable {
         this.denyTrade.setOnAction(this::returnToMainMenu);
     }
 
+    /**
+     * Returns a list of an item in this user's inventory that someone else wants
+     * @return List of an Item
+     */
     private List<Item> setUpTradeOptions() {
         List<Item> userItem = new ArrayList<>();
         for(Item item : this.userInventory) {
@@ -77,12 +96,17 @@ public class LoanMenu implements Initializable {
         return userItem;
     }
 
-    @FXML
+    /**
+     * Brings up the trade request menu
+     */
     private void sendTradeRequest() {
         // trade controller call
     }
 
-    @FXML
+    /**
+     * Returns to the main menu
+     * @param actionEvent ActionEvent object
+     */
     private void returnToMainMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
