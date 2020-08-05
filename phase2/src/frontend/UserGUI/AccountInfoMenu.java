@@ -1,6 +1,7 @@
 package frontend.UserGUI;
 
-import javafx.application.Application;
+import frontend.UserGUI.AccountInfo.BrowseThroughUserCollection;
+import frontend.UserGUI.AccountInfo.NewPassword;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,12 +46,12 @@ public class AccountInfoMenu implements Initializable {
     private Type type;
 
     // .fxml pathways
-    private final String tradeHistoryFXML = "BrowseThroughUserTrades.fxml";
-    private final String passwordFXML = "";
+    private final String tradeHistoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserTrades.fxml";
+    private final String passwordFXML = "/frontend/UserGUI/AccountInfo/NewPasswordGUI.fxml";
     private final String tradePartnersFXML = "";
     private final String recentTradesFXML = "";
-    private final String inventoryFXML = "BrowseThroughUserInventory.fxml";
-    private final String wishlistFXML = "BrowseThroughUserWishlist.fxml";
+    private final String inventoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserInventory.fxml";
+    private final String wishlistFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserWishlist.fxml";
 
     /**
      * Constructs a new BrowseThroughUserInfo object
@@ -116,7 +117,7 @@ public class AccountInfoMenu implements Initializable {
                 break;
             // change password
             case PASSWORD:
-                // loader.setController(new Object());
+                loader.setController(new NewPassword(this.currUser, this.userManager));
                 break;
             // view trade partners
             case TRADE_PARTNERS:
@@ -167,17 +168,41 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses new password menu
      */
-    public void setNewPassword() { }
+    public void setNewPassword() {
+        try {
+            this.type = Type.PASSWORD;
+            switchScene(this.passwordFXML);
+        }
+        catch(IOException ex) {
+            this.systemMessage.setText("Input error in setNewPassword");
+        }
+    }
 
     /**
      * Accesses trade Partners menu
      */
-    public void viewTradePartners() { }
+    public void viewTradePartners() {
+        try {
+            this.type = Type.TRADE_PARTNERS;
+            switchScene(this.tradePartnersFXML);
+        }
+        catch(IOException ex) {
+            this.systemMessage.setText("Input error in viewTradePartners");
+        }
+    }
 
     /**
      * Accesses recent trades menu
      */
-    public void viewRecentTrades() { }
+    public void viewRecentTrades() {
+        try {
+            this.type = Type.RECENT_TRADES;
+            switchScene(this.recentTradesFXML);
+        }
+        catch(IOException ex) {
+            this.systemMessage.setText("Input error in viewRecentTrades");
+        }
+    }
 
     /**
      * Accesses viewInventory menu

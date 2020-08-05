@@ -1,4 +1,4 @@
-package frontend.UserGUI;
+package frontend.UserGUI.AccountInfo;
 
 import entities.PermTrade;
 import javafx.event.ActionEvent;

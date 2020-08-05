@@ -1,9 +1,8 @@
 package frontend.UserGUI;
 
-import controllers.GlobalInventoryController;
 import exceptions.UserFrozenException;
 import frontend.MessageReplySystem.UserMessageReplyGUI;
-import javafx.application.Application;
+import frontend.UserGUI.AccountInfo.BrowseThroughUserCollection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +14,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.Scanner;
 
 import presenters.UserPresenter;
 import use_cases.*;
