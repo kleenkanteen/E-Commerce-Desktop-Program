@@ -58,7 +58,7 @@ public class DemoUserMenuGUI  implements Initializable {
         logout.setText(demoUserPresenter.exit());
 
         accountInfo.setOnAction(e -> getAccountInfo(e));
-        globalInventory.setOnAction(e -> getGlobalInventory(e));
+        globalInventory.setOnAction(e-> getGlobalInventory(e));
         loanItem.setOnAction(e -> getLoanMenu(e));
         messageInbox.setOnAction(e -> getInbox(e));
         newItem.setOnAction(e -> getNewItemMenu(e));
@@ -84,26 +84,26 @@ public class DemoUserMenuGUI  implements Initializable {
     @FXML
     public void getGlobalInventory(ActionEvent event) {
         //test
-//        try {
-//            this.type = Type.GLOBAL_INVENTORY;
-//            switchScene(this.globalInventoryFXML);
-//        }
-//        catch(IOException ex) {
-//            // some kind of error message
-//        }
+        try {
+            this.type = Type.GLOBAL_INVENTORY;
+            switchScene(this.globalInventoryFXML);
+        }
+        catch(IOException ex) {
+            // some kind of error message
+        }
 
-        if(!this.globalInventoryManager.hasNoItem()) {
-            try {
-                this.type = Type.GLOBAL_INVENTORY;
-                switchScene(this.globalInventoryFXML);
-            }
-            catch(IOException ex) {
-                // some kind of error message
-            }
-        }
-        else {
-            this.systemMessage.setText(this.demoUserPresenter.emptyglobalinventory());
-        }
+//        if(!this.globalInventoryManager.hasNoItem()) {
+//            try {
+//                this.type = Type.GLOBAL_INVENTORY;
+//                switchScene(this.globalInventoryFXML);
+//            }
+//            catch(IOException ex) {
+//                // some kind of error message
+//            }
+//        }
+//        else {
+//            this.systemMessage.setText(this.demoUserPresenter.emptyglobalinventory());
+//        }
     }
 
     // switch to the loan menu scene

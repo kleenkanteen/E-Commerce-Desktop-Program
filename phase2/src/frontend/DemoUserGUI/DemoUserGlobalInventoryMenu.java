@@ -24,9 +24,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DemoUserGlobalInventoryMenu implements Initializable {
-
+    DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
     GlobalInventoryManager globalInventoryManager;
     DemoUserManager demoUserManager;
+    String DemoUserTradeMenuFXML = "DemoUserTradeMenu.fxml";
 
     @FXML private TableView<Item> tableView;
     @FXML private TableColumn<Item, String> itemName;
@@ -41,35 +42,37 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
     public DemoUserGlobalInventoryMenu() {
     }
 
-    public DemoUserGlobalInventoryMenu(String username, String password, GlobalInventoryManager globalInventoryManager) {
-        this.demoUserManager = new DemoUserManager(username, password);
-        this.globalInventoryManager = globalInventoryManager;
-    }
+//    public DemoUserGlobalInventoryMenu(String username, String password, GlobalInventoryManager globalInventoryManager) {
+//        this.demoUserManager = new DemoUserManager(username, password);
+//        this.globalInventoryManager = globalInventoryManager;
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        itemName.setText("Item Name");
-        itemOwner.setText("Item Owner");
-        itemDescription.setText("Item Description");
-        addToWishlist.setText("Add to wish-list");
-        trade.setText("Send a trade request");
-        exit.setText("exit");
+        itemName.setText(demoUserPresenter.itemName());
+        itemOwner.setText(demoUserPresenter.itemOwner());
+        itemDescription.setText(demoUserPresenter.itemDescription());
+        addToWishlist.setText(demoUserPresenter.addToWishlist());
+        trade.setText(demoUserPresenter.sendTradeReqeust());
+        exit.setText(demoUserPresenter.menuPromptExit());
 
         itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
         itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
         itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
+        tableView.setOnMouseClicked(e -> selected(e));
         //load data
         tableView.setItems(getItem());
-//        addToWishlist.setOnAction();
+        addToWishlist.setOnAction(e -> addToWishlist(e));
         exit.setOnAction(e -> exit(e));
+        trade.setOnAction(e->tradeMenu(e));
 
         //TODO set action for addToWishList buttom and send a trade reqeust buttom
         //TODO add "please select a item label, and separate the presenter
     }
     public void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
-        loader.setController(new Object());// call trademenu
+        loader.setController(new DemoUserTradeMenu());// call trademenu
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
@@ -95,10 +98,33 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
     public void selected(javafx.scene.input.MouseEvent mouseEvent) {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null){
-            message.setText("No item selected");
+            message.setText(demoUserPresenter.noItemSelected());
         }
         else {
-            message.setText(itemselected.getName() + " is selected! \nWhat do you want to do with this item?");
+            message.setText(demoUserPresenter.whatToDo(itemselected));
+        }
+    }
+
+    public void addToWishlist(ActionEvent event){
+        Item itemselected = tableView.getSelectionModel().getSelectedItem();
+        if (itemselected == null) {
+            message.setText(demoUserPresenter.noItemSelected());
+            demoUserManager.addDemoWishlist(itemselected);
+        }
+        else message.setText(demoUserPresenter.addedToWishlist(itemselected));
+
+    }
+
+    public void tradeMenu(ActionEvent event) {
+        Item itemselected = tableView.getSelectionModel().getSelectedItem();
+        if (itemselected == null) {
+            message.setText(demoUserPresenter.noItemSelected());
+        } else {
+            try {
+                switchScene(this.DemoUserTradeMenuFXML);
+            }
+            catch (IOException ex) {
+            }
         }
     }
 

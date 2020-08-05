@@ -1,5 +1,7 @@
 package frontend.DemoUserGUI;
 
+import entities.Item;
+
 public class DemoUserfxPresenter {
 
     public DemoUserfxPresenter() {
@@ -93,5 +95,37 @@ public class DemoUserfxPresenter {
 
     public String menuPromptExit() {
         return "Exit";
+    }
+
+    public String createAcc(){
+        return "Please create an account to request a real trade.";
+    }
+
+    public String itemName(){
+        return "Item Name";
+    }
+
+    public String itemOwner(){
+        return "Item Owner";
+    }
+    public String itemDescription(){
+        return "Item Description";
+    }
+    public String addToWishlist(){
+        return"Add to wish-list";
+    }
+    public String sendTradeReqeust(){
+        return "Send a trade request";
+    }
+
+    public String noItemSelected(){
+        return "No item selected";
+    }
+
+    public String addedToWishlist(Item item){
+        return item.getName() + " is added to your wish-list";
+    }
+    public String whatToDo(Item item){
+        return item.getName() + " is selected! \nWhat do you want to do with this item?";
     }
 }

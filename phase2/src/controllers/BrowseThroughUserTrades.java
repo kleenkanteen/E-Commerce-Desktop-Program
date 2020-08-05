@@ -27,7 +27,7 @@ public class BrowseThroughUserTrades {
      * Run the BrowseThroughUserTrades controller
      */
     public void run() {
-        List<Trade> userTrades = tradeManager.getTradeHistory(this.currUser);
+        List<Trade> userTrades = this.tradeManager.getTradeHistory(this.currUser);
         int index = 0;
         Scanner input = new Scanner(System.in);
         String userTradeInput = "";

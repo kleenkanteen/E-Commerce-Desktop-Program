@@ -2,6 +2,7 @@ package frontend.UserGUI;
 
 import controllers.GlobalInventoryController;
 import exceptions.UserFrozenException;
+import frontend.MessageReplySystem.UserMessageReplyGUI;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 import presenters.UserPresenter;
 import use_cases.*;
@@ -24,6 +28,7 @@ import entities.*;
 
 public class UserMenuGUI implements Initializable {
 
+    // JavaFX stuff
     @FXML private Button accountInfo;
     @FXML private Button globalInventory;
     @FXML private Button loanItem;
@@ -34,6 +39,7 @@ public class UserMenuGUI implements Initializable {
     @FXML private Button logout;
     @FXML private Label systemMessage;
 
+    // instance variables
     private String currUser;
     private AdminManager adminManager;
     private UserPresenter userPresenter;
@@ -42,16 +48,22 @@ public class UserMenuGUI implements Initializable {
     private GlobalWishlistManager globalWishlistManager;
     private TradeManager tradeManager;
     private MessageBuilder messageBuilder;
+    String[] errorMessages = {" ", " ", " "};
+    List<Trade> incompletes;
+    String errorMessage;
+    private Type type;
 
+    // FXML locations
     private final String accountFXML = "AccountInfoGUI.fxml";
     private final String loanFXML = "LoanMenuGUI.fxml";
     private final String privateMessageFXML = "PrivateMessageMenuGUI.fxml";
     private final String newItemFXML = "NewItemMenuGUI.fxml";
     private final String globalInventoryFXML = "";
-    private final String userMessagesFXML = "";
+    private final String userMessagesFXML = "/frontend/MessageReplySystem/MessageGUI.fxml";
+    private final String unconfirmedTradesFXML = "UnconfirmedTradesPopUp.fxml";
+    private final String userStatusFXML = "UserStatusPopUpGUI.fxml";
+    private final String errorAlertFXML = "userStatusPopUpGUI.fxml";
     private final String userFXML = "UserMenuGUI.fxml";
-
-    private Type type;
 
     /**
      * Instantiates a new UserMenu instance
@@ -73,16 +85,27 @@ public class UserMenuGUI implements Initializable {
         this.adminManager = adminManager;
         this.userPresenter = new UserPresenter();
         this.messageBuilder = new MessageBuilder();
+        this.incompletes = this.tradeManager.tradesToConfirm(this.currUser);
     }
 
+    /**
+     * The ENUM values for UserMenu
+     */
     enum Type {
-        ACCOUNT_INFO, GLOBAL_INVENTORY, USER_MESSAGES, LOAN_MENU, NEW_ITEM, PRIVATE_MESSAGES
+        ACCOUNT_INFO, GLOBAL_INVENTORY, USER_MESSAGES, LOAN_MENU, NEW_ITEM, PRIVATE_MESSAGES,
+        UNCONFIRMED_TRADES, USER_STATUS_FROZEN, USER_STATUS_NOT_FROZEN, ERROR
     }
 
-    // set up button text here when I get around to setting up the presenter properly
+    /**
+     * Sets up button functionality/labels and calls getUserStatus, brings up unconfirmedTradesMenu
+     * @param location the location? idk
+     * @param resources ¯\_(ツ)_/¯
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // call getUserStatus/confirmIncompleteUserTrades here?
+        confirmIncompleteUserTrades();
+        checkUserStatus();
 
         // set button text
         this.accountInfo.setText(this.userPresenter.userMenuPromptAccountInfo());
@@ -106,14 +129,15 @@ public class UserMenuGUI implements Initializable {
     }
 
     /**
-     * Switches the scene being viewed
-     * @param filename the filename of the .fxml file to be loaded
-     * @throws IOException for a funky input
+     * Switches the scene being viewed via this.type (enum)
+     * @param filename the FXML file path (set as final above)
+     * @throws IOException for funky input errors
      */
     public void switchScene(String filename) throws IOException {
+        // instantiate the FXMLLoader
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
-        // access account info
         switch (this.type) {
+            // access account info
             case ACCOUNT_INFO:
                 loader.setController(new AccountInfoMenu(this.currUser, this.userManager, this.tradeManager,
                         this.globalInventoryManager, this.globalWishlistManager));
@@ -131,7 +155,8 @@ public class UserMenuGUI implements Initializable {
                 break;
             // access user messages
             case USER_MESSAGES:
-                // loader.setController(new Object());
+                loader.setController(new UserMessageReplyGUI(this.adminManager, this.globalInventoryManager,
+                        this.tradeManager, this.userManager, this.currUser));
                 break;
             // access new item menu
             case NEW_ITEM:
@@ -141,7 +166,23 @@ public class UserMenuGUI implements Initializable {
             case PRIVATE_MESSAGES:
                 loader.setController(new PrivateMessageMenu(this.userManager, this.currUser));
                 break;
+            // access unconfirmed trades menu
+            case UNCONFIRMED_TRADES:
+                loader.setController(new BrowseThroughUserCollection(this.currUser, this.tradeManager,
+                        this.globalWishlistManager, this.incompletes));
+                break;
+            // pop up for user frozen status
+            case USER_STATUS_FROZEN:
+                loader.setController(new UserStatusPopUp());
+                break;
+            // pop up for user failing to meet certain criteria (too many trades, borrows v loans, etc.)
+            case USER_STATUS_NOT_FROZEN:
+                loader.setController(new UserStatusPopUp(this.errorMessages));
+                break;
+            case ERROR:
+                loader.setController(new ErrorPopUp(this.errorMessage));
         }
+        // set up the scene and open up a new window
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
@@ -149,18 +190,22 @@ public class UserMenuGUI implements Initializable {
         window.show();
     }
 
-    // switch to the Account info menu scene
+    /**
+     * Open up the accountInfoMenu via switchScene
+     */
     public void getAccountInfo() {
         try {
             this.type = Type.ACCOUNT_INFO;
             switchScene(this.accountFXML);
         }
         catch (IOException ex) {
-            // some kind of error message?
+            this.systemMessage.setText("IOException in getAccountInfo");
         }
     }
 
-    // switch to the GlobalInventory scene
+    /**
+     * Open up the globalInventory Scene via switchScene
+     */
     public void getGlobalInventory() {
         if(!this.globalInventoryManager.hasNoItem()) {
 
@@ -169,7 +214,7 @@ public class UserMenuGUI implements Initializable {
                 switchScene(this.globalInventoryFXML);
             }
             catch(IOException ex) {
-                // some kind of error message
+                this.systemMessage.setText("IOException in getGlobalInventory");
             }
         }
         else {
@@ -177,12 +222,14 @@ public class UserMenuGUI implements Initializable {
         }
     }
 
-    // switch to the loan menu scene
+    /**
+     * Switch to the loan menu scene
+     */
     public void getLoanMenu() {
         // get this user's inventory, the user that wants something and the item that this user wants
         List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         List<String> itemsToLend = this.globalWishlistManager.userWhoWants(userInventory);
-        // check to see if they have anything in it
+        // check to see if they have anything in their inventory
         if(userInventory.size() == 0) {
             // set a label to this text
             this.systemMessage.setText(this.userPresenter.emptyPersonalInventoryWhileLoaning());
@@ -202,7 +249,7 @@ public class UserMenuGUI implements Initializable {
                         switchScene(this.loanFXML);
                     }
                     catch(IOException ex) {
-                        // some error message idk
+                        this.systemMessage.setText("IOException in getLoanMenu");
                     }
 
                 }
@@ -214,21 +261,35 @@ public class UserMenuGUI implements Initializable {
         }
     }
 
-    // switch to the user message system scene
-    public void getInbox() { }
+    /**
+     * Switch to the UserMessageResponse whatever window via switchScene
+     */
+    public void getInbox() {
+        try  {
+            this.type = Type.USER_MESSAGES;
+            switchScene(this.userMessagesFXML);
+        }
+        catch(IOException ex) {
+            this.systemMessage.setText("IOException in getInbox");
+        }
+    }
 
-    // switch to the new item scene
+    /**
+     * Switch to the newItemMenu window via switchScene
+     */
     public void getNewItemMenu() {
         try {
             this.type = Type.NEW_ITEM;
             switchScene(this.newItemFXML);
         }
         catch (IOException ex) {
-            // some error message
+            this.systemMessage.setText("IOException in getNewItemMenu");
         }
     }
 
-    // switch to the unfreeze request scene
+    /**
+     * Allow for unfreeze request sending
+     */
     public void getUnfreezeRequest() {
         if(this.userManager.getUserFrozenStatus(this.currUser)) {
             List<Message> adminMessages = this.adminManager.getAdminMessages();
@@ -242,18 +303,99 @@ public class UserMenuGUI implements Initializable {
         }
     }
 
-    // switch to the private message sending scene
+    /**
+     * Open up the PrivateMessageMenu via switchScene
+     */
     public void getPrivateMessageMenu() {
         try {
             this.type = Type.PRIVATE_MESSAGES;
             switchScene(this.privateMessageFXML);
         }
         catch (IOException ex) {
-            // some kind of error message?
+            this.systemMessage.setText("IOException in getPrivateMessageMenu");
         }
     }
 
-    // exit
+    /**
+     * Checks on a user's trade status
+     */
+    private void checkUserStatus() {
+        boolean tooManyIncomplete = false;
+        boolean tooManyBorrowVLoan = false;
+        boolean tooManyTrades = false;
+        // check to see if this user is frozen
+        if (!this.userManager.getUserFrozenStatus(this.currUser)) {
+            // check num of incomplete trades
+            if(this.tradeManager.tradesToConfirm(this.currUser).size() >=
+                    this.userManager.getUserIncompleteTrades(this.currUser)) {
+                this.errorMessages[0] = this.userPresenter.tooManyIncompleteTrades();
+                tooManyIncomplete = true;
+            }
+            // check num of borrows v. loans
+            if((this.tradeManager.getBorrowedTimes(this.currUser) - this.tradeManager.getLendTimes(this.currUser)) >
+                    this.userManager.getUserThreshold(this.currUser)) {
+                this.errorMessages[1] = this.userPresenter.tooManyBorrowsVLoans(
+                        this.tradeManager.getBorrowedTimes(this.currUser) -
+                                this.tradeManager.getLendTimes(this.currUser));
+                tooManyBorrowVLoan = true;
+            }
+            // check num of trades
+            if(tradeManager.numberOfTradesCreatedThisWeek(this.currUser) >=
+                    this.userManager.getTradesPerWeekForUser(this.currUser)) {
+                this.errorMessages[2] = this.userPresenter.tooManyTradesThisWeek();
+                tooManyTrades = true;
+            }
+            // if too many incompletes or too many borrows, request Freeze of this account
+            if(tooManyIncomplete || tooManyBorrowVLoan) {
+                List<Message> adminMessages = this.adminManager.getAdminMessages();
+                adminMessages.add(this.messageBuilder.getFreezeRequest("User " + this.currUser +
+                        " should have their account frozen.", this.currUser));
+                this.adminManager.setAdminMessages(adminMessages);
+            }
+            // if any possible errors are true, bring up a pop up
+            if(tooManyIncomplete || tooManyBorrowVLoan || tooManyTrades) {
+                try {
+                    this.type = Type.USER_STATUS_NOT_FROZEN;
+                    switchScene(this.userStatusFXML);
+                }
+                catch(IOException ex) {
+                    this.systemMessage.setText("IOException in checkUserStatus NOT frozen if branch");
+                }
+            }
+        }
+        // if the user is already frozen
+        else {
+            try {
+                this.type = Type.USER_STATUS_FROZEN;
+                switchScene(this.userStatusFXML);
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("IOException in checkUserStatus FROZEN if branch");
+            }
+        }
+    }
+
+    /**
+     * Allows a user to confirm their incomplete trades.
+     */
+    private void confirmIncompleteUserTrades() {
+        // check to make sure that the user has unconfirmed trades
+        if (this.incompletes.size() != 0) {
+            // instantiate unconfirmed trades
+            try {
+                this.type = Type.UNCONFIRMED_TRADES;
+                switchScene(this.unconfirmedTradesFXML);
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("IOException in confirmIncompleteUserTrades");
+            }
+        }
+    }
+
+    /**
+     * Close the UserMenu window
+     * @param actionEvent the ActionEvent object
+     */
     public void logoff(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();

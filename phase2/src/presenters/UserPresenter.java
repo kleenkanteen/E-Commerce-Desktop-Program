@@ -115,15 +115,15 @@ public class UserPresenter {
     }
 
     public String menuPromptRemove() {
-        return "Remove this Item";
+        return "Remove";
     }
 
     public String menuPromptNext() {
-        return "Go to next item";
+        return "Next";
     }
 
     public String menuPromptPrevious() {
-        return "Return to the previous item";
+        return "Previous";
     }
 
     public String menuPromptExit() {
@@ -160,6 +160,10 @@ public class UserPresenter {
         return "Reached the end of your wishlist.";
     }
 
+    public String endOfUserCollection() {
+        return "You have reached the end of this menu.";
+    }
+
     /**
      * Prints that a collection (inventory, wishlist, etc.) is empty
      * @param collection the collection name
@@ -179,7 +183,7 @@ public class UserPresenter {
      * Prompt for too many incomplete trades.
      */
     public String tooManyIncompleteTrades() {
-        return "You have too many incomplete trades.\n";
+        return "You have too many incomplete trades, \nand your account has been requested to be frozen.";
     }
 
     /**
@@ -187,7 +191,7 @@ public class UserPresenter {
      * @param difference the difference of borrows - loans
      */
     public String tooManyBorrowsVLoans(int difference) {
-        return "You have " + difference +  " more borrows than loans!\n";
+        return "You have " + difference +  " more borrows than loans! \nYour account has been requested to be frozen.";
     }
 
     /**
@@ -284,6 +288,10 @@ public class UserPresenter {
 
     public String denyMeetingPrompt() {
         return "This meeting did not happen";
+    }
+
+    public String unconfirmedMeetingAllDone() {
+        return "All unconfirmed trades addressed. You can exit now.";
     }
 
     /**
@@ -428,6 +436,10 @@ public class UserPresenter {
 
     public String invalidUsername() {
         return "This is not a valid username, please try again.";
+    }
+
+    public String invalidMessageInput() {
+        return "Please fill out both username and description inputs.";
     }
 
     public String tradeOfferCreationCancelled() {

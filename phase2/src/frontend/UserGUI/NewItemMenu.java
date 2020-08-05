@@ -36,6 +36,11 @@ public class NewItemMenu implements Initializable {
     @FXML private Label errorMessage;
     @FXML private Label confirmation;
 
+    /**
+     * Constructs a new NewItemMenu listener
+     * @param currUser the current user
+     * @param adminManager the AdminManager object
+     */
     public NewItemMenu(String currUser, AdminManager adminManager) {
         this.currUser = currUser;
         this.adminManager = adminManager;
@@ -43,6 +48,11 @@ public class NewItemMenu implements Initializable {
         this.userPresenter = new UserPresenter();
     }
 
+    /**
+     * Sets up the button functionality/lables
+     * @param location ¯\_(ツ)_/¯
+     * @param resources ¯\_(ツ)_/¯
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set text
@@ -56,12 +66,16 @@ public class NewItemMenu implements Initializable {
         this.cancel.setOnAction(this::returnToMainMenu);
     }
 
-    @FXML
+    /**
+     * Handles the new item request sending
+     */
     public void sendNewItemRequest() {
         String itemName = this.nameInput.getText();
         String itemDescription = this.descriptionInput.getText();
         // if user input is wack
         if(itemName.length() == 0 || itemDescription.length() == 0) {
+            this.errorMessage.setVisible(true);
+            this.confirmation.setVisible(false);
             this.errorMessage.setText("Please fill out both the name and description inputs.");
         }
         // if user correctly filled out inputs
@@ -73,11 +87,16 @@ public class NewItemMenu implements Initializable {
             this.adminManager.setAdminMessages(adminMessages);
             this.userPresenter.newItemMessageSentToAdmin();
             // tell user that it is safe to exit now
+            this.errorMessage.setVisible(false);
+            this.confirmation.setVisible(true);
             this.confirmation.setText(this.userPresenter.newItemMessageSentToAdmin());
         }
     }
 
-    @FXML
+    /**
+     * Handles returning to main menu
+     * @param actionEvent the ActionEvent object
+     */
     public void returnToMainMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();

@@ -41,7 +41,7 @@ public class BrowseThroughUserInventory {
             // prompt user on what to do with this item
             this.userPresenter.userInventoryPrompts();
             userInventoryInput = input.nextLine();
-            // remove the item from the global inventory and the personal inventory
+            // remove the item from the global inventory
             if(userInventoryInput.equals("1")) {
                 this.globalInventoryManager.removeItem(userInventory.get(index).getItemID());
                 userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
