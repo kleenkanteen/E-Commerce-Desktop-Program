@@ -67,6 +67,10 @@ public class MessageReplyPresenter {
         return "Success";
     }
 
+    public String error(){
+        return "Error";
+    }
+
 
 
     //-------------------Report System-----------------------//
@@ -93,4 +97,6 @@ public class MessageReplyPresenter {
     public String reportSuccess(){
         return "Your report has been sent to the Admin.";
     }
+
+    //--------------------
 }
