@@ -9,16 +9,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import presenters.UserPresenter;
 import use_cases.*;
 import entities.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AccountInfoMenu implements Initializable {
 
+    // JavaFX stuff
     @FXML private Button tradeHistory;
     @FXML private Button newPassword;
     @FXML private Button tradePartners;
@@ -26,15 +30,27 @@ public class AccountInfoMenu implements Initializable {
     @FXML private Button inventory;
     @FXML private Button wishlist;
     @FXML private Button exit;
+    @FXML private Label systemMessage;
 
+    // instance variables
     private String currUser;
     private UserManager userManager;
     private TradeManager tradeManager;
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
     private UserPresenter userPresenter;
-
+    List<Trade> userTrades;
+    List<Item> userInventory;
+    List<Item> userWishlist;
     private Type type;
+
+    // .fxml pathways
+    private final String tradeHistoryFXML = "BrowseThroughUserTrades.fxml";
+    private final String passwordFXML = "";
+    private final String tradePartnersFXML = "";
+    private final String recentTradesFXML = "";
+    private final String inventoryFXML = "BrowseThroughUserInventory.fxml";
+    private final String wishlistFXML = "BrowseThroughUserWishlist.fxml";
 
     /**
      * Constructs a new BrowseThroughUserInfo object
@@ -76,7 +92,7 @@ public class AccountInfoMenu implements Initializable {
         this.exit.setText(this.userPresenter.menuPromptExit());
 
         // set button function
-        this.tradePartners.setOnAction(e -> viewTradeHistory());
+        this.tradeHistory.setOnAction(e -> viewTradeHistory());
         this.newPassword.setOnAction(e -> setNewPassword());
         this.tradePartners.setOnAction(e -> viewTradePartners());
         this.recentTrades.setOnAction(e -> viewRecentTrades());
@@ -95,7 +111,8 @@ public class AccountInfoMenu implements Initializable {
         switch(this.type) {
             // view trade history
             case TRADE_HISTORY:
-                // loader.setController(new Object());
+                loader.setController(new BrowseThroughUserCollection(this.userTrades,
+                        this.tradeManager, this.currUser));
                 break;
             // change password
             case PASSWORD:
@@ -111,11 +128,13 @@ public class AccountInfoMenu implements Initializable {
                 break;
             // view user inventory
             case INVENTORY:
-                // loader.setController(new Object());
+                loader.setController(new BrowseThroughUserCollection(this.userInventory,
+                        this.globalInventoryManager, this.currUser));
                 break;
             // view user wishlist
             case WISHLIST:
-                // loader.setController(new Object());
+                loader.setController(new BrowseThroughUserCollection(this.userWishlist, this.currUser,
+                        this.userManager, this.tradeManager, this.globalInventoryManager, this.globalWishlistManager));
                 break;
         }
         Parent root = loader.load();
@@ -128,7 +147,22 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses tradeHistory menu
      */
-    public void viewTradeHistory() { }
+    public void viewTradeHistory() {
+        this.userTrades = this.tradeManager.getTradeHistory(this.currUser);
+        // if nothing in trade history
+        if(this.userTrades.size() == 0) {
+            this.systemMessage.setText(this.userPresenter.isEmpty("trade history"));
+        }
+        else {
+            try {
+                this.type = Type.TRADE_HISTORY;
+                switchScene(this.tradeHistoryFXML);
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("Input error in viewTradeHistory");
+            }
+        }
+    }
 
     /**
      * Accesses new password menu
@@ -148,12 +182,50 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses viewInventory menu
      */
-    public void viewInventory() { }
+    public void viewInventory() {
+        this.userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
+        // check to see if the inventory populated
+        if(this.userInventory.size() == 0) {
+            this.systemMessage.setText(this.userPresenter.isEmpty("inventory"));
+        }
+        // if the inventory is populated
+        else {
+            try {
+                this.type = Type.INVENTORY;
+                switchScene(this.inventoryFXML);
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("Input error in viewInventory");
+            }
+        }
+    }
 
     /**
      * Accesses viewWishlist menu
      */
-    public void viewWishlist() { }
+    public void viewWishlist() {
+        // list of item ids
+        List<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
+        // check to see if wishlist is empty
+        if(userWishlistIDs.size() == 0) {
+            this.systemMessage.setText(this.userPresenter.isEmpty("wishlist"));
+        }
+        // if the wishlist is populated
+        else {
+            try {
+                // construct the user wishlist
+                this.userWishlist = new ArrayList<>();
+                for(String itemID : userWishlistIDs) {
+                    this.userWishlist.add(this.globalInventoryManager.getItemFromGI(itemID));
+                }
+                this.type = Type.WISHLIST;
+                switchScene(this.wishlistFXML);
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("Input error in viewWishlist");
+            }
+        }
+    }
 
     /**
      * Returns to main Menu

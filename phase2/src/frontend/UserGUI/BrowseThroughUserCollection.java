@@ -33,29 +33,18 @@ public class BrowseThroughUserCollection implements Initializable {
     private GlobalWishlistManager globalWishlistManager;
     private UserPresenter userPresenter;
     private int index;
-
     private Type type;
 
-    // universal label
     @FXML private Label viewItem;
     @FXML private Label systemMessage;
-
-    // unconfirmed trades label
     @FXML private Label unconfirmedTradesPrompt;
     @FXML private Label allDonePrompt;
-
-    // inventory/wishlist/trades button
     @FXML private Button next;
     @FXML private Button previous;
-
-    // inventory/wishlist buttons
     @FXML private Button remove;
-
-    // unconfirmed trades buttons
+    @FXML private Button sendTradeRequest;
     @FXML private Button confirm;
     @FXML private Button deny;
-
-    // universal buttons
     @FXML private Button exit;
 
     /**
@@ -157,7 +146,13 @@ public class BrowseThroughUserCollection implements Initializable {
             // set up button functionality
             this.previous.setOnAction(e -> previous());
             this.next.setOnAction(e -> next());
-            //TODO set up remove button
+            this.remove.setOnAction(e -> remove());
+
+            // if this instance is a wishlist collection
+            if(this.type == Type.WISHLIST) {
+                this.sendTradeRequest.setText(this.userPresenter.wishlistPromptTradeOffer());
+                this.sendTradeRequest.setOnAction(e -> sendTradeRequest());
+            }
         }
         // set up for UNCONFIRMED TRADES
         else {
@@ -184,10 +179,22 @@ public class BrowseThroughUserCollection implements Initializable {
     public void itemToString() {
         switch(this.type) {
             case INVENTORY:
-                this.viewItem.setText(this.userInventory.get(this.index).toString());
+                // if the inventory is not empty
+                if(this.userInventory.size() != 0) {
+                    this.viewItem.setText(this.userInventory.get(this.index).toString());
+                }
+                else {
+                    this.viewItem.setText(this.userPresenter.isEmpty("inventory"));
+                }
                 break;
             case WISHLIST:
-                this.viewItem.setText(this.wishlist.get(this.index).toString());
+                // if the wishlist is not empty
+                if(this.wishlist.size() != 0) {
+                    this.viewItem.setText(this.wishlist.get(this.index).toString());
+                }
+                else {
+                    this.viewItem.setText(this.userPresenter.isEmpty("wishlist"));
+                }
                 break;
             case TRADE_HISTORY:
                 this.viewItem.setText(this.userTrades.get(this.index).toString());
@@ -276,6 +283,25 @@ public class BrowseThroughUserCollection implements Initializable {
     }
 
     /**
+     * Remove the currently viewed item from the user inventory/wishlist
+     */
+    public void remove() {
+        switch(this.type) {
+            // remove from global inventory and reset this instance's local list
+            case INVENTORY:
+                this.globalInventoryManager.removeItem(this.userInventory.get(this.index).getItemID());
+                this.userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
+                break;
+            // remove from global wishlist and reset this instance's local list
+            case WISHLIST:
+                this.globalWishlistManager.removeWish(this.wishlist.get(index).getItemID(), this.currUser);
+                this.wishlist.remove(this.wishlist.get(index));
+                break;
+        }
+        this.index = 0;
+    }
+
+    /**
      * Method for confirming unconfirmed user trades
      */
     public void confirm() {
@@ -321,6 +347,13 @@ public class BrowseThroughUserCollection implements Initializable {
                 }
             }
         }
+    }
+
+    /**
+     * Send a trade request
+     */
+    public void sendTradeRequest() {
+
     }
 
     /**

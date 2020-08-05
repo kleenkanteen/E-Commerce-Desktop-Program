@@ -160,6 +160,10 @@ public class UserPresenter {
         return "Reached the end of your wishlist.";
     }
 
+    public String endOfUserCollection() {
+        return "You have reached the end of this menu.";
+    }
+
     /**
      * Prints that a collection (inventory, wishlist, etc.) is empty
      * @param collection the collection name
