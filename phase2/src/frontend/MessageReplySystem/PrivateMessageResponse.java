@@ -17,6 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.List;
 
+import javafx.stage.StageStyle;
 import presenters.MessageReplyPresenter;
 import entities.Message;
 import use_cases.AdminManager;
@@ -36,6 +37,7 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
     private AdminManager adminManager;
     private String accountName;
 
+    private final String ReportCreationFilepath = "MakeReport.fxml";
 
     PrivateMessageResponse(Message message, AdminManager adminManager, List<Message> messageList, String accountName){
         this.message = message;
@@ -58,16 +60,17 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
         else if(action.equals(validActions[1])){
             try {
                 window = new Stage();
-                FXMLLoader reportLoader = new FXMLLoader(getClass().getResource("MakeReport.fxml"));
+                FXMLLoader reportLoader = new FXMLLoader(getClass().getResource(ReportCreationFilepath));
                 reportLoader.setController(this);
                 Parent root = reportLoader.load();
 
                 window.initModality(Modality.APPLICATION_MODAL);
                 window.setScene(new Scene(root));
                 window.setTitle(messageReplyPresenter.reportTitle());
+                window.initStyle(StageStyle.UNDECORATED);
                 window.show();
             }catch(IOException e){
-                new PopUp("Error");
+                new PopUp(messageReplyPresenter.error());
             }
         }
     }

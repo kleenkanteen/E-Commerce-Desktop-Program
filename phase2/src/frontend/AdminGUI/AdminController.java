@@ -52,7 +52,7 @@ public class AdminController extends Application  implements Initializable{
 
     private String AdminAccountFXML = "AdminAccount.fxml";
     private String TradeUndoFXML = "TradeUndoMenu.fxml";
-    private String AdminMessageGUI = "AdminMessageReplyGUI.fxml";
+    private String AdminMessageGUI = "/frontend/MessageReplySystem/MessageGUI.fxml";
 
 
 
@@ -88,7 +88,7 @@ public class AdminController extends Application  implements Initializable{
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Message Inbox");
         window.setMinWidth(800);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminMessageGUI));
 
         loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
                 userManager, admin.getUsername()));
