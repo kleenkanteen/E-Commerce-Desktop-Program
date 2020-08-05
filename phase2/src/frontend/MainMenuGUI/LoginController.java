@@ -4,15 +4,20 @@ import controllers.AdminSystem;
 import controllers.BannedUserController;
 import controllers.DemoUserController;
 import controllers.UserMenu;
+import entities.GlobalInventory;
 import exceptions.InvalidUsernameException;
+import frontend.BannedUser.BannedUserMenu;
+import frontend.DemoUserGUI.DemoUserMenuGUI;
 import frontend.UserGUI.UserMenuGUI;
 import frontend.AdminGUI.AdminController;
+import frontend.DemoUserGUI.DemoUserMenuGUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presenters.MainMenuPresenter;
 import use_cases.*;
@@ -38,9 +43,11 @@ public class LoginController implements Initializable {
 
     private final String userMenuGUIFile = "/frontend/UserGUI/UserMenuGUI.fxml";
     private final String adminMenuGUIFile = "/frontend/AdminGUI/AdminMenu.fxml";
+    private final String demoMenuGUIFile = "/frontend/DemoUserGUI/DemoUserMenu.fxml";
+    private final String bannedUserMenuGUIFile = "/frontend/BannedUser/BannedUserMenuGUI.fxml";
 
     private enum OpenMenu {
-        USER_MENU, ADMIN_MENU, DEMO_MENU
+        USER_MENU, ADMIN_MENU, BANNED_USER_MENU, DEMO_MENU
     }
     public LoginController(SelectedOption type, UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
                            GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager){
@@ -52,29 +59,16 @@ public class LoginController implements Initializable {
         this.globalWishlistManager = globalWishlistManager;
     }
 
-    // code for method changeScreenButtonPushed is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
+    // code for method changeScreenButtonPushed is similar to: https://www.youtube.com/watch?v=
+
     private void changeScreenButtonPushed(ActionEvent actionEvent)  {
-       /* try {
-           Parent mainMenuParent = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-            Scene mainMenuScene = new Scene(mainMenuParent);
-
-            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-
-            window.setScene(mainMenuScene);
-            window.show();
-        }catch (IOException e){
-            // TODO: print error pop up or something
-            errorMessage.setText("File you are returning to was not found");
-        }
-
-          */
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
 
-    private void goToOtherScene(String otherScene, String MenuToOpen, String username) throws IOException {
+    private void goToOtherScene(String otherScene, String MenuToOpen, String username, String password) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
         if (MenuToOpen.equals("USER_MENU")) {
@@ -82,17 +76,25 @@ public class LoginController implements Initializable {
                     globalInventoryManager, globalWishlistManager, adminManager));
         }
 
-       if (MenuToOpen.equals("ADMIN_MENU")) {
+        if (MenuToOpen.equals("ADMIN_MENU")) {
             loader.setController(new AdminController(adminManager.getAdmin(username), adminManager,
                     userManager, globalInventoryManager, tradeManager));
         }
 
-       /* if (MenuToOpen.equals("DEMO_MENU")) {
-            loader.setController(new UserMenuGUI(selectedOption.name(), userManager, tradeManager, adminManager,
-                    globalInventoryManager, globalWishlistManager));
-        */
+        if (MenuToOpen.equals("BANNED_USER_MENU")) {
+            loader.setController(new BannedUserMenu(username, adminManager));
+        }
+
+        /*
+        if (MenuToOpen.equals("DEMO_MENU")) {
+            loader.setController(new DemoUserMenuGUI(String username, String password,
+                GlobalInventory globalInventoryManager);
+        }
+         */
+
 
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         window.setScene(scene);
@@ -129,9 +131,16 @@ public class LoginController implements Initializable {
                 }
             });
         }
+        // if user selects Program Demo option
         else {
             loginButton.setText("Log In");
-            loginButton.setOnAction(e -> programDemo());
+            loginButton.setOnAction(e -> {
+                try {
+                    programDemo();
+                } catch (IOException ioException) {
+                    errorMessage.setText("Failed to log in.");
+                }
+            });
         }
     }
 
@@ -140,11 +149,10 @@ public class LoginController implements Initializable {
         String password = this.password.getText();
         if(userManager.login(username, password)) {
             if (!userManager.getUserIsBanned(username)) {
-                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username);
+                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username, password);
             }
             else {
-                BannedUserController bannedUserController = new BannedUserController(username, adminManager);
-                bannedUserController.run();
+                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username, password);
             }
         }
         else errorMessage.setText("Wrong login, try again.");
@@ -169,18 +177,18 @@ public class LoginController implements Initializable {
         String password = this.password.getText();
 
         if ((adminManager.login(username, password))) {
-            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username);
+            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username, password);
         }
         else errorMessage.setText("Wrong login, try again.");
     }
 
 
-    private void programDemo(){
+    private void programDemo() throws IOException {
         String username = this.username.getText();
         String password = this.password.getText();
 
-        DemoUserController demo = new DemoUserController(username, password, globalInventoryManager);
-        demo.run();
+        goToOtherScene(demoMenuGUIFile, OpenMenu.DEMO_MENU.name(), username, password);
+
     }
 }
 

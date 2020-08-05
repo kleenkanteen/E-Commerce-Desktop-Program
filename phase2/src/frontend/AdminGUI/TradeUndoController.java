@@ -23,7 +23,7 @@ public class TradeUndoController implements Initializable {
     @FXML private Button goBackButton;
     @FXML private TextField userNameField;
 
-    private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu";
+    private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu.fxml";
     private UserManager usermanager;
     private TradeManager tradeManager;
     TradeUndoController(TradeManager tradeManager, UserManager userManager){

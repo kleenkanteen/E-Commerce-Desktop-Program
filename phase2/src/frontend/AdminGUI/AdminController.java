@@ -83,11 +83,24 @@ public class AdminController extends Application  implements Initializable{
         window.show();
     }
 
-    public void messageInboxButtonPushed(ActionEvent actionEvent){
+    public void messageInboxButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Admin Account Management");
+        window.setTitle("Admin Message Inbox");
         window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
+
+        loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
+                userManager, admin.getUsername()));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+        window.setScene(scene);
+
+        window.show();
 
 
     }
@@ -98,17 +111,13 @@ public class AdminController extends Application  implements Initializable{
         window.setTitle("Admin Account Management");
         window.setMinWidth(800);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
-
         loader.setController(new AdminAccountController(admin, adminManager, userManager));
-
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
-
         window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
         window.setScene(scene);
+        window.show();
 
-        window.showAndWait();
 
     }
 
@@ -121,10 +130,9 @@ public class AdminController extends Application  implements Initializable{
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Message Inbox");
         window.setMinWidth(800);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminMessageGUI));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
 
-        loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
-                userManager, admin.getUsername()));
+        loader.setController(new TradeUndoController(tradeManager, userManager));
 
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
@@ -133,7 +141,7 @@ public class AdminController extends Application  implements Initializable{
 
         window.setScene(scene);
 
-        window.showAndWait();
+        window.show();
 
     }
 
@@ -163,7 +171,13 @@ public class AdminController extends Application  implements Initializable{
         manageAdminAccountButton.setText("Manage Admin account" );
         UserBrowsingButton.setText("Access the information of Users");
         TradeUndoButton.setText("Undo the trade of Users");
-        messageInboxButton.setOnAction(this::messageInboxButtonPushed);
+        messageInboxButton.setOnAction(e -> {
+            try {
+                messageInboxButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
         exitButton.setText("Press to go back");
         exitButton.setOnAction(this::close);
         manageAdminAccountButton.setOnAction(e -> {
