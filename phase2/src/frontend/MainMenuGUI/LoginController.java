@@ -4,6 +4,7 @@ import controllers.AdminSystem;
 import controllers.BannedUserController;
 import controllers.DemoUserController;
 import controllers.UserMenu;
+import entities.GlobalInventory;
 import exceptions.InvalidUsernameException;
 import frontend.BannedUser.BannedUserMenu;
 import frontend.DemoUserGUI.DemoUserMenuGUI;
@@ -67,7 +68,7 @@ public class LoginController implements Initializable {
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
 
-    private void goToOtherScene(String otherScene, String MenuToOpen, String username) throws IOException {
+    private void goToOtherScene(String otherScene, String MenuToOpen, String username, String password) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
         if (MenuToOpen.equals("USER_MENU")) {
@@ -84,11 +85,13 @@ public class LoginController implements Initializable {
             loader.setController(new BannedUserMenu(username, adminManager));
         }
 
-        /*if (MenuToOpen.equals("DEMO_MENU")) {
-            //DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager
-            loader.setController(new DemoUserMenuGUI();
+        /*
+        if (MenuToOpen.equals("DEMO_MENU")) {
+            loader.setController(new DemoUserMenuGUI(String username, String password,
+                GlobalInventory globalInventoryManager);
         }
          */
+
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -131,7 +134,13 @@ public class LoginController implements Initializable {
         // if user selects Program Demo option
         else {
             loginButton.setText("Log In");
-            loginButton.setOnAction(e -> programDemo());
+            loginButton.setOnAction(e -> {
+                try {
+                    programDemo();
+                } catch (IOException ioException) {
+                    errorMessage.setText("Failed to log in.");
+                }
+            });
         }
     }
 
@@ -140,10 +149,10 @@ public class LoginController implements Initializable {
         String password = this.password.getText();
         if(userManager.login(username, password)) {
             if (!userManager.getUserIsBanned(username)) {
-                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username);
+                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username, password);
             }
             else {
-                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username);
+                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username, password);
             }
         }
         else errorMessage.setText("Wrong login, try again.");
@@ -168,18 +177,18 @@ public class LoginController implements Initializable {
         String password = this.password.getText();
 
         if ((adminManager.login(username, password))) {
-            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username);
+            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username, password);
         }
         else errorMessage.setText("Wrong login, try again.");
     }
 
 
-    private void programDemo(){
+    private void programDemo() throws IOException {
         String username = this.username.getText();
         String password = this.password.getText();
 
-        DemoUserController demo = new DemoUserController(username, password, globalInventoryManager);
-        demo.run();
+        goToOtherScene(demoMenuGUIFile, OpenMenu.DEMO_MENU.name(), username, password);
+
     }
 }
 
