@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.control.*;
@@ -60,6 +61,7 @@ public class MainMenuController implements Initializable {
                 globalInventoryManager, globalWishlistManager));
 
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         window.setScene(scene);
