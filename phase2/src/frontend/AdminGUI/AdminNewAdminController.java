@@ -5,9 +5,11 @@ import exceptions.InvalidUsernameException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import presenters.AdminAccountPresenter;
 import use_cases.AdminManager;
 import use_cases.UserManager;
@@ -18,6 +20,7 @@ import java.util.ResourceBundle;
 public class AdminNewAdminController implements Initializable {
     @FXML private Label resultOfCreationLabel;
     @FXML private Button addNewAdminButton;
+    @FXML private Button exitButton;
     @FXML private TextField newAdminUserNameTextField;
     @FXML private TextField newAdminPasswordTextField;
 
@@ -37,9 +40,15 @@ public class AdminNewAdminController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        exitButton.setText("Go back to Admin Account Menu");
+        exitButton.setOnAction(this::close);
         addNewAdminButton.setText("Create a new Admin!");
         addNewAdminButton.setOnAction(this::addNewAdminButtonPushed);
 
+    }
+    public void close(ActionEvent actionEvent){
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
     }
     public void addNewAdminButtonPushed(ActionEvent actionEvent){
 

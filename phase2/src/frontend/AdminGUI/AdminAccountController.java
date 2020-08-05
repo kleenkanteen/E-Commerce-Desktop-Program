@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 public class AdminAccountController implements Initializable {
     @FXML private Button changePassWordButton;
     @FXML private Button adminCreationButton;
+    @FXML private Button exitButton;
 
     private String NewPasswordFXML = "AdminNewPasswordController";
     private String NewAdminFXML = "AdminNewAdminController";
@@ -60,6 +61,11 @@ public class AdminAccountController implements Initializable {
 
 
 
+    }
+
+    public void close(ActionEvent actionEvent){
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
     }
 
 
@@ -113,6 +119,8 @@ public class AdminAccountController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         changePassWordButton.setText("Change your password");
         adminCreationButton.setText("Add a new admin account");
+        exitButton.setText("Press to go back");
+        exitButton.setOnAction(this::close);
         changePassWordButton.setOnAction(e -> {
             try {
                 ChangePassWordButtonPushed(e);

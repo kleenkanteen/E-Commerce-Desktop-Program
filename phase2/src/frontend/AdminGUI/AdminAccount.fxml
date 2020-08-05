@@ -10,7 +10,7 @@
             <Label text="You have some options with Admin accounts" textAlignment="CENTER" />
             <Button fx:id="changePassWordButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="200.0"  />
             <Button fx:id="adminCreationButton" mnemonicParsing="false" prefHeight="80.0" prefWidth="200.0"  />
-          <Button fx:id="exitButton" mnemonicParsing="false"  prefHeight="80.0" prefWidth="200.0" text="Exit to admin menu" />
+          <Button fx:id="exitButton" mnemonicParsing="false"  prefHeight="80.0" prefWidth="200.0"  />
          </children>
       </VBox>
    </children>
