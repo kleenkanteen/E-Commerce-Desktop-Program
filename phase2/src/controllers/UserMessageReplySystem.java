@@ -198,8 +198,9 @@ public class UserMessageReplySystem {
                 //Setting the new date/place that the user edit
                 tempTradeRequestManager.setDateAndPlace(accountUsername, time, place);
                 //Sent the new trade request to other trader TODO
-                //userManager.addUserMessage(username, "Your trade request has been edited",
-                // tempTradeRequestManager.getTradeRequest(), accountUsername);
+                userManager.addUserMessage(username, tempTradeRequestManager.getTradeRequest());
+
+
                 messageReplyMenu.success();
             }
             catch(IOException e){

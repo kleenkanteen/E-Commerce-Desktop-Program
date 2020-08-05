@@ -29,6 +29,7 @@ public class AdminController extends Application  implements Initializable{
     @FXML private Button manageAdminAccountButton;
     @FXML private Button UserBrowsingButton;
     @FXML private Button TradeUndoButton;
+    @FXML private Button exitButton;
     private Admin admin;
     private AdminMenu adminMenu;
 
@@ -151,6 +152,10 @@ public class AdminController extends Application  implements Initializable{
 
 
     }
+    public void close(ActionEvent actionEvent){
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -159,6 +164,8 @@ public class AdminController extends Application  implements Initializable{
         UserBrowsingButton.setText("Access the information of Users");
         TradeUndoButton.setText("Undo the trade of Users");
         messageInboxButton.setOnAction(this::messageInboxButtonPushed);
+        exitButton.setText("Press to go back");
+        exitButton.setOnAction(this::close);
         manageAdminAccountButton.setOnAction(e -> {
             try {
                 manageAdminAccountButtonPushed(e);
@@ -173,6 +180,7 @@ public class AdminController extends Application  implements Initializable{
                 ioException.printStackTrace();
             }
         });
+
 
 
 

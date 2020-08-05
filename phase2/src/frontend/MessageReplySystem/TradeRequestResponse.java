@@ -3,6 +3,11 @@ package frontend.MessageReplySystem;
 import entities.*;
 import exceptions.UserFrozenException;
 import frontend.PopUp.PopUp;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import presenters.MessageReplyPresenter;
 import use_cases.*;
 
@@ -16,7 +21,6 @@ import java.util.List;
 
 public class TradeRequestResponse implements MessageResponse {
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
-    private TradeRequest message;
     private TradeRequestManager tradeRequestManager;
     private List<Message> messageList;
     private UserManager userManager;
@@ -26,7 +30,6 @@ public class TradeRequestResponse implements MessageResponse {
 
     TradeRequestResponse(TradeRequest message, List<Message> messageList, UserManager userManager,
                          GlobalInventoryManager globalInventoryManager, TradeManager tradeManager, String accountName){
-        this.message = message;
         this.messageList = messageList;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
@@ -41,17 +44,18 @@ public class TradeRequestResponse implements MessageResponse {
     }
     @Override
     public String[] getActions() {
-        return messageReplyPresenter.requestAction(message);
+        return messageReplyPresenter.requestAction(tradeRequestManager.getTradeRequest());
     }
 
     @Override
     public void doAction(String action) {
         String[]validActions = getActions();
+        TradeRequest message = tradeRequestManager.getTradeRequest();
         if(action.equals(validActions[0])){
             confirmTrade();
         }
         else if(action.equals(validActions[1])){
-            messageList.remove(message);
+            messageList.remove(tradeRequestManager.getTradeRequest());
             MessageBuilder messageBuilder = new MessageBuilder();
 
             userManager.addUserMessage(message.getSender(),
@@ -61,7 +65,10 @@ public class TradeRequestResponse implements MessageResponse {
         else if(action.equals(validActions[2])){
             if(!tradeRequestManager.canEdit(accountUsername)&&!tradeRequestManager.canEdit(message.getSender())){
                 new PopUp(messageReplyPresenter.tradeRequestCancel());
+                messageList.remove(message);
+                return;
             }
+            tradeRequestEdit();
         }
     }
 
@@ -69,27 +76,9 @@ public class TradeRequestResponse implements MessageResponse {
 
     //----------------Helpers----------------//
     private void confirmTrade(){
+        TradeRequest message = tradeRequestManager.getTradeRequest();
         if(cannotTrade(message.getUserA(),message.getItemA())||cannotTrade(message.getUserB(), message.getItemB())){
-            //Tell the user that their trade cannot be created at this time
-            //messageReplyMenu.printCannotTradePrompt();
-//            do {
-//                input = br.readLine();
-//                if(input.equals("2"))done = true;
-//                else if(input.equals("1")) {
-//                    messages.remove(m);
-//                    //Tell the other trader that the trade could not be created at this time and
-//                    //the trade request is deleted
-//                    userManager.addUserMessage(username,
-//                            messageBuilder.getSystemMessage("You or the other trader cannot create a " +
-//                                    "new trade at this time or the items involved or not for trade at this time. " +
-//                                    "The other trader has chosen to delete this trade request.\n"+
-//                                    "Trade Request: "+m.toString()));
-//                    done = true;
-//                }
-//                else messageReplyMenu.printInvalidInput();
-//            }while(!done);
-//            return true;
-            //TODO
+            tradeRequestCannotConfirm();
         }
         //Confirming the trade
         messageList.remove(message);
@@ -106,7 +95,7 @@ public class TradeRequestResponse implements MessageResponse {
         for(Item i:list) {
             globalInventoryManager.removeItem(i.getItemID());
         }
-        new PopUp("Success");
+        new PopUp(messageReplyPresenter.success());
     }
 
     private boolean cannotTrade(String username, List<Item> userItem){
@@ -131,7 +120,35 @@ public class TradeRequestResponse implements MessageResponse {
         return false;
     }
 
-    private void tradeRequestEdit(TradeRequest m, BufferedReader br){
+    private void tradeRequestEdit(){
+        try {
+            Stage window = new Stage();
+            FXMLLoader reportLoader = new FXMLLoader(getClass().getResource("TradeRequestEdit.fxml"));
+            reportLoader.setController(new TradeRequestEditGUI(tradeRequestManager, userManager, messageList, accountUsername));
+            Parent root = reportLoader.load();
 
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setScene(new Scene(root));
+            window.setTitle(messageReplyPresenter.reportTitle());
+            window.show();
+        }catch(IOException e){
+            new PopUp(messageReplyPresenter.error());
+        }
+    }
+
+    private void tradeRequestCannotConfirm(){
+        try {
+            Stage window = new Stage();
+            FXMLLoader reportLoader = new FXMLLoader(getClass().getResource("TradeRequestCannotConfirm.fxml"));
+            reportLoader.setController(new TradeRequestCannotConfirmGUI(tradeRequestManager, userManager, messageList));
+            Parent root = reportLoader.load();
+
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setScene(new Scene(root));
+            window.setTitle(messageReplyPresenter.reportTitle());
+            window.show();
+        }catch(IOException e){
+            new PopUp(messageReplyPresenter.error());
+        }
     }
 }
