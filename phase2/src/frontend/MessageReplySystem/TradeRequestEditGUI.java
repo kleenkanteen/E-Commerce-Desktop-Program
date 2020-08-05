@@ -1,7 +1,7 @@
 package frontend.MessageReplySystem;
 
 import entities.Message;
-import entities.TradeRequest;
+import frontend.PopUp.PopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,10 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import presenters.MessageReplyPresenter;
 import use_cases.TradeRequestManager;
 import use_cases.UserManager;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +34,7 @@ public class TradeRequestEditGUI implements Initializable {
     private String accountUsername;
     private UserManager userManager;
     private List<Message> messages;
+    private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
 
     public TradeRequestEditGUI (TradeRequestManager tradeRequestManager, UserManager userManager,
                                 List<Message> messages,
@@ -46,16 +47,15 @@ public class TradeRequestEditGUI implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //TODO use presenter
-        title.setText("Make changes to the old trade request: ");
-        button1.setText("Exit");
+        title.setText(messageReplyPresenter.titleTradeRequestEdit());
+        button1.setText(messageReplyPresenter.exit());
         button1.setOnAction(this::exit);
-        button2.setText("Edit");
+        button2.setText(messageReplyPresenter.edit());
         button2.setOnAction(e -> editTradeRequest());
-        dateLabel.setText("Old date .... \nEnter the new date in the format yyyy-mm-dd hh:mm (or leave it empty):");
-        placeLabel.setText("Old place ...\nEnter the new place (or leave it empty):");
-        dateTextField.setText("");
-        placeTextField.setText("");
+        dateLabel.setText(messageReplyPresenter.datePrompt(tradeRequestManager.getTradeRequest().getDate().toString()));
+        placeLabel.setText(messageReplyPresenter.placePrompt(tradeRequestManager.getTradeRequest().getPlace()));
+        dateTextField.setText(messageReplyPresenter.emptyString());
+        placeTextField.setText(messageReplyPresenter.emptyString());
     }
 
     private void exit(ActionEvent e){
@@ -75,12 +75,12 @@ public class TradeRequestEditGUI implements Initializable {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 newDate = LocalDateTime.parse(date, dtf);
             } catch (DateTimeParseException e) {
-                title.setText("Wrong Format");
+                new PopUp(messageReplyPresenter.wrongFormat());
                 return;
             }
 
             if (newDate.isBefore(LocalDateTime.now())) {
-                title.setText("Enter a time in the future");
+                new PopUp(messageReplyPresenter.enterDateInPast());
                 return;
             }
         }
@@ -89,7 +89,7 @@ public class TradeRequestEditGUI implements Initializable {
             newPlace = place;
         }
         else{
-            title.setText("Make at least one Edit or Exit");
+            new PopUp(messageReplyPresenter.noEdit());
             return;
         }
         messages.remove(tradeRequestManager.getTradeRequest());

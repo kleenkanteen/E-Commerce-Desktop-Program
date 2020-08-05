@@ -71,6 +71,14 @@ public class MessageReplyPresenter {
         return "Error";
     }
 
+    public String delete(){
+        return "Delete";
+    }
+
+    public String emptyString(){
+        return "";
+    }
+
 
 
     //-------------------Report System-----------------------//
@@ -98,5 +106,47 @@ public class MessageReplyPresenter {
         return "Your report has been sent to the Admin.";
     }
 
-    //--------------------
+    //--------------------TradeRequestCannotConfirmGUI--------------------//
+    public String titleTradeRequestCannotConfirm(){
+        return "You are unable to confirm this trade right now";
+    }
+
+    public String tradeRequestCannotConfirmPrompt(TradeRequest m){
+        return "You or the other trader cannot create a new trade at this time or the items involved " +
+                "are not for trade at this time, try again later.\nTrade Request: " +
+                m.toString() +
+                "\nYou can delete this trade request or skip it for now.";
+    }
+
+    public String keepAndSkip(){
+        return "Keep and Skip";
+    }
+
+    //--------------------TradeRequestEdit-----------------------//
+    public String edit(){
+        return "Edit";
+    }
+    public String titleTradeRequestEdit(){
+        return "Make changes to the old trade request:";
+    }
+    public String datePrompt(String oldDate){
+        return "Old date " + oldDate +"\nEnter the new date in the format yyyy-mm-dd hh:mm (or leave it empty):";
+    }
+
+    public String placePrompt(String oldPlace){
+        return "Old place "+oldPlace+"\nEnter the new place (or leave it empty):";
+    }
+
+    public String wrongFormat(){
+        return "Wrong format";
+    }
+
+    public String enterDateInPast(){
+        return "Enter a time in the future";
+    }
+
+    public String noEdit(){
+        return "Make at least one Edit or Exit";
+    }
+
 }
