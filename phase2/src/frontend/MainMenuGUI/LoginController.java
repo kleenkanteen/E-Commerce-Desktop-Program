@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.MainMenuPresenter;
 import use_cases.*;
 
@@ -92,6 +93,7 @@ public class LoginController implements Initializable {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         window.setScene(scene);
