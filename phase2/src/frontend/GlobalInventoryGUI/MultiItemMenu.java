@@ -40,6 +40,10 @@ public class MultiItemMenu implements Initializable {
         this.item = item;
     }
 
+    public MultiItemMenu(String user, GlobalInventoryManager globalInventoryManager) {
+        this.user = user;
+        this.globalInventoryManager = globalInventoryManager;
+    }
 
     @FXML TableView<Item> userItem;
     @FXML private TableColumn<Item, String> itemName;
@@ -63,9 +67,9 @@ public class MultiItemMenu implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userItemLabel.setText(user + "'s inventory");
+        userItemLabel.setText(item.getOwnerName() + "'s inventory");
         tradingItemLabel.setText("Items selected");
-        title.setText("You are Trading with " + user + "\n please select the items you want to trade");
+        title.setText("You are Trading with " + item.getOwnerName() + "\n please select the items you want to trade");
         itemName.setText(globalInventoryMenuPresenter.itemName());
         itemOwner.setText(globalInventoryMenuPresenter.itemOwner());
         itemDescription.setText(globalInventoryMenuPresenter.itemDescription());
