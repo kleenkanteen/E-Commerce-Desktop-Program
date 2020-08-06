@@ -4,18 +4,16 @@ import entities.*;
 import exceptions.UserFrozenException;
 import frontend.PopUp.PopUp;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.MessageReplyPresenter;
 import use_cases.*;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +25,9 @@ public class TradeRequestResponse implements MessageResponse {
     private TradeManager tradeManager;
     private GlobalInventoryManager globalInventoryManager;
     private String accountUsername;
+
+    private final String TradeRequestCannotConfirmFilepath = "TradeRequestCannotConfirm.fxml";
+    private final String TradeRequestEditFilepath = "TradeRequestEdit.fxml";
 
     TradeRequestResponse(TradeRequest message, List<Message> messageList, UserManager userManager,
                          GlobalInventoryManager globalInventoryManager, TradeManager tradeManager, String accountName){
@@ -121,31 +122,25 @@ public class TradeRequestResponse implements MessageResponse {
     }
 
     private void tradeRequestEdit(){
-        try {
-            Stage window = new Stage();
-            FXMLLoader reportLoader = new FXMLLoader(getClass().getResource("TradeRequestEdit.fxml"));
-            reportLoader.setController(new TradeRequestEditGUI(tradeRequestManager, userManager, messageList, accountUsername));
-            Parent root = reportLoader.load();
-
-            window.initModality(Modality.APPLICATION_MODAL);
-            window.setScene(new Scene(root));
-            window.setTitle(messageReplyPresenter.reportTitle());
-            window.show();
-        }catch(IOException e){
-            new PopUp(messageReplyPresenter.error());
-        }
+        setNewWindow(TradeRequestEditFilepath,
+                new TradeRequestEditGUI(tradeRequestManager, userManager, messageList, accountUsername));
     }
 
     private void tradeRequestCannotConfirm(){
+        setNewWindow(TradeRequestCannotConfirmFilepath,
+                new TradeRequestCannotConfirmGUI(tradeRequestManager, userManager, messageList));
+    }
+
+    private void setNewWindow(String filepath, Initializable controller){
         try {
             Stage window = new Stage();
-            FXMLLoader reportLoader = new FXMLLoader(getClass().getResource("TradeRequestCannotConfirm.fxml"));
-            reportLoader.setController(new TradeRequestCannotConfirmGUI(tradeRequestManager, userManager, messageList));
-            Parent root = reportLoader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(filepath));
+            loader.setController(controller);
+            Parent root = loader.load();
 
             window.initModality(Modality.APPLICATION_MODAL);
+            window.initStyle(StageStyle.UNDECORATED);
             window.setScene(new Scene(root));
-            window.setTitle(messageReplyPresenter.reportTitle());
             window.show();
         }catch(IOException e){
             new PopUp(messageReplyPresenter.error());
