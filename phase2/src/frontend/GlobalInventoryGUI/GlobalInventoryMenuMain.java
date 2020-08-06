@@ -1,4 +1,4 @@
-package frontend;
+package frontend.GlobalInventoryGUI;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +14,7 @@ public class GlobalInventoryMenuMain extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GlobalInventoryMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GlobalInventoryGUI/GlobalInventoryMenu.fxml"));
         primaryStage.setTitle("Global Inventory");
         primaryStage.setScene(new Scene(root, 400, 500) );
         primaryStage.show();
