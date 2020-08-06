@@ -7,20 +7,20 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminBrowsingUsers">
+<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminGUI.AdminBrowsingUsersController">
    <children>
       <Label layoutX="52.0" layoutY="14.0" text="Enter the user's username:">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField layoutX="77.0" layoutY="51.0" stylesheets="@cool.css" />
+      <TextField layoutX="77.0" layoutY="51.0" stylesheets="@../cool styling/cool.css" />
       <Label layoutX="72.0" layoutY="89.0" text="Invalid user, try again">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Button layoutX="130.0" layoutY="356.0" mnemonicParsing="false" stylesheets="@coolbutton.css" text="Exit">
+      <Button layoutX="130.0" layoutY="356.0" mnemonicParsing="false" stylesheets="@../cool styling/coolbutton.css" text="Exit">
          <font>
             <Font size="14.0" />
          </font>
