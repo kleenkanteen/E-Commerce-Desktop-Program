@@ -38,22 +38,6 @@ public class AdminGUIPresenter {
 
     //Label and Text
 
-    public String NewPasswordLabel(){
-        return "";
-    }
-
-    public String confirmPasswordLabel(){
-        return "";
-    }
-
-    public String newAdminUserNameLabel(){
-        return  "";
-
-    }
-
-    public String newAdminPasswordLabel(){
-        return  "";
-    }
 
     public String InvalidUserNameLabel(){
         return "invalid User Name";
