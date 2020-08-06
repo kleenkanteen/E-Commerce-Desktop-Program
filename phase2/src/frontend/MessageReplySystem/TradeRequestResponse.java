@@ -80,6 +80,7 @@ public class TradeRequestResponse implements MessageResponse {
         TradeRequest message = tradeRequestManager.getTradeRequest();
         if(cannotTrade(message.getUserA(),message.getItemA())||cannotTrade(message.getUserB(), message.getItemB())){
             tradeRequestCannotConfirm();
+            return;
         }
         //Confirming the trade
         messageList.remove(message);

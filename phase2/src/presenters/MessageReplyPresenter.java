@@ -75,8 +75,16 @@ public class MessageReplyPresenter {
         return "Delete";
     }
 
+    public String confirm(){
+        return "Confirm";
+    }
+
     public String emptyString(){
         return "";
+    }
+
+    public String instructions(){
+        return "Select a Message you want to view on the side list. Then click confirm to view.";
     }
 
 

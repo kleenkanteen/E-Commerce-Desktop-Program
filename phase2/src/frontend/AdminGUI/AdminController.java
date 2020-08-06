@@ -88,7 +88,6 @@ public class AdminController extends Application  implements Initializable{
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Message Inbox");
-        window.setMinWidth(800);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminMessageGUI));
 
         loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
@@ -111,7 +110,6 @@ public class AdminController extends Application  implements Initializable{
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Account Management");
-        window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
         loader.setController(new AdminAccountController(admin, adminManager, userManager));
         Parent parent = loader.load();
@@ -134,8 +132,7 @@ public class AdminController extends Application  implements Initializable{
     public void tradeUndoButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Admin Message Inbox");
-        window.setMinWidth(600);
+        window.setTitle("Undoing a Trade");
         FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
 
         loader.setController(new TradeUndoController(tradeManager, userManager));
