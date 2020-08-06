@@ -6,6 +6,17 @@ import java.util.List;
 
 
 public class TradeMenu {
+    public final static String trade = "Trade";
+    public final static String tradeType = "What type of trade?";
+    public final static String temp = "Temporary";
+    public final static String perm = "Permanent";
+    public final static String oneTwoWay = "Is it a one way or two way trade?";
+    public final static String oneWay = "One way trade";
+    public final static String twoWay = "Two way trade";
+    public final static String submit = "Submit";
+    public final static String exit = "Exit the program";
+
+
     /**
      * Presenter for choosing permanent trade or temporary trade.
      */
