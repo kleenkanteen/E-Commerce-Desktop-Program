@@ -27,8 +27,8 @@ public class AdminAccountController implements Initializable {
     @FXML private Button adminCreationButton;
     @FXML private Button exitButton;
 
-    private String NewPasswordFXML = "AdminNewPasswordController";
-    private String NewAdminFXML = "AdminNewAdminController";
+    private String NewPasswordFXML = "AdminChangePassword.fxml";
+    private String NewAdminFXML = "AdminCreation.fxml";
 
 
 
@@ -75,17 +75,13 @@ public class AdminAccountController implements Initializable {
         window.setTitle("Go set a new password!");
         window.setMinWidth(800);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewPasswordFXML));
-
         loader.setController(new AdminNewPasswordController(admin, adminManager, userManager));
-
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
-
         window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
         window.setScene(scene);
+        window.show();
 
-        window.showAndWait();
 
 
     }
@@ -105,7 +101,7 @@ public class AdminAccountController implements Initializable {
 
         window.setScene(scene);
 
-        window.showAndWait();
+        window.show();
 
 
     }

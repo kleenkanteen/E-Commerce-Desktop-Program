@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.DemoUserManager;
 
@@ -20,6 +21,8 @@ public class DemoUserInfoMenu implements Initializable {
     private Type type;
     private DemoUserManager demoUserManager;
     private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
+    private String DemoUserInventoryFXML = "DemoUserInventory.fxml";
+    private String DemoUserWishListFXML = "DemoUserWishlist.fxml";
 
     @FXML private Button tradeHistory;
     @FXML private Button newPassword;
@@ -30,8 +33,6 @@ public class DemoUserInfoMenu implements Initializable {
     @FXML private Button exit;
     @FXML private Label message;
 
-    public DemoUserInfoMenu() {
-    }
 
     public DemoUserInfoMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
@@ -69,25 +70,42 @@ public class DemoUserInfoMenu implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch(this.type) {
             case INVENTORY:
-                // loader.setController(new Object());
+                loader.setController(new DemoUserInventory(demoUserManager));
                 break;
             // view user wishlist
             case WISHLIST:
-                // loader.setController(new Object());
+                loader.setController(new DemoUserWishlist(demoUserManager));
                 break;
         }
         Parent root = loader.load();
         Scene newScene = new Scene(root);
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }
 
     @FXML
-    public void viewInventory() { }
+    public void viewInventory() {
+        try{
+            type = Type.INVENTORY;
+            switchScene(this.DemoUserInventoryFXML);
+        } catch (IOException e){
+            System.out.println("oh no");
+            System.out.println(demoUserManager.getUserInventory().size());
+        }
+    }
 
     @FXML
-    public void viewWishlist() { }
+    public void viewWishlist() {
+        try{
+            type = Type.WISHLIST;
+            switchScene(this.DemoUserWishListFXML);
+        } catch (IOException e){
+            System.out.println("wishlist");
+            System.out.println(demoUserManager.getUserWishlist().size());
+        }
+    }
 
     @FXML
     public void exit(ActionEvent actionEvent) {

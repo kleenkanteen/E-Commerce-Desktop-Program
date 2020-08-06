@@ -128,4 +128,47 @@ public class DemoUserfxPresenter {
     public String whatToDo(Item item){
         return item.getName() + " is selected! \nWhat do you want to do with this item?";
     }
+
+    public String menuPromptRemove() {
+        return "Remove";
+    }
+
+    public String menuPromptNext() {
+        return "Next";
+    }
+
+    public String menuPromptPrevious() {
+        return "Previous";
+    }
+
+    /**
+     * Reached end of user inventory.
+     */
+    public String endOfUserInventory() {
+        return "Reached end of inventory.";
+    }
+
+    public String endOfUserWishlist(){
+        return "Reached end of inventory";
+    }
+
+    /**
+     * Prompt for item removal
+     */
+    public String itemRemoved() {
+        return "Item removed.\n";
+    }
+
+
+    public String wishlistPromptTradeOffer() {
+        return "Send a trade offer to this user";
+    }
+
+    public String inventoryIsEmpty() {
+        return "Your inventory is empty!\n";
+    }
+
+    public String wishlistIsEmpty() {
+        return "Your wishlist is empty!\n";
+    }
 }

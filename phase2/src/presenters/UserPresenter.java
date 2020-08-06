@@ -97,6 +97,10 @@ public class UserPresenter {
         return "Enter in your new password.";
     }
 
+    public String setNewPasswordPromptSecundus() {
+        return "Reenter your new password";
+    }
+
     /**
      * Print this user's trade partner for get frequent trade partners.
      * @param tradePartner String username of trade partner
@@ -399,6 +403,10 @@ public class UserPresenter {
                 "\n[2] No, and take me back to the main menu.");
     }
 
+    public String userLoanPrompt() {
+        return "Would you like to loan this item to this user?";
+    }
+
     public String userLoanPromptOfferedItemLabel() {
         return "Your offered item:";
     }
@@ -439,10 +447,26 @@ public class UserPresenter {
     }
 
     public String invalidMessageInput() {
-        return "Please fill out both username and description inputs.";
+        return "Please fill out both text fields.";
+    }
+
+    public String invalidPasswordInputs() {
+        return "Passwords must match.";
+    }
+
+    public String passwordConfirmation() {
+        return "Password successfully changed.";
     }
 
     public String tradeOfferCreationCancelled() {
         return "Trade offer creation cancelled.";
+    }
+
+    public String recentTradesMenu() {
+        return "These are your recent trades:";
+    }
+
+    public String tradePartnersMenu() {
+        return "These are your frequent trade partners:";
     }
 }

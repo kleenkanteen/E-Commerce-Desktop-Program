@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,8 +23,9 @@ public class TradeUndoController implements Initializable {
     @FXML private Button searchUserButton;
     @FXML private Button goBackButton;
     @FXML private TextField userNameField;
+    @FXML private Label invalidUserLabel;
 
-    private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu";
+    private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu.fxml";
     private UserManager usermanager;
     private TradeManager tradeManager;
     TradeUndoController(TradeManager tradeManager, UserManager userManager){
@@ -72,6 +74,9 @@ public class TradeUndoController implements Initializable {
         if(usermanager.isValidUser(userNameField.getText())){
             openTradeWindow(actionEvent);
         }
+        else {
+            invalidUserLabel.setText("invalid User Name");
+        }
 
 
     }
@@ -82,6 +87,7 @@ public class TradeUndoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        invalidUserLabel.setText(" ");
         searchUserButton.setText("Search");
         searchUserButton.setOnAction(e -> {
             try {

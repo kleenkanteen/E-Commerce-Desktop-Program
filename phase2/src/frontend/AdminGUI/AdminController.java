@@ -52,7 +52,7 @@ public class AdminController extends Application  implements Initializable{
 
     private String AdminAccountFXML = "AdminAccount.fxml";
     private String TradeUndoFXML = "TradeUndoMenu.fxml";
-    private String AdminMessageGUI = "AdminMessageReplyGUI.fxml";
+    private String AdminMessageGUI = "/frontend/MessageReplySystem/MessageGUI.fxml";
 
 
 
@@ -83,40 +83,7 @@ public class AdminController extends Application  implements Initializable{
         window.show();
     }
 
-    public void messageInboxButtonPushed(ActionEvent actionEvent){
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Admin Account Management");
-        window.setMinWidth(800);
-
-
-    }
-
-    public void manageAdminAccountButtonPushed(ActionEvent actionEvent) throws IOException {
-        Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Admin Account Management");
-        window.setMinWidth(800);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
-
-        loader.setController(new AdminAccountController(admin, adminManager, userManager));
-
-        Parent parent = loader.load();
-        Scene scene = new Scene(parent);
-
-        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
-        window.setScene(scene);
-
-        window.showAndWait();
-
-    }
-
-    public void userBrowsingButtonPushed(ActionEvent actionEvent){
-
-    }
-
-    public void tradeUndoButtonPushed(ActionEvent actionEvent) throws IOException {
+    public void messageInboxButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Message Inbox");
@@ -133,7 +100,48 @@ public class AdminController extends Application  implements Initializable{
 
         window.setScene(scene);
 
-        window.showAndWait();
+        window.show();
+
+
+    }
+
+    public void manageAdminAccountButtonPushed(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Admin Account Management");
+        window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
+        loader.setController(new AdminAccountController(admin, adminManager, userManager));
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
+
+
+    }
+
+    public void userBrowsingButtonPushed(ActionEvent actionEvent){
+
+    }
+
+    public void tradeUndoButtonPushed(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle("Admin Message Inbox");
+        window.setMinWidth(800);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
+
+        loader.setController(new TradeUndoController(tradeManager, userManager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
+
+        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
+        window.setScene(scene);
+
+        window.show();
 
     }
 
@@ -163,7 +171,13 @@ public class AdminController extends Application  implements Initializable{
         manageAdminAccountButton.setText("Manage Admin account" );
         UserBrowsingButton.setText("Access the information of Users");
         TradeUndoButton.setText("Undo the trade of Users");
-        messageInboxButton.setOnAction(this::messageInboxButtonPushed);
+        messageInboxButton.setOnAction(e -> {
+            try {
+                messageInboxButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
         exitButton.setText("Press to go back");
         exitButton.setOnAction(this::close);
         manageAdminAccountButton.setOnAction(e -> {

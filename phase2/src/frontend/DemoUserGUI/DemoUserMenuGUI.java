@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
@@ -38,10 +39,11 @@ public class DemoUserMenuGUI  implements Initializable {
     @FXML private Button logout;
 
     //TODO: use presenter to set the text on screen
-    public DemoUserMenuGUI(){}
 
-    public DemoUserMenuGUI(DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager) {
-        this.demoUserManager = demoUserManager;
+    public DemoUserMenuGUI(GlobalInventoryManager globalInventoryManager) {
+        this.demoUserManager = new DemoUserManager("demo", "demo");
+        System.out.println(demoUserManager.getUserWishlist().size());
+        System.out.println(demoUserManager.getUserInventory().size());
         this.globalInventoryManager = globalInventoryManager;
     }
 
@@ -162,22 +164,23 @@ public class DemoUserMenuGUI  implements Initializable {
         // access account info
         switch (this.type) {
             case ACCOUNT_INFO:
-                loader.setController(new DemoUserInfoMenu());
+                loader.setController(new DemoUserInfoMenu(demoUserManager));
                 break;
             // access global inventory
             case GLOBAL_INVENTORY:
-                loader.setController(new DemoUserGlobalInventoryMenu());
+                loader.setController(new DemoUserGlobalInventoryMenu(demoUserManager, globalInventoryManager));
                 break;
 
             // access new item menu
             case NEW_ITEM:
-                loader.setController(new DemoUserAddItemMenu());
+                loader.setController(new DemoUserAddItemMenu(demoUserManager));
                 break;
 
         }
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }
