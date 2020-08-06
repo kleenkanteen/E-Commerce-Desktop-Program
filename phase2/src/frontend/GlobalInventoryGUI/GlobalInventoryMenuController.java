@@ -107,7 +107,7 @@ public class GlobalInventoryMenuController implements Initializable {
 
     public void switchScene(String filename, Item item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
-        loader.setController(new MultiItemMenu(item,globalInventoryManager, userManager, tradeManager));// call Multimenu
+        loader.setController(new MultiItemMenu(item, user, globalInventoryManager, userManager, tradeManager));// call Multimenu
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();

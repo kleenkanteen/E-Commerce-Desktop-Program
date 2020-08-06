@@ -1,6 +1,5 @@
 package frontend.GlobalInventoryGUI;
 
-import entities.GlobalWishlist;
 import entities.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,19 +41,19 @@ public class MultiItemMenu implements Initializable {
     private UserManager userManager;
     private String user;
     private TradeManager tradeManager;
-    private GlobalWishlist globalWishlist;
     private String TrademenuFXML = "TradeMenu.fxml";
     private GlobalInventoryManager globalInventoryManager;
     private Item item;
     private ObservableList<Item> selectedItems = FXCollections.observableArrayList();;
 
 
-    public MultiItemMenu(Item item, GlobalInventoryManager globalInventoryManager, UserManager userManager,
+    public MultiItemMenu(Item item, String user, GlobalInventoryManager globalInventoryManager, UserManager userManager,
                          TradeManager tradeManager) {
         this.globalInventoryManager = globalInventoryManager;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
         this.item = item;
+        this.user = user;
     }
 
     @Override
