@@ -28,6 +28,9 @@ public class MultiItemMenu implements Initializable {
     @FXML private TableColumn<Item, String> itemName;
     @FXML private TableColumn<Item,String> itemOwner;
     @FXML private TableColumn<Item, String> itemDescription;
+    @FXML private TableColumn<Item, String> tradingitemName;
+    @FXML private TableColumn<Item,String> tradingitemOwner;
+    @FXML private TableColumn<Item, String> tradingitemDescription;
     @FXML TableView<Item> tradingItem;
     @FXML Button select;
     @FXML Button remove;
@@ -68,6 +71,13 @@ public class MultiItemMenu implements Initializable {
         itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
         itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
         itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+
+        tradingitemName.setText(globalInventoryMenuPresenter.itemName());
+        tradingitemOwner.setText(globalInventoryMenuPresenter.itemOwner());
+        tradingitemDescription.setText(globalInventoryMenuPresenter.itemDescription());
+        tradingitemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+        tradingitemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
+        tradingitemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
         userItem.setOnMouseClicked(this::selected);
         //load data
