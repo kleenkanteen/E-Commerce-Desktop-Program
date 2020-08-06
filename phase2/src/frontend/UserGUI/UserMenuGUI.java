@@ -12,12 +12,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.stage.StageStyle;
 import presenters.UserPresenter;
 import use_cases.*;
 import entities.*;
@@ -182,6 +184,8 @@ public class UserMenuGUI implements Initializable {
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initStyle(StageStyle.UNDECORATED);
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }

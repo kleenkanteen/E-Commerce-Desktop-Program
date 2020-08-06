@@ -403,6 +403,10 @@ public class UserPresenter {
                 "\n[2] No, and take me back to the main menu.");
     }
 
+    public String userLoanPrompt() {
+        return "Would you like to loan this item to this user?";
+    }
+
     public String userLoanPromptOfferedItemLabel() {
         return "Your offered item:";
     }
@@ -445,6 +449,7 @@ public class UserPresenter {
     public String invalidMessageInput() {
         return "Please fill out both text fields.";
     }
+
     public String invalidPasswordInputs() {
         return "Passwords must match.";
     }
@@ -455,5 +460,13 @@ public class UserPresenter {
 
     public String tradeOfferCreationCancelled() {
         return "Trade offer creation cancelled.";
+    }
+
+    public String recentTradesMenu() {
+        return "These are your recent trades:";
+    }
+
+    public String tradePartnersMenu() {
+        return "These are your frequent trade partners:";
     }
 }
