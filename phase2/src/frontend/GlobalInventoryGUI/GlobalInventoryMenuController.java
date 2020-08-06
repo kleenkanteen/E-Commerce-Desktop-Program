@@ -1,6 +1,5 @@
 package frontend.GlobalInventoryGUI;
 
-import entities.GlobalWishlist;
 import entities.Item;
 import exceptions.UserFrozenException;
 import javafx.collections.FXCollections;
@@ -19,7 +18,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
+import use_cases.GlobalWishlistManager;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 
@@ -33,20 +34,20 @@ public class GlobalInventoryMenuController implements Initializable {
 
 
     private GlobalInventoryManager globalInventoryManager;
-    private String DemoUserTradeMenuFXML = "MultiItemMenu.fxml";
     private GlobalInventoryMenuPresenter globalInventoryMenuPresenter= new GlobalInventoryMenuPresenter();
     private UserManager userManager;
     private String user;
     private TradeManager tradeManager;
-    private GlobalWishlist globalWishlist;
+    private GlobalWishlistManager globalWishlistManager;
     private String MultiItemMenuFXML = "MultiItemMenu.fxml";
 
-    public GlobalInventoryMenuController(GlobalInventoryManager globalInventoryManager, UserManager userManager,
-                                         TradeManager tradeManager, GlobalWishlist globalWishlist) {
+    public GlobalInventoryMenuController(String user, GlobalInventoryManager globalInventoryManager, UserManager userManager,
+                                         TradeManager tradeManager, GlobalWishlistManager globalWishlistManager) {
         this.globalInventoryManager = globalInventoryManager;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
-        this.globalWishlist = globalWishlist;
+        this.globalWishlistManager = globalWishlistManager;
+        this.user = user;
     }
 
     @FXML private TableView<Item> tableView;
@@ -135,12 +136,15 @@ public class GlobalInventoryMenuController implements Initializable {
         if (itemselected == null) {
             message.setText(globalInventoryMenuPresenter.noItemSelected());
         }
-        else if (globalWishlist.getPersonWishlist(user).contains(itemselected)){
+        else if (globalWishlistManager.getPersonWishlist(user).contains(itemselected)){
             message.setText(globalInventoryMenuPresenter.alreadyHave());
+        }
+        else if (itemselected.getOwnerName().equals(user)){
+            message.setText(globalInventoryMenuPresenter.ownItem());
         }
         else {
             message.setText(globalInventoryMenuPresenter.addedToWishlist(itemselected));
-            globalWishlist.addWish(itemselected.getItemID(), user);
+            globalWishlistManager.addWish(itemselected.getItemID(), user);
         }
 
 
@@ -150,18 +154,19 @@ public class GlobalInventoryMenuController implements Initializable {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(globalInventoryMenuPresenter.noItemSelected());
-        } else if (globalInventoryManager.contains(itemselected)){
+        } else if (globalInventoryManager.getPersonInventory(user).contains(itemselected)){
             message.setText(globalInventoryMenuPresenter.ownItem());
         }
         else {
             if (userManager.getCanTrade(user, tradeManager.getBorrowedTimes(user),
                     tradeManager.getLendTimes(user), tradeManager.getIncompleteTimes(user),
                     tradeManager.numberOfTradesCreatedThisWeek(user))){
+
                 try {
                     switchScene(MultiItemMenuFXML, itemselected);
                 }
                 catch (IOException ex) {
-                    //error
+                    System.out.println("error");
                 }
             }
             else message.setText(globalInventoryMenuPresenter.FrozenAcc());

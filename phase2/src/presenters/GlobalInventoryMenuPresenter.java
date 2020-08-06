@@ -1,4 +1,4 @@
-package frontend.GlobalInventoryGUI;
+package presenters;
 
 import entities.Item;
 

@@ -1,6 +1,10 @@
 package frontend.UserGUI;
 
+import entities.Item;
+import entities.Message;
+import entities.Trade;
 import exceptions.UserFrozenException;
+import frontend.GlobalInventoryGUI.GlobalInventoryMenuController;
 import frontend.MessageReplySystem.UserMessageReplyGUI;
 import frontend.UserGUI.AccountInfo.BrowseThroughUserCollection;
 import javafx.event.ActionEvent;
@@ -14,15 +18,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import presenters.UserPresenter;
+import use_cases.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javafx.stage.StageStyle;
-import presenters.UserPresenter;
-import use_cases.*;
-import entities.*;
 
 public class UserMenuGUI implements Initializable {
 
@@ -56,7 +59,7 @@ public class UserMenuGUI implements Initializable {
     private final String loanFXML = "LoanMenuGUI.fxml";
     private final String privateMessageFXML = "PrivateMessageMenuGUI.fxml";
     private final String newItemFXML = "NewItemMenuGUI.fxml";
-    private final String globalInventoryFXML = "";
+    private final String globalInventoryFXML = "/frontend/GlobalInventoryGUI/GlobalInventoryMenu.fxml";
     private final String userMessagesFXML = "/frontend/MessageReplySystem/MessageGUI.fxml";
     private final String unconfirmedTradesFXML = "UnconfirmedTradesPopUp.fxml";
     private final String userStatusFXML = "UserStatusPopUpGUI.fxml";
@@ -142,6 +145,8 @@ public class UserMenuGUI implements Initializable {
                 break;
             // access global inventory
             case GLOBAL_INVENTORY:
+                loader.setController(new GlobalInventoryMenuController(currUser, globalInventoryManager, userManager,
+                        tradeManager, globalWishlistManager));
                 // loader.setController(new Object());
                 break;
             // access loan menu

@@ -90,7 +90,6 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
         String reason = userInput.getText();
         Message m = messageBuilder.getReportRequest(reason, accountName, message.getContent(), message.getSender());
         adminManager.addMessage(m);
-        messageList.remove(message);
 
         title.setText(messageReplyPresenter.success());
         messageContent.setText(messageReplyPresenter.reportSuccess());
