@@ -39,7 +39,7 @@ public class GlobalInventoryMenuController implements Initializable {
     private UserManager userManager;
     private String user;
     private TradeManager tradeManager;
-    private GlobalWishlistManager globalWishlist;
+    private GlobalWishlistManager globalWishlistManager;
     private String MultiItemMenuFXML = "MultiItemMenu.fxml";
 
     public GlobalInventoryMenuController(GlobalInventoryManager globalInventoryManager, UserManager userManager,
@@ -47,7 +47,7 @@ public class GlobalInventoryMenuController implements Initializable {
         this.globalInventoryManager = globalInventoryManager;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
-        this.globalWishlist = globalWishlistManager;
+        this.globalWishlistManager = globalWishlistManager;
     }
 
     @FXML private TableView<Item> tableView;
@@ -136,12 +136,12 @@ public class GlobalInventoryMenuController implements Initializable {
         if (itemselected == null) {
             message.setText(globalInventoryMenuPresenter.noItemSelected());
         }
-        else if (globalWishlist.getPersonWishlist(user).contains(itemselected)){
+        else if (globalWishlistManager.getPersonWishlist(user).contains(itemselected)){
             message.setText(globalInventoryMenuPresenter.alreadyHave());
         }
         else {
             message.setText(globalInventoryMenuPresenter.addedToWishlist(itemselected));
-            globalWishlist.addWish(itemselected.getItemID(), user);
+            globalWishlistManager.addWish(itemselected.getItemID(), user);
         }
 
 
