@@ -42,12 +42,13 @@ public class GlobalInventoryMenuController implements Initializable {
     private GlobalWishlistManager globalWishlistManager;
     private String MultiItemMenuFXML = "MultiItemMenu.fxml";
 
-    public GlobalInventoryMenuController(GlobalInventoryManager globalInventoryManager, UserManager userManager,
+    public GlobalInventoryMenuController(String user, GlobalInventoryManager globalInventoryManager, UserManager userManager,
                                          TradeManager tradeManager, GlobalWishlistManager globalWishlistManager) {
         this.globalInventoryManager = globalInventoryManager;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
         this.globalWishlistManager = globalWishlistManager;
+        this.user = user;
     }
 
     @FXML private TableView<Item> tableView;
@@ -139,6 +140,9 @@ public class GlobalInventoryMenuController implements Initializable {
         else if (globalWishlistManager.getPersonWishlist(user).contains(itemselected)){
             message.setText(globalInventoryMenuPresenter.alreadyHave());
         }
+        else if (itemselected.getOwnerName().equals(user)){
+            message.setText(globalInventoryMenuPresenter.ownItem());
+        }
         else {
             message.setText(globalInventoryMenuPresenter.addedToWishlist(itemselected));
             globalWishlistManager.addWish(itemselected.getItemID(), user);
@@ -151,18 +155,19 @@ public class GlobalInventoryMenuController implements Initializable {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(globalInventoryMenuPresenter.noItemSelected());
-        } else if (globalInventoryManager.contains(itemselected)){
+        } else if (globalInventoryManager.getPersonInventory(user).contains(itemselected)){
             message.setText(globalInventoryMenuPresenter.ownItem());
         }
         else {
             if (userManager.getCanTrade(user, tradeManager.getBorrowedTimes(user),
                     tradeManager.getLendTimes(user), tradeManager.getIncompleteTimes(user),
                     tradeManager.numberOfTradesCreatedThisWeek(user))){
+
                 try {
                     switchScene(MultiItemMenuFXML, itemselected);
                 }
                 catch (IOException ex) {
-                    //error
+                    System.out.println("error");
                 }
             }
             else message.setText(globalInventoryMenuPresenter.FrozenAcc());
