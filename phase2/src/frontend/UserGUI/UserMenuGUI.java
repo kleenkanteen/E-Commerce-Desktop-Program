@@ -1,5 +1,8 @@
 package frontend.UserGUI;
 
+import entities.Item;
+import entities.Message;
+import entities.Trade;
 import exceptions.UserFrozenException;
 import frontend.GlobalInventoryGUI.GlobalInventoryMenuController;
 import frontend.MessageReplySystem.UserMessageReplyGUI;
@@ -15,15 +18,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import presenters.UserPresenter;
+import use_cases.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-
-import javafx.stage.StageStyle;
-import presenters.UserPresenter;
-import use_cases.*;
-import entities.*;
 
 public class UserMenuGUI implements Initializable {
 
@@ -144,7 +146,7 @@ public class UserMenuGUI implements Initializable {
             // access global inventory
             case GLOBAL_INVENTORY:
                 loader.setController(new GlobalInventoryMenuController(globalInventoryManager, userManager,
-                        tradeManager, globalWishlistManager.getGlobalWishlistData()));
+                        tradeManager, globalWishlistManager));
                 // loader.setController(new Object());
                 break;
             // access loan menu

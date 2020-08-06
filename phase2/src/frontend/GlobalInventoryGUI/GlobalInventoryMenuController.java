@@ -1,6 +1,5 @@
 package frontend.GlobalInventoryGUI;
 
-import entities.GlobalWishlist;
 import entities.Item;
 import exceptions.UserFrozenException;
 import javafx.collections.FXCollections;
@@ -21,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
+import use_cases.GlobalWishlistManager;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 
@@ -39,15 +39,15 @@ public class GlobalInventoryMenuController implements Initializable {
     private UserManager userManager;
     private String user;
     private TradeManager tradeManager;
-    private GlobalWishlist globalWishlist;
+    private GlobalWishlistManager globalWishlist;
     private String MultiItemMenuFXML = "MultiItemMenu.fxml";
 
     public GlobalInventoryMenuController(GlobalInventoryManager globalInventoryManager, UserManager userManager,
-                                         TradeManager tradeManager, GlobalWishlist globalWishlist) {
+                                         TradeManager tradeManager, GlobalWishlistManager globalWishlistManager) {
         this.globalInventoryManager = globalInventoryManager;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
-        this.globalWishlist = globalWishlist;
+        this.globalWishlist = globalWishlistManager;
     }
 
     @FXML private TableView<Item> tableView;
