@@ -104,6 +104,7 @@ public class AdminController implements Initializable{
 
     }
 
+
     public void manageAdminAccountButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
