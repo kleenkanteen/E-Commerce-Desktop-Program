@@ -26,7 +26,7 @@ public class AdminNewAdminController implements Initializable {
 
     private Admin admin;
 
-    private AdminAccountPresenter adminAccountPresenter;
+    private AdminGUIPresenter adminGUIPresenter;
 
     private UserManager userManager;
 
@@ -34,15 +34,15 @@ public class AdminNewAdminController implements Initializable {
 
     AdminNewAdminController(Admin admin, AdminManager adminManager, UserManager userManager){
         this.admin = admin;
-        adminAccountPresenter = new AdminAccountPresenter(admin);
+        adminGUIPresenter = new AdminGUIPresenter();
         this.adminManager = adminManager;
         this.userManager = userManager;
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        exitButton.setText("Go back to Admin Account Menu");
+        exitButton.setText(adminGUIPresenter.exitButton());
         exitButton.setOnAction(this::close);
-        addNewAdminButton.setText("Create a new Admin!");
+        addNewAdminButton.setText(adminGUIPresenter.newAdminButton());
         addNewAdminButton.setOnAction(this::addNewAdminButtonPushed);
 
     }
@@ -55,16 +55,23 @@ public class AdminNewAdminController implements Initializable {
         String newUsername = newAdminUserNameTextField.getText();
 
         String newPassword = newAdminPasswordTextField.getText();
-        if(userManager.isValidUser(newUsername)){
-            resultOfCreationLabel.setText(adminAccountPresenter.AdminCreationFailed());
+        if (newUsername.equals("")){
+            resultOfCreationLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
+
+        }
+        else if(newPassword.equals("")){
+            resultOfCreationLabel.setText(adminGUIPresenter.passwordCannotBeEmpty());
+        }
+        else if(userManager.isValidUser(newUsername)){
+            resultOfCreationLabel.setText(adminGUIPresenter.AdminCreationFailed());
         }
         else {
             try {
                 adminManager.addAdmin(newUsername, newPassword);
-                resultOfCreationLabel.setText(adminAccountPresenter.newAdminCreated());
+                resultOfCreationLabel.setText(adminGUIPresenter.newAdminCreated());
             }
             catch (InvalidUsernameException e) {
-                resultOfCreationLabel.setText(adminAccountPresenter.AdminCreationFailed());
+                resultOfCreationLabel.setText(adminGUIPresenter.AdminCreationFailed());
             }
         }
 

@@ -145,7 +145,7 @@ public class UserMenuGUI implements Initializable {
                 break;
             // access global inventory
             case GLOBAL_INVENTORY:
-                loader.setController(new GlobalInventoryMenuController(globalInventoryManager, userManager,
+                loader.setController(new GlobalInventoryMenuController(currUser, globalInventoryManager, userManager,
                         tradeManager, globalWishlistManager));
                 // loader.setController(new Object());
                 break;

@@ -16,8 +16,8 @@
             </Label>
             <Button fx:id="messageInboxButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" />
             <Button fx:id="manageAdminAccountButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" />
-            <Button fx:id="UserBrowsingButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" />
-            <Button fx:id="TradeUndoButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" />
+            <Button fx:id="userBrowsingButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" />
+            <Button fx:id="tradeUndoButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0" />
             <Button fx:id="exitButton" mnemonicParsing="false" prefHeight="50.0" prefWidth="300.0"  />
          </children>
          <padding>

@@ -6,17 +6,19 @@ import entities.Trade;
 import entities.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 
-import java.awt.event.ActionEvent;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.ResourceBundle;
 
 public class UndoUnstartedTradeMenuController implements Initializable {
     @FXML private Button deleteTradeButton;
+    @FXML private Button exitButton;
     @FXML
     private TableView<Trade> tableView;
     @FXML private TableColumn<Trade, String> column1;
@@ -34,6 +37,7 @@ public class UndoUnstartedTradeMenuController implements Initializable {
     @FXML private TableColumn<Trade, ArrayList<Item>> column4;
     @FXML private TableColumn<Trade, LocalDateTime> column5;
     String currentUserName;
+    AdminGUIPresenter adminGUIPresenter;
 
     private UserManager usermanager;
     private TradeManager tradeManager;
@@ -41,6 +45,7 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         this.currentUserName = currentUserName;
         this.usermanager = userManager;
         this.tradeManager = tradeManager;
+        adminGUIPresenter = new AdminGUIPresenter();
     }
 
 
@@ -54,9 +59,16 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         allTrades.remove(selectedRow);
         tradeManager.removeTrade(selectedRow);
     }
+
+    public void close(ActionEvent actionEvent){
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deleteTradeButton.setText("delete selected Trade!");
+        exitButton.setText(adminGUIPresenter.exitButton());
+        exitButton.setOnAction(this::close);
+        deleteTradeButton.setText(adminGUIPresenter.deleteSelectedTradeButton());
         column1.setCellValueFactory(new PropertyValueFactory<Trade, String>("TraderA"));
         column2.setCellValueFactory(new PropertyValueFactory<Trade, String>("TraderB"));
         column3.setCellValueFactory(new PropertyValueFactory<Trade, ArrayList<Item>>("traderAItemsToTrade"));
