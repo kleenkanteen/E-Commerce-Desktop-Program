@@ -42,8 +42,6 @@ public class DemoUserMenuGUI  implements Initializable {
 
     public DemoUserMenuGUI(GlobalInventoryManager globalInventoryManager) {
         this.demoUserManager = new DemoUserManager("demo", "demo");
-        System.out.println(demoUserManager.getUserWishlist().size());
-        System.out.println(demoUserManager.getUserInventory().size());
         this.globalInventoryManager = globalInventoryManager;
     }
 
