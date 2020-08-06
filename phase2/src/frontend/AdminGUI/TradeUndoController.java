@@ -76,7 +76,11 @@ public class TradeUndoController implements Initializable {
 
 
     public void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
-        if(usermanager.isValidUser(userNameField.getText())){
+        if(userNameField.getText().equals("")){
+            invalidUserLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
+
+        }
+        else if(usermanager.isValidUser(userNameField.getText())){
             openTradeWindow(actionEvent);
         }
         else {
