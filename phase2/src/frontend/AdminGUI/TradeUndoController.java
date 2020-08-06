@@ -29,9 +29,11 @@ public class TradeUndoController implements Initializable {
     private String UndoUnstartedTradeMenuFXML = "UndoUnstartedTradeMenu.fxml";
     private UserManager usermanager;
     private TradeManager tradeManager;
+    private AdminGUIPresenter adminGUIPresenter;
     TradeUndoController(TradeManager tradeManager, UserManager userManager){
         this.usermanager = userManager;
         this.tradeManager = tradeManager;
+        adminGUIPresenter = new AdminGUIPresenter();
     }
 
 
@@ -47,7 +49,7 @@ public class TradeUndoController implements Initializable {
     private void openTradeWindow(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("User's Unstarted Trades");
+        window.setTitle(adminGUIPresenter.undoUserTradeWindow());
         window.setMinWidth(800);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(UndoUnstartedTradeMenuFXML));
 
@@ -77,7 +79,7 @@ public class TradeUndoController implements Initializable {
             openTradeWindow(actionEvent);
         }
         else {
-            invalidUserLabel.setText("invalid User Name");
+            invalidUserLabel.setText(adminGUIPresenter.InvalidUserNameLabel());
         }
 
 
@@ -94,7 +96,7 @@ public class TradeUndoController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         invalidUserLabel.setText(" ");
-        searchUserButton.setText("Search");
+        searchUserButton.setText(adminGUIPresenter.searchButtonText());
         searchUserButton.setOnAction(e -> {
             try {
                 searchUserButtonPushed(e);
@@ -102,7 +104,7 @@ public class TradeUndoController implements Initializable {
                 ioException.printStackTrace();
             }
         });
-        goBackButton.setText("Back to Admin Menu");
+        goBackButton.setText(adminGUIPresenter.exitButton());
         goBackButton.setOnAction(this::close);
 
 

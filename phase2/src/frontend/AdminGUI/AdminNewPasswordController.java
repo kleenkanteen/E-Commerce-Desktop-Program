@@ -25,7 +25,7 @@ public class AdminNewPasswordController implements Initializable {
     @FXML private Button exitButton;
     private Admin admin;
 
-    private AdminAccountPresenter adminAccountPresenter;
+    private AdminGUIPresenter adminGUIPresenter;
 
     private UserManager userManager;
 
@@ -33,7 +33,7 @@ public class AdminNewPasswordController implements Initializable {
     AdminNewPasswordController(Admin admin, AdminManager adminManager,
                            UserManager userManager){
         this.admin = admin;
-        adminAccountPresenter = new AdminAccountPresenter(admin);
+        adminGUIPresenter = new AdminGUIPresenter();
         this.adminManager = adminManager;
         this.userManager = userManager;
 
@@ -46,9 +46,9 @@ public class AdminNewPasswordController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        exitButton.setText("Back to Admin account menu");
+        exitButton.setText(adminGUIPresenter.exitButton());
         exitButton.setOnAction(this::close);
-        addNewPasswordButton.setText("Save changes");
+        addNewPasswordButton.setText(adminGUIPresenter.saveChangeButtonText());
         addNewPasswordButton.setOnAction(this::addNewPasswordButtonPushed);
 
 
@@ -59,9 +59,9 @@ public class AdminNewPasswordController implements Initializable {
 
         String password2 = confirmNewPasswordField.getText();
         if (adminManager.addNewPassWord(password1,password2, admin)){
-            resultOfPasswordChangeLabel.setText(adminAccountPresenter.newPasswordCreated());
+            resultOfPasswordChangeLabel.setText(adminGUIPresenter.newPasswordCreated(admin));
         }
         else {
-            resultOfPasswordChangeLabel.setText(adminAccountPresenter.newPasswordNotSaved());
+            resultOfPasswordChangeLabel.setText(adminGUIPresenter.newPasswordNotSaved());
         }
 }}
