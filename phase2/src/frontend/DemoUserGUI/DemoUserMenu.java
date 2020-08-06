@@ -1,9 +1,6 @@
 package frontend.DemoUserGUI;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,11 +13,11 @@ public class DemoUserMenu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DemoUserMenu.fxml"));
-        loader.setController(new DemoUserMenuGUI());
-        Parent root = loader.load();
-        primaryStage.setTitle("DemoUserMenu");
-        primaryStage.setScene(new Scene(root, 400, 500) );
-        primaryStage.show();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("DemoUserMenu.fxml"));
+//        loader.setController(new DemoUserMenuGUI());
+//        Parent root = loader.load();
+//        primaryStage.setTitle("DemoUserMenu");
+//        primaryStage.setScene(new Scene(root, 400, 500) );
+//        primaryStage.show();
     }
 }

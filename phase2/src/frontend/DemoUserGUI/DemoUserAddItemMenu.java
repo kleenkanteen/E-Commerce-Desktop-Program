@@ -27,8 +27,7 @@ public class DemoUserAddItemMenu implements Initializable {
     @FXML private TextArea descriptionInput;
     @FXML private Label errorMessage;
 
-    public DemoUserAddItemMenu() {
-    }
+
 
     public DemoUserAddItemMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;

@@ -20,6 +20,8 @@ public class DemoUserInfoMenu implements Initializable {
     private Type type;
     private DemoUserManager demoUserManager;
     private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
+    private String DemoUserInventoryFXML = "DemoUserInventory.fxml";
+    private String DemoUserWishListFXML = "DemoUserWishlist.fxml";
 
     @FXML private Button tradeHistory;
     @FXML private Button newPassword;
@@ -30,8 +32,6 @@ public class DemoUserInfoMenu implements Initializable {
     @FXML private Button exit;
     @FXML private Label message;
 
-    public DemoUserInfoMenu() {
-    }
 
     public DemoUserInfoMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
@@ -69,11 +69,11 @@ public class DemoUserInfoMenu implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch(this.type) {
             case INVENTORY:
-                // loader.setController(new Object());
+                loader.setController(new DemoUserInventory());
                 break;
             // view user wishlist
             case WISHLIST:
-                // loader.setController(new Object());
+                loader.setController(new DemoUserWishlist(demoUserManager));
                 break;
         }
         Parent root = loader.load();
@@ -84,10 +84,24 @@ public class DemoUserInfoMenu implements Initializable {
     }
 
     @FXML
-    public void viewInventory() { }
+    public void viewInventory() {
+        try{
+            type = Type.INVENTORY;
+            switchScene(this.DemoUserInventoryFXML);
+        } catch (IOException e){
+            // error
+        }
+    }
 
     @FXML
-    public void viewWishlist() { }
+    public void viewWishlist() {
+        try{
+            type = Type.WISHLIST;
+            switchScene(this.DemoUserWishListFXML);
+        } catch (IOException e){
+            // error
+        }
+    }
 
     @FXML
     public void exit(ActionEvent actionEvent) {

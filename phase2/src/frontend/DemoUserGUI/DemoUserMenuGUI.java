@@ -38,10 +38,9 @@ public class DemoUserMenuGUI  implements Initializable {
     @FXML private Button logout;
 
     //TODO: use presenter to set the text on screen
-    public DemoUserMenuGUI(){}
 
-    public DemoUserMenuGUI(DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager) {
-        this.demoUserManager = demoUserManager;
+    public DemoUserMenuGUI(GlobalInventoryManager globalInventoryManager) {
+        this.demoUserManager = new DemoUserManager();
         this.globalInventoryManager = globalInventoryManager;
     }
 
@@ -162,16 +161,16 @@ public class DemoUserMenuGUI  implements Initializable {
         // access account info
         switch (this.type) {
             case ACCOUNT_INFO:
-                loader.setController(new DemoUserInfoMenu());
+                loader.setController(new DemoUserInfoMenu(demoUserManager));
                 break;
             // access global inventory
             case GLOBAL_INVENTORY:
-                loader.setController(new DemoUserGlobalInventoryMenu());
+                loader.setController(new DemoUserGlobalInventoryMenu(demoUserManager, globalInventoryManager));
                 break;
 
             // access new item menu
             case NEW_ITEM:
-                loader.setController(new DemoUserAddItemMenu());
+                loader.setController(new DemoUserAddItemMenu(demoUserManager));
                 break;
 
         }

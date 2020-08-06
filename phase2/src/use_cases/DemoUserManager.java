@@ -1,8 +1,9 @@
 package use_cases;
 
+import entities.DemoUser;
+import entities.Item;
+
 import java.util.List;
-import entities.*;
-import use_cases.MessageBuilder;
 
 public class DemoUserManager {
 
@@ -19,6 +20,12 @@ public class DemoUserManager {
         this.demoUser = new DemoUser(username, password);
         this.demoName = username;
         this.itemID = 0;
+    }
+
+    /**
+     * Constructs a new DemoUserManager and stores an instance of DemoUser as an instance variable
+     */
+    public DemoUserManager() {
     }
 
     /**

@@ -21,6 +21,8 @@ import use_cases.GlobalInventoryManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DemoUserGlobalInventoryMenu implements Initializable {
@@ -39,13 +41,10 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
     @FXML private Label message;
 
     // for testing
-    public DemoUserGlobalInventoryMenu() {
-    }
 
-//    public DemoUserGlobalInventoryMenu(String username, String password, GlobalInventoryManager globalInventoryManager) {
-//        this.demoUserManager = new DemoUserManager(username, password);
-//        this.globalInventoryManager = globalInventoryManager;
-//    }
+    public DemoUserGlobalInventoryMenu(DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager) {
+        this.globalInventoryManager = globalInventoryManager;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -83,15 +82,15 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     private ObservableList<Item> getItem(){
         ObservableList<Item> items = FXCollections.observableArrayList();
-        // for demonstration purpose
-        Item itema = new Item("pen", "Jerry", "a pen");
-        Item itemb = new Item("desk", "Jerry", "a desk");
-        items.addAll(itema, itemb);
+//        // for demonstration purpose
+//        Item itema = new Item("pen", "Jerry", "a pen");
+//        Item itemb = new Item("desk", "Jerry", "a desk");
+//        items.addAll(itema, itemb);
         // using GlobalinventorManager
-//        List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
-//        for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
-//            items.add(i);
-//        }
+        List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
+        for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
+            items.add(i);
+        }
         return items;
     }
 
