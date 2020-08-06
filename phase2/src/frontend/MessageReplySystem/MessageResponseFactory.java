@@ -53,6 +53,9 @@ public class MessageResponseFactory {
         else if(message instanceof UnbanRequest){
             return new UnbanRequestResponse((UnbanRequest) message, messageList, userManager);
         }
+        else if(message instanceof NewItemRequest){
+            return new NewItemRequestResponse((NewItemRequest)message, messageList, userManager, globalInventoryManager);
+        }
         else {
             return new TradeRequestResponse((TradeRequest)message, messageList, userManager, globalInventoryManager,
                     tradeManager, accountUsername);
