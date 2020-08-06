@@ -36,6 +36,7 @@ public class LoanMenu implements Initializable {
     @FXML private Label recipientPrompt;
     @FXML private Label userItem;
     @FXML private Label recipientUser;
+    @FXML private Label prompt;
     @FXML private Button confirmTrade;
     @FXML private Button denyTrade;
 
@@ -70,12 +71,13 @@ public class LoanMenu implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // set text
         List<Item> userItem = setUpTradeOptions();
-        this.userItem.setText(userItem.get(0).getName());
+        this.userItem.setText(userItem.get(0).toString());
         this.recipientUser.setText(this.itemsToLend.get(1));
         this.itemPrompt.setText(this.userPresenter.userLoanPromptOfferedItemLabel());
         this.recipientPrompt.setText(this.userPresenter.userLoanPromptRecipientLabel());
         this.confirmTrade.setText(this.userPresenter.userLoanPromptConfirm());
         this.denyTrade.setText(this.userPresenter.userLoanPromptCancel());
+        this.prompt.setText(this.userPresenter.userLoanPrompt());
 
         // set button function
         this.confirmTrade.setOnAction(e -> sendTradeRequest());

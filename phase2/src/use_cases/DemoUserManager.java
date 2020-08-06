@@ -1,8 +1,9 @@
 package use_cases;
 
+import entities.DemoUser;
+import entities.Item;
+
 import java.util.List;
-import entities.*;
-import use_cases.MessageBuilder;
 
 public class DemoUserManager {
 
@@ -20,6 +21,7 @@ public class DemoUserManager {
         this.demoName = username;
         this.itemID = 0;
     }
+
 
     /**
      * Get this demo user's inventory

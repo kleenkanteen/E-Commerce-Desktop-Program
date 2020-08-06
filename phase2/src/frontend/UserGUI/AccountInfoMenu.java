@@ -1,6 +1,8 @@
 package frontend.UserGUI;
 
-import javafx.application.Application;
+import frontend.UserGUI.AccountInfo.BrowseThroughUserCollection;
+import frontend.UserGUI.AccountInfo.NewPassword;
+import frontend.UserGUI.AccountInfo.RecentTradesTradePartners;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.UserPresenter;
 import use_cases.*;
 import entities.*;
@@ -39,18 +43,20 @@ public class AccountInfoMenu implements Initializable {
     private GlobalInventoryManager globalInventoryManager;
     private GlobalWishlistManager globalWishlistManager;
     private UserPresenter userPresenter;
-    List<Trade> userTrades;
-    List<Item> userInventory;
-    List<Item> userWishlist;
+    private List<Trade> userTrades;
+    private List<Item> userInventory;
+    private List<Item> userWishlist;
+    private Trade[] recentTradeHistory;
+    private String[] tradingPartners;
     private Type type;
 
     // .fxml pathways
-    private final String tradeHistoryFXML = "BrowseThroughUserTrades.fxml";
-    private final String passwordFXML = "";
-    private final String tradePartnersFXML = "";
-    private final String recentTradesFXML = "";
-    private final String inventoryFXML = "BrowseThroughUserInventory.fxml";
-    private final String wishlistFXML = "BrowseThroughUserWishlist.fxml";
+    private final String tradeHistoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserTrades.fxml";
+    private final String passwordFXML = "/frontend/UserGUI/AccountInfo/NewPasswordGUI.fxml";
+    private final String tradePartnersFXML = "/frontend/UserGUI/AccountInfo/RecentTradesPartnersGUI.fxml";
+    private final String recentTradesFXML = "/frontend/UserGUI/AccountInfo/RecentTradesPartnersGUI.fxml";
+    private final String inventoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserInventory.fxml";
+    private final String wishlistFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserWishlist.fxml";
 
     /**
      * Constructs a new BrowseThroughUserInfo object
@@ -61,8 +67,7 @@ public class AccountInfoMenu implements Initializable {
      * @param globalWishlistManager GlobalWishlistManager object
      */
     public AccountInfoMenu(String currUser, UserManager userManager, TradeManager tradeManager,
-                           GlobalInventoryManager globalInventoryManager,
-                           GlobalWishlistManager globalWishlistManager) {
+                           GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager) {
         this.currUser = currUser;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
@@ -116,15 +121,15 @@ public class AccountInfoMenu implements Initializable {
                 break;
             // change password
             case PASSWORD:
-                // loader.setController(new Object());
+                loader.setController(new NewPassword(this.currUser, this.userManager));
                 break;
             // view trade partners
             case TRADE_PARTNERS:
-                // loader.setController(new Object());
+                loader.setController(new RecentTradesTradePartners(this.tradingPartners));
                 break;
             // view 3 most recent trades
             case RECENT_TRADES:
-                // loader.setController(new Object());
+                loader.setController(new RecentTradesTradePartners(this.recentTradeHistory));
                 break;
             // view user inventory
             case INVENTORY:
@@ -140,6 +145,8 @@ public class AccountInfoMenu implements Initializable {
         Parent root = loader.load();
         Scene newScene = new Scene(root);
         Stage window = new Stage();
+        window.initStyle(StageStyle.UNDECORATED);
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }
@@ -167,17 +174,54 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses new password menu
      */
-    public void setNewPassword() { }
+    public void setNewPassword() {
+        try {
+            this.type = Type.PASSWORD;
+            switchScene(this.passwordFXML);
+        }
+        catch(IOException ex) {
+            this.systemMessage.setText("Input error in setNewPassword");
+        }
+    }
 
     /**
      * Accesses trade Partners menu
      */
-    public void viewTradePartners() { }
+    public void viewTradePartners() {
+        this.tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
+        // if the first entry is null
+        if(this.tradingPartners[0] == null) {
+            this.systemMessage.setText(this.userPresenter.noTradingPartners());
+        }
+        else {
+            try {
+                this.type = Type.TRADE_PARTNERS;
+                switchScene(this.tradePartnersFXML);
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("Input error in viewTradePartners");
+            }
+        }
+    }
 
     /**
      * Accesses recent trades menu
      */
-    public void viewRecentTrades() { }
+    public void viewRecentTrades() {
+        this.recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
+        // if the first entry is null
+        if (this.recentTradeHistory[0] == null) {
+            this.systemMessage.setText(this.userPresenter.noRecentTrades());
+        }
+        else {
+            try {
+                this.type = Type.RECENT_TRADES;
+                switchScene(this.recentTradesFXML);
+            } catch (IOException ex) {
+                this.systemMessage.setText("Input error in viewRecentTrades");
+            }
+        }
+    }
 
     /**
      * Accesses viewInventory menu

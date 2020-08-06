@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.control.*;
+import javafx.stage.StageStyle;
 import presenters.*;
 import use_cases.*;
 
@@ -62,6 +63,7 @@ public class MainMenuController implements Initializable {
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         window.setScene(scene);

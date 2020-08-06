@@ -1,24 +1,23 @@
 package frontend.MainMenuGUI;
 
-import controllers.AdminSystem;
-import controllers.BannedUserController;
-import controllers.DemoUserController;
-import controllers.UserMenu;
-import entities.GlobalInventory;
 import exceptions.InvalidUsernameException;
+import frontend.AdminGUI.AdminController;
 import frontend.BannedUser.BannedUserMenu;
 import frontend.DemoUserGUI.DemoUserMenuGUI;
 import frontend.UserGUI.UserMenuGUI;
-import frontend.AdminGUI.AdminController;
-import frontend.DemoUserGUI.DemoUserMenuGUI;
 import javafx.event.ActionEvent;
-import javafx.fxml.*;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.MainMenuPresenter;
 import use_cases.*;
 
@@ -85,16 +84,16 @@ public class LoginController implements Initializable {
             loader.setController(new BannedUserMenu(username, adminManager));
         }
 
-        /*
+
         if (MenuToOpen.equals("DEMO_MENU")) {
-            loader.setController(new DemoUserMenuGUI(String username, String password,
-                GlobalInventory globalInventoryManager);
+            loader.setController(new DemoUserMenuGUI(globalInventoryManager));
         }
-         */
+
 
 
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
         Parent root = loader.load();
         Scene scene = new Scene(root);
         window.setScene(scene);

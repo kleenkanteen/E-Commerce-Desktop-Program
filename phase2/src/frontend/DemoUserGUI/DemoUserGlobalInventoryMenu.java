@@ -15,12 +15,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DemoUserGlobalInventoryMenu implements Initializable {
@@ -39,13 +42,10 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
     @FXML private Label message;
 
     // for testing
-    public DemoUserGlobalInventoryMenu() {
-    }
 
-//    public DemoUserGlobalInventoryMenu(String username, String password, GlobalInventoryManager globalInventoryManager) {
-//        this.demoUserManager = new DemoUserManager(username, password);
-//        this.globalInventoryManager = globalInventoryManager;
-//    }
+    public DemoUserGlobalInventoryMenu(DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager) {
+        this.globalInventoryManager = globalInventoryManager;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -76,6 +76,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }
@@ -83,15 +84,15 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     private ObservableList<Item> getItem(){
         ObservableList<Item> items = FXCollections.observableArrayList();
-        // for demonstration purpose
-        Item itema = new Item("pen", "Jerry", "a pen");
-        Item itemb = new Item("desk", "Jerry", "a desk");
-        items.addAll(itema, itemb);
+//        // for demonstration purpose
+//        Item itema = new Item("pen", "Jerry", "a pen");
+//        Item itemb = new Item("desk", "Jerry", "a desk");
+//        items.addAll(itema, itemb);
         // using GlobalinventorManager
-//        List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
-//        for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
-//            items.add(i);
-//        }
+        List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
+        for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
+            items.add(i);
+        }
         return items;
     }
 
@@ -109,9 +110,9 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(demoUserPresenter.noItemSelected());
-            demoUserManager.addDemoWishlist(itemselected);
         }
-        else message.setText(demoUserPresenter.addedToWishlist(itemselected));
+        else {message.setText(demoUserPresenter.addedToWishlist(itemselected));
+            demoUserManager.addDemoWishlist(itemselected);}
 
     }
 
