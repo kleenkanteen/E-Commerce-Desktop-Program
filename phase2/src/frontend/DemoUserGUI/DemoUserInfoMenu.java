@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.DemoUserManager;
 
@@ -69,7 +70,7 @@ public class DemoUserInfoMenu implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch(this.type) {
             case INVENTORY:
-                loader.setController(new DemoUserInventory());
+                loader.setController(new DemoUserInventory(demoUserManager));
                 break;
             // view user wishlist
             case WISHLIST:
@@ -79,6 +80,7 @@ public class DemoUserInfoMenu implements Initializable {
         Parent root = loader.load();
         Scene newScene = new Scene(root);
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }
@@ -89,7 +91,8 @@ public class DemoUserInfoMenu implements Initializable {
             type = Type.INVENTORY;
             switchScene(this.DemoUserInventoryFXML);
         } catch (IOException e){
-            // error
+            System.out.println("oh no");
+            System.out.println(demoUserManager.getUserInventory().size());
         }
     }
 
@@ -99,7 +102,8 @@ public class DemoUserInfoMenu implements Initializable {
             type = Type.WISHLIST;
             switchScene(this.DemoUserWishListFXML);
         } catch (IOException e){
-            // error
+            System.out.println("wishlist");
+            System.out.println(demoUserManager.getUserWishlist().size());
         }
     }
 

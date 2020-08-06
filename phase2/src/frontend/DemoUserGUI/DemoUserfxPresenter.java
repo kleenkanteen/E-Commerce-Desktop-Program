@@ -148,6 +148,10 @@ public class DemoUserfxPresenter {
         return "Reached end of inventory.";
     }
 
+    public String endOfUserWishlist(){
+        return "Reached end of inventory";
+    }
+
     /**
      * Prompt for item removal
      */
@@ -155,12 +159,16 @@ public class DemoUserfxPresenter {
         return "Item removed.\n";
     }
 
-    public String emptyinventory(){
-        return "Your inventory is empty";
-    }
 
     public String wishlistPromptTradeOffer() {
         return "Send a trade offer to this user";
     }
 
+    public String inventoryIsEmpty() {
+        return "Your inventory is empty!\n";
+    }
+
+    public String wishlistIsEmpty() {
+        return "Your wishlist is empty!\n";
+    }
 }

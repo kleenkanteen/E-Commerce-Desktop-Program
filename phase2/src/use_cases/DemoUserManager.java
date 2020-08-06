@@ -22,11 +22,6 @@ public class DemoUserManager {
         this.itemID = 0;
     }
 
-    /**
-     * Constructs a new DemoUserManager and stores an instance of DemoUser as an instance variable
-     */
-    public DemoUserManager() {
-    }
 
     /**
      * Get this demo user's inventory

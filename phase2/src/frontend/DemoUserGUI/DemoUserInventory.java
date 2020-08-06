@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 public class DemoUserInventory implements Initializable {
     private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
     private DemoUserManager demoUserManager;
-    private int index;
+    private int index = 0;
 
 
 
@@ -30,9 +30,6 @@ public class DemoUserInventory implements Initializable {
     @FXML private Button deny;
     @FXML private Button exit;
 
-
-    public DemoUserInventory() {
-    }
 
     public DemoUserInventory(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
@@ -51,6 +48,11 @@ public class DemoUserInventory implements Initializable {
         this.previous.setOnAction(e -> previous());
         this.next.setOnAction(e -> next());
         this.remove.setOnAction(e -> remove());
+
+        if (demoUserManager.getUserInventory().size() > 0){
+            viewItem.setText(demoUserManager.getUserInventory().get(index).toString());
+        }
+        else viewItem.setText(demoUserPresenter.inventoryIsEmpty());
     }
 
     public void previous (){
@@ -73,8 +75,10 @@ public class DemoUserInventory implements Initializable {
         itemToString();
     }
     public void remove(){
+        if (demoUserManager.getUserInventory().size() > 0){
         demoUserManager.removeFromInventory(demoUserManager.getUserInventory().get(index));
-        viewItem.setText(demoUserPresenter.itemRemoved());
+        viewItem.setText(demoUserPresenter.itemRemoved());}
+        else viewItem.setText(demoUserPresenter.inventoryIsEmpty());
     }
 
     public void itemToString() {
@@ -82,7 +86,7 @@ public class DemoUserInventory implements Initializable {
             this.viewItem.setText(demoUserManager.getUserInventory().get(index).toString());
         }
         else {
-            this.viewItem.setText(demoUserPresenter.emptyinventory());
+            this.viewItem.setText(demoUserPresenter.inventoryIsEmpty());
         }
     }
 

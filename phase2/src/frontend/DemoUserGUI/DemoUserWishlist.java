@@ -16,7 +16,7 @@ public class DemoUserWishlist implements Initializable {
 
     private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
     private DemoUserManager demoUserManager;
-    private int index;
+    private int index = 0;
 
 
 
@@ -49,13 +49,17 @@ public class DemoUserWishlist implements Initializable {
         this.next.setText(this.demoUserPresenter.menuPromptNext());
         this.previous.setText(this.demoUserPresenter.menuPromptPrevious());
         this.remove.setText(this.demoUserPresenter.menuPromptRemove());
-
         this.sendTradeRequest.setText(demoUserPresenter.wishlistPromptTradeOffer());
         this.sendTradeRequest.setOnAction(e -> sendTradeRequest());
-
         this.previous.setOnAction(e -> previous());
         this.next.setOnAction(e -> next());
         this.remove.setOnAction(e -> remove());
+
+
+        if (demoUserManager.getUserWishlist().size() > 0){
+            viewItem.setText(demoUserManager.getUserWishlist().get(index).toString());
+        }
+        else viewItem.setText(demoUserPresenter.wishlistIsEmpty());
     }
 
     public void previous (){
@@ -70,7 +74,7 @@ public class DemoUserWishlist implements Initializable {
 
     public void next(){
         if(this.index == demoUserManager.getUserInventory().size() - 1) {
-            this.systemMessage.setText(demoUserPresenter.endOfUserInventory());
+            this.systemMessage.setText(demoUserPresenter.endOfUserWishlist());
         }
         else{
             this.index++;
@@ -78,8 +82,10 @@ public class DemoUserWishlist implements Initializable {
         itemToString();
     }
     public void remove(){
+        if (demoUserManager.getUserWishlist().size() > 0){
         demoUserManager.removeFromInventory(demoUserManager.getUserInventory().get(index));
-        viewItem.setText(demoUserPresenter.itemRemoved());
+        viewItem.setText(demoUserPresenter.itemRemoved());}
+        else viewItem.setText(demoUserPresenter.wishlistIsEmpty());
     }
 
     public void itemToString() {
@@ -87,7 +93,7 @@ public class DemoUserWishlist implements Initializable {
             this.viewItem.setText(demoUserManager.getUserInventory().get(index).toString());
         }
         else {
-            this.viewItem.setText(demoUserPresenter.emptyinventory());
+            this.viewItem.setText(demoUserPresenter.endOfUserWishlist());
         }
     }
 

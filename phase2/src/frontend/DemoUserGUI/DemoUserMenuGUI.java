@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
@@ -40,7 +41,9 @@ public class DemoUserMenuGUI  implements Initializable {
     //TODO: use presenter to set the text on screen
 
     public DemoUserMenuGUI(GlobalInventoryManager globalInventoryManager) {
-        this.demoUserManager = new DemoUserManager();
+        this.demoUserManager = new DemoUserManager("demo", "demo");
+        System.out.println(demoUserManager.getUserWishlist().size());
+        System.out.println(demoUserManager.getUserInventory().size());
         this.globalInventoryManager = globalInventoryManager;
     }
 
@@ -177,6 +180,7 @@ public class DemoUserMenuGUI  implements Initializable {
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }

@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import use_cases.DemoUserManager;
 import use_cases.GlobalInventoryManager;
@@ -75,6 +76,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }
@@ -108,9 +110,9 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(demoUserPresenter.noItemSelected());
-            demoUserManager.addDemoWishlist(itemselected);
         }
-        else message.setText(demoUserPresenter.addedToWishlist(itemselected));
+        else {message.setText(demoUserPresenter.addedToWishlist(itemselected));
+            demoUserManager.addDemoWishlist(itemselected);}
 
     }
 

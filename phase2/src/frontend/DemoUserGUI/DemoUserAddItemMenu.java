@@ -1,5 +1,6 @@
 package frontend.DemoUserGUI;
 
+import entities.Item;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,6 +47,8 @@ public class DemoUserAddItemMenu implements Initializable {
     }
 
     public void demoAddItem(){
+        Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
+        demoUserManager.getUserInventory().add(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());
     }
 
