@@ -69,6 +69,7 @@ public class AdminAccountController implements Initializable {
     public void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
+        window.setMinHeight(400);
         window.setTitle(adminGUIPresenter.adminPasswordChangeWindow());
         window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewPasswordFXML));
@@ -88,6 +89,7 @@ public class AdminAccountController implements Initializable {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.adminAccountCreationWindow());
         window.setMinWidth(600);
+        window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewAdminFXML));
 
         loader.setController(new AdminNewAdminController(admin, adminManager, userManager));

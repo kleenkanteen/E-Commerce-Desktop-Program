@@ -51,6 +51,7 @@ public class TradeUndoController implements Initializable {
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.undoUserTradeWindow());
         window.setMinWidth(800);
+        window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(UndoUnstartedTradeMenuFXML));
 
         loader.setController(new UndoUnstartedTradeMenuController(userNameField.getText(), tradeManager, usermanager));

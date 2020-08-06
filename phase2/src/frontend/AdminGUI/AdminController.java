@@ -85,7 +85,8 @@ public class AdminController implements Initializable{
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.adminMessageWindow());
-        window.setMinWidth(800);
+        window.setMinHeight(400);
+        window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminMessageGUI));
 
         loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
@@ -110,6 +111,7 @@ public class AdminController implements Initializable{
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.adminAccountWindow());
         window.setMinWidth(600);
+        window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
         loader.setController(new AdminAccountController(admin, adminManager, userManager));
         Parent parent = loader.load();
@@ -134,6 +136,7 @@ public class AdminController implements Initializable{
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.adminTradeUndoSearchWindow());
         window.setMinWidth(600);
+        window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
 
         loader.setController(new TradeUndoController(tradeManager, userManager));
