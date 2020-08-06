@@ -12,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 
@@ -59,6 +60,7 @@ public class TradeUndoController implements Initializable {
 
         window.setScene(scene);
 
+
         window.showAndWait();
     }
 
@@ -80,6 +82,10 @@ public class TradeUndoController implements Initializable {
 
 
     }
+    public void close(ActionEvent actionEvent){
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.close();
+    }
 
 
 
@@ -97,6 +103,7 @@ public class TradeUndoController implements Initializable {
             }
         });
         goBackButton.setText("Back to Admin Menu");
+        goBackButton.setOnAction(this::close);
 
 
     }

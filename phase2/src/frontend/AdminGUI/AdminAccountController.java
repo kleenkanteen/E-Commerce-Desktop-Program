@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.AdminAccountPresenter;
 import use_cases.AdminManager;
 import use_cases.UserManager;
@@ -73,13 +74,14 @@ public class AdminAccountController implements Initializable {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Go set a new password!");
-        window.setMinWidth(800);
+        window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewPasswordFXML));
         loader.setController(new AdminNewPasswordController(admin, adminManager, userManager));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
-        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
         window.setScene(scene);
+
         window.show();
 
 
@@ -89,7 +91,7 @@ public class AdminAccountController implements Initializable {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Go create a new pal!");
-        window.setMinWidth(800);
+        window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewAdminFXML));
 
         loader.setController(new AdminNewAdminController(admin, adminManager, userManager));
@@ -97,9 +99,10 @@ public class AdminAccountController implements Initializable {
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
 
-        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
 
         window.setScene(scene);
+
 
         window.show();
 

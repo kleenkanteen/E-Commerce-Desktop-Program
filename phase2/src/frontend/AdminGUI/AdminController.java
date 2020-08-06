@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.AdminMenu;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
@@ -96,9 +97,10 @@ public class AdminController extends Application  implements Initializable{
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
 
-        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
 
         window.setScene(scene);
+
 
         window.show();
 
@@ -109,14 +111,18 @@ public class AdminController extends Application  implements Initializable{
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Account Management");
-        window.setMinWidth(800);
+        window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
         loader.setController(new AdminAccountController(admin, adminManager, userManager));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
-        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
         window.setScene(scene);
+
         window.show();
+
+
+
 
 
     }
@@ -129,7 +135,7 @@ public class AdminController extends Application  implements Initializable{
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle("Admin Message Inbox");
-        window.setMinWidth(800);
+        window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
 
         loader.setController(new TradeUndoController(tradeManager, userManager));
@@ -137,9 +143,10 @@ public class AdminController extends Application  implements Initializable{
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
 
-        window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
 
         window.setScene(scene);
+
 
         window.show();
 
