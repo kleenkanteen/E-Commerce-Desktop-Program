@@ -27,5 +27,6 @@
       <Button fx:id="remove" layoutX="268.0" layoutY="245.0" mnemonicParsing="false" />
       <Label fx:id="title" layoutX="283.0" layoutY="55.0" />
       <Label fx:id="message" layoutX="266.0" layoutY="352.0" />
+      <Button fx:id="trade" layoutX="268.0" layoutY="337.0" mnemonicParsing="false" />
    </children>
 </AnchorPane>
