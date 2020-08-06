@@ -34,7 +34,6 @@ public class GlobalInventoryMenuController implements Initializable {
 
 
     private GlobalInventoryManager globalInventoryManager;
-    private String DemoUserTradeMenuFXML = "MultiItemMenu.fxml";
     private GlobalInventoryMenuPresenter globalInventoryMenuPresenter= new GlobalInventoryMenuPresenter();
     private UserManager userManager;
     private String user;
