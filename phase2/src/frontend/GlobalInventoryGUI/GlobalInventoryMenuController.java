@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
 import use_cases.TradeManager;
 import use_cases.UserManager;

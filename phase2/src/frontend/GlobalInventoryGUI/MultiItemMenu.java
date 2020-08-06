@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
 import use_cases.TradeManager;
 import use_cases.UserManager;

@@ -1,6 +1,7 @@
 package frontend.UserGUI;
 
 import exceptions.UserFrozenException;
+import frontend.GlobalInventoryGUI.GlobalInventoryMenuController;
 import frontend.MessageReplySystem.UserMessageReplyGUI;
 import frontend.UserGUI.AccountInfo.BrowseThroughUserCollection;
 import javafx.event.ActionEvent;
@@ -56,7 +57,7 @@ public class UserMenuGUI implements Initializable {
     private final String loanFXML = "LoanMenuGUI.fxml";
     private final String privateMessageFXML = "PrivateMessageMenuGUI.fxml";
     private final String newItemFXML = "NewItemMenuGUI.fxml";
-    private final String globalInventoryFXML = "";
+    private final String globalInventoryFXML = "/frontend/GlobalInventoryGUI/GlobalInventoryMenu.fxml";
     private final String userMessagesFXML = "/frontend/MessageReplySystem/MessageGUI.fxml";
     private final String unconfirmedTradesFXML = "UnconfirmedTradesPopUp.fxml";
     private final String userStatusFXML = "UserStatusPopUpGUI.fxml";
@@ -142,6 +143,8 @@ public class UserMenuGUI implements Initializable {
                 break;
             // access global inventory
             case GLOBAL_INVENTORY:
+                loader.setController(new GlobalInventoryMenuController(globalInventoryManager, userManager,
+                        tradeManager, globalWishlistManager.getGlobalWishlistData()));
                 // loader.setController(new Object());
                 break;
             // access loan menu
