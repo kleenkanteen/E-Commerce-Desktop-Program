@@ -1,7 +1,6 @@
 package frontend.AdminGUI;
 
 import entities.Admin;
-import exceptions.InvalidUsernameException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,17 +9,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-import presenters.AdminAccountPresenter;
 import use_cases.AdminManager;
 import use_cases.UserManager;
 
 import java.io.IOException;
 import java.net.URL;
+
 import java.util.ResourceBundle;
 
 public class AdminAccountController implements Initializable {
@@ -36,7 +32,7 @@ public class AdminAccountController implements Initializable {
 
     private Admin admin;
 
-    private AdminAccountPresenter adminAccountPresenter;
+    private AdminGUIPresenter adminGUIPresenter;
 
     private UserManager userManager;
 
@@ -56,7 +52,7 @@ public class AdminAccountController implements Initializable {
     AdminAccountController(Admin admin, AdminManager adminManager,
                        UserManager userManager){
         this.admin = admin;
-        adminAccountPresenter = new AdminAccountPresenter(admin);
+        adminGUIPresenter = new AdminGUIPresenter();
         this.adminManager = adminManager;
         this.userManager = userManager;
 
@@ -73,7 +69,8 @@ public class AdminAccountController implements Initializable {
     public void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Go set a new password!");
+        window.setMinHeight(400);
+        window.setTitle(adminGUIPresenter.adminPasswordChangeWindow());
         window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewPasswordFXML));
         loader.setController(new AdminNewPasswordController(admin, adminManager, userManager));
@@ -90,8 +87,9 @@ public class AdminAccountController implements Initializable {
     public void AdminCreationButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setTitle("Go create a new pal!");
+        window.setTitle(adminGUIPresenter.adminAccountCreationWindow());
         window.setMinWidth(600);
+        window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewAdminFXML));
 
         loader.setController(new AdminNewAdminController(admin, adminManager, userManager));
@@ -116,9 +114,9 @@ public class AdminAccountController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        changePassWordButton.setText("Change your password");
-        adminCreationButton.setText("Add a new admin account");
-        exitButton.setText("Press to go back");
+        changePassWordButton.setText(adminGUIPresenter.adminChangePasswordButton());
+        adminCreationButton.setText(adminGUIPresenter.adminCreationButtonText());
+        exitButton.setText(adminGUIPresenter.exitButton());
         exitButton.setOnAction(this::close);
         changePassWordButton.setOnAction(e -> {
             try {
@@ -127,7 +125,7 @@ public class AdminAccountController implements Initializable {
                 ioException.printStackTrace();
             }
         });
-        adminCreationButton.setText("Add a new admin account");
+
         adminCreationButton.setOnAction(e -> {
             try {
                 AdminCreationButtonPushed(e);
