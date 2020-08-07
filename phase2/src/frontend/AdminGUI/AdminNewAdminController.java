@@ -55,7 +55,14 @@ public class AdminNewAdminController implements Initializable {
         String newUsername = newAdminUserNameTextField.getText();
 
         String newPassword = newAdminPasswordTextField.getText();
-        if(userManager.isValidUser(newUsername)){
+        if (newUsername.equals("")){
+            resultOfCreationLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
+
+        }
+        else if(newPassword.equals("")){
+            resultOfCreationLabel.setText(adminGUIPresenter.passwordCannotBeEmpty());
+        }
+        else if(userManager.isValidUser(newUsername)){
             resultOfCreationLabel.setText(adminGUIPresenter.AdminCreationFailed());
         }
         else {

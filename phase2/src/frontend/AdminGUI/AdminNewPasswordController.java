@@ -58,7 +58,14 @@ public class AdminNewPasswordController implements Initializable {
         String password1 = newPasswordTextField.getText();
 
         String password2 = confirmNewPasswordField.getText();
-        if (adminManager.addNewPassWord(password1,password2, admin)){
+
+        if(password1.equals("")){
+            resultOfPasswordChangeLabel.setText(adminGUIPresenter.passwordCannotBeEmpty());
+        }
+        else if (password2.equals("")){
+            resultOfPasswordChangeLabel.setText(adminGUIPresenter.newPasswordNotSaved());
+        }
+        else if (adminManager.addNewPassWord(password1,password2, admin)){
             resultOfPasswordChangeLabel.setText(adminGUIPresenter.newPasswordCreated(admin));
         }
         else {

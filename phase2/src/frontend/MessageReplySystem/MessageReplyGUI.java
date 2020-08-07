@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,6 +33,8 @@ public abstract class MessageReplyGUI implements Initializable{
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private MessageResponseFactory factory;
     private MessageResponse messageResponse;
+
+    private HashMap<String, Message> formatter = new HashMap<>();
 
     MessageReplyGUI(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                            TradeManager tradeManager, UserManager userManager, String accountUsername){
@@ -66,12 +69,12 @@ public abstract class MessageReplyGUI implements Initializable{
             buttonBar.getButtons().add(button1);
         }
         else {
-            Message message = (Message) messageListView.getSelectionModel().getSelectedItems().get(0);
+            String key = (String) messageListView.getSelectionModel().getSelectedItems().get(0);
+            Message message = formatter.get(key);
 
             messageResponse = factory.getMessageResponse(message);
             String[] s = messageResponse.getActions();
             messageContent.setText(messageReplyPresenter.messageString(message));
-
             messageContent.setWrapText(true);
 
             Button[] buttons = new Button[s.length + 2];
@@ -101,9 +104,15 @@ public abstract class MessageReplyGUI implements Initializable{
 
     private void refresh(){
         List<Message> messageList = factory.getMessageList();
-
         messageListView.getItems().clear();
-        messageListView.getItems().addAll(messageList);
+
+        for(int i = 1; i<=messageList.size(); i++){
+            Message m = messageList.get(i-1);
+            String key = i+" From "+m.getSender();
+            formatter.put(key, m);
+            messageListView.getItems().add(key);
+        }
+
         messageListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
     }

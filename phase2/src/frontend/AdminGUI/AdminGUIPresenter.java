@@ -43,6 +43,16 @@ public class AdminGUIPresenter {
         return "invalid User Name";
     }
 
+    public String userNameCannotBeEmpty(){
+        return "User name cannot be empty";
+
+    };
+
+    public String passwordCannotBeEmpty(){
+        return "Password cannot be empty";
+
+    };
+
 
     public String newPasswordCreated(Admin admin){
         return "Congrats! your password has been changed to " + admin.getPassword();
@@ -107,6 +117,8 @@ public class AdminGUIPresenter {
     public String newAdminButton(){
         return "Create a new Admin!";
     }
+
+
 
 
 
