@@ -116,8 +116,8 @@ public class AccountInfoMenu implements Initializable {
         switch(this.type) {
             // view trade history
             case TRADE_HISTORY:
-                loader.setController(new BrowseThroughUserCollection(this.userTrades,
-                        this.tradeManager, this.currUser));
+                loader.setController(new BrowseThroughUserCollection(
+                        this.userTrades, this.tradeManager, this.currUser));
                 break;
             // change password
             case PASSWORD:

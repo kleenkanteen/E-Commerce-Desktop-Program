@@ -469,4 +469,20 @@ public class UserPresenter {
     public String tradePartnersMenu() {
         return "These are your frequent trade partners:";
     }
+
+    public String itemMenuName() {
+        return "Name";
+    }
+
+    public String itemMenuDescription() {
+        return "Description";
+    }
+
+    public String itemMenuOwnerName() {
+        return "Owner Name";
+    }
+
+    public String selectValidObject() {
+        return "Please select a valid entry.";
+    }
 }
