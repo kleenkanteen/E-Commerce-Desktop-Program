@@ -152,13 +152,17 @@ public class MultiItemMenu implements Initializable {
         for (Item i : selectedItems){
             items.add(i);
         }
-        try{
-            String trademenuFXML = "TradeMenu.fxml";
-            switchScene(trademenuFXML, items);
+        if (selectedItems.size() > 0){
+            try{
+                String trademenuFXML = "TradeMenu.fxml";
+                switchScene(trademenuFXML, items);
+            }
+            catch (IOException ex) {
+                //error
+            }
         }
-        catch (IOException ex) {
-            //error
-        }
+        else message.setText(globalInventoryMenuPresenter.noItemSelected());
+
     }
 
     public void switchScene(String filename, List<Item> items) throws IOException {
@@ -177,5 +181,19 @@ public class MultiItemMenu implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
+
+//
+////    public List<Item> getSelectedItems() throws IncompleteTradeException {
+////        List<Item> items = new ArrayList<Item>();
+////        for (Item i : selectedItems){
+////            items.add(i);
+////        }
+////        try{
+////            if (items.size()> 0){
+////                return items;
+////            }
+////            else
+////        }
+//    }
 
 }
