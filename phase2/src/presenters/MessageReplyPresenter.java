@@ -179,11 +179,11 @@ public class MessageReplyPresenter {
     }
 
     /**
-     * Return a string that tells the user the report is already made
-     * @return the string that tells the user the report is already made
+     * Return a string that tells the user their reason for reporting is empty
+     * @return the string that tells the user their reason for reporting is empty
      */
-    public String reportCompleted(){
-        return "Report already made";
+    public String reportReasonEmpty(){
+        return "The reason for the report must not be empty";
     }
 
     /**

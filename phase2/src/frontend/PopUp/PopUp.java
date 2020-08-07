@@ -10,7 +10,8 @@ public class PopUp {
         Label errorMessage = new Label(message);
         errorMessage.setWrapText(true);
         window.initModality(Modality.APPLICATION_MODAL);
-        window.setScene(new Scene(errorMessage, 200, 100));
+        window.initStyle(StageStyle.UTILITY);
+        window.setScene(new Scene(errorMessage, 300, 200));
         window.show();
 
     }
