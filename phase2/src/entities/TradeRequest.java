@@ -22,6 +22,11 @@ public class TradeRequest extends Request implements Serializable {
      * A message to a User from another user that asks them to make a decision on a trade request
      * @param content is the content of the message
      * @param sender is the sender's username
+     * @param userA username of one of the user that is involved in the trade
+     * @param userB username of the other user that is involved in the trade
+     * @param itemA userA's items that userA is lending in this trade
+     * @param itemB userB's items that userB is lending in this trade
+     * @param perm whether the trade is permanent or not
      */
     public TradeRequest(String content, String sender, String userA, String userB, List<Item> itemA,
                         List<Item> itemB, boolean perm) {
@@ -138,7 +143,7 @@ public class TradeRequest extends Request implements Serializable {
     /**
      * Get the trading partner of the input user
      * @param user a user
-     * @return the other user involved in the traderequest
+     * @return the other user involved in the trade request
      */
     public String getTradePartner (String user){
         if (user.equals(userA)){
@@ -152,7 +157,7 @@ public class TradeRequest extends Request implements Serializable {
 
     /**
      * Returns a string representation of the message
-     * @return the content, decisions, and trade request of the message in a string representation
+     * @return the content and trade request of the message in a string representation
      */
 
     @Override
@@ -192,6 +197,5 @@ public class TradeRequest extends Request implements Serializable {
         if(perm) info = info + "\nTrade type: permanent trade";
         else info = info + "\nTrade type: temporary trade";
         return info;
-        //TO DO: loop over item list to get all the items
     }
 }

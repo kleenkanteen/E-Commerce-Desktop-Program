@@ -16,7 +16,7 @@ public class SystemMessageResponse implements MessageResponse {
     }
     @Override
     public String[] getActions() {
-        return messageReplyPresenter.systemMessageAction(message);
+        return messageReplyPresenter.systemMessageAction();
     }
 
     @Override

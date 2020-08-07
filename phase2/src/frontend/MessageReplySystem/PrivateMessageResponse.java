@@ -48,7 +48,7 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
 
     @Override
     public String[] getActions() {
-        return messageReplyPresenter.privateMessageAction(message);
+        return messageReplyPresenter.privateMessageAction();
     }
 
     @Override

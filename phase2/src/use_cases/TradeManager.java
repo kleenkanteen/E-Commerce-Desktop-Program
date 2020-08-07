@@ -255,6 +255,10 @@ public class TradeManager {
         }
     }
 
+    /**
+     * Removing a trade from the system
+     * @param trade the trade to be removed from the system
+     */
     public void removeTrade(Trade trade){
         if(tradeHistory.containsKey(trade.getTraderA())){
             tradeHistory.get(trade.getTraderA()).remove(trade);
@@ -264,6 +268,12 @@ public class TradeManager {
         }
     }
 
+    /**
+     * Returns the list of all unstarted trades in a user's trade history
+     * Trade history is the list of trades that the user is involved in
+     * @param username the user's username
+     * @return the list of all unstarted trades this user have
+     */
     public List<Trade> getUnstartTrades(String username){
         List<Trade> tradeHistory = getTradeHistory(username);
         List<Trade> unstartTrades = new ArrayList<>();
@@ -273,6 +283,10 @@ public class TradeManager {
         return unstartTrades;
     }
 
+    /**
+     * Getter of the data stored in thsi manager
+     * @return the data stored in this manager
+     */
     public Map<String, List<Trade>> getTradeData(){
         return tradeHistory;
     }

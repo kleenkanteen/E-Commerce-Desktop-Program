@@ -25,7 +25,7 @@ public class FreezeRequest extends Request implements Serializable {
 
     /**
      * Returns a string representation of the message
-     * @return the content, decisions, and user of the message in a string representation
+     * @return the content and user of the message in a string representation
      */
     @Override
     public String toString() {

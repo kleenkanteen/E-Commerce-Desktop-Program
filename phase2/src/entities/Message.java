@@ -26,10 +26,18 @@ public abstract class Message implements Serializable {
         senderUsername = username;
     }
 
+    /**
+     * Setter of the content of the message
+     * @param content the new content of the message
+     */
     public void setContent(String content) {
         this.content = content;
     }
 
+    /**
+     * Setter of the sender of the message
+     * @param senderUsername the new sender's username
+     */
     public void setSenderUsername(String senderUsername) {
         this.senderUsername = senderUsername;
     }
