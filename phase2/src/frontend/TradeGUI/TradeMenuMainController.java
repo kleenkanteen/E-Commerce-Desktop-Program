@@ -6,6 +6,7 @@ import entities.Message;
 import exceptions.IncompleteTradeException;
 import frontend.GlobalInventoryGUI.MultiItemMenu;
 import frontend.PopUp.PopUp;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,15 +29,16 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeMenuMainController implements Initializable {
     private GlobalInventoryManager globalInventoryManager = null;
-    private ArrayList<Item> itemsToTrade = null;
+    private ObservableList<Item> itemsToTrade = null;
     private UserManager allUsers;
     private String userA;
-    private ArrayList<Item> itemsToTradeB;
-    private ArrayList<Item> itemsToTradeA;
+    private List<Item> itemsToTradeB;
+    private ObservableList<Item> itemsToTradeA;
     private GlobalWishlistManager globalWishlistManager;
     private String userB;
 
@@ -53,18 +55,20 @@ public class TradeMenuMainController implements Initializable {
     @FXML private Button returnToMainMenu;
     @FXML private DatePicker primaryDate;
 
-
-    public TradeMenuMainController(GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager, UserManager allUsers, ArrayList<Item> itemsToTradeB, String userA) {
+    /**
+     * A controller for TradeMenuMain.fxml
+     * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
+     * @param allUsers is a UserManager that contains all the users in the program
+     * @param itemsToTradeB is a List that contains the items to trade from userB to userA.
+     * @param userA is a String that contains the current user.
+     */
+    public TradeMenuMainController(GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager, UserManager allUsers, List<Item> itemsToTradeB, String userA) {
         this.itemsToTradeB = itemsToTradeB;
         this.userA = userA;
         this.userB = itemsToTradeB.get(0).getName();
         this.allUsers = allUsers;
         this.globalInventoryManager = globalInventoryManager;
         this.globalWishlistManager = globalWishlistManager;
-    }
-
-    public void buildController() {
-
     }
 
     /**
@@ -98,7 +102,13 @@ public class TradeMenuMainController implements Initializable {
             }
         });
         oneWayTrade.setOnAction(this::oneWayChoice);
-        twoWayTrade.setOnAction(this::twoWayChoice);
+        twoWayTrade.setOnAction(actionEvent -> {
+            try {
+                twoWayChoice(actionEvent);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
         returnToMainMenu.setOnAction(this::exitProgram);
 
     }
@@ -159,25 +169,21 @@ public class TradeMenuMainController implements Initializable {
     }
 
     @FXML
-    public void twoWayChoice(ActionEvent actionEvent) {
+    public void twoWayChoice(ActionEvent actionEvent) throws IOException {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());
-        // TODO open MultiItemMenu to get itemsToTradeA.
         PopUp suggestedItems = new PopUp(suggestedItems());
 
-//        itemsToTradeB = itemsToTrade;
-//        MultiItemMenu multiItemMenu = new MultiItemMenu(userA, globalInventoryManager);
-//        try {
-//            switchScene(multiItemMenu);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        itemsToTradeA = itemsToTrade;
+        itemsToTradeB = itemsToTrade;
+        MultiItemMenu multiItemMenu = new MultiItemMenu(userA, globalInventoryManager);
+        switchScene(multiItemMenu);
+        itemsToTradeA = multiItemMenu.getItem();
+//        System.out.println(multiItemMenu.getItem());
     }
 
     private String suggestedItems() {
         StringBuilder suggestedItems = new StringBuilder("Here are a list of items that you should trade to " + userB + ":");
         TradeController tradeController = new TradeController(globalInventoryManager, globalWishlistManager);
-        ArrayList<Item> listOfSuggestedItems = (ArrayList<Item>) tradeController.findSuggestedItems(userA, userB);
+        ArrayList<Item> listOfSuggestedItems = (ArrayList<Item>) findSuggestedItems(userA, userB);
         // showing suggestions to the user.
         for (Item suggestion : listOfSuggestedItems) {
             suggestedItems.append(suggestion).append("\n");
@@ -185,11 +191,31 @@ public class TradeMenuMainController implements Initializable {
         return suggestedItems.toString();
     }
 
+    /**
+     * Finds suggested items for the user to use when making a two way trade with another user.
+     * @param userA is a String that represents the user making the trade to userB.
+     * @param userB is a String that represents the person that is receiving the trade from userA.
+     * @return a list of Suggested items for userA to trade with userB.
+     */
+    public List<Item> findSuggestedItems(String userA, String userB) {
+        List<Item> userAInventory = this.globalInventoryManager.getPersonInventory(userA);
+        List<Item> suggestedItems = new ArrayList<Item>();
+        List<String> interestedItemIDs = this.globalWishlistManager.getInterestedItems(userAInventory, userB);
+
+        if (!interestedItemIDs.isEmpty()) {
+            // converting itemIDs into Items.
+            for (String itemID : interestedItemIDs) {
+                suggestedItems.add(this.globalInventoryManager.getItemFromGI(itemID));
+            }
+        }
+        return suggestedItems;
+    }
+
     private void switchScene(MultiItemMenu multiItemMenu) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiItemMenu.fxml"));
         loader.setController(multiItemMenu);
         Parent root = loader.load();
-        Scene newScene= new Scene(root);
+        Scene newScene = new Scene(root);
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
