@@ -21,8 +21,8 @@ public class DemoUserInfoMenu implements Initializable {
     private Type type;
     private DemoUserManager demoUserManager;
     private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
-    private String DemoUserInventoryFXML = "DemoUserInventory.fxml";
-    private String DemoUserWishListFXML = "DemoUserWishlist.fxml";
+    private String DemoUserInventoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserInventory.fxml";
+    private String DemoUserWishListFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserWishlist.fxml";
 
     @FXML private Button tradeHistory;
     @FXML private Button newPassword;

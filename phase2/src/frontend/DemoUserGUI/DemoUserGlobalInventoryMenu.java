@@ -45,6 +45,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     public DemoUserGlobalInventoryMenu(DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager) {
         this.globalInventoryManager = globalInventoryManager;
+        this.demoUserManager = demoUserManager;
     }
 
     @Override
@@ -67,8 +68,6 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         exit.setOnAction(e -> exit(e));
         trade.setOnAction(e->tradeMenu(e));
 
-        //TODO set action for addToWishList buttom and send a trade reqeust buttom
-        //TODO add "please select a item label, and separate the presenter
     }
     public void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
@@ -84,11 +83,6 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     private ObservableList<Item> getItem(){
         ObservableList<Item> items = FXCollections.observableArrayList();
-//        // for demonstration purpose
-//        Item itema = new Item("pen", "Jerry", "a pen");
-//        Item itemb = new Item("desk", "Jerry", "a desk");
-//        items.addAll(itema, itemb);
-        // using GlobalinventorManager
         List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
         for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
             items.add(i);
