@@ -111,29 +111,62 @@ public class GlobalInventoryMenuPresenter {
     }
 
 
-
-
+    /**
+     * set up userItem TableView label
+     * @param item item user selected
+     * @return label that shows who's inventory is presented on screen
+     */
     public String userItemLabel(Item item){
         return item.getOwnerName() + "'s inventory";
     }
 
+    /**
+     * setup label when user select an item
+     * @return Items selected
+     */
     public String itemSelected(){
         return "Items selected";
     }
 
+    /**
+     * message shows what item is currently selected
+     * @param item item user selected
+     * @return a message what item is currently selected
+     */
+    public String itemSelected(Item item ){
+        return item.getName() + " is selected";
+    }
+
+    /**
+     * title for mutliItemMenu
+     * @param item items user selected
+     * @return the title
+     */
     public String selectItem(Item item){
         return "You are Trading with " + item.getOwnerName() + "\n please select the items you want to trade";
     }
 
+    /**
+     * setup select button
+     * @return Select
+     */
     public String select(){
         return "Select";
     }
 
+    /**
+     * setup remove button
+     * @return Remove
+     */
     public String remove(){
         return "Remove";
     }
 
+    /**
+     * setup trade button
+     * @return Trade
+     */
     public String trade(){
-        return "trade";
+        return "Trade";
     }
 }

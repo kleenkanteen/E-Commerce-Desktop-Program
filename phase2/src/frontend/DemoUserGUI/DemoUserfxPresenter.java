@@ -4,6 +4,9 @@ import entities.Item;
 
 public class DemoUserfxPresenter {
 
+    /**
+     * constructor for DemoUserfxPresenter
+     */
     public DemoUserfxPresenter() {
     }
 
