@@ -31,7 +31,14 @@ public class TradeRequestCannotConfirmGUI implements Initializable {
 
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
 
-    public  TradeRequestCannotConfirmGUI(TradeRequestManager tradeRequestManager, UserManager userManager,
+    /**
+     * Class constructor.
+     * Create a new TradeRequestCannotConfirmGUI that allows the user to act when they cannot confirm a trade request
+     * @param tradeRequestManager the trade request manager with the message in it
+     * @param userManager the user manager of the system
+     * @param messages the copyed message list from the source of the new item request
+     */
+    TradeRequestCannotConfirmGUI(TradeRequestManager tradeRequestManager, UserManager userManager,
                                          List<Message> messages){
         this.tradeRequestManager = tradeRequestManager;
         this.userManager = userManager;
@@ -44,6 +51,12 @@ public class TradeRequestCannotConfirmGUI implements Initializable {
         Stage s = (Stage)(((Node) e.getSource()).getScene().getWindow());
         s.close();
     }
+
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         title.setText(messageReplyPresenter.titleTradeRequestCannotConfirm());

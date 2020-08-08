@@ -1,7 +1,15 @@
 package frontend.MessageReplySystem;
 
 public interface MessageResponse {
-    //public abstract String getMessageString();
-    public abstract String[] getActions();
-    public abstract void doAction(String action);
+    /**
+     * Method to get all the possible actions an user can do to a message
+     * @return list of all possible actions in string
+     */
+    String[] getActions();
+
+    /**
+     * Method that takes in an actions, if it's from the list of possible actions, the method will do the action
+     * @param action the action passed in
+     */
+    void doAction(String action);
 }

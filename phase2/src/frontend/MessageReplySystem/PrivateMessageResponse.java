@@ -1,36 +1,21 @@
 package frontend.MessageReplySystem;
 
 import frontend.PopUp.PopUp;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.List;
 
 import javafx.stage.StageStyle;
 import presenters.MessageReplyPresenter;
 import entities.Message;
 import use_cases.AdminManager;
-import use_cases.MessageBuilder;
 
-public class PrivateMessageResponse implements  MessageResponse, Initializable {
-    @FXML private Label title;
-    @FXML private Label messageContent;
-    @FXML private Button button1;
-    @FXML private Button button2;
-    @FXML private TextField userInput;
-    private Stage window;
+public class PrivateMessageResponse implements  MessageResponse{
 
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private Message message;
@@ -40,6 +25,14 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
 
     private final String ReportCreationFilepath = "MakeReport.fxml";
 
+    /**
+     * Class constructor.
+     * Create a new PrivateMessageResponse that responses to the user's action for a private message
+     * @param message the message
+     * @param adminManager the admin manager of the system
+     * @param messageList the copyed message list from the source of the new item request
+     * @param accountName the username of the current user using the system
+     */
     PrivateMessageResponse(Message message, AdminManager adminManager, List<Message> messageList, String accountName){
         this.message = message;
         this.adminManager = adminManager;
@@ -47,22 +40,33 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
         this.accountName = accountName;
     }
 
+    /**
+     * Method to get all the possible actions an user can do to a private message
+     * @return list of all possible actions in string
+     */
     @Override
     public String[] getActions() {
         return messageReplyPresenter.privateMessageAction();
     }
 
+    /**
+     * Method that takes in an actions, if it's from the list of possible actions, the method will do the action
+     * @param action the action passed in
+     */
     @Override
     public void doAction(String action){
         String[]validActions = getActions();
+        //Action: Deletion
         if(action.equals(validActions[0])){
             messageList.remove(message);
         }
+        //Action: Reporting
         else if(action.equals(validActions[1])){
+            //Create the reporting UI
             try {
-                window = new Stage();
+                Stage window = new Stage();
                 FXMLLoader reportLoader = new FXMLLoader(getClass().getResource(ReportCreationFilepath));
-                reportLoader.setController(this);
+                reportLoader.setController(new MakeReportGUI(message, adminManager, accountName));
                 Parent root = reportLoader.load();
 
                 window.initModality(Modality.APPLICATION_MODAL);
@@ -74,35 +78,6 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
                 new PopUp(messageReplyPresenter.error());
             }
         }
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        title.setText(messageReplyPresenter.reportPrompt());
-        messageContent.setText(messageReplyPresenter.messageContent(message));
-        button1.setText(messageReplyPresenter.exit());
-        button1.setOnAction(e -> window.close());
-        button2.setText(messageReplyPresenter.report());
-        button2.setOnAction(e -> makeReport());
-    }
-
-    private void makeReport(){
-        MessageBuilder messageBuilder = new MessageBuilder();
-        String reason = userInput.getText();
-
-        if(reason.length() == 0){
-            title.setText(messageReplyPresenter.reportReasonEmpty());
-            return;
-        }
-
-        Message m = messageBuilder.getReportRequest(reason, accountName, message.getContent(), message.getSender());
-        adminManager.addMessage(m);
-
-        title.setText(messageReplyPresenter.success());
-        new PopUp(messageReplyPresenter.reportSuccess());
-
-        window.close();
-
     }
 
 }

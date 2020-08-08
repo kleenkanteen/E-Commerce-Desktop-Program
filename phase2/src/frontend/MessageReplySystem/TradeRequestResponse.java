@@ -29,6 +29,16 @@ public class TradeRequestResponse implements MessageResponse {
     private final String TradeRequestCannotConfirmFilepath = "TradeRequestCannotConfirm.fxml";
     private final String TradeRequestEditFilepath = "TradeRequestEdit.fxml";
 
+    /**
+     * Class constructor.
+     * Create a new TradeRequestResponse that responses to the user's action for a trade request
+     * @param message the message
+     * @param tradeManager the trade manager of the system
+     * @param userManager the user manager of the system
+     * @param globalInventoryManager the global inventory manager of the system
+     * @param messageList the copyed message list from the source of the new item request
+     * @param accountName the username of the current user using the system
+     */
     TradeRequestResponse(TradeRequest message, List<Message> messageList, UserManager userManager,
                          GlobalInventoryManager globalInventoryManager, TradeManager tradeManager, String accountName){
         this.messageList = messageList;
@@ -39,36 +49,52 @@ public class TradeRequestResponse implements MessageResponse {
 
         tradeRequestManager = new TradeRequestManager(message);
 
+        //Creates a popup window to warning the user if they have reached the max number of edits
         if(!tradeRequestManager.canEdit(accountName)&&!tradeRequestManager.canEdit(message.getSender())){
             new PopUp(messageReplyPresenter.tradeRequestWarning());
         }
     }
+
+    /**
+     * Method to get all the possible actions an user can do to a trade request
+     * @return list of all possible actions in string
+     */
     @Override
     public String[] getActions() {
         return messageReplyPresenter.requestAction(tradeRequestManager.getTradeRequest());
     }
 
+    /**
+     * Method that takes in an actions, if it's from the list of possible actions, the method will do the action
+     * @param action the action passed in
+     */
     @Override
     public void doAction(String action) {
         String[]validActions = getActions();
         TradeRequest message = tradeRequestManager.getTradeRequest();
+        //Action: Confirm
         if(action.equals(validActions[0])){
             confirmTrade();
         }
+        //Action: Reject
         else if(action.equals(validActions[1])){
             messageList.remove(tradeRequestManager.getTradeRequest());
-            MessageBuilder messageBuilder = new MessageBuilder();
 
+            //Informing the other user
+            MessageBuilder messageBuilder = new MessageBuilder();
             userManager.addUserMessage(message.getSender(),
                     messageBuilder.getSystemMessage("Your trade request:"+message.toString()+
                             "\n is rejected by "+ accountUsername));
         }
+        //Action: Edit
         else if(action.equals(validActions[2])){
+            //If the max number of edits have been reach, delete the message
             if(!tradeRequestManager.canEdit(accountUsername)&&!tradeRequestManager.canEdit(message.getSender())){
                 new PopUp(messageReplyPresenter.tradeRequestCancel());
                 messageList.remove(message);
                 return;
             }
+
             tradeRequestEdit();
         }
     }
@@ -78,6 +104,7 @@ public class TradeRequestResponse implements MessageResponse {
     //----------------Helpers----------------//
     private void confirmTrade(){
         TradeRequest message = tradeRequestManager.getTradeRequest();
+        //Checking if the person can confirm
         if(cannotTrade(message.getUserA(),message.getItemA())||cannotTrade(message.getUserB(), message.getItemB())){
             tradeRequestCannotConfirm();
             return;
@@ -88,7 +115,7 @@ public class TradeRequestResponse implements MessageResponse {
         //Add trade to both user's trade history
         tradeManager.addTrade(trade);
 
-        //Removing the items from the GI and personal inventory
+        //Removing the items from the GI/personal inventory
         List<Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
         for(Item i:list) {
             globalInventoryManager.removeItem(i.getItemID());
@@ -97,6 +124,8 @@ public class TradeRequestResponse implements MessageResponse {
         for(Item i:list) {
             globalInventoryManager.removeItem(i.getItemID());
         }
+
+        //Telling the user their action is done successfully
         new PopUp(messageReplyPresenter.success());
     }
 
@@ -123,11 +152,13 @@ public class TradeRequestResponse implements MessageResponse {
     }
 
     private void tradeRequestEdit(){
+        //Creating the tradeRequestEdit UI
         setNewWindow(TradeRequestEditFilepath,
                 new TradeRequestEditGUI(tradeRequestManager, userManager, messageList, accountUsername));
     }
 
     private void tradeRequestCannotConfirm(){
+        //Creating the tradeRequestCannotConfirm UI
         setNewWindow(TradeRequestCannotConfirmFilepath,
                 new TradeRequestCannotConfirmGUI(tradeRequestManager, userManager, messageList));
     }

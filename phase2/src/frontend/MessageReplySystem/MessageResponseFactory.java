@@ -16,6 +16,15 @@ public class MessageResponseFactory {
     private AdminManager adminManager;
     private List<Message> messageList;
 
+    /**
+     * Class constructor.
+     * Create a new MessageResponseFactory that creates some type/s of MessageResponse
+     * @param accountUsername the username of the currently logged in User
+     * @param adminManager the admin manager of the system
+     * @param userManager the user manager of the system
+     * @param tradeManager the trade manager of the system
+     * @param globalInventoryManager the global inventory manager of the system
+     */
     MessageResponseFactory(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                                   TradeManager tradeManager, UserManager userManager,
                                   String accountUsername){
@@ -26,14 +35,27 @@ public class MessageResponseFactory {
         this.accountUsername = accountUsername;
     }
 
+    /**
+     * Setter to the copy of the source of all the messages
+     * @param messageList copy of the source of all the messages
+     */
     void setMessageList(List<Message> messageList){
         this.messageList = messageList;
     }
 
+    /**
+     * Getter to the messageList in this class
+     * @return the messageList
+     */
     List<Message> getMessageList(){
         return messageList;
     }
 
+    /**
+     * Creates and return a type of MessageResponse based on the message given
+     * @param message a message, the message must be in the messageList
+     * @return a new MessageResponse to response to the given message
+     */
     MessageResponse getMessageResponse(Message message){
         if(message instanceof SystemMessage){
             return new SystemMessageResponse(message, messageList);

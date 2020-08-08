@@ -36,7 +36,14 @@ public class TradeRequestEditGUI implements Initializable {
     private List<Message> messages;
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
 
-    public TradeRequestEditGUI (TradeRequestManager tradeRequestManager, UserManager userManager,
+    /**
+     * Class constructor.
+     * Create a new TradeRequestEditGUI that allows the user to edit a trade request
+     * @param tradeRequestManager the trade request manager with the message in it
+     * @param userManager the user manager of the system
+     * @param messages the copyed message list from the source of the new item request
+     */
+    TradeRequestEditGUI (TradeRequestManager tradeRequestManager, UserManager userManager,
                                 List<Message> messages,
                                 String accountUsername){
         this.userManager = userManager;
@@ -45,6 +52,11 @@ public class TradeRequestEditGUI implements Initializable {
         this.messages =messages;
     }
 
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         title.setText(messageReplyPresenter.titleTradeRequestEdit());
@@ -92,7 +104,7 @@ public class TradeRequestEditGUI implements Initializable {
             new PopUp(messageReplyPresenter.noEdit());
             return;
         }
-        System.out.println(messages.remove(tradeRequestManager.getTradeRequest()));
+        messages.remove(tradeRequestManager.getTradeRequest());
         tradeRequestManager.setDateAndPlace(accountUsername, newDate, newPlace);
         userManager.addUserMessage(receiver, tradeRequestManager.getTradeRequest());
         new PopUp(messageReplyPresenter.success());
