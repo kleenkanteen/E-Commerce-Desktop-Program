@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
     @FXML private Button exitButton;
     @FXML private Label errorMessage;
 
-    private SelectedOption type; //change to ENUM
+    private SelectedOption userSelectedOption; //change to ENUM
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
     private UserManager userManager;
     private TradeManager tradeManager;
@@ -63,7 +63,7 @@ public class LoginController implements Initializable {
     public LoginController(SelectedOption selectedOption, UserManager userManager, TradeManager tradeManager,
                            AdminManager adminManager,
                            GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager){
-        this.type = selectedOption;
+        this.userSelectedOption = selectedOption;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
         this.adminManager = adminManager;
@@ -125,7 +125,7 @@ public class LoginController implements Initializable {
         exitButton.setText("Return to Main Menu");
         exitButton.setOnAction(this::changeScreenButtonPushed);
 
-        if (type.equals(SelectedOption.USER_LOGIN)) {
+        if (userSelectedOption.equals(SelectedOption.USER_LOGIN)) {
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
@@ -136,11 +136,11 @@ public class LoginController implements Initializable {
             });
         }
 
-        else if (type.equals(SelectedOption.USER_SIGNUP)) {
+        else if (userSelectedOption.equals(SelectedOption.USER_SIGNUP)) {
             loginButton.setText("Sign Up");
             loginButton.setOnAction(e -> userSignUp());
         }
-        else if (type.equals(SelectedOption.ADMIN_LOGIN)) {
+        else if (userSelectedOption.equals(SelectedOption.ADMIN_LOGIN)) {
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
