@@ -166,12 +166,12 @@ public class TradeRequest extends Request implements Serializable {
         StringBuilder itema = new StringBuilder();
         StringBuilder itemb = new StringBuilder();
         for (Item i : itemA){
-            String item = i + ", ";
+            String item = i.getName() + ", ";
             itema.append(item);
         }
         for (Item i : itemB){
-            String item = i + ", ";
-            itema.append(item);
+            String item = i.getName() + ", ";
+            itemb.append(item);
         }
         if (itemA.isEmpty()){
             info =  "TraderA (Borrower): " + getUserA() +

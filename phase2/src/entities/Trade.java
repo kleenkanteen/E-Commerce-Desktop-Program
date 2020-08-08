@@ -22,8 +22,8 @@ public abstract class Trade implements Serializable {
      *
      * @param traderA             takes in a entities.trader that wants to create the entities.Trade.
      * @param traderB             takes in a entities.trader that wants to borrow the item based on the trade.
-     * @param traderAItemsToTrade takes in items that want to be traded to traderB.
-     * @param traderBItemsToTrade takes in items that want to be traded to traderA.
+     * @param traderAItemsToTrade takes in items that tradeA own and want to be borrowed to traderB.
+     * @param traderBItemsToTrade takes in items that tradeB own and want to be borrowed to traderA.
      * @param startDate           is a LocalDateTime type that indicates the start date of a Trade.
      *                            Note: this is also used to identify the rental process if the trade is temporary.
      */
@@ -225,25 +225,36 @@ public abstract class Trade implements Serializable {
     @Override
     public String toString() {
         String info = "";
+        StringBuilder itema = new StringBuilder();
+        StringBuilder itemb = new StringBuilder();
+        for (Item i : traderAItemstoTrade){
+            String item = i.getName() + ", ";
+            itema.append(item);
+        }
+        for (Item i : traderBItemsToTrade){
+            String item = i.getName() + ", ";
+            itemb.append(item);
+        }
+
         if (traderBItemsToTrade.isEmpty()){
             info =  "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA: " + getTraderA() +
                     "\nTraderB (Borrower): " + getTraderB() +
-                    "\nItem from TraderA: " + getTraderAItemsToTrade().get(0).getName()+
+                    "\nItem from TraderA: " + itema+
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else if (traderAItemstoTrade.isEmpty()){
             info = "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA (Borrower): " + getTraderA() +
                     "\nTraderB: " + getTraderB() +
-                    "\nItem from TraderB: " + getTraderBItemsToTrade().get(0).getName()+
+                    "\nItem from TraderB: " + itemb+
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else info = "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA: " + getTraderA() +
                     "\nTraderB: " + getTraderB() +
-                    "\n" + getTraderA()+ " confirmed to trade with: " + getTraderAItemsToTrade().get(0).getName() +
-                    "\n" + getTraderB()+ " confirmed to trade with: " + getTraderBItemsToTrade().get(0).getName() +
+                    "\n" + getTraderA()+ " confirmed to trade with: " + itema +
+                    "\n" + getTraderB()+ " confirmed to trade with: " + itemb +
                     "\nThe Trade has been made on: " + getStartDate();
 
         return info;
