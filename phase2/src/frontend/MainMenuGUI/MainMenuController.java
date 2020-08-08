@@ -177,8 +177,7 @@ public class MainMenuController implements Initializable {
             new File(dataFolderPath).mkdirs();
             deserialize();
             errorMessage.setWrapText(true);
-            errorMessage.setText("Either because your data folder was missing or your ser files were corrupted, " +
-                    "your old data was cleared.");
+            errorMessage.setText("Info corrupted, data cleared.");
             return;
         }
 
