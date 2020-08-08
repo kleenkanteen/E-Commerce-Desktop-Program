@@ -64,7 +64,7 @@ public class TradeUndoController implements Initializable {
         window.setScene(scene);
 
 
-        window.showAndWait();
+        window.show();
     }
 
 

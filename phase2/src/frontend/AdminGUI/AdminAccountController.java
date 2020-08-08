@@ -41,7 +41,7 @@ public class AdminAccountController implements Initializable {
 
     /**
      * Class constructor.
-     * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
+     * Create a new AdminAccountSystem that controls and allows the admin to manage Admin Accounts
      * @param admin the admin of the currently logged in.
      * @param adminManager the AdminManager will be used to change account information
 
@@ -59,6 +59,11 @@ public class AdminAccountController implements Initializable {
 
 
     }
+
+    /**
+     * Close the window
+     * @param actionEvent
+     */
 
     public void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
