@@ -25,12 +25,19 @@ public class DemoUserInventory implements Initializable {
     @FXML private Button exit;
     @FXML private ListView<Item> itemList;
 
-
+    /**
+     * constructor for DemoUserInventory
+     * @param demoUserManager a demoUserManager object
+     */
     public DemoUserInventory(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
-
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set up exit button
@@ -45,8 +52,10 @@ public class DemoUserInventory implements Initializable {
 
     }
 
-
-    public void remove(){
+    /**
+     * remove items from demo inventory
+     */
+    private void remove(){
         // if there are no items left
         if(this.itemList.getItems().size() == 0) {
             this.systemMessage.setText(demoUserPresenter.inventoryIsEmpty());
@@ -63,7 +72,11 @@ public class DemoUserInventory implements Initializable {
         }
 
 
-    public void exit(ActionEvent actionEvent) {
+    /**
+     * exit demo user from personal inventory menu
+     * @param actionEvent mouse click on exit button
+     */
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
