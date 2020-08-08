@@ -34,10 +34,19 @@ public class DemoUserInfoMenu implements Initializable {
     @FXML private Label message;
 
 
+    /**
+     * a constructor for DemoUserInfoMenu
+     * @param demoUserManager demoUserManager object
+     */
     public DemoUserInfoMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.tradeHistory.setText(demoUserPresenter.accountInfoPromptTradeHistory());
@@ -48,13 +57,13 @@ public class DemoUserInfoMenu implements Initializable {
         this.wishlist.setText(demoUserPresenter.accountInfoPromptWishlist());
         this.exit.setText(demoUserPresenter.menuPromptExit());
 
-        tradeHistory.setOnAction(e -> noAccess(e));
-        newPassword.setOnAction(e -> noAccess(e));
-        tradePartners.setOnAction(e -> noAccess(e));
-        recentTrades.setOnAction(e -> noAccess(e));
+        tradeHistory.setOnAction(this::noAccess);
+        newPassword.setOnAction(this::noAccess);
+        tradePartners.setOnAction(this::noAccess);
+        recentTrades.setOnAction(this::noAccess);
         this.inventory.setOnAction(e -> viewInventory());
         this.wishlist.setOnAction(e -> viewWishlist());
-        exit.setOnAction(e -> exit(e));
+        exit.setOnAction(this::exit);
     }
 
     enum Type {
@@ -66,7 +75,7 @@ public class DemoUserInfoMenu implements Initializable {
      * @param filename the filename of the .fxml file to be loaded
      * @throws IOException for a funky input
      */
-    public void switchScene(String filename) throws IOException {
+    private void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch(this.type) {
             case INVENTORY:
@@ -85,19 +94,24 @@ public class DemoUserInfoMenu implements Initializable {
         window.show();
     }
 
+    /**
+     * view demo user inventory
+     */
     @FXML
-    public void viewInventory() {
+    private void viewInventory() {
         try{
             type = Type.INVENTORY;
             switchScene(this.DemoUserInventoryFXML);
         } catch (IOException e){
-            System.out.println("oh no");
             System.out.println(demoUserManager.getUserInventory().size());
         }
     }
 
+    /**
+     * view demo user wishlist
+     */
     @FXML
-    public void viewWishlist() {
+    private void viewWishlist() {
         try{
             type = Type.WISHLIST;
             switchScene(this.DemoUserWishListFXML);
@@ -107,14 +121,22 @@ public class DemoUserInfoMenu implements Initializable {
         }
     }
 
+    /**
+     * exit user from this menu
+     * @param actionEvent mouse click on exit
+     */
     @FXML
-    public void exit(ActionEvent actionEvent) {
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
 
+    /**
+     * prints no access on screen
+     * @param event mouse click
+     */
     @FXML
-    public void noAccess(ActionEvent event){
+    private void noAccess(ActionEvent event){
         message.setText(demoUserPresenter.noAccess());
 
     }

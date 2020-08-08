@@ -26,7 +26,7 @@ public class DemoUserMenuGUI  implements Initializable {
 
     private final String accountFXML = "DemoAccountMenu.fxml";
     private final String newItemFXML = "DemoAddItemMenu.fxml";
-    private final String globalInventoryFXML = "DemoGlobalInventoryMenu.fxml";
+    private final String globalInventoryFXML = "frontend/GlobalInventoryGUI/GlobalInventoryMenu.fxml";
 
     @FXML private Label systemMessage;
     @FXML private Button accountInfo;
@@ -38,14 +38,20 @@ public class DemoUserMenuGUI  implements Initializable {
     @FXML private Button privateMessage;
     @FXML private Button logout;
 
-    //TODO: use presenter to set the text on screen
-
+    /**
+     * constructor for DemoUserMenuGUI
+     * @param globalInventoryManager a globalInventoryManager
+     */
     public DemoUserMenuGUI(GlobalInventoryManager globalInventoryManager) {
         this.demoUserManager = new DemoUserManager("demo", "demo");
         this.globalInventoryManager = globalInventoryManager;
     }
 
-
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         accountInfo.setText(demoUserPresenter.accInfo());
@@ -57,20 +63,25 @@ public class DemoUserMenuGUI  implements Initializable {
         privateMessage.setText(demoUserPresenter.pm());
         logout.setText(demoUserPresenter.exit());
 
-        accountInfo.setOnAction(e -> getAccountInfo(e));
-        globalInventory.setOnAction(e-> getGlobalInventory(e));
-        loanItem.setOnAction(e -> getLoanMenu(e));
-        messageInbox.setOnAction(e -> getInbox(e));
-        newItem.setOnAction(e -> getNewItemMenu(e));
-        unfreezeRequest.setOnAction(e -> getUnfreezeRequest(e));
-        privateMessage.setOnAction(e -> getPrivateMessageMenu(e));
-        logout.setOnAction(e -> exit(e));
+        accountInfo.setOnAction(this::getAccountInfo);
+        globalInventory.setOnAction(this::getGlobalInventory);
+        loanItem.setOnAction(this::getLoanMenu);
+        messageInbox.setOnAction(this::getInbox);
+        newItem.setOnAction(this::getNewItemMenu);
+        unfreezeRequest.setOnAction(this::getUnfreezeRequest);
+        privateMessage.setOnAction(this::getPrivateMessageMenu);
+        logout.setOnAction(this::exit);
 
     }
 
     // switch to the Account info menu scene
+
+    /**
+     * switch to accountInfo menu
+     * @param event mouse click
+     */
     @FXML
-    public void getAccountInfo(ActionEvent event) {
+    private void getAccountInfo(ActionEvent event) {
         try {
             this.type = Type.ACCOUNT_INFO;
             switchScene(this.accountFXML);
@@ -80,9 +91,12 @@ public class DemoUserMenuGUI  implements Initializable {
         }
     }
 
-    // switch to the GlobalInventory scene
+    /**
+     * switch to globalInventoryMenu
+     * @param event mouse click
+     */
     @FXML
-    public void getGlobalInventory(ActionEvent event) {
+    private void getGlobalInventory(ActionEvent event) {
         //test
         try {
             this.type = Type.GLOBAL_INVENTORY;
@@ -92,36 +106,32 @@ public class DemoUserMenuGUI  implements Initializable {
             // some kind of error message
         }
 
-//        if(!this.globalInventoryManager.hasNoItem()) {
-//            try {
-//                this.type = Type.GLOBAL_INVENTORY;
-//                switchScene(this.globalInventoryFXML);
-//            }
-//            catch(IOException ex) {
-//                // some kind of error message
-//            }
-//        }
-//        else {
-//            this.systemMessage.setText(this.demoUserPresenter.emptyglobalinventory());
-//        }
     }
 
     // switch to the loan menu scene
+
+    /**
+     * switch to loanMenu, but for demo user it prints no access on screen
+     * @param event mouse click
+     */
     @FXML
-    public void getLoanMenu(ActionEvent event) {
+    private void getLoanMenu(ActionEvent event) {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
-    // switch to the user message system scene
+    /**
+     * switch to user message inbox, but for demo user it prints no access on screen
+     * @param event mouse click
+     */
     @FXML
-    public void getInbox(ActionEvent event) {
+    private void getInbox(ActionEvent event) {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
 
     // switch to the new item scene
     @FXML
-    public void getNewItemMenu(ActionEvent event) {
+    private void getNewItemMenu(ActionEvent event) {
         try {
             this.type = Type.NEW_ITEM;
             switchScene(this.newItemFXML);
@@ -131,25 +141,39 @@ public class DemoUserMenuGUI  implements Initializable {
         }
     }
 
+    /**
+     * switch to UnfreezeRequest menu, but for demo user it prints no access on screen
+     * @param event mouse click
+     */
     @FXML
-    public void getUnfreezeRequest(ActionEvent event) {
+    private void getUnfreezeRequest(ActionEvent event) {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
-    // switch to the private message sending scene
+    /**
+     * switch to PrivateMessageMenu, but for demo user it prints no access on screen
+     * @param event mouse click
+     */
     @FXML
-    public void getPrivateMessageMenu(ActionEvent event) {
+    private void getPrivateMessageMenu(ActionEvent event) {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
+    /**
+     * exit user from DemoUserMenu
+     * @param event mouse click
+     */
     @FXML
-    public void exit(ActionEvent event) {
+    private void exit(ActionEvent event) {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
 
+    /**
+     * The ENUM values for demoUser
+     */
     enum Type {
-        ACCOUNT_INFO, GLOBAL_INVENTORY, USER_MESSAGES, LOAN_MENU, NEW_ITEM, PRIVATE_MESSAGES
+        ACCOUNT_INFO, GLOBAL_INVENTORY, NEW_ITEM
     }
 
     /**
@@ -157,7 +181,7 @@ public class DemoUserMenuGUI  implements Initializable {
      * @param filename the filename of the .fxml file to be loaded
      * @throws IOException for a funky input
      */
-    public void switchScene(String filename) throws IOException {
+    private void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         // access account info
         switch (this.type) {
@@ -182,20 +206,6 @@ public class DemoUserMenuGUI  implements Initializable {
         window.setScene(newScene);
         window.show();
     }
-//
-//    public void goToOtherScene(ActionEvent actionEvent, String otherScene, SelectedOption selectedOption) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
-//
-//        loader.setController(new LoginController(selectedOption.name(), userManager, tradeManager, adminManager,
-//                globalInventoryManager, globalWishlistManager));
-//
-//        Parent parent = loader.load();
-//        Scene scene = new Scene(parent);
-//
-//        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-//
-//        window.setScene(scene);
-//        window.show();
-//    }
+
 }
 
