@@ -1,5 +1,6 @@
 package frontend.DemoUserGUI;
 
+import frontend.PopUp.PopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -87,7 +88,7 @@ public class DemoUserMenuGUI  implements Initializable {
             switchScene(this.accountFXML);
         }
         catch(IOException ex) {
-            // some kind of error message
+            new PopUp(demoUserPresenter.error());
         }
     }
 
@@ -103,7 +104,7 @@ public class DemoUserMenuGUI  implements Initializable {
             switchScene(this.globalInventoryFXML);
         }
         catch(IOException ex) {
-            // some kind of error message
+            new PopUp(demoUserPresenter.error());
         }
 
     }
@@ -137,7 +138,7 @@ public class DemoUserMenuGUI  implements Initializable {
             switchScene(this.newItemFXML);
         }
         catch(IOException ex) {
-            // some kind of error message
+            new PopUp(demoUserPresenter.error());
         }
     }
 

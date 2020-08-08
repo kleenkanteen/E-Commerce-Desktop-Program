@@ -311,4 +311,13 @@ public class DemoUserfxPresenter {
     public String wishlistIsEmpty() {
         return "Your wishlist is empty!\n";
     }
+
+    /**
+     * prints something went wrong, please try again
+     * @return Something went wrong, please try again
+     */
+    public String error(){
+        return "Something went wrong, please try again";
+    }
+
 }
