@@ -20,11 +20,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeMenuMainLendController implements Initializable {
 
-    private ArrayList<Item> itemsToTradeB;
+    private List<Item> itemsToTradeB;
     private String userA;
     private UserManager allUsers;
     private GlobalInventoryManager globalInventoryManager;
@@ -44,7 +45,14 @@ public class TradeMenuMainLendController implements Initializable {
     @FXML private Button returnToMainMenu;
     @FXML private DatePicker primaryDate;
 
-    public TradeMenuMainLendController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, ArrayList<Item> itemsToTradeB, String userA) {
+    /**
+     * A controller for TradeMenuMainLend.fxml
+     * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
+     * @param allUsers is a UserManager that contains all the users in the program
+     * @param itemsToTradeB is a List that contains the items to trade from userB to userA.
+     * @param userA is a String that contains the current user.
+     */
+    public TradeMenuMainLendController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, List<Item> itemsToTradeB, String userA) {
         this.itemsToTradeB = itemsToTradeB;
         this.userA = userA;
         this.allUsers = allUsers;
