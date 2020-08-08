@@ -12,33 +12,25 @@ import java.util.ResourceBundle;
 
 public class DemoUserTradeMenu implements Initializable {
     DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
-    @FXML
-    public Label titleScreen;
-    @FXML
-    public TextField timeOfTrade;
-    @FXML
-    public TextField meetTrade;
-    @FXML
-    public MenuButton typesOfTrade;
-    @FXML
-    public MenuItem temporary;
-    @FXML
-    public MenuItem permanent;
-    @FXML
-    public MenuButton oneOrTwoWayTrade;
-    @FXML
-    public MenuItem oneWayTrade;
-    @FXML
-    public MenuItem twoWayTrade;
-    @FXML
-    public Button submit;
-    @FXML
-    public Button returnToMainMenu;
-    @FXML
-    DatePicker primaryDate;
+    @FXML public Label titleScreen;
+    @FXML public TextField timeOfTrade;
+    @FXML public TextField meetTrade;
+    @FXML public MenuButton typesOfTrade;
+    @FXML public MenuItem temporary;
+    @FXML public MenuItem permanent;
+    @FXML public MenuButton oneOrTwoWayTrade;
+    @FXML public MenuItem oneWayTrade;
+    @FXML public MenuItem twoWayTrade;
+    @FXML public Button submit;
+    @FXML public Button returnToMainMenu;
+    @FXML DatePicker primaryDate;
     @FXML Label message;
 
-
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         titleScreen.setText("Trade");
@@ -58,29 +50,55 @@ public class DemoUserTradeMenu implements Initializable {
         twoWayTrade.setOnAction(this::twoWayChoice);
     }
 
+    /**
+     * exit user from tradeMenu
+     * @param event mouse click on exit button
+     */
     @FXML
-    public void exit(ActionEvent event) {
+    private void exit(ActionEvent event) {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
+
+    /**
+     * setup text on screen when user select perm trade
+     * @param actionEvent mouse click
+     */
     @FXML
     private void permChoice(ActionEvent actionEvent) {
         typesOfTrade.setText(permanent.getText());
     }
 
+    /**
+     * setup text on screen when user select temp trade
+     * @param actionEvent mouse click
+     */
     @FXML
     private void tempChoice(ActionEvent actionEvent) {
         typesOfTrade.setText(temporary.getText());
     }
 
-    public void demoTrade(ActionEvent event){
+    /**
+     * ask user to create a account to trade when user click on trade
+     * @param event mouse click
+     */
+    private void demoTrade(ActionEvent event){
         message.setText(demoUserPresenter.createAcc());
     }
+
+    /**
+     * setup text on screen when user click on one way trade
+     * @param actionEvent
+     */
     @FXML
     private void oneWayChoice(ActionEvent actionEvent) {
         oneOrTwoWayTrade.setText(oneWayTrade.getText());
     }
 
+    /**
+     * setup text on screen when user click on two way trade
+     * @param actionEvent
+     */
     @FXML
     private void twoWayChoice(ActionEvent actionEvent) {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());

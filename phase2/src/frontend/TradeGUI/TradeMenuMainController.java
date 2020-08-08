@@ -25,6 +25,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -34,7 +35,7 @@ public class TradeMenuMainController implements Initializable {
     private UserManager allUsers;
     private String userA;
     private List<Item> itemsToTradeB;
-    private ObservableList<Item> itemsToTradeA;
+    private List<Item> itemsToTradeA;
     private GlobalWishlistManager globalWishlistManager;
     private String userB;
 
@@ -51,9 +52,12 @@ public class TradeMenuMainController implements Initializable {
     @FXML private Button returnToMainMenu;
     @FXML private DatePicker primaryDate;
 
+    private final String filepath = "MultiTradeItemMenu.fxml";
+
     /**
      * A controller for TradeMenuMain.fxml
      * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
+     * @param globalWishlistManager is a the global wishlist manager
      * @param allUsers is a UserManager that contains all the users in the program
      * @param itemsToTradeB is a List that contains the items to trade from userB to userA.
      * @param userA is a String that contains the current user.
@@ -128,17 +132,21 @@ public class TradeMenuMainController implements Initializable {
                 (!typesOfTrade.getText().equals(TradeMenu.TRADETYPE)) &&
                 (!oneOrTwoWayTrade.getText().equals(TradeMenu.ONETWOWAY))) {
 
-            // convert LocalDate to LocalDateTime
-            LocalDate tradeDate = primaryDate.getValue();
-            String datePattern = "H:mm";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-            LocalTime tradeTime = LocalTime.parse(timeOfTrade.getText().replaceAll("\\s+", ""), formatter);
-            tradeDateTime = tradeDate.atTime(tradeTime);
+            try {
+                // convert LocalDate to LocalDateTime
+                LocalDate tradeDate = primaryDate.getValue();
+                String datePattern = "H:mm";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
+                LocalTime tradeTime = LocalTime.parse(timeOfTrade.getText().replaceAll("\\s+", ""), formatter);
+                tradeDateTime = tradeDate.atTime(tradeTime);
+            } catch (DateTimeParseException ex) {
+                new PopUp(TradeMenu.WRONGFORMAT);
+                return;
+            }
 
             // rest of the inputs from the user.
             placeOfMeeting = meetTrade.getText();
             tradeType = typesOfTrade.getText();
-            oneTwoWayTrade = oneOrTwoWayTrade.getText();
 
         } else {
             throw new IncompleteTradeException();
@@ -151,9 +159,12 @@ public class TradeMenuMainController implements Initializable {
             perm = true;
         }
 
-        TradeRequestManager tradeRequest = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, itemsToTradeA, perm);
+        TradeRequestManager tradeRequest = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeA, itemsToTradeB, perm);
         tradeRequest.setDateAndPlaceFirst(tradeDateTime, placeOfMeeting);
-        new PopUp("Success");
+
+        allUsers.addUserMessage(userB, tradeRequest.getTradeRequest());
+
+        new PopUp(TradeMenu.SUCCESS);
         ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
     }
 
@@ -167,15 +178,15 @@ public class TradeMenuMainController implements Initializable {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());
         String suggestions = suggestedItems();
         if (!suggestions.isEmpty()) {
-            new PopUp(suggestions);
+            new PopUp(TradeMenu.SUGGEST + suggestions);
         }
         MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager, allUsers);
         switchScene(multiItemMenu);
-        itemsToTradeA = multiItemMenu.getItem();
+        itemsToTradeA = new ArrayList<>(multiItemMenu.getItems());
     }
 
     private String suggestedItems() {
-        StringBuilder suggestedItems = new StringBuilder("Here are a list of items that you should trade to " + userB + ":");
+        StringBuilder suggestedItems = new StringBuilder();
         ArrayList<Item> listOfSuggestedItems = (ArrayList<Item>) findSuggestedItems(userA, userB);
         // showing suggestions to the user.
         for (Item suggestion : listOfSuggestedItems) {
@@ -205,7 +216,7 @@ public class TradeMenuMainController implements Initializable {
     }
 
     private void switchScene(MultiTradeItemMenu multiItemMenu) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiTradeItemMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(filepath));
         loader.setController(multiItemMenu);
         Parent root = loader.load();
         Scene newScene = new Scene(root);

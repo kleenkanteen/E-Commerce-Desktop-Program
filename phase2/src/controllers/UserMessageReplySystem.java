@@ -28,6 +28,7 @@ public class UserMessageReplySystem {
      * @param accountUsername the username of the currently logged in User
      * @param userManager the user manager of the system
      * @param tradeManager the trade manager of the system
+     * @param adminManager the admin manager of the system
      * @param globalInventoryManager the global inventory manager of the system
      */
     public UserMessageReplySystem(UserManager userManager, GlobalInventoryManager globalInventoryManager,

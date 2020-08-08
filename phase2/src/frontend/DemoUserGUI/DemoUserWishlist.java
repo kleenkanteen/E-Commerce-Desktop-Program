@@ -26,14 +26,19 @@ public class DemoUserWishlist implements Initializable {
     @FXML private Button exit;
     @FXML private Button sendTradeRequest;
 
-
-
+    /**
+     * constructor for DemoUserWishlist
+     * @param demoUserManager a demoUserManager object
+     */
     public DemoUserWishlist(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
-
-
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set up exit button
@@ -48,10 +53,12 @@ public class DemoUserWishlist implements Initializable {
         this.itemList.getItems().addAll(demoUserManager.getUserWishlist());
         this.itemList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
                 this.selectedItem = newValue);
-
     }
 
-    public void remove(){
+    /**
+     * remove item from demo user wish-list
+     */
+    private void remove(){
         // if there are no items left
         if(this.itemList.getItems().size() == 0) {
             this.systemMessage.setText(demoUserPresenter.wishlistIsEmpty());
@@ -68,13 +75,19 @@ public class DemoUserWishlist implements Initializable {
             this.selectedItem = null;
         }
 
-
-    public void exit(ActionEvent actionEvent) {
+    /**
+     * exit demo user from their perosnal wish-list
+     * @param actionEvent
+     */
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
 
-    public void sendTradeRequest(){
+    /**
+     * set no access text on screen when demo user select to send a trade request
+     */
+    private void sendTradeRequest(){
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 }

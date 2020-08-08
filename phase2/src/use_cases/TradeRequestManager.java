@@ -52,6 +52,7 @@ public class TradeRequestManager {
             tradeRequest.setNumberOfEditB(tradeRequest.getNumberOfEditB() - 1);
             tradeRequest.setContent("Your trade request has been edited");
         }
+        tradeRequest.setSenderUsername(user);
     }
 
     /**

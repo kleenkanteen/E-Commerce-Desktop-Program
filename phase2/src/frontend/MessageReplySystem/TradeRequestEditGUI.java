@@ -41,6 +41,7 @@ public class TradeRequestEditGUI implements Initializable {
      * Create a new TradeRequestEditGUI that allows the user to edit a trade request
      * @param tradeRequestManager the trade request manager with the message in it
      * @param userManager the user manager of the system
+     * @param accountUsername the username of the user that is currently login
      * @param messages the copyed message list from the source of the new item request
      */
     TradeRequestEditGUI (TradeRequestManager tradeRequestManager, UserManager userManager,

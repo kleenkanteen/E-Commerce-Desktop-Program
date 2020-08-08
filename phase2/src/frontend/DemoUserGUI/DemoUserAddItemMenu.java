@@ -29,11 +29,19 @@ public class DemoUserAddItemMenu implements Initializable {
     @FXML private Label errorMessage;
 
 
-
+    /**
+     * Construct a new DemoUserAddItemMenu
+     * @param demoUserManager DemoUserManager object
+     */
     public DemoUserAddItemMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         namePrompt.setText(demoUserPresenter.enterItemName());
@@ -42,19 +50,26 @@ public class DemoUserAddItemMenu implements Initializable {
         this.cancel.setText(demoUserPresenter.Cancel());
 
         // set button function
-        this.confirm.setOnAction(e -> demoAddItem());
+        this.confirm.setOnAction(this:: demoAddItem);
         this.cancel.setOnAction(this::returnToMainMenu);
     }
 
-    public void demoAddItem(){
+    /**
+     * Add new items to demo user's personal inventory
+     */
+    private void demoAddItem(ActionEvent event){
         Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
         demoUserManager.getUserInventory().add(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());
     }
 
+    /**
+     * Exit the global inventory menu
+     * @param event mouse click on Exit button
+     */
     @FXML
-    public void returnToMainMenu(ActionEvent actionEvent) {
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+    private void returnToMainMenu(ActionEvent event) {
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
 
