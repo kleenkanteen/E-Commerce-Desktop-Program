@@ -30,6 +30,7 @@ public class AdminSystem {
      * @param adminManager the AdminManager will be used to change account information
      * @param userManager the UserManager will be used to change user account information
      * @param globalInventoryManager the GlobalInventory will be used to change item in GlobalInventory
+     * @param tradeManager  the trade manager for the system
      */
 
 

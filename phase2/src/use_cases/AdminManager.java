@@ -31,7 +31,6 @@ public class AdminManager{
      * Throw error if there's another admin with the same username.
      * Put this method in a try-catch!!!
      * @param toAdd Admin object who we want to add to the HashMap of all admins.
-     * @return the new HashMap containing the new Admin
      * @throws InvalidUsernameException username is already taken
      */
 
