@@ -6,24 +6,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminGUI.AdminBrowsingUsersController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.AdminGUI.AdminBrowsingUsersController">
    <children>
-      <Label layoutX="52.0" layoutY="14.0" text="Enter the user's username:">
+      <Label layoutX="202.0" layoutY="25.0" text="Enter the user's username:">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField layoutX="77.0" layoutY="51.0" stylesheets="@../cool styling/cool.css" />
-      <Label layoutX="72.0" layoutY="89.0" text="Invalid user, try again">
+      <TextField fx:id="usernameText" layoutX="226.0" layoutY="65.0" stylesheets="@../styling/cool.css" />
+      <Label fx:id="mainLabel" layoutX="137.0" layoutY="109.0" prefHeight="26.0" prefWidth="283.0" text="Main Label">
          <font>
             <Font size="17.0" />
          </font>
       </Label>
-      <Button layoutX="130.0" layoutY="356.0" mnemonicParsing="false" stylesheets="@../cool styling/coolbutton.css" text="Exit">
+      <Button fx:id="exitButton" layoutX="280.0" layoutY="356.0" mnemonicParsing="false" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Exit">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+      <Label fx:id="userLabel" layoutX="26.0" layoutY="163.0" prefHeight="180.0" prefWidth="296.0" text="User Label" />
+      <Button fx:id="lendingButton" layoutX="373.0" layoutY="156.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="203.0" stylesheets="@../styling/coolbutton.css" text="Change lending threshold " />
+      <Button fx:id="freezeButton" layoutX="373.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Freeze/unfreeze user" />
+      <Button fx:id="searchButton" layoutX="399.0" layoutY="63.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" stylesheets="@../styling/coolbutton.css" text="Search" />
+      <Button fx:id="banButton" layoutX="373.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Ban/unban user" />
+      <Button fx:id="weeklyButton" layoutX="373.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Change weekly trade limit" />
+      <Button fx:id="incompleteButton" layoutX="373.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Change limit of incomplete trades" />
+      <TextField fx:id="optionText" layoutX="390.0" layoutY="303.0" prefHeight="25.0" prefWidth="70.0" stylesheets="@../styling/cool.css" />
+      <Button fx:id="optionButton" layoutX="481.0" layoutY="301.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" stylesheets="@../styling/coolbutton.css" text="Enter" />
    </children>
 </AnchorPane>
