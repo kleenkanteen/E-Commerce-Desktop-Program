@@ -38,19 +38,21 @@ public class AdminController implements Initializable{
     private UserManager userManager;
     private GlobalInventoryManager globalInventoryManager;
 
-    /**
-     * Class constructor.
-     * Create a new AdminAccountSystem that controls and allows the admin to reply to system messages
-     * @param admin the admin of the currently logged in.
-     * @param adminManager the AdminManager will be used to change account information
-     * @param userManager the UserManager will be used to change user account information
-     * @param globalInventoryManager the GlobalInventory will be used to change item in GlobalInventory
-     */
 
     private String AdminAccountFXML = "AdminAccount.fxml";
     private String TradeUndoFXML = "TradeUndoMenu.fxml";
     private String AdminMessageGUI = "/frontend/MessageReplySystem/MessageGUI.fxml";
     private String AdminBrowsing = "AdminBrowsingUsers.fxml";
+    /**
+     * Class constructor.
+     * Create a new AdminSystem that allows admins to manage their message, to manage admin accounts, to manage User
+     * accounts, and to undo the on-going trade.
+     * @param admin the admin of the currently logged in.
+     * @param adminManager the AdminManager will be used to change account information
+     * @param userManager the UserManager will be used to change user account information
+     * @param globalInventoryManager the GlobalInventory will be used to change item in GlobalInventory
+     * @param tradeManager the TradeManager will be used to modify the on-going trades.
+     */
 
 
 
@@ -165,6 +167,11 @@ public class AdminController implements Initializable{
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

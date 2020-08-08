@@ -60,11 +60,6 @@ public class AdminAccountController implements Initializable {
 
     }
 
-    /**
-     * Close the window
-     * @param actionEvent
-     */
-
     private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
@@ -111,6 +106,11 @@ public class AdminAccountController implements Initializable {
 
 
     }
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
 
 
 
