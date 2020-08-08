@@ -28,7 +28,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeMenuMainController implements Initializable {
@@ -55,17 +54,17 @@ public class TradeMenuMainController implements Initializable {
     @FXML private DatePicker primaryDate;
 
 
-    public TradeMenuMainController() {
-
-    }
-
-    public void buildController(GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager, UserManager allUsers, ArrayList<Item> itemsToTradeB, String userA) {
+    public TradeMenuMainController(GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager, UserManager allUsers, ArrayList<Item> itemsToTradeB, String userA) {
         this.itemsToTradeB = itemsToTradeB;
         this.userA = userA;
         this.userB = itemsToTradeB.get(0).getName();
         this.allUsers = allUsers;
         this.globalInventoryManager = globalInventoryManager;
         this.globalWishlistManager = globalWishlistManager;
+    }
+
+    public void buildController() {
+
     }
 
     /**

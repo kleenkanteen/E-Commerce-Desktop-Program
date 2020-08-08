@@ -17,13 +17,13 @@ public class TradeMenuMainLend extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loadTradeMenu = new FXMLLoader(getClass().getResource("TradeMenuLend.fxml"));
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        loadTradeMenu.setController(new TradeMenuMainLendController());
-        Parent root = loadTradeMenu.load();
-        primaryStage.setTitle("Lend Trade");
-        Scene tradeScene = new Scene(root, 600, 400);
-        primaryStage.setScene(tradeScene);
-        primaryStage.show();
+//        FXMLLoader loadTradeMenu = new FXMLLoader(getClass().getResource("TradeMenuLend.fxml"));
+//        primaryStage.initStyle(StageStyle.UNDECORATED);
+//        loadTradeMenu.setController(new TradeMenuMainLendController());
+//        Parent root = loadTradeMenu.load();
+//        primaryStage.setTitle("Lend Trade");
+//        Scene tradeScene = new Scene(root, 600, 400);
+//        primaryStage.setScene(tradeScene);
+//        primaryStage.show();
     }
 }

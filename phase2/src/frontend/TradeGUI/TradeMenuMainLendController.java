@@ -44,11 +44,7 @@ public class TradeMenuMainLendController implements Initializable {
     @FXML private Button returnToMainMenu;
     @FXML private DatePicker primaryDate;
 
-    public TradeMenuMainLendController() {
-
-    }
-
-    public void buildController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, ArrayList<Item> itemsToTradeB, String userA) {
+    public TradeMenuMainLendController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, ArrayList<Item> itemsToTradeB, String userA) {
         this.itemsToTradeB = itemsToTradeB;
         this.userA = userA;
         this.allUsers = allUsers;
