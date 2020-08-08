@@ -8,6 +8,7 @@ import java.util.List;
 public class TradeRequestManager {
     private TradeRequest tradeRequest;
     private Trade trade;
+
     /**
      * a constructor for TradeRequestManager to edit the traderequet object
      * @param t the traderequest that is been edit
@@ -17,9 +18,14 @@ public class TradeRequestManager {
     }
 
     /**
-     * a constructor of TradeRequestManager to generate the new traderequest object
+     * a constructor of TradeRequestManager to generate the new tradeRequest object
      * @param content trade request message content
-     * @param userA userA who sends the trade request
+     * @param sender
+     * @param userA userA
+     * @param userB userB
+     * @param itemA items belongs to userA
+     * @param itemB items belongs to userB
+     * @param perm perm or temp trade
      */
     public TradeRequestManager(String content, String sender, String userA, String userB,  List<Item> itemA,
                                List<Item> itemB, boolean perm){
@@ -28,6 +34,11 @@ public class TradeRequestManager {
     }
 
 
+    /**
+     * method to set the date and place for the first time
+     * @param date meeting date
+     * @param place meeting place
+     */
     public void setDateAndPlaceFirst(LocalDateTime date, String place ){
         tradeRequest.setDate(date);
         tradeRequest.setPlace(place);

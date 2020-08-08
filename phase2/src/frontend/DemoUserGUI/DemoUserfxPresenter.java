@@ -265,7 +265,7 @@ public class DemoUserfxPresenter {
 
     /**
      * setup remove button
-     * @return
+     * @return Remove
      */
     public String menuPromptRemove() {
         return "Remove";

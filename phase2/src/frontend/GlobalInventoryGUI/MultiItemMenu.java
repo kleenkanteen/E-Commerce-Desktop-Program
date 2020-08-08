@@ -131,7 +131,7 @@ public class MultiItemMenu implements Initializable {
      * put the item user selected in global inventory into trading Item
      * @return a ObservableList of item user selected
      */
-    public ObservableList<Item> getItem(){
+    private ObservableList<Item> getItem(){
         selectedItems.add(item);
         return selectedItems;
     }
@@ -140,7 +140,7 @@ public class MultiItemMenu implements Initializable {
      * check if user selected the item on screen
      * @param mouseEvent mouse click
      */
-    public void selected(javafx.scene.input.MouseEvent mouseEvent) {
+    private void selected(javafx.scene.input.MouseEvent mouseEvent) {
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (itemselected == null){
             message.setText(globalInventoryMenuPresenter.noItemSelected());
@@ -154,7 +154,7 @@ public class MultiItemMenu implements Initializable {
      * select item in the userItem TableView to tradingItem TableView
      * @param event mouse click
      */
-    public void select(ActionEvent event){
+    private void select(ActionEvent event){
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             userItem.getItems().remove(itemselected);
@@ -166,7 +166,7 @@ public class MultiItemMenu implements Initializable {
      * remove item in the tradingItem TableView to userItem TableView
      * @param event mouse click
      */
-    public void remove(ActionEvent event){
+    private void remove(ActionEvent event){
         Item itemselected = tradingItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             tradingItem.getItems().remove(itemselected);
@@ -177,9 +177,9 @@ public class MultiItemMenu implements Initializable {
     /**
      * switch scene to tradeMenu when user click on trade button
      * @param event mouse click
-     * @throws IOException
+     * @throws IOException something went wrong
      */
-    public void tradeRequest(ActionEvent event) throws IOException {
+    private void tradeRequest(ActionEvent event) throws IOException {
         List<Item> items = new ArrayList<Item>();
         for (Item i : selectedItems){
             items.add(i);
@@ -201,9 +201,10 @@ public class MultiItemMenu implements Initializable {
      * to switch to MultiItemMenu when user clicked on trade button
      * @param filename file name of the MultiItemMenu FXML file
      * @param items the item user selected
-     * @throws IOException
+     * @param e close window
+     * @throws IOException something went wrong
      */
-    public void switchScene(String filename, List<Item> items, ActionEvent e) throws IOException {
+    private void switchScene(String filename, List<Item> items, ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         loader.setController(new TradeMenuMainController(globalInventoryManager, globalWishlistManager, userManager, items, user));// call tradeParent root = loader.load();
         Scene newScene= new Scene(loader.load());
@@ -219,7 +220,7 @@ public class MultiItemMenu implements Initializable {
      * @param event mouse click on Exit button
      */
     @FXML
-    public void exit(ActionEvent event) {
+    private void exit(ActionEvent event) {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
