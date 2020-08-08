@@ -50,6 +50,7 @@ public class AdminController implements Initializable{
     private String AdminAccountFXML = "AdminAccount.fxml";
     private String TradeUndoFXML = "TradeUndoMenu.fxml";
     private String AdminMessageGUI = "/frontend/MessageReplySystem/MessageGUI.fxml";
+    private String AdminBrowsing = "AdminBrowsingUsers.fxml";
 
 
 
@@ -127,7 +128,19 @@ public class AdminController implements Initializable{
 
     }
 
-    public void userBrowsingButtonPushed(ActionEvent actionEvent){
+    public void userBrowsingButtonPushed(ActionEvent actionEvent) throws IOException {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setTitle(adminGUIPresenter.adminBrowsingWindow());
+        window.setMinHeight(400);
+        window.setMinWidth(600);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminBrowsing)
+        );
+
+        loader.setController(new AdminBrowsingUsersController(userManager));
+
+        Parent parent = loader.load();
+        Scene scene = new Scene(parent);
 
     }
 
@@ -186,6 +199,14 @@ public class AdminController implements Initializable{
         tradeUndoButton.setOnAction(e -> {
             try {
                 tradeUndoButtonPushed(e);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
+        userBrowsingButton.setOnAction(e -> {
+            try {
+                userBrowsingButtonPushed(e);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }

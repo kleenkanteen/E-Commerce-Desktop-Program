@@ -8,6 +8,11 @@ public class AdminGUIPresenter {
     }
     // Window
 
+    public String adminBrowsingWindow(){
+        return "User Account Management";
+
+    }
+
     public String adminAccountWindow(){
         return "Admin Account Management";
 

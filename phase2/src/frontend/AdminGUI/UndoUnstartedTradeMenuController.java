@@ -1,3 +1,4 @@
+
 package frontend.AdminGUI;
 
 import entities.Item;
@@ -36,8 +37,8 @@ public class UndoUnstartedTradeMenuController implements Initializable {
     @FXML private TableColumn<Trade, ArrayList<Item>> column3;
     @FXML private TableColumn<Trade, ArrayList<Item>> column4;
     @FXML private TableColumn<Trade, LocalDateTime> column5;
-    String currentUserName;
-    AdminGUIPresenter adminGUIPresenter;
+    private String currentUserName;
+    private AdminGUIPresenter adminGUIPresenter;
 
     private UserManager usermanager;
     private TradeManager tradeManager;
@@ -66,6 +67,7 @@ public class UndoUnstartedTradeMenuController implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tableView.setItems(getTrade());
         exitButton.setText(adminGUIPresenter.exitButton());
         exitButton.setOnAction(this::close);
         deleteTradeButton.setText(adminGUIPresenter.deleteSelectedTradeButton());
@@ -74,7 +76,6 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         column3.setCellValueFactory(new PropertyValueFactory<Trade, ArrayList<Item>>("traderAItemsToTrade"));
         column4.setCellValueFactory(new PropertyValueFactory<Trade, ArrayList<Item>>("traderBItemsToTrade"));
         column5.setCellValueFactory(new PropertyValueFactory<Trade, LocalDateTime>("startDate"));
-        tableView.setItems(getTrade());
         deleteTradeButton.setOnAction(e -> deleteTradeButtonPushed());
 
     }
@@ -82,6 +83,8 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         ObservableList<Trade> unstartedTrade = FXCollections.observableArrayList();
         unstartedTrade.addAll(tradeManager.getUnstartTrades(currentUserName));
         return unstartedTrade;
+//        ObservableList<Trade> demo = FXCollections.observableArrayList();
+//
 //        Item item1 = new Item("blood", "leo", "suck it");
 //        Item item2 = new Item("blood", "leo", "suck it");
 //        Item item3 = new Item("blood", "clara", "suck it");
@@ -101,5 +104,9 @@ public class UndoUnstartedTradeMenuController implements Initializable {
 //        demo.add(trade2);
 //        demo.add(trade3);
 //        demo.add(trade4);
-//        return demo;}
-}}
+//        return demo;
+    }
+
+
+}
+
