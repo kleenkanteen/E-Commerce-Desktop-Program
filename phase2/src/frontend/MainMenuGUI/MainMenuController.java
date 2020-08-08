@@ -1,7 +1,6 @@
 package frontend.MainMenuGUI;
 
 import controllers.*;
-import frontend.MainMenuGUI.LoginController;
 import gateways.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,8 +17,10 @@ import javafx.stage.StageStyle;
 import presenters.*;
 import use_cases.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -44,6 +45,7 @@ public class MainMenuController implements Initializable {
     private final String adminMessagesFilepath = "data/serializedAdminMessages.ser";
     private final String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
     private final String tradeFilepath = "data/serializedUserTrades.ser";
+    private final String dataFolderPath = "data/";
 
     private AdminAccountGateways adminAccountGateways;
     private UserGateway userGateway;
@@ -139,7 +141,7 @@ public class MainMenuController implements Initializable {
      * attempts to deserialize all previously stored objects including Admins, Users, the GlobalInventory, Messages
      * shared by all admins, the GlobalWishList, all UserTrades
      */
-    public void deserialize(){
+    private void deserialize(){
 
         try {
 
@@ -147,7 +149,7 @@ public class MainMenuController implements Initializable {
             //deserialize admins
             adminAccountGateways = gatewayBuilder.getAdminAccountGateways(adminFilepath);
 
-            if(adminAccountGateways.getAdminMap().isEmpty()){
+            if (adminAccountGateways.getAdminMap().isEmpty()){
                 adminAccountGateways.beginAdminMap();
             }
             //deserialize users
@@ -166,7 +168,18 @@ public class MainMenuController implements Initializable {
             adminMessageGateway = gatewayBuilder.getAdminMessageGateways(adminMessagesFilepath);
         }
         catch(IOException | ClassNotFoundException ex) {
-            errorMessage.setText("Could not read file, exiting you from the program");
+            deleteFile(adminFilepath);
+            deleteFile(userFilepath);
+            deleteFile(globalInventoryFilepath);
+            deleteFile(adminMessagesFilepath);
+            deleteFile(globalWishlistFilepath);
+            deleteFile(dataFolderPath);
+            new File(dataFolderPath).mkdirs();
+            deserialize();
+            errorMessage.setWrapText(true);
+            errorMessage.setText("Either because your data folder was missing or your ser files were corrupted, " +
+                    "your old data was cleared.");
+            return;
         }
 
         UseCaseBuilder useCaseBuilder = new UseCaseBuilder();
@@ -187,7 +200,7 @@ public class MainMenuController implements Initializable {
      * attempts to serialize all objects used by the program including Admins, Users, the GlobalInventory, Messages
      * shared by all admins, the GlobalWishList, all UserTrades
      */
-    public void serialize() {
+    private void serialize() {
 
         try {
             userGateway.writeToFile(userFilepath, userManager.getUserData());
@@ -203,5 +216,11 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    // code for deleteFile is similar to: https://www.w3schools.com/java/java_files_delete.asp
+
+    private boolean deleteFile (String fileToDelete) {
+        File myObj = new File(fileToDelete);
+        return myObj.delete();
+    }
 
 }
