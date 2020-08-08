@@ -107,7 +107,7 @@ public class AdminBrowsingUsersController implements Initializable {
     @FXML
     private void ban(ActionEvent actionEvent) {
         if(users.getUserIsBanned(user)){
-  // TODO          users.unbanUserAccount(user);
+            users.unFreezeUserAccount(user);
         }
         else{
             users.banUserAccount(user);
