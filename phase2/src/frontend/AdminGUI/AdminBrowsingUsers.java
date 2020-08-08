@@ -1,4 +1,4 @@
-package controllers;
+package frontend.AdminGUI;
 import presenters.AdminBrowsingUsersPresenter;
 import use_cases.UserManager;
 
@@ -86,7 +86,7 @@ public class AdminBrowsingUsers {
                         // check if admin wants to change ban a user
                         case "3":
                             if(users.getUserIsBanned(user)){
-                                users.unbanUserAccount(user);
+                                users.unFreezeUserAccount(user);
                             }
                             else{
                                 users.banUserAccount(user);
