@@ -57,6 +57,7 @@ public class TradeMenuMainController implements Initializable {
     /**
      * A controller for TradeMenuMain.fxml
      * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
+     * @param globalWishlistManager is a the global wishlist manager
      * @param allUsers is a UserManager that contains all the users in the program
      * @param itemsToTradeB is a List that contains the items to trade from userB to userA.
      * @param userA is a String that contains the current user.

@@ -46,8 +46,13 @@ public class MessageBuilder {
 
     /**
      * Return a new TradeRequest object
-     * @param content the String content
-     * @param sender the String username of the sender
+     * @param content is the content of the message
+     * @param sender is the sender's username
+     * @param userA username of one of the user that is involved in the trade
+     * @param userB username of the other user that is involved in the trade
+     * @param itemA userA's items that userA is lending in this trade
+     * @param itemB userB's items that userB is lending in this trade
+     * @param perm whether the trade is permanent or not
      * @return a new TradeRequest message
      */
     public Message getTradeRequest(String content, String sender, String userA, String userB,  List<Item> itemA,
