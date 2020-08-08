@@ -42,6 +42,14 @@ public class UndoUnstartedTradeMenuController implements Initializable {
 
     private UserManager usermanager;
     private TradeManager tradeManager;
+    /**
+     * Class constructor.
+     * Create a new AdminSystem that allows admins to undo the on-going trade of that User.
+     * @param currentUserName the valid UserName of the User whose trade information is accessing by admin to
+     *                        undo the on-going trade.
+     * @param userManager the UserManager will be used to change user account information
+     * @param tradeManager the TradeManager will be used to modify the on-going trades.
+     */
     UndoUnstartedTradeMenuController(String currentUserName, TradeManager tradeManager, UserManager userManager){
         this.currentUserName = currentUserName;
         this.usermanager = userManager;
@@ -65,6 +73,11 @@ public class UndoUnstartedTradeMenuController implements Initializable {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tableView.setItems(getTrade());

@@ -60,18 +60,13 @@ public class AdminAccountController implements Initializable {
 
     }
 
-    /**
-     * Close the window
-     * @param actionEvent
-     */
-
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
 
 
-    public void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
+    private void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setMinHeight(400);
@@ -89,7 +84,7 @@ public class AdminAccountController implements Initializable {
 
 
     }
-    public void AdminCreationButtonPushed(ActionEvent actionEvent) throws IOException {
+    private void AdminCreationButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.adminAccountCreationWindow());
@@ -111,6 +106,11 @@ public class AdminAccountController implements Initializable {
 
 
     }
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
 
 
 

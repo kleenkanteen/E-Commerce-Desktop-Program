@@ -31,6 +31,13 @@ public class AdminNewAdminController implements Initializable {
     private UserManager userManager;
 
     private AdminManager adminManager;
+    /**
+     * Class constructor.
+     * Create a new AdminSystem that allows admins to create a new admin account.
+     * @param admin the admin of the currently logged in.
+     * @param adminManager the AdminManager will be used to change account information
+     * @param userManager the UserManager will be used to change user account information
+     */
 
     AdminNewAdminController(Admin admin, AdminManager adminManager, UserManager userManager){
         this.admin = admin;
@@ -38,6 +45,12 @@ public class AdminNewAdminController implements Initializable {
         this.adminManager = adminManager;
         this.userManager = userManager;
     }
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         exitButton.setText(adminGUIPresenter.exitButton());
@@ -46,11 +59,11 @@ public class AdminNewAdminController implements Initializable {
         addNewAdminButton.setOnAction(this::addNewAdminButtonPushed);
 
     }
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
-    public void addNewAdminButtonPushed(ActionEvent actionEvent){
+    private void addNewAdminButtonPushed(ActionEvent actionEvent){
 
         String newUsername = newAdminUserNameTextField.getText();
 

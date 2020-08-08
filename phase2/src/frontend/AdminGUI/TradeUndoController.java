@@ -30,6 +30,14 @@ public class TradeUndoController implements Initializable {
     private UserManager usermanager;
     private TradeManager tradeManager;
     private AdminGUIPresenter adminGUIPresenter;
+
+    /**
+     * Class constructor.
+     * Create a new AdminSystem that allows admins to search a specific USer with Username and undo the on-going trade
+     * of that User.
+     * @param userManager the UserManager will be used to change user account information
+     * @param tradeManager the TradeManager will be used to modify the on-going trades.
+     */
     TradeUndoController(TradeManager tradeManager, UserManager userManager){
         this.usermanager = userManager;
         this.tradeManager = tradeManager;
@@ -37,15 +45,6 @@ public class TradeUndoController implements Initializable {
     }
 
 
-    public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fileName));
-        Scene newScene= new Scene(root);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
-        window.setScene(newScene);
-        window.show();
-    }
     private void openTradeWindow(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -71,7 +70,11 @@ public class TradeUndoController implements Initializable {
 
 
 
-    public void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
+
+
+
+
+    private void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
         if(userNameField.getText().equals("")){
             invalidUserLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
 
@@ -85,10 +88,15 @@ public class TradeUndoController implements Initializable {
 
 
     }
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
 
 
 
