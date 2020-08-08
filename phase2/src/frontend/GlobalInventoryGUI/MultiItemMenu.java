@@ -113,7 +113,7 @@ public class MultiItemMenu implements Initializable {
         userItems.addAll(useritemlist);
     }
 
-    private ObservableList<Item> getItem(){
+    public ObservableList<Item> getItem(){
         selectedItems.add(item);
         return selectedItems;
     }

@@ -71,10 +71,6 @@ public class TradeUndoController implements Initializable {
 
 
 
-
-
-
-
     public void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
         if(userNameField.getText().equals("")){
             invalidUserLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
