@@ -160,7 +160,7 @@ public class MultiItemMenu implements Initializable {
         if (selectedItems.size() > 0){
             try{
                 String trademenuFXML = "/frontend/TradeGUI/TradeMenu.fxml";
-                switchScene(trademenuFXML, items);
+                switchScene(trademenuFXML, items, event);
             }
             catch (IOException ex) {
                 //error
@@ -170,14 +170,15 @@ public class MultiItemMenu implements Initializable {
 
     }
 
-    public void switchScene(String filename, List<Item> items) throws IOException {
+    public void switchScene(String filename, List<Item> items, ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         loader.setController(new TradeMenuMainController(globalInventoryManager, globalWishlistManager, userManager, items, user));// call tradeParent root = loader.load();
         Scene newScene= new Scene(loader.load());
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
-        window.show();
+        window.showAndWait();
+        ((Stage)((Node) e.getSource()).getScene().getWindow()).close();
     }
 
     @FXML

@@ -119,6 +119,10 @@ public class MultiTradeItemMenu implements Initializable {
         return selectedItems;
     }
 
+    public List<Item> getItems(){
+        return selectedItems;
+    }
+
     private void selected(javafx.scene.input.MouseEvent mouseEvent) {
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (itemselected == null){
