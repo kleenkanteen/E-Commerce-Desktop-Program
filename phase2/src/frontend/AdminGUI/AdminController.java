@@ -129,6 +129,11 @@ public class AdminController implements Initializable{
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
 
+        window.setScene(scene);
+
+
+        window.show();
+
     }
 
     private void tradeUndoButtonPushed(ActionEvent actionEvent) throws IOException {

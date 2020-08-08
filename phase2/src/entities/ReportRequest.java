@@ -1,6 +1,8 @@
 package entities;
 
-public class ReportRequest extends Request{
+import java.io.Serializable;
+
+public class ReportRequest extends Request implements Serializable {
     private String contentReported;
     private String reportedPerson;
 

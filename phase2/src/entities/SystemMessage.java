@@ -1,6 +1,8 @@
 package entities;
 
-public class SystemMessage extends Message {
+import java.io.Serializable;
+
+public class SystemMessage extends Message implements Serializable {
     /**
      * Class constructor
      * A message sent by the system with only information/a content

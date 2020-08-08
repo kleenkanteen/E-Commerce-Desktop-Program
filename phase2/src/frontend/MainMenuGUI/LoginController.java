@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
     @FXML private Button exitButton;
     @FXML private Label errorMessage;
 
-    private SelectedOption type; //change to ENUM
+    private SelectedOption userSelectedOption; //change to ENUM
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
     private UserManager userManager;
     private TradeManager tradeManager;
@@ -48,9 +48,22 @@ public class LoginController implements Initializable {
     private enum OpenMenu {
         USER_MENU, ADMIN_MENU, BANNED_USER_MENU, DEMO_MENU
     }
-    public LoginController(SelectedOption type, UserManager userManager, TradeManager tradeManager, AdminManager adminManager,
+
+    /**
+     * Constructor for LoginController, if a new LoginController is created, sets values of objects to be used.
+     * @param selectedOption stores user's selected sign-in or login option stored as an ENUM
+     * @param userManager use case that allows users to modify their user accounts and manage their messages.
+     * @param tradeManager use case with all users' trade options given their trades
+     * @param adminManager use case that allows admins to modify user accounts, manage their messages
+     * @param globalInventoryManager use case storing all methods by which a user can modify the items stored by
+     *                               themselves and other users
+     * @param globalWishlistManager use case storing all items that user and other users want in their inventory
+     */
+
+    public LoginController(SelectedOption selectedOption, UserManager userManager, TradeManager tradeManager,
+                           AdminManager adminManager,
                            GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager){
-        this.type = type;
+        this.userSelectedOption = selectedOption;
         this.userManager = userManager;
         this.tradeManager = tradeManager;
         this.adminManager = adminManager;
@@ -67,7 +80,8 @@ public class LoginController implements Initializable {
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
 
-    private void goToOtherScene(String otherScene, String MenuToOpen, String username, String password) throws IOException {
+    private void goToOtherScene(String otherScene, String MenuToOpen, String username)
+            throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
         if (MenuToOpen.equals("USER_MENU")) {
@@ -89,8 +103,6 @@ public class LoginController implements Initializable {
             loader.setController(new DemoUserMenuGUI(globalInventoryManager));
         }
 
-
-
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.initStyle(StageStyle.UNDECORATED);
@@ -98,15 +110,22 @@ public class LoginController implements Initializable {
         Scene scene = new Scene(root);
         window.setScene(scene);
         window.show();
+
     }
 
+    /**
+     * Initialize the scene's labels and buttons with text based on user's desired menu selection
+     * @param location stores location of path storing buttons and labels.
+     * @param resources ResourceBundle to localize root object
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         errorMessage.setText("");
         exitButton.setText("Return to Main Menu");
-        exitButton.setOnAction(e -> changeScreenButtonPushed(e));
+        exitButton.setOnAction(this::changeScreenButtonPushed);
 
-        if(type.equals(SelectedOption.USER_LOGIN)){
+        if (userSelectedOption.equals(SelectedOption.USER_LOGIN)) {
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
@@ -116,11 +135,12 @@ public class LoginController implements Initializable {
                 }
             });
         }
-        else if(type.equals(SelectedOption.USER_SIGNUP)){
+
+        else if (userSelectedOption.equals(SelectedOption.USER_SIGNUP)) {
             loginButton.setText("Sign Up");
             loginButton.setOnAction(e -> userSignUp());
         }
-        else if(type.equals(SelectedOption.ADMIN_LOGIN)){
+        else if (userSelectedOption.equals(SelectedOption.ADMIN_LOGIN)) {
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
@@ -144,14 +164,16 @@ public class LoginController implements Initializable {
     }
 
     private void userLogin() throws IOException {
+
         String username = this.username.getText();
         String password = this.password.getText();
-        if(userManager.login(username, password)) {
+
+        if (userManager.login(username, password)) {
             if (!userManager.getUserIsBanned(username)) {
-                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username, password);
+                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username);
             }
             else {
-                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username, password);
+                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username);
             }
         }
         else errorMessage.setText("Wrong login, try again.");
@@ -161,10 +183,11 @@ public class LoginController implements Initializable {
         try {
             String username = this.username.getText();
             String password = this.password.getText();
-                if (userManager.createNewUser(username, password) && !adminManager.userExist(username)) {
-                    errorMessage.setText("New account successfully created");
-                }
-                else errorMessage.setText("Your username is taken or invalid, try again.");
+
+            if (userManager.createNewUser(username, password) && !adminManager.userExist(username)) {
+                errorMessage.setText("New account successfully created");
+            }
+            else errorMessage.setText("Your username is taken or invalid, try again.");
         }
         catch (InvalidUsernameException f){
             errorMessage.setText("Your username is taken or invalid, try again.");
@@ -176,7 +199,7 @@ public class LoginController implements Initializable {
         String password = this.password.getText();
 
         if ((adminManager.login(username, password))) {
-            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username, password);
+            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username);
         }
         else errorMessage.setText("Wrong login, try again.");
     }
@@ -184,9 +207,8 @@ public class LoginController implements Initializable {
 
     private void programDemo() throws IOException {
         String username = this.username.getText();
-        String password = this.password.getText();
 
-        goToOtherScene(demoMenuGUIFile, OpenMenu.DEMO_MENU.name(), username, password);
+        goToOtherScene(demoMenuGUIFile, OpenMenu.DEMO_MENU.name(), username);
 
     }
 }

@@ -4,10 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="titleScreen" layoutX="183.0" layoutY="14.0" />
-      <VBox alignment="CENTER" layoutX="95.0" layoutY="31.0" prefHeight="259.0" prefWidth="206.0">
+      <Label fx:id="titleScreen" layoutX="193.0" layoutY="41.0" prefHeight="17.0" prefWidth="208.0" />
+      <VBox alignment="CENTER" layoutX="178.0" layoutY="71.0" prefHeight="259.0" prefWidth="238.0">
          <children>
             <DatePicker fx:id="primaryDate" />
             <TextField fx:id="timeOfTrade" promptText="Time of trade (HH:MM format)">
@@ -25,8 +25,8 @@
             </TextField>
             <MenuButton fx:id="typesOfTrade" mnemonicParsing="false">
               <items>
-                <MenuItem fx:id="permanent" mnemonicParsing="false" onAction="#permChoice" />
-                <MenuItem fx:id="temporary" mnemonicParsing="false" onAction="#tempChoice" />
+                <MenuItem fx:id="permanent" mnemonicParsing="false" />
+                <MenuItem fx:id="temporary" mnemonicParsing="false" />
               </items>
                <VBox.margin>
                   <Insets top="15.0" />
@@ -34,19 +34,19 @@
             </MenuButton>
             <MenuButton fx:id="oneOrTwoWayTrade" mnemonicParsing="false">
               <items>
-                <MenuItem fx:id="oneWayTrade" mnemonicParsing="false" onAction="#oneWayChoice" />
-                <MenuItem fx:id="twoWayTrade" mnemonicParsing="false" onAction="#twoWayChoice" />
+                <MenuItem fx:id="oneWayTrade" mnemonicParsing="false" />
+                <MenuItem fx:id="twoWayTrade" mnemonicParsing="false" />
               </items>
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
             </MenuButton>
-            <Button fx:id="submit" mnemonicParsing="false" onAction="#submitAction">
+            <Button fx:id="submit" mnemonicParsing="false">
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="returnToMainMenu" mnemonicParsing="false" onAction="#exitProgram">
+            <Button fx:id="returnToMainMenu" mnemonicParsing="false">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

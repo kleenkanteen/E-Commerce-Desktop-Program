@@ -52,6 +52,10 @@ public class DemoUserTradeMenu implements Initializable {
         returnToMainMenu.setText("Return to Main Menu");
         returnToMainMenu.setOnAction(this::exit);
         submit.setOnAction(this::demoTrade);
+        permanent.setOnAction(this::permChoice);
+        temporary.setOnAction(this::tempChoice);
+        oneWayTrade.setOnAction(this::oneWayChoice);
+        twoWayTrade.setOnAction(this::twoWayChoice);
     }
 
     @FXML
@@ -59,9 +63,27 @@ public class DemoUserTradeMenu implements Initializable {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }
+    @FXML
+    private void permChoice(ActionEvent actionEvent) {
+        typesOfTrade.setText(permanent.getText());
+    }
+
+    @FXML
+    private void tempChoice(ActionEvent actionEvent) {
+        typesOfTrade.setText(temporary.getText());
+    }
 
     public void demoTrade(ActionEvent event){
         message.setText(demoUserPresenter.createAcc());
+    }
+    @FXML
+    private void oneWayChoice(ActionEvent actionEvent) {
+        oneOrTwoWayTrade.setText(oneWayTrade.getText());
+    }
+
+    @FXML
+    private void twoWayChoice(ActionEvent actionEvent) {
+        oneOrTwoWayTrade.setText(twoWayTrade.getText());
     }
 }
 

@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
 import use_cases.GlobalWishlistManager;
@@ -108,10 +109,11 @@ public class GlobalInventoryMenuController implements Initializable {
 
     public void switchScene(String filename, Item item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
-        loader.setController(new MultiItemMenu(item, user, globalInventoryManager, userManager, tradeManager));// call Multimenu
+        loader.setController(new MultiItemMenu(item, user, globalInventoryManager, userManager, globalWishlistManager));// call Multimenu
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initStyle(StageStyle.UNDECORATED);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();

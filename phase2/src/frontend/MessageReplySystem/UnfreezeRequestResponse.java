@@ -48,7 +48,7 @@ public class UnfreezeRequestResponse implements MessageResponse {
         if(action.equals(validActions[0])){
             messageList.remove(message);
             String username = message.getUser();
-            userManager.freezeUserAccount(username);
+            userManager.unFreezeUserAccount(username);
 
             //informing the other user
             MessageBuilder messageBuilder = new MessageBuilder();

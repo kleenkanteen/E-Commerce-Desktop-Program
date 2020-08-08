@@ -58,6 +58,14 @@ public class AdminBrowsingUsersController implements Initializable {
         userLabel.setVisible(false);
         mainLabel.setVisible(false);
 
+        exitButton.setOnAction(this::exit);
+        lendingButton.setOnAction(this::lending);
+        freezeButton.setOnAction(this::freeze);
+        searchButton.setOnAction(this::search);
+        banButton.setOnAction(this::ban);
+        weeklyButton.setOnAction(this::weeklyLimit);
+        incompleteButton.setOnAction(this::incompleteLimit);
+        optionButton.setOnAction(this::optionInput);
     }
 
     @FXML
@@ -99,7 +107,7 @@ public class AdminBrowsingUsersController implements Initializable {
     @FXML
     private void ban(ActionEvent actionEvent) {
         if(users.getUserIsBanned(user)){
-  // TODO          users.unbanUserAccount(user);
+            users.unFreezeUserAccount(user);
         }
         else{
             users.banUserAccount(user);

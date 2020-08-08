@@ -9,6 +9,11 @@ import javafx.stage.StageStyle;
 
 public class StartScreen extends Application {
 
+    /**
+     *
+     * @param primaryStage Initial stage of the JavaFX program
+     * @throws Exception if stage or stage properties could not be created
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
@@ -18,6 +23,10 @@ public class StartScreen extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Used in case the application can not be launched through deployment artifacts
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
