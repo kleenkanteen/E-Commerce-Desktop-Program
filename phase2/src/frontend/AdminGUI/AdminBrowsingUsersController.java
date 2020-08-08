@@ -47,6 +47,13 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @Override
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from
+     * Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location
+     *                 is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     public void initialize(URL location, ResourceBundle resources) {
         lendingButton.setVisible(false);
         freezeButton.setVisible(false);
