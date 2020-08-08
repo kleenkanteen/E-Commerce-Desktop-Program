@@ -47,11 +47,8 @@ public class MultiItemMenu implements Initializable {
 
     @FXML TableView<Item> userItem;
     @FXML private TableColumn<Item, String> itemName;
-    @FXML private TableColumn<Item,String> itemOwner;
     @FXML private TableColumn<Item, String> itemDescription;
-
     @FXML private TableColumn<Item, String> tradingitemName;
-    @FXML private TableColumn<Item,String> tradingitemOwner;
     @FXML private TableColumn<Item, String> tradingitemDescription;
     @FXML private TableView<Item> tradingItem;
     @FXML private Button select;
@@ -71,7 +68,7 @@ public class MultiItemMenu implements Initializable {
         tradingItemLabel.setText("Items selected");
         title.setText("You are Trading with " + item.getOwnerName() + "\n please select the items you want to trade");
         itemName.setText(globalInventoryMenuPresenter.itemName());
-        itemOwner.setText(globalInventoryMenuPresenter.itemOwner());
+
         itemDescription.setText(globalInventoryMenuPresenter.itemDescription());
         select.setText("Select");
         remove.setText("Remove");
@@ -79,14 +76,14 @@ public class MultiItemMenu implements Initializable {
         exit.setText(globalInventoryMenuPresenter.menuPromptExit());
 
         itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-        itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
+
         itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
         tradingitemName.setText(globalInventoryMenuPresenter.itemName());
-        tradingitemOwner.setText(globalInventoryMenuPresenter.itemOwner());
+
         tradingitemDescription.setText(globalInventoryMenuPresenter.itemDescription());
         tradingitemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-        tradingitemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
+
         tradingitemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
         userItem.setOnMouseClicked(this::selected);
@@ -182,18 +179,18 @@ public class MultiItemMenu implements Initializable {
         window.close();
     }
 
-//
-////    public List<Item> getSelectedItems() throws IncompleteTradeException {
-////        List<Item> items = new ArrayList<Item>();
-////        for (Item i : selectedItems){
-////            items.add(i);
-////        }
-////        try{
-////            if (items.size()> 0){
-////                return items;
-////            }
-////            else
-////        }
+
+//    public List<Item> getSelectedItems() throws IncompleteTradeException {
+//        List<Item> items = new ArrayList<Item>();
+//        for (Item i : selectedItems){
+//            items.add(i);
+//        }
+//        try{
+//            if (items.size()> 0){
+//                return items;
+//            }
+//            else
+//        }
 //    }
 
 }
