@@ -31,7 +31,7 @@ public class LoginController implements Initializable {
     @FXML private Button exitButton;
     @FXML private Label errorMessage;
 
-    private SelectedOption userSelectedOption; //change to ENUM
+    private SelectedOption userSelectedOption;
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
     private UserManager userManager;
     private TradeManager tradeManager;
@@ -79,26 +79,26 @@ public class LoginController implements Initializable {
 
     // code for method goToOtherScene is similar to: https://www.youtube.com/watch?v=XCgcQTQCfJQ
 
-    private void goToOtherScene(String otherScene, String MenuToOpen, String username)
+    private void goToOtherScene(String otherScene, OpenMenu MenuToOpen, String username)
             throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(otherScene));
 
-        if (MenuToOpen.equals("USER_MENU")) {
+        if (MenuToOpen.equals(OpenMenu.USER_MENU)) {
             loader.setController(new UserMenuGUI(username, userManager, tradeManager,
                     globalInventoryManager, globalWishlistManager, adminManager));
         }
 
-        if (MenuToOpen.equals("ADMIN_MENU")) {
+        if (MenuToOpen.equals(OpenMenu.ADMIN_MENU)) {
             loader.setController(new AdminController(adminManager.getAdmin(username), adminManager,
                     userManager, globalInventoryManager, tradeManager));
         }
 
-        if (MenuToOpen.equals("BANNED_USER_MENU")) {
+        if (MenuToOpen.equals(OpenMenu.BANNED_USER_MENU)) {
             loader.setController(new BannedUserMenu(username, adminManager));
         }
 
 
-        if (MenuToOpen.equals("DEMO_MENU")) {
+        if (MenuToOpen.equals(OpenMenu.DEMO_MENU)) {
             loader.setController(new DemoUserMenuGUI(globalInventoryManager));
         }
 
@@ -170,10 +170,10 @@ public class LoginController implements Initializable {
 
         if (userManager.login(username, password)) {
             if (!userManager.getUserIsBanned(username)) {
-                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU.name(), username);
+                goToOtherScene(userMenuGUIFile, OpenMenu.USER_MENU, username);
             }
             else {
-                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username);
+                goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU, username);
             }
         }
         else errorMessage.setText(mainMenuPresenter.wrongLogin());
@@ -199,7 +199,7 @@ public class LoginController implements Initializable {
         String password = this.password.getText();
 
         if ((adminManager.login(username, password))) {
-            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username);
+            goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU, username);
         }
         else errorMessage.setText(mainMenuPresenter.wrongLogin());
     }
@@ -208,7 +208,7 @@ public class LoginController implements Initializable {
     private void programDemo() throws IOException {
         String username = this.username.getText();
 
-        goToOtherScene(demoMenuGUIFile, OpenMenu.DEMO_MENU.name(), username);
+        goToOtherScene(demoMenuGUIFile, OpenMenu.DEMO_MENU, username);
 
     }
 }
