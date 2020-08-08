@@ -9,6 +9,7 @@ import use_cases.UserManager;
 import java.util.*;
 
 public class AdminMessageReplyGUI extends MessageReplyGUI{
+
     public AdminMessageReplyGUI(AdminManager adminManager, GlobalInventoryManager globalInventoryManager,
                                UserManager userManager, String accountUsername){
         super(adminManager, globalInventoryManager, null, userManager, accountUsername);

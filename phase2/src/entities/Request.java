@@ -29,6 +29,10 @@ public abstract class Request extends Message implements Serializable {
         this.options = options;
     }
 
+    /**
+     * Returns the options a user have to this request
+     * @return the string representation of the options a user have to this request
+     */
     public String[] getOptions(){
         return options;
     }

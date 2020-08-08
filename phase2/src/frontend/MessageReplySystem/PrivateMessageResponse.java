@@ -1,6 +1,7 @@
 package frontend.MessageReplySystem;
 
 import frontend.PopUp.PopUp;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -48,7 +49,7 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
 
     @Override
     public String[] getActions() {
-        return messageReplyPresenter.privateMessageAction(message);
+        return messageReplyPresenter.privateMessageAction();
     }
 
     @Override
@@ -88,12 +89,20 @@ public class PrivateMessageResponse implements  MessageResponse, Initializable {
     private void makeReport(){
         MessageBuilder messageBuilder = new MessageBuilder();
         String reason = userInput.getText();
+
+        if(reason.length() == 0){
+            title.setText(messageReplyPresenter.reportReasonEmpty());
+            return;
+        }
+
         Message m = messageBuilder.getReportRequest(reason, accountName, message.getContent(), message.getSender());
         adminManager.addMessage(m);
 
         title.setText(messageReplyPresenter.success());
-        messageContent.setText(messageReplyPresenter.reportSuccess());
-        button2.setOnAction(e -> title.setText(messageReplyPresenter.reportCompleted()));
+        new PopUp(messageReplyPresenter.reportSuccess());
+
+        window.close();
+
     }
 
 }

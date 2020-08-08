@@ -1,7 +1,9 @@
 package frontend.MessageReplySystem;
 
 import entities.GlobalInventory;
+import entities.Item;
 import entities.Message;
+import entities.TradeRequest;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import use_cases.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -51,6 +54,16 @@ public class TestMessageMain extends Application{
         messageList.add(messageBuilder.getSystemMessage("nice day"));
         messageList.add(messageBuilder.getPrivateMessage("Hi it's me again", "Hello"));
         //messageList.add(new FreezeRequest("You should freeze this person", "Max"));
+        Item i1 = new Item("apple", "Max", "an apple");
+        ArrayList<Item> i = new ArrayList<>();
+        i.add(i1);
+
+        TradeRequestManager trm = new TradeRequestManager("trade request to you", "Hello", "Max", "Hello",
+                i, new ArrayList<>(), true);
+        trm.setDateAndPlaceFirst(LocalDateTime.now(), "cafe");
+
+        messageList.add(trm.getTradeRequest());
+
         return messageList;
     }
 

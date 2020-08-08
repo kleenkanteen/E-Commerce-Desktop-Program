@@ -48,10 +48,10 @@ public class TradeRequestEditGUI implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         title.setText(messageReplyPresenter.titleTradeRequestEdit());
-        button1.setText(messageReplyPresenter.exit());
-        button1.setOnAction(this::exit);
-        button2.setText(messageReplyPresenter.edit());
-        button2.setOnAction(e -> editTradeRequest());
+        button2.setText(messageReplyPresenter.exit());
+        button2.setOnAction(this::exit);
+        button1.setText(messageReplyPresenter.edit());
+        button1.setOnAction(this::editTradeRequest);
         dateLabel.setText(messageReplyPresenter.datePrompt(tradeRequestManager.getTradeRequest().getDate().toString()));
         placeLabel.setText(messageReplyPresenter.placePrompt(tradeRequestManager.getTradeRequest().getPlace()));
         dateTextField.setText(messageReplyPresenter.emptyString());
@@ -63,9 +63,9 @@ public class TradeRequestEditGUI implements Initializable {
         s.close();
     }
 
-    private void editTradeRequest(){
-        String place = placeLabel.getText();
-        String date = dateLabel.getText();
+    private void editTradeRequest(ActionEvent e){
+        String place = placeTextField.getText();
+        String date = dateTextField.getText();
         LocalDateTime newDate = tradeRequestManager.getTradeRequest().getDate();
         String newPlace = tradeRequestManager.getTradeRequest().getPlace();
         String receiver = tradeRequestManager.getTradeRequest().getSender();
@@ -74,7 +74,7 @@ public class TradeRequestEditGUI implements Initializable {
             try {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                 newDate = LocalDateTime.parse(date, dtf);
-            } catch (DateTimeParseException e) {
+            } catch (DateTimeParseException ex) {
                 new PopUp(messageReplyPresenter.wrongFormat());
                 return;
             }
@@ -92,9 +92,11 @@ public class TradeRequestEditGUI implements Initializable {
             new PopUp(messageReplyPresenter.noEdit());
             return;
         }
-        messages.remove(tradeRequestManager.getTradeRequest());
+        System.out.println(messages.remove(tradeRequestManager.getTradeRequest()));
         tradeRequestManager.setDateAndPlace(accountUsername, newDate, newPlace);
         userManager.addUserMessage(receiver, tradeRequestManager.getTradeRequest());
+        new PopUp(messageReplyPresenter.success());
+        exit(e);
     }
 
 }

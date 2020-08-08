@@ -108,7 +108,7 @@ public abstract class MessageReplyGUI implements Initializable{
 
         for(int i = 1; i<=messageList.size(); i++){
             Message m = messageList.get(i-1);
-            String key = i+" From "+m.getSender();
+            String key = messageReplyPresenter.messageStringSideBar(m, i);
             formatter.put(key, m);
             messageListView.getItems().add(key);
         }

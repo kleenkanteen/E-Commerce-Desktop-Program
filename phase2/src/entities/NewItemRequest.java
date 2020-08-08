@@ -26,7 +26,7 @@ public class NewItemRequest extends Request implements Serializable {
 
     /**
      * Returns a string representation of the message
-     * @return the content, decisions, and item of the message in a string representation
+     * @return the content and item of the message in a string representation
      */
     @Override
     public String toString() {

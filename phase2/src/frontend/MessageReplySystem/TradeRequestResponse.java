@@ -142,7 +142,7 @@ public class TradeRequestResponse implements MessageResponse {
             window.initModality(Modality.APPLICATION_MODAL);
             window.initStyle(StageStyle.UNDECORATED);
             window.setScene(new Scene(root));
-            window.show();
+            window.showAndWait();
         }catch(IOException e){
             new PopUp(messageReplyPresenter.error());
         }
