@@ -4,13 +4,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0"
-            prefWidth="400.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+            prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="frontend.MainMenuGUI.MainMenuController">
     <children>
-        <VBox alignment="CENTER" layoutX="119.0" layoutY="14.0" prefHeight="200.0" prefWidth="163.0" spacing="15.0">
+        <VBox alignment="CENTER" layoutX="219.0" layoutY="87.0" prefHeight="200.0" prefWidth="163.0" spacing="15.0">
             <children>
-                 <Label fx:id="errorMessage" />
+                 <Label fx:id="errorMessage" wrapText="true" />
                 <Button fx:id="userLoginButton" mnemonicParsing="false" onAction="#userLoginButtonPressed" />
                 <Button fx:id="userSignUpButton" mnemonicParsing="false" onAction="#userSignUpButtonPressed" />
                 <Button fx:id="adminLoginButton" mnemonicParsing="false" onAction="#adminLoginButtonPressed" />
