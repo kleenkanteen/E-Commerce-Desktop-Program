@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -72,11 +73,9 @@ public class TradeMenuMainController implements Initializable {
     }
 
     /**
-     * This method is used to initialize the text
-     *
-     * @param location  The location used to resolve relative paths for the root object, or
-     *                  <tt>null</tt> if the location is not known.
-     * @param resources The resources used to localize the root object, or <tt>null</tt> if
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -114,17 +113,17 @@ public class TradeMenuMainController implements Initializable {
     }
     
     @FXML
-    public void permChoice(ActionEvent actionEvent) {
+    private void permChoice(ActionEvent actionEvent) {
         typesOfTrade.setText(permanent.getText());
     }
 
     @FXML
-    public void tempChoice(ActionEvent actionEvent) {
+    private void tempChoice(ActionEvent actionEvent) {
         typesOfTrade.setText(temporary.getText());
     }
 
     @FXML
-    public void submitAction(ActionEvent actionEvent) throws IncompleteTradeException {
+    private void submitAction(ActionEvent actionEvent) throws IncompleteTradeException {
         LocalDateTime tradeDateTime;
         String placeOfMeeting;
         String tradeType;
@@ -164,19 +163,19 @@ public class TradeMenuMainController implements Initializable {
     }
 
     @FXML
-    public void oneWayChoice(ActionEvent actionEvent) {
+    private void oneWayChoice(ActionEvent actionEvent) {
         oneOrTwoWayTrade.setText(oneWayTrade.getText());
     }
 
     @FXML
-    public void twoWayChoice(ActionEvent actionEvent) throws IOException {
+    private void twoWayChoice(ActionEvent actionEvent) throws IOException {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());
         PopUp suggestedItems = new PopUp(suggestedItems());
 
         itemsToTradeB = itemsToTrade;
         MultiItemMenu multiItemMenu = new MultiItemMenu(userA, globalInventoryManager);
         switchScene(multiItemMenu);
-        itemsToTradeA = multiItemMenu.getItem();
+        //itemsToTradeA = multiItemMenu.getItem();
 //        System.out.println(multiItemMenu.getItem());
     }
 
@@ -197,7 +196,7 @@ public class TradeMenuMainController implements Initializable {
      * @param userB is a String that represents the person that is receiving the trade from userA.
      * @return a list of Suggested items for userA to trade with userB.
      */
-    public List<Item> findSuggestedItems(String userA, String userB) {
+    private List<Item> findSuggestedItems(String userA, String userB) {
         List<Item> userAInventory = this.globalInventoryManager.getPersonInventory(userA);
         List<Item> suggestedItems = new ArrayList<Item>();
         List<String> interestedItemIDs = this.globalWishlistManager.getInterestedItems(userAInventory, userB);
@@ -223,7 +222,8 @@ public class TradeMenuMainController implements Initializable {
     }
 
     @FXML
-    public void exitProgram(ActionEvent actionEvent) {
-        System.exit(0);
+    private void exitProgram(ActionEvent e) {
+        Stage s = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        s.close();
     }
 }

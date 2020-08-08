@@ -30,10 +30,10 @@ public class TradeMenuMainLendController implements Initializable {
     private UserManager allUsers;
     private GlobalInventoryManager globalInventoryManager;
 
-    String tradeType;
-    String placeOfMeeting;
-    Message tradeRequest;
-    LocalDateTime tradeDateTime;
+    private String tradeType;
+    private String placeOfMeeting;
+    private Message tradeRequest;
+    private LocalDateTime tradeDateTime;
 
     @FXML private Label titleScreen;
     @FXML private TextField timeOfTrade;
@@ -59,6 +59,11 @@ public class TradeMenuMainLendController implements Initializable {
         this.globalInventoryManager = globalInventoryManager;
     }
 
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // setting up text for GUI.
@@ -82,17 +87,17 @@ public class TradeMenuMainLendController implements Initializable {
     }
 
     @FXML
-    public void permChoice(ActionEvent actionEvent) {
+    private void permChoice(ActionEvent actionEvent) {
         typesOfTrade.setText(permanent.getText());
     }
 
     @FXML
-    public void tempChoice(ActionEvent actionEvent) {
+    private void tempChoice(ActionEvent actionEvent) {
         typesOfTrade.setText(temporary.getText());
     }
 
     @FXML
-    public void submitAction(ActionEvent actionEvent) throws IncompleteTradeException {
+    private void submitAction(ActionEvent actionEvent) throws IncompleteTradeException {
         TradeRequestManager tradeRequestManager;
         if ((primaryDate.getValue() != null) &&
                 (timeOfTrade.getText() != null) &&
@@ -126,7 +131,7 @@ public class TradeMenuMainLendController implements Initializable {
     }
 
     @FXML
-    public void exitProgram(ActionEvent actionEvent) {
+    private void exitProgram(ActionEvent actionEvent) {
         System.exit(0);
     }
 
