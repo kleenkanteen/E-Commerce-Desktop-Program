@@ -7,7 +7,9 @@ import frontend.PopUp.PopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import presenters.TradeMenu;
 import use_cases.GlobalInventoryManager;
 import use_cases.MessageBuilder;
@@ -131,8 +133,9 @@ public class TradeMenuMainLendController implements Initializable {
     }
 
     @FXML
-    private void exitProgram(ActionEvent actionEvent) {
-        System.exit(0);
+    private void exitProgram(ActionEvent e) {
+        Stage s = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        s.close();
     }
 
 }

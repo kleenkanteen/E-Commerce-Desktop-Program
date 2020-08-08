@@ -1,6 +1,8 @@
 package entities;
 
-public class UnbanRequest extends Request {
+import java.io.Serializable;
+
+public class UnbanRequest extends Request implements Serializable {
     /**
      * Class constructor.
      * A message sent to the Admins from a user that request to be unbanned from the system

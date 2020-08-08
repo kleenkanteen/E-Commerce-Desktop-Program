@@ -132,7 +132,8 @@ public class MainMenuController implements Initializable {
             adminMessageGateway = gatewayBuilder.getAdminMessageGateways(adminMessagesFilepath);
         }
         catch(IOException | ClassNotFoundException ex) {
-            errorMessage.setText("Could not read file, exiting you from the program");
+            System.out.println("error");
+            errorMessage.setText("Could not read file");
             // ? exitButton.fire();
         }
         // create managers to pass in serialized data

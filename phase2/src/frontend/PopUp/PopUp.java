@@ -12,7 +12,7 @@ public class PopUp {
         window.initModality(Modality.APPLICATION_MODAL);
         window.initStyle(StageStyle.UTILITY);
         window.setScene(new Scene(errorMessage, 300, 200));
-        window.show();
+        window.showAndWait();
 
     }
 }

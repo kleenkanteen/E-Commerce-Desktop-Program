@@ -18,6 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
 import use_cases.GlobalWishlistManager;
@@ -112,6 +113,7 @@ public class GlobalInventoryMenuController implements Initializable {
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
+        window.initStyle(StageStyle.UNDECORATED);
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();

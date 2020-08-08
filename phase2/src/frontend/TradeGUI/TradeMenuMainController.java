@@ -1,10 +1,9 @@
 package frontend.TradeGUI;
 
-import controllers.TradeController;
 import entities.Item;
+
 import entities.Message;
 import exceptions.IncompleteTradeException;
-import frontend.GlobalInventoryGUI.MultiItemMenu;
 import frontend.PopUp.PopUp;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +17,7 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presenters.TradeMenu;
-import use_cases.GlobalInventoryManager;
-import use_cases.GlobalWishlistManager;
-import use_cases.MessageBuilder;
-import use_cases.UserManager;
+import use_cases.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -65,7 +61,7 @@ public class TradeMenuMainController implements Initializable {
     public TradeMenuMainController(GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager, UserManager allUsers, List<Item> itemsToTradeB, String userA) {
         this.itemsToTradeB = itemsToTradeB;
         this.userA = userA;
-        this.userB = itemsToTradeB.get(0).getName();
+        this.userB = itemsToTradeB.get(0).getOwnerName();
         this.allUsers = allUsers;
         this.globalInventoryManager = globalInventoryManager;
         this.globalWishlistManager = globalWishlistManager;
@@ -147,15 +143,18 @@ public class TradeMenuMainController implements Initializable {
         } else {
             throw new IncompleteTradeException();
         }
-        Message tradeRequest = null;
+
+        boolean perm = false;
+
         // push it into TradeRequestManager.
-        MessageBuilder messageBuilder = new MessageBuilder();
         if (tradeType.equals(TradeMenu.PERM)) {
-            tradeRequest = messageBuilder.getTradeRequest("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, itemsToTradeA, true);
-        } else if (tradeType.equals(TradeMenu.TEMP)) {
-            tradeRequest = messageBuilder.getTradeRequest("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, itemsToTradeA, false);
+            perm = true;
         }
-        allUsers.addUserMessage(userB, tradeRequest);
+
+        TradeRequestManager tradeRequest = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, itemsToTradeA, perm);
+        tradeRequest.setDateAndPlaceFirst(tradeDateTime, placeOfMeeting);
+        new PopUp("Success");
+        ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
     }
 
     @FXML

@@ -1,6 +1,8 @@
 package entities;
 
-public class PrivateMessage extends Message {
+import java.io.Serializable;
+
+public class PrivateMessage extends Message implements Serializable {
     /**
      * Class constructor
      * A message sent by an account with only information/a content
