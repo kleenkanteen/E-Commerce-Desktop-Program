@@ -1,6 +1,7 @@
 package frontend.TradeGUI;
 
 import entities.Item;
+import frontend.PopUp.PopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -31,21 +32,18 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MultiTradeItemMenu implements Initializable {
-    private GlobalWishlistManager globalWishlistManager;
     private UserManager allUsers;
     private GlobalInventoryMenuPresenter globalInventoryMenuPresenter= new GlobalInventoryMenuPresenter();
     private String user;
-    private TradeManager tradeManager;
     private GlobalInventoryManager globalInventoryManager;
     private List<Item> items;
     private ObservableList<Item> selectedItems = FXCollections.observableArrayList();
     private ObservableList<Item> userItems = FXCollections.observableArrayList();
 
-    public MultiTradeItemMenu(List<Item> items, String user, GlobalInventoryManager globalInventoryManager, GlobalWishlistManager globalWishlistManager, UserManager allUsers) {
+    public MultiTradeItemMenu(String user, GlobalInventoryManager globalInventoryManager, UserManager allUsers) {
         this.user = user;
         this.globalInventoryManager = globalInventoryManager;
-        this.globalWishlistManager = globalWishlistManager;
-        this.items = items;
+        this.items = new ArrayList<>();
         this.allUsers = allUsers;
     }
 
@@ -71,11 +69,10 @@ public class MultiTradeItemMenu implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userItemLabel.setText(items.get(0).getOwnerName() + "'s inventory");
+        userItemLabel.setText(user + "'s inventory");
         tradingItemLabel.setText("Items selected");
-        title.setText("You are Trading with " + items.get(0).getOwnerName() + "\n please select the items you want to trade");
+        title.setText("Please select from your items the items you want to trade");
         itemName.setText(globalInventoryMenuPresenter.itemName());
-        itemOwner.setText(globalInventoryMenuPresenter.itemOwner());
         itemDescription.setText(globalInventoryMenuPresenter.itemDescription());
         select.setText("Select");
         remove.setText("Remove");
@@ -83,14 +80,11 @@ public class MultiTradeItemMenu implements Initializable {
         exit.setText(globalInventoryMenuPresenter.menuPromptExit());
 
         itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-        itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
         itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
         tradingitemName.setText(globalInventoryMenuPresenter.itemName());
-        tradingitemOwner.setText(globalInventoryMenuPresenter.itemOwner());
         tradingitemDescription.setText(globalInventoryMenuPresenter.itemDescription());
         tradingitemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-        tradingitemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
         tradingitemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
         userItem.setOnMouseClicked(this::selected);
@@ -99,7 +93,6 @@ public class MultiTradeItemMenu implements Initializable {
         //load data
         loadData();
         userItem.setItems(userItems);
-        System.out.println("hi");
         tradingItem.setItems(getItem());
         select.setOnAction(this::select);
         remove.setOnAction(this::remove);
@@ -108,24 +101,25 @@ public class MultiTradeItemMenu implements Initializable {
             try {
                 tradeRequest(e);
             } catch (IOException ex) {
-                System.out.println("Frozen account");
+                new PopUp("Error");
+                ((Stage)((Node) (e.getSource())).getScene().getWindow()).close();
             }
         });
     }
 
 
     private void loadData(){
-        List<Item> useritemlist =  globalInventoryManager.getPersonInventory(items.get(0).getOwnerName());
-        useritemlist.remove(useritemlist.indexOf(items.get(0)));
+        List<Item> useritemlist =  globalInventoryManager.getPersonInventory(user);
+        //useritemlist.remove(useritemlist.indexOf(items.get(0)));
         userItems.addAll(useritemlist);
     }
 
     public ObservableList<Item> getItem(){
-        selectedItems.add(items.get(0));
+        //selectedItems.add(items.get(0));
         return selectedItems;
     }
 
-    public void selected(javafx.scene.input.MouseEvent mouseEvent) {
+    private void selected(javafx.scene.input.MouseEvent mouseEvent) {
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (itemselected == null){
             message.setText(globalInventoryMenuPresenter.noItemSelected());
@@ -135,7 +129,7 @@ public class MultiTradeItemMenu implements Initializable {
         }
     }
 
-    public void select(ActionEvent event){
+    private void select(ActionEvent event){
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             userItem.getItems().remove(itemselected);
@@ -143,7 +137,7 @@ public class MultiTradeItemMenu implements Initializable {
         }
     }
 
-    public void remove(ActionEvent event){
+    private void remove(ActionEvent event){
         Item itemselected = tradingItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             tradingItem.getItems().remove(itemselected);
@@ -151,7 +145,7 @@ public class MultiTradeItemMenu implements Initializable {
         }
     }
 
-    public void tradeRequest(ActionEvent event) throws IOException {
+    private void tradeRequest(ActionEvent event) throws IOException {
         List<Item> items = new ArrayList<Item>();
         for (Item i : selectedItems){
             items.add(i);

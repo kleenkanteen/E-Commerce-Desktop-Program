@@ -1,20 +1,25 @@
 package frontend.GlobalInventoryGUI;
 
 import entities.Item;
+import frontend.TradeGUI.TradeMenuMainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import presenters.GlobalInventoryMenuPresenter;
 import use_cases.GlobalInventoryManager;
+import use_cases.GlobalWishlistManager;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 
@@ -27,17 +32,20 @@ import java.util.ResourceBundle;
 public class MultiItemMenu implements Initializable {
     private GlobalInventoryMenuPresenter globalInventoryMenuPresenter= new GlobalInventoryMenuPresenter();
     private String user;
-    private TradeManager tradeManager;
     private GlobalInventoryManager globalInventoryManager;
+    private GlobalWishlistManager globalWishlistManager;
+    private UserManager userManager;
     private Item item;
     private ObservableList<Item> selectedItems = FXCollections.observableArrayList();
     private ObservableList<Item> userItems = FXCollections.observableArrayList();
 
     public MultiItemMenu(Item item, String user, GlobalInventoryManager globalInventoryManager, UserManager userManager,
-                         TradeManager tradeManager) {
+                         GlobalWishlistManager globalWishlistManager) {
         this.user = user;
         this.globalInventoryManager = globalInventoryManager;
         this.item = item;
+        this.userManager = userManager;
+        this.globalWishlistManager = globalWishlistManager;
     }
 
     public MultiItemMenu(String user, GlobalInventoryManager globalInventoryManager) {
@@ -151,7 +159,7 @@ public class MultiItemMenu implements Initializable {
         }
         if (selectedItems.size() > 0){
             try{
-                String trademenuFXML = "TradeMenu.fxml";
+                String trademenuFXML = "/frontend/TradeGUI/TradeMenu.fxml";
                 switchScene(trademenuFXML, items);
             }
             catch (IOException ex) {
@@ -163,14 +171,13 @@ public class MultiItemMenu implements Initializable {
     }
 
     public void switchScene(String filename, List<Item> items) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
-//        loader.setController(new TradeMenuMainController(items, user));// call trade
-//        Parent root = loader.load();
-//        Scene newScene= new Scene(root);
-//        Stage window = new Stage();
-//        window.initModality(Modality.APPLICATION_MODAL);
-//        window.setScene(newScene);
-//        window.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
+        loader.setController(new TradeMenuMainController(globalInventoryManager, globalWishlistManager, userManager, items, user));// call tradeParent root = loader.load();
+        Scene newScene= new Scene(loader.load());
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.setScene(newScene);
+        window.show();
     }
 
     @FXML

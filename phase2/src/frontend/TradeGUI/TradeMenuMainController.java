@@ -170,7 +170,7 @@ public class TradeMenuMainController implements Initializable {
         if (!suggestions.isEmpty()) {
             new PopUp(suggestions);
         }
-        MultiItemMenu multiItemMenu = new MultiItemMenu(userA, globalInventoryManager);
+        MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager, allUsers);
         switchScene(multiItemMenu);
         itemsToTradeA = multiItemMenu.getItem();
     }
@@ -205,7 +205,7 @@ public class TradeMenuMainController implements Initializable {
         return suggestedItems;
     }
 
-    private void switchScene(MultiItemMenu multiItemMenu) throws IOException {
+    private void switchScene(MultiTradeItemMenu multiItemMenu) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiTradeItemMenu.fxml"));
         loader.setController(multiItemMenu);
         Parent root = loader.load();
