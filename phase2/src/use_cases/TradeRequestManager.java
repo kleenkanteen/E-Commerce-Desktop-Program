@@ -20,7 +20,7 @@ public class TradeRequestManager {
     /**
      * a constructor of TradeRequestManager to generate the new tradeRequest object
      * @param content trade request message content
-     * @param sender
+     * @param sender the message sender
      * @param userA userA
      * @param userB userB
      * @param itemA items belongs to userA
