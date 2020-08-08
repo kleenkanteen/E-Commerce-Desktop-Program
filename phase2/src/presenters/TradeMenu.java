@@ -15,10 +15,12 @@ public class TradeMenu {
     public final static String ONEWAY = "One way trade";
     public final static String TWOWAY = "Two way trade";
     public final static String SUBMIT = "Submit";
+    public final static String SUCCESS = "Success";
     public final static String EXIT = "Exit the program";
+    public final static String WRONGFORMAT = "Wrong format";
     public final static String ERROR = "You didn't complete the trade! Check if you're missing anything.";
     public final static String NOITEMS = "Looks like you don't have any items to give to the other user, try again after adding items!";
-
+    public final static String SUGGEST = "Here are a list of items that you should lend in the trade: ";
 
     /**
      * Presenter for choosing permanent trade or temporary trade.

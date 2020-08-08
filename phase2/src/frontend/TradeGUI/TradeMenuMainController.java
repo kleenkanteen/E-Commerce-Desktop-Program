@@ -52,6 +52,8 @@ public class TradeMenuMainController implements Initializable {
     @FXML private Button returnToMainMenu;
     @FXML private DatePicker primaryDate;
 
+    private final String filepath = "MultiTradeItemMenu.fxml";
+
     /**
      * A controller for TradeMenuMain.fxml
      * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
@@ -137,7 +139,7 @@ public class TradeMenuMainController implements Initializable {
                 LocalTime tradeTime = LocalTime.parse(timeOfTrade.getText().replaceAll("\\s+", ""), formatter);
                 tradeDateTime = tradeDate.atTime(tradeTime);
             } catch (DateTimeParseException ex) {
-                new PopUp("Wrong format");
+                new PopUp(TradeMenu.WRONGFORMAT);
                 return;
             }
 
@@ -161,7 +163,7 @@ public class TradeMenuMainController implements Initializable {
 
         allUsers.addUserMessage(userB, tradeRequest.getTradeRequest());
 
-        new PopUp("Success");
+        new PopUp(TradeMenu.SUCCESS);
         ((Stage)((Node)actionEvent.getSource()).getScene().getWindow()).close();
     }
 
@@ -175,7 +177,7 @@ public class TradeMenuMainController implements Initializable {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());
         String suggestions = suggestedItems();
         if (!suggestions.isEmpty()) {
-            new PopUp("Here are a list of items that you should trade to " + userB + ": " + suggestions);
+            new PopUp(TradeMenu.SUGGEST + suggestions);
         }
         MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager, allUsers);
         switchScene(multiItemMenu);
@@ -213,7 +215,7 @@ public class TradeMenuMainController implements Initializable {
     }
 
     private void switchScene(MultiTradeItemMenu multiItemMenu) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiTradeItemMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(filepath));
         loader.setController(multiItemMenu);
         Parent root = loader.load();
         Scene newScene = new Scene(root);
