@@ -18,7 +18,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import presenters.MainMenuPresenter;
 import use_cases.*;
 
 import java.io.IOException;
@@ -121,44 +120,44 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        errorMessage.setText("");
-        exitButton.setText("Return to Main Menu");
+        errorMessage.setText(mainMenuPresenter.stringReset());
+        exitButton.setText(mainMenuPresenter.returnToMainMenu());
         exitButton.setOnAction(this::changeScreenButtonPushed);
 
         if (userSelectedOption.equals(SelectedOption.USER_LOGIN)) {
-            loginButton.setText("Log In");
+            loginButton.setText(mainMenuPresenter.login());
             loginButton.setOnAction(e -> {
                 try {
-                    errorMessage.setText("");
+                    errorMessage.setText(mainMenuPresenter.stringReset());
                     userLogin();
                 } catch (IOException ioException) {
-                    errorMessage.setText("Failed to log in.");
+                    errorMessage.setText(mainMenuPresenter.failedLogin());
                 }
             });
         }
 
         else if (userSelectedOption.equals(SelectedOption.USER_SIGNUP)) {
-            loginButton.setText("Sign Up");
+            loginButton.setText(mainMenuPresenter.signUp());
             loginButton.setOnAction(e -> userSignUp());
         }
         else if (userSelectedOption.equals(SelectedOption.ADMIN_LOGIN)) {
-            loginButton.setText("Log In");
+            loginButton.setText(mainMenuPresenter.login());
             loginButton.setOnAction(e -> {
                 try {
                     adminLogin();
                 } catch (IOException ioException) {
-                    errorMessage.setText("Failed to log in.");
+                    errorMessage.setText(mainMenuPresenter.failedLogin());
                 }
             });
         }
         // if user selects Program Demo option
         else {
-            loginButton.setText("Log In");
+            loginButton.setText(mainMenuPresenter.login());
             loginButton.setOnAction(e -> {
                 try {
                     programDemo();
                 } catch (IOException ioException) {
-                    errorMessage.setText("Failed to log in.");
+                    errorMessage.setText(mainMenuPresenter.failedLogin());
                 }
             });
         }
@@ -177,7 +176,7 @@ public class LoginController implements Initializable {
                 goToOtherScene(bannedUserMenuGUIFile, OpenMenu.BANNED_USER_MENU.name(), username);
             }
         }
-        else errorMessage.setText("Wrong login, try again.");
+        else errorMessage.setText(mainMenuPresenter.wrongLogin());
     }
 
     private void userSignUp(){
@@ -186,12 +185,12 @@ public class LoginController implements Initializable {
             String password = this.password.getText();
 
             if (userManager.createNewUser(username, password) && !adminManager.userExist(username)) {
-                errorMessage.setText("New account successfully created");
+                errorMessage.setText(mainMenuPresenter.successfulAccountCreation());
             }
-            else errorMessage.setText("Your username is taken or invalid, try again.");
+            else errorMessage.setText(mainMenuPresenter.takenOrInvalidUsername());
         }
         catch (InvalidUsernameException f){
-            errorMessage.setText("Your username is taken or invalid, try again.");
+            errorMessage.setText(mainMenuPresenter.takenOrInvalidUsername());
         }
     }
 
@@ -202,7 +201,7 @@ public class LoginController implements Initializable {
         if ((adminManager.login(username, password))) {
             goToOtherScene(adminMenuGUIFile, OpenMenu.ADMIN_MENU.name(), username);
         }
-        else errorMessage.setText("Wrong login, try again.");
+        else errorMessage.setText(mainMenuPresenter.wrongLogin());
     }
 
 
