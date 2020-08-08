@@ -35,7 +35,6 @@ import java.util.ResourceBundle;
 
 public class TradeMenuMainController implements Initializable {
     private GlobalInventoryManager globalInventoryManager = null;
-    private ObservableList<Item> itemsToTrade = null;
     private UserManager allUsers;
     private String userA;
     private List<Item> itemsToTradeB;
@@ -131,8 +130,7 @@ public class TradeMenuMainController implements Initializable {
         if ((primaryDate.getValue() != null) &&
                 (timeOfTrade.getText() != null) &&
                 (!typesOfTrade.getText().equals(TradeMenu.TRADETYPE)) &&
-                (!oneOrTwoWayTrade.getText().equals(TradeMenu.ONETWOWAY)) &&
-                (!itemsToTradeA.isEmpty())) {
+                (!oneOrTwoWayTrade.getText().equals(TradeMenu.ONETWOWAY))) {
 
             // convert LocalDate to LocalDateTime
             LocalDate tradeDate = primaryDate.getValue();
@@ -149,10 +147,8 @@ public class TradeMenuMainController implements Initializable {
         } else {
             throw new IncompleteTradeException();
         }
-        String userB = itemsToTradeB.get(0).getName();
         Message tradeRequest = null;
         // push it into TradeRequestManager.
-        // TODO find out where to put suggestions in TradeMainMenuController.
         MessageBuilder messageBuilder = new MessageBuilder();
         if (tradeType.equals(TradeMenu.PERM)) {
             tradeRequest = messageBuilder.getTradeRequest("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, itemsToTradeA, true);
@@ -170,18 +166,17 @@ public class TradeMenuMainController implements Initializable {
     @FXML
     private void twoWayChoice(ActionEvent actionEvent) throws IOException {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());
-        PopUp suggestedItems = new PopUp(suggestedItems());
-
-        itemsToTradeB = itemsToTrade;
+        String suggestions = suggestedItems();
+        if (!suggestions.isEmpty()) {
+            new PopUp(suggestions);
+        }
         MultiItemMenu multiItemMenu = new MultiItemMenu(userA, globalInventoryManager);
         switchScene(multiItemMenu);
-        //itemsToTradeA = multiItemMenu.getItem();
-//        System.out.println(multiItemMenu.getItem());
+        itemsToTradeA = multiItemMenu.getItem();
     }
 
     private String suggestedItems() {
         StringBuilder suggestedItems = new StringBuilder("Here are a list of items that you should trade to " + userB + ":");
-        TradeController tradeController = new TradeController(globalInventoryManager, globalWishlistManager);
         ArrayList<Item> listOfSuggestedItems = (ArrayList<Item>) findSuggestedItems(userA, userB);
         // showing suggestions to the user.
         for (Item suggestion : listOfSuggestedItems) {
@@ -211,14 +206,14 @@ public class TradeMenuMainController implements Initializable {
     }
 
     private void switchScene(MultiItemMenu multiItemMenu) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiItemMenu.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MultiTradeItemMenu.fxml"));
         loader.setController(multiItemMenu);
         Parent root = loader.load();
         Scene newScene = new Scene(root);
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
-        window.show();
+        window.showAndWait();
     }
 
     @FXML
