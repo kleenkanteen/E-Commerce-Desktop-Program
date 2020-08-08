@@ -94,7 +94,7 @@ public class GlobalInventoryMenuController implements Initializable {
             try {
                 MultiItemMenu(e);
             } catch (UserFrozenException ex) {
-                new PopUp("Frozen account");
+                new PopUp(globalInventoryMenuPresenter.frozenAcc());
             }
         });
     }

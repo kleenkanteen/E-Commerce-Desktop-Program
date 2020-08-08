@@ -1,6 +1,7 @@
 package frontend.GlobalInventoryGUI;
 
 import entities.Item;
+import frontend.PopUp.PopUp;
 import frontend.TradeGUI.TradeMenuMainController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -113,7 +114,7 @@ public class MultiItemMenu implements Initializable {
             try {
                 tradeRequest(e);
             } catch (IOException ex) {
-                System.out.println("Frozen account");
+                new PopUp(globalInventoryMenuPresenter.frozenAcc());
             }
         });
     }
@@ -190,7 +191,7 @@ public class MultiItemMenu implements Initializable {
                 switchScene(trademenuFXML, items, event);
             }
             catch (IOException ex) {
-                //error
+                new PopUp(globalInventoryMenuPresenter.error());
             }
         }
         else message.setText(globalInventoryMenuPresenter.noItemSelected());

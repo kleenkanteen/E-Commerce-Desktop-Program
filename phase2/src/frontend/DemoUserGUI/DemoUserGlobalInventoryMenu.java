@@ -1,6 +1,7 @@
 package frontend.DemoUserGUI;
 
 import entities.Item;
+import frontend.PopUp.PopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -150,6 +151,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
                 switchScene(this.DemoUserTradeMenuFXML);
             }
             catch (IOException ex) {
+                new PopUp(demoUserPresenter.error());
             }
         }
     }

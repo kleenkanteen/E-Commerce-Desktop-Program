@@ -169,4 +169,12 @@ public class GlobalInventoryMenuPresenter {
     public String trade(){
         return "Trade";
     }
+
+    /**
+     * frozen account
+     * @return Sorry, your account is frozen
+     */
+    public String frozenAcc(){
+        return "Sorry, your account is frozen.";
+    }
 }

@@ -1,5 +1,6 @@
 package frontend.DemoUserGUI;
 
+import frontend.PopUp.PopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -103,7 +104,7 @@ public class DemoUserInfoMenu implements Initializable {
             type = Type.INVENTORY;
             switchScene(this.DemoUserInventoryFXML);
         } catch (IOException e){
-            System.out.println(demoUserManager.getUserInventory().size());
+            new PopUp(demoUserPresenter.error());
         }
     }
 
@@ -116,8 +117,7 @@ public class DemoUserInfoMenu implements Initializable {
             type = Type.WISHLIST;
             switchScene(this.DemoUserWishListFXML);
         } catch (IOException e){
-            System.out.println("wishlist");
-            System.out.println(demoUserManager.getUserWishlist().size());
+            new PopUp(demoUserPresenter.error());
         }
     }
 
