@@ -129,6 +129,7 @@ public class LoginController implements Initializable {
             loginButton.setText("Log In");
             loginButton.setOnAction(e -> {
                 try {
+                    errorMessage.setText("");
                     userLogin();
                 } catch (IOException ioException) {
                     errorMessage.setText("Failed to log in.");
