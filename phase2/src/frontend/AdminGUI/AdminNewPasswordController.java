@@ -40,7 +40,7 @@ public class AdminNewPasswordController implements Initializable {
 
 
     }
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
@@ -53,7 +53,7 @@ public class AdminNewPasswordController implements Initializable {
 
 
     }
-    public void addNewPasswordButtonPushed(ActionEvent actionEvent){
+    private void addNewPasswordButtonPushed(ActionEvent actionEvent){
 
         String password1 = newPasswordTextField.getText();
 

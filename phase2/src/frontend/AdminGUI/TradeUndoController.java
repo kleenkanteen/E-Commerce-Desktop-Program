@@ -37,15 +37,6 @@ public class TradeUndoController implements Initializable {
     }
 
 
-    public void switchScene(ActionEvent actionEvent, String fileName) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(fileName));
-        Scene newScene= new Scene(root);
-
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-
-        window.setScene(newScene);
-        window.show();
-    }
     private void openTradeWindow(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
@@ -75,7 +66,7 @@ public class TradeUndoController implements Initializable {
 
 
 
-    public void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
+    private void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
         if(userNameField.getText().equals("")){
             invalidUserLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
 
@@ -89,7 +80,7 @@ public class TradeUndoController implements Initializable {
 
 
     }
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

@@ -46,11 +46,11 @@ public class AdminNewAdminController implements Initializable {
         addNewAdminButton.setOnAction(this::addNewAdminButtonPushed);
 
     }
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
-    public void addNewAdminButtonPushed(ActionEvent actionEvent){
+    private void addNewAdminButtonPushed(ActionEvent actionEvent){
 
         String newUsername = newAdminUserNameTextField.getText();
 

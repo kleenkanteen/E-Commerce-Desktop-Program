@@ -65,13 +65,13 @@ public class AdminAccountController implements Initializable {
      * @param actionEvent
      */
 
-    public void close(ActionEvent actionEvent){
+    private void close(ActionEvent actionEvent){
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
 
 
-    public void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
+    private void ChangePassWordButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setMinHeight(400);
@@ -89,7 +89,7 @@ public class AdminAccountController implements Initializable {
 
 
     }
-    public void AdminCreationButtonPushed(ActionEvent actionEvent) throws IOException {
+    private void AdminCreationButtonPushed(ActionEvent actionEvent) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(adminGUIPresenter.adminAccountCreationWindow());
