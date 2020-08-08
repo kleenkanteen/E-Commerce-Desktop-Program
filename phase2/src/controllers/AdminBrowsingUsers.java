@@ -86,7 +86,7 @@ public class AdminBrowsingUsers {
                         // check if admin wants to change ban a user
                         case "3":
                             if(users.getUserIsBanned(user)){
-                                users.unFreezeUserAccount(user);
+                                users.unbanUserAccount(user);
                             }
                             else{
                                 users.banUserAccount(user);
