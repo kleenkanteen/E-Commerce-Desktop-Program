@@ -89,11 +89,11 @@ public class AdminBrowsingUsersController implements Initializable {
             banButton.setVisible(true);
             userLabel.setText(users.getUserInfo(user));
             userLabel.setVisible(true);
-            mainLabel.setText("Choose your option below");
+            mainLabel.setText("     Choose your option below");
             mainLabel.setVisible(true);
         }
         else {
-            mainLabel.setText("Invalid username, try again");
+            mainLabel.setText("     Invalid username, try again");
             mainLabel.setVisible(true);
         }
     }
@@ -120,6 +120,7 @@ public class AdminBrowsingUsersController implements Initializable {
             users.banUserAccount(user);
         }
         mainLabel.setText("User banning state has been changed");
+        userLabel.setText(users.getUserInfo(user));
     }
 
     @FXML
@@ -131,6 +132,7 @@ public class AdminBrowsingUsersController implements Initializable {
             users.freezeUserAccount(user);
         }
         mainLabel.setText("User freezing state has been changed");
+        userLabel.setText(users.getUserInfo(user));
     }
 
     @FXML
@@ -146,18 +148,21 @@ public class AdminBrowsingUsersController implements Initializable {
             users.setWeeklyTradesForOneUser(user, Integer.parseInt(limit));
             mainLabel.setText("Weekly limit successfully changed");
             incompleteLimit = false;
+            userLabel.setText(users.getUserInfo(user));
         }
         else if (incompleteLimit) {
             String limit = optionText.getText();
             users.setLimitOfIncompleteTradesForOneUser(user, Integer.parseInt(limit));
             mainLabel.setText("Incomplete trades limit successfully changed");
             incompleteLimit = false;
+            userLabel.setText(users.getUserInfo(user));
         }
         else if (lendingLimit){
             String limit = optionText.getText();
             users.setNewThresholdForOneUser(user, Integer.parseInt(limit));
             mainLabel.setText("Threshold successfully changed");
             lendingLimit = false;
+            userLabel.setText(users.getUserInfo(user));
         }
     }
 
