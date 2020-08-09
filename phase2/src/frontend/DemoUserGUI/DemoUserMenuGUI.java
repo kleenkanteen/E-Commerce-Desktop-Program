@@ -27,7 +27,7 @@ public class DemoUserMenuGUI  implements Initializable {
 
     private final String accountFXML = "DemoAccountMenu.fxml";
     private final String newItemFXML = "DemoAddItemMenu.fxml";
-    private final String globalInventoryFXML = "frontend/GlobalInventoryGUI/GlobalInventoryMenu.fxml";
+    private final String globalInventoryFXML = "/frontend/GlobalInventoryGUI/GlobalInventoryMenu.fxml";
 
     @FXML private Label systemMessage;
     @FXML private Button accountInfo;
