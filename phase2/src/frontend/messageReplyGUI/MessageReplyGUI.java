@@ -100,11 +100,12 @@ public abstract class MessageReplyGUI implements Initializable{
             messageContent.setWrapText(true);
 
             //Adding the buttons for the unqiue actions
-            Button[] buttons = new Button[s.length + 2];
+            Button[] buttons = new Button[s.length + 1];
 
             for (int i = 0; i < s.length; i++) {
                 String action = s[i];
                 buttons[i] = new Button(action);
+                buttons[i].setWrapText(true);
                 buttons[i].setOnAction(e -> {
                     messageResponse.doAction(action);
                     refresh();
@@ -112,16 +113,9 @@ public abstract class MessageReplyGUI implements Initializable{
                 });
             }
 
-            //Button to unselect the current message
-            buttons[s.length] = new Button(messageReplyPresenter.skip());
-            buttons[s.length].setOnAction(e -> {
-                refresh();
-                setUp();
-            });
-
             //Button to exit menu
-            buttons[s.length + 1] = new Button(messageReplyPresenter.exit());
-            buttons[s.length + 1].setOnAction(this::exitGUI);
+            buttons[s.length] = new Button(messageReplyPresenter.exit());
+            buttons[s.length].setOnAction(this::exitGUI);
 
             //Adding the buttons to the window
             buttonBar.getButtons().addAll(buttons);
