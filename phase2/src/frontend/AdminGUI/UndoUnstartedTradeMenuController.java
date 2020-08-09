@@ -1,10 +1,7 @@
 
 package frontend.AdminGUI;
 
-import entities.Item;
-import entities.PermTrade;
-import entities.Trade;
-import entities.User;
+import entities.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,6 +64,9 @@ public class UndoUnstartedTradeMenuController implements Initializable {
 
         allTrades.remove(selectedRow);
         tradeManager.removeTrade(selectedRow);
+        Message tradeDeletedNotification = new SystemMessage("Your trade has been deleted.");
+        usermanager.addUserMessage(selectedRow.getTraderA(), tradeDeletedNotification);
+        usermanager.addUserMessage(selectedRow.getTraderB(), tradeDeletedNotification);
     }
 
     public void close(ActionEvent actionEvent){

@@ -66,6 +66,7 @@ public class LoanMenu implements Initializable {
         this.tradeManager = tradeManager;
         this.globalWishlistManager = globalWishlistManager;
         this.globalInventoryManager = globalInventoryManager;
+        this.userPresenter = new UserPresenter();
     }
 
     /**

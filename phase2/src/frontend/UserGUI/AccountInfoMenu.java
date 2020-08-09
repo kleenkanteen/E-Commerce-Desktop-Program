@@ -53,8 +53,8 @@ public class AccountInfoMenu implements Initializable {
     // .fxml pathways
     private final String tradeHistoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserTrades.fxml";
     private final String passwordFXML = "/frontend/UserGUI/AccountInfo/NewPasswordGUI.fxml";
-    private final String tradePartnersFXML = "/frontend/UserGUI/AccountInfo/RecentTradesPartnersGUI.fxml";
-    private final String recentTradesFXML = "/frontend/UserGUI/AccountInfo/RecentTradesPartnersGUI.fxml";
+    private final String tradePartnersFXML = "/frontend/UserGUI/AccountInfo/RecentTradeTradePartnersGUI.fxml";
+    private final String recentTradesFXML = "/frontend/UserGUI/AccountInfo/RecentTradeTradePartnersGUI.fxml";
     private final String inventoryFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserInventory.fxml";
     private final String wishlistFXML = "/frontend/UserGUI/AccountInfo/BrowseThroughUserWishlist.fxml";
 

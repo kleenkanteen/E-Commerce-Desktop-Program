@@ -49,8 +49,8 @@ public class UserMenuGUI implements Initializable {
     private GlobalWishlistManager globalWishlistManager;
     private TradeManager tradeManager;
     private MessageBuilder messageBuilder;
-    String[] errorMessages = {" ", " ", " "};
-    List<Trade> incompletes;
+    private String[] errorMessages = {" ", " ", " "};
+    private List<Trade> incompletes;
     private Type type;
 
     // FXML locations
@@ -185,22 +185,16 @@ public class UserMenuGUI implements Initializable {
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
-        // make sure the user trades/status prompt is always on top (I hope this works!)
-        if(this.type == Type.USER_STATUS_NOT_FROZEN ||
-                this.type == Type.USER_STATUS_FROZEN ||
-                this.type == Type.UNCONFIRMED_TRADES) {
-            window.setAlwaysOnTop(true);
-        }
-        // window.initStyle(StageStyle.UNDECORATED);
-        // window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
         window.setScene(newScene);
-        window.show();
+        window.showAndWait();
+        window.close();
     }
 
     /**
      * Open up the accountInfoMenu via switchScene
      */
-    public void getAccountInfo() {
+    private void getAccountInfo() {
         try {
             this.type = Type.ACCOUNT_INFO;
             switchScene(this.accountFXML);
@@ -213,7 +207,7 @@ public class UserMenuGUI implements Initializable {
     /**
      * Open up the globalInventory Scene via switchScene
      */
-    public void getGlobalInventory() {
+    private void getGlobalInventory() {
         if(!this.globalInventoryManager.hasNoItem()) {
 
             try {
@@ -232,7 +226,7 @@ public class UserMenuGUI implements Initializable {
     /**
      * Switch to the loan menu scene
      */
-    public void getLoanMenu() {
+    private void getLoanMenu() {
         // get this user's inventory, the user that wants something and the item that this user wants
         List<Item> userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         List<String> itemsToLend = this.globalWishlistManager.userWhoWants(userInventory);
@@ -242,7 +236,7 @@ public class UserMenuGUI implements Initializable {
             this.systemMessage.setText(this.userPresenter.emptyPersonalInventoryWhileLoaning());
         }
         // see if anyone is interested in this user's items
-        else if(itemsToLend.size() != 0) {
+        else if(itemsToLend.size() == 0) {
             this.systemMessage.setText(this.userPresenter.itemNotInOtherUsersWishlist());
         }
         else {
@@ -271,7 +265,7 @@ public class UserMenuGUI implements Initializable {
     /**
      * Switch to the UserMessageResponse whatever window via switchScene
      */
-    public void getInbox() {
+    private void getInbox() {
         try  {
             this.type = Type.USER_MESSAGES;
             switchScene(this.userMessagesFXML);
@@ -284,7 +278,7 @@ public class UserMenuGUI implements Initializable {
     /**
      * Switch to the newItemMenu window via switchScene
      */
-    public void getNewItemMenu() {
+    private void getNewItemMenu() {
         try {
             this.type = Type.NEW_ITEM;
             switchScene(this.newItemFXML);
@@ -297,7 +291,7 @@ public class UserMenuGUI implements Initializable {
     /**
      * Allow for unfreeze request sending
      */
-    public void getUnfreezeRequest() {
+    private void getUnfreezeRequest() {
         if(this.userManager.getUserFrozenStatus(this.currUser)) {
             List<Message> adminMessages = this.adminManager.getAdminMessages();
             adminMessages.add(this.messageBuilder.getUnfreezeRequest("User " + this.currUser +
@@ -313,7 +307,7 @@ public class UserMenuGUI implements Initializable {
     /**
      * Open up the PrivateMessageMenu via switchScene
      */
-    public void getPrivateMessageMenu() {
+    private void getPrivateMessageMenu() {
         try {
             this.type = Type.PRIVATE_MESSAGES;
             switchScene(this.privateMessageFXML);
@@ -403,7 +397,7 @@ public class UserMenuGUI implements Initializable {
      * Close the UserMenu window
      * @param actionEvent the ActionEvent object
      */
-    public void logoff(ActionEvent actionEvent) {
+    private void logoff(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
