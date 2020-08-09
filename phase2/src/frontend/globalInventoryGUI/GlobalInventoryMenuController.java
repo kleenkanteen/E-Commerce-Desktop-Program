@@ -117,7 +117,7 @@ public class GlobalInventoryMenuController implements Initializable {
      * to switch to MultiItemMenu when user clicked on trade button
      * @param filename file name of the MultiItemMenu FXML file
      * @param item the item user selected
-     * @throws IOException
+     * @throws IOException some thing went wrong
      */
     private void switchScene(String filename, Item item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
@@ -139,7 +139,9 @@ public class GlobalInventoryMenuController implements Initializable {
         ObservableList<Item> items = FXCollections.observableArrayList();
         List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
         for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
-            items.add(i);
+            if (!(i == null)) {
+                items.add(i);
+            }
         }
         return items;
     }
@@ -170,7 +172,7 @@ public class GlobalInventoryMenuController implements Initializable {
     /**
      * Switch to MultiItemMenu for user to select multiple items
      * @param event mouse click on trade button
-     * @throws UserFrozenException
+     * @throws UserFrozenException user account is frozen
      */
     private void MultiItemMenu(ActionEvent event) throws UserFrozenException {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
