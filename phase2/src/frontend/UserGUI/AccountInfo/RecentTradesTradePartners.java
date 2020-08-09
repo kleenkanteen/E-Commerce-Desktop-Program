@@ -27,7 +27,6 @@ public class RecentTradesTradePartners implements Initializable {
     // fxml stuff
     @FXML private Button exit;
     @FXML private ListView<String> tradeList;
-    @FXML private Label title;
 
     /**
      * Constructor for listener that handles recent trade viewing
@@ -36,7 +35,9 @@ public class RecentTradesTradePartners implements Initializable {
     public RecentTradesTradePartners(Trade[] recentTrades) {
         this.userTradeInfo = new ArrayList<>();
         for(Trade trade : recentTrades) {
-            this.userTradeInfo.add(trade.toString());
+            if(trade != null) {
+                this.userTradeInfo.add(trade.toString());
+            }
         }
         this.userPresenter = new UserPresenter();
     }
@@ -47,7 +48,11 @@ public class RecentTradesTradePartners implements Initializable {
      */
     public RecentTradesTradePartners(String[] tradePartners) {
         this.userTradeInfo = new ArrayList<>();
-        this.userTradeInfo.addAll(Arrays.asList(tradePartners));
+        for(String partner : tradePartners) {
+            if(partner != null) {
+                this.userTradeInfo.add(partner);
+            }
+        }
         this.userPresenter = new UserPresenter();
     }
 

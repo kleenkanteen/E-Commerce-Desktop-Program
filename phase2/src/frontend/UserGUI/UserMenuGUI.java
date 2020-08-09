@@ -242,7 +242,7 @@ public class UserMenuGUI implements Initializable {
             this.systemMessage.setText(this.userPresenter.emptyPersonalInventoryWhileLoaning());
         }
         // see if anyone is interested in this user's items
-        else if(itemsToLend.size() != 0) {
+        else if(itemsToLend.size() == 0) {
             this.systemMessage.setText(this.userPresenter.itemNotInOtherUsersWishlist());
         }
         else {
