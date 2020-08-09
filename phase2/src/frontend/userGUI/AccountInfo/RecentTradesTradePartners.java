@@ -72,7 +72,7 @@ public class RecentTradesTradePartners implements Initializable {
      * Exit to AccountInfo menu
      * @param actionEvent the ActionEvent object
      */
-    public void exit(ActionEvent actionEvent) {
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

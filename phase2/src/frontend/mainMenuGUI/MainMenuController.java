@@ -78,7 +78,8 @@ public class MainMenuController implements Initializable {
      ** If the user presses the Log In button, passes user input for wanting to log in at the MainMenu to goToOtherScene
      * @throws IOException If something is wrong with the filepath or file
      */
-    public void userLoginButtonPressed () throws IOException {
+    @FXML
+    private void userLoginButtonPressed () throws IOException {
         goToOtherScene(loginFXMLFile, SelectedOption.USER_LOGIN); //change to enum
     }
 
@@ -86,7 +87,8 @@ public class MainMenuController implements Initializable {
      * If the user presses the Sign Up button, passes user input for wanting to sign up at the MainMenu to goToOtherScene
      * @throws IOException If something is wrong with the filepath or file
      */
-    public void userSignUpButtonPressed() throws IOException {
+    @FXML
+    private void userSignUpButtonPressed() throws IOException {
         goToOtherScene(loginFXMLFile, SelectedOption.USER_SIGNUP);
     }
 
@@ -94,14 +96,16 @@ public class MainMenuController implements Initializable {
      * If the admin presses the Log In button, passes user input for wanting to log in at the MainMenu to goToOtherScene
      * @throws IOException If something is wrong with the filepath or file
      */
-    public void adminLoginButtonPressed() throws IOException {
+    @FXML
+    private void adminLoginButtonPressed() throws IOException {
         goToOtherScene(loginFXMLFile, SelectedOption.ADMIN_LOGIN);
     }
     /**
      * If the user the Program Demo button, passes user input for wanting to try demo at the MainMenu to goToOtherScene
      * @throws IOException If something is wrong with the filepath or file
      */
-    public void programDemoButtonPressed() throws IOException {
+    @FXML
+    private void programDemoButtonPressed() throws IOException {
         goToOtherScene(loginFXMLFile,SelectedOption.DEMO_LOGIN);
     }
 
@@ -110,7 +114,8 @@ public class MainMenuController implements Initializable {
      * @param actionEvent store information regarding which method to call given a button press
      */
     // code for method closeButtonIsPushed is similar to: https://www.youtube.com/watch?v=i4Fk10U7Sks
-    public void closeButtonIsPushed(ActionEvent actionEvent) {
+    @FXML
+    private void closeButtonIsPushed(ActionEvent actionEvent) {
         Stage s = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
         s.close();
         serialize();

@@ -1,4 +1,4 @@
-package presenters;
+package frontend.adminGUI;
 
 import entities.Admin;
 

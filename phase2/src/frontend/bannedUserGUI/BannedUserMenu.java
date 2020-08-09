@@ -12,7 +12,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import use_cases.AdminManager;
-import presenters.BannedUserPresenter;
 import use_cases.MessageBuilder;
 
 public class BannedUserMenu implements Initializable {
@@ -59,7 +58,7 @@ public class BannedUserMenu implements Initializable {
     /**
      * Send the unban request
      */
-    public void confirm() {
+    private void confirm() {
         List<Message> adminMessages = this.adminManager.getAdminMessages();
         adminMessages.add(this.messageBuilder.getUnbanRequest("Please unban user: " +
                 this.currUser + ". They are very sorry :(", this.currUser));
@@ -71,7 +70,7 @@ public class BannedUserMenu implements Initializable {
      * Return to main menu (closes this banned user listener)
      * @param actionEvent the ActionEvent object
      */
-    public void returnToMainMenu(ActionEvent actionEvent) {
+    private void returnToMainMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

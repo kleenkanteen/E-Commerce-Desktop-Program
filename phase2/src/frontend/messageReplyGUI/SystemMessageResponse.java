@@ -1,7 +1,6 @@
 package frontend.messageReplyGUI;
 
 import entities.Message;
-import presenters.MessageReplyPresenter;
 
 import java.util.List;
 

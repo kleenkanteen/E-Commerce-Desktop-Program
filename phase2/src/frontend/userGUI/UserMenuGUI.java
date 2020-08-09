@@ -131,7 +131,7 @@ public class UserMenuGUI implements Initializable {
      * @param filename the FXML file path (set as final above)
      * @throws IOException for funky input errors
      */
-    public void switchScene(String filename) throws IOException {
+    private void switchScene(String filename) throws IOException {
         // instantiate the FXMLLoader
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch (this.type) {

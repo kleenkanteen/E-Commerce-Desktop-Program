@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import presenters.AdminGUIPresenter;
 import use_cases.AdminManager;
 import use_cases.UserManager;
 

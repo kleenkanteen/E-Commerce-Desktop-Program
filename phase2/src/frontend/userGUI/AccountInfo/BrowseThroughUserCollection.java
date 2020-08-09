@@ -188,7 +188,7 @@ public class BrowseThroughUserCollection implements Initializable {
     /**
      * Remove the currently viewed item from the user inventory/wishlist
      */
-    public void remove() {
+    private void remove() {
         // if there are no items left
         if(this.itemList.getItems().size() == 0) {
             this.systemMessage.setText(this.userPresenter.isEmpty("collection"));
@@ -223,7 +223,7 @@ public class BrowseThroughUserCollection implements Initializable {
     /**
      * Method for confirming unconfirmed user trades
      */
-    public void confirm() {
+    private void confirm() {
         // if there is nothing left in unconfirmed
         if(this.tradeList.getItems().size() == 0) {
             this.systemMessage.setText(this.userPresenter.unconfirmedMeetingAllDone());
@@ -255,7 +255,7 @@ public class BrowseThroughUserCollection implements Initializable {
     /**
      * Method for denying unconfirmed user trades
      */
-    public void deny() {
+    private void deny() {
         // if there are no unconfirmed trades left
         if(this.tradeList.getItems().size() == 0) {
             this.systemMessage.setText(this.userPresenter.unconfirmedMeetingAllDone());
@@ -305,7 +305,7 @@ public class BrowseThroughUserCollection implements Initializable {
     /**
      * Send a trade request
      */
-    public void sendTradeRequest() {
+    private void sendTradeRequest() {
         if(this.itemList.getItems().size() == 0) {
             this.systemMessage.setText(this.userPresenter.isEmpty("collection"));
         }
@@ -343,7 +343,7 @@ public class BrowseThroughUserCollection implements Initializable {
      * Exit the scene
      * @param actionEvent ActionEvent object
      */
-    public void exit(ActionEvent actionEvent) {
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

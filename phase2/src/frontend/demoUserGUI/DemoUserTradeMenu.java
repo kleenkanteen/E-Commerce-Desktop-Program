@@ -12,19 +12,19 @@ import java.util.ResourceBundle;
 
 public class DemoUserTradeMenu implements Initializable {
     DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
-    @FXML public Label titleScreen;
-    @FXML public TextField timeOfTrade;
-    @FXML public TextField meetTrade;
-    @FXML public MenuButton typesOfTrade;
-    @FXML public MenuItem temporary;
-    @FXML public MenuItem permanent;
-    @FXML public MenuButton oneOrTwoWayTrade;
-    @FXML public MenuItem oneWayTrade;
-    @FXML public MenuItem twoWayTrade;
-    @FXML public Button submit;
-    @FXML public Button returnToMainMenu;
-    @FXML DatePicker primaryDate;
-    @FXML Label message;
+    @FXML private Label titleScreen;
+    @FXML private TextField timeOfTrade;
+    @FXML private TextField meetTrade;
+    @FXML private MenuButton typesOfTrade;
+    @FXML private MenuItem temporary;
+    @FXML private MenuItem permanent;
+    @FXML private MenuButton oneOrTwoWayTrade;
+    @FXML private MenuItem oneWayTrade;
+    @FXML private MenuItem twoWayTrade;
+    @FXML private Button submit;
+    @FXML private Button returnToMainMenu;
+    @FXML private DatePicker primaryDate;
+    @FXML private Label message;
 
     /**
      * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)

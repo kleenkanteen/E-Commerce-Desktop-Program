@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import presenters.AdminGUIPresenter;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 

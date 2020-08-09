@@ -1,5 +1,4 @@
 package frontend.adminGUI;
-import presenters.AdminBrowsingUsersPresenter;
 import use_cases.UserManager;
 
 import java.io.BufferedReader;

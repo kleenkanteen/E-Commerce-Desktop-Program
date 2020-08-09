@@ -13,7 +13,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import presenters.AdminGUIPresenter;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 

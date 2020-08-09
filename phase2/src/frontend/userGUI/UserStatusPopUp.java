@@ -71,7 +71,7 @@ public class UserStatusPopUp implements Initializable {
      * Close this window
      * @param actionEvent the ActionEvent object
      */
-    public void exit(ActionEvent actionEvent) {
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

@@ -1,7 +1,6 @@
 package frontend.messageReplyGUI;
 
 import entities.FreezeRequest;
-import presenters.MessageReplyPresenter;
 import entities.Message;
 import use_cases.MessageBuilder;
 import use_cases.UserManager;
