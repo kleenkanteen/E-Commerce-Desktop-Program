@@ -144,6 +144,11 @@ public class TradeMenuMainController implements Initializable {
                 return;
             }
 
+            if(tradeDateTime.isBefore(LocalDateTime.now())){
+                new PopUp(TradeMenu.PASTDATE);
+                return;
+            }
+
             // rest of the inputs from the user.
             placeOfMeeting = meetTrade.getText();
             tradeType = typesOfTrade.getText();
