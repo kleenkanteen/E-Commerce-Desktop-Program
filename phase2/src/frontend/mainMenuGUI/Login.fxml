@@ -10,7 +10,7 @@
          <children>
             <Label fx:id="errorMessage" />
             <TextField fx:id="username" promptText="Username" />
-            <TextField fx:id="password" promptText="Password" />
+            <PasswordField fx:id="password" promptText="Password" />
             <Button fx:id="loginButton" mnemonicParsing="false" />
             <Button fx:id="exitButton" mnemonicParsing="false" />
          </children>
