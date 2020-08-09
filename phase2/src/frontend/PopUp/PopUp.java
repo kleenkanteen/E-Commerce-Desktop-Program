@@ -1,5 +1,6 @@
 package frontend.PopUp;
 
+import javafx.geometry.Pos;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -13,7 +14,7 @@ public class PopUp {
     public PopUp(String message){
         Stage window = new Stage();
         Label errorMessage = new Label(message);
-        errorMessage.setTextAlignment(TextAlignment.CENTER);
+        errorMessage.setAlignment(Pos.CENTER);
         errorMessage.setWrapText(true);
         window.initModality(Modality.APPLICATION_MODAL);
         window.initStyle(StageStyle.UTILITY);
