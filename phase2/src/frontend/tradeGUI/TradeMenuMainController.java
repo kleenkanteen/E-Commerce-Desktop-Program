@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import presenters.TradeMenu;
 import use_cases.*;
 
 import java.io.IOException;

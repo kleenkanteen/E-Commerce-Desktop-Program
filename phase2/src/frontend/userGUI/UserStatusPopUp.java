@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import presenters.UserPresenter;
 
 import java.net.URL;
 import java.util.ResourceBundle;

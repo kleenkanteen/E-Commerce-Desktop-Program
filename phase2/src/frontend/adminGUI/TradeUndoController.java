@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import presenters.AdminGUIPresenter;
 import use_cases.TradeManager;
 import use_cases.UserManager;
 
@@ -66,14 +66,6 @@ public class TradeUndoController implements Initializable {
         window.show();
     }
 
-
-
-
-
-
-
-
-
     private void searchUserButtonPushed(ActionEvent actionEvent) throws IOException {
         if(userNameField.getText().equals("")){
             invalidUserLabel.setText(adminGUIPresenter.userNameCannotBeEmpty());
@@ -97,11 +89,6 @@ public class TradeUndoController implements Initializable {
      * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
-
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         invalidUserLabel.setText(" ");

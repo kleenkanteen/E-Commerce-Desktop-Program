@@ -1,6 +1,5 @@
 package frontend.mainMenuGUI;
 
-import controllers.*;
 import gateways.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

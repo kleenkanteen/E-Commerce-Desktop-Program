@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import presenters.AdminGUIPresenter;
 import use_cases.AdminManager;
 import use_cases.UserManager;
 

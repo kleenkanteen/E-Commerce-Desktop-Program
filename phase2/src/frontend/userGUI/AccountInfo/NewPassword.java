@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import use_cases.UserManager;
-import presenters.UserPresenter;
+import frontend.userGUI.UserPresenter;
 
 import java.net.URL;
 import java.util.ResourceBundle;

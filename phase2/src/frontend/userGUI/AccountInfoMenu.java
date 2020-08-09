@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import presenters.UserPresenter;
 import use_cases.*;
 import entities.*;
 import java.io.IOException;

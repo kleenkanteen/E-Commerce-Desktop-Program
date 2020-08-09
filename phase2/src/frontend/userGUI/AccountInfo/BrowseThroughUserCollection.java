@@ -26,7 +26,7 @@ import use_cases.GlobalInventoryManager;
 import use_cases.GlobalWishlistManager;
 import use_cases.TradeManager;
 import use_cases.UserManager;
-import presenters.UserPresenter;
+import frontend.userGUI.UserPresenter;
 
 public class BrowseThroughUserCollection implements Initializable {
 

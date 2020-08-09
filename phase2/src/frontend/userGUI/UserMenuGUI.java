@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import presenters.UserPresenter;
 import use_cases.*;
 
 import java.io.IOException;

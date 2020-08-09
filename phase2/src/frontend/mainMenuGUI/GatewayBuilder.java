@@ -1,4 +1,4 @@
-package controllers;
+package frontend.mainMenuGUI;
 import gateways.*;
 
 import java.io.IOException;

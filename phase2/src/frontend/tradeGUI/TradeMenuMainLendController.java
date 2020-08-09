@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import presenters.TradeMenu;
 import use_cases.GlobalInventoryManager;
 import use_cases.TradeRequestManager;
 import use_cases.UserManager;
