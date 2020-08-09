@@ -169,8 +169,11 @@ public class MainMenuController implements Initializable {
             deleteFile(globalInventoryFilepath);
             deleteFile(adminMessagesFilepath);
             deleteFile(globalWishlistFilepath);
+            deleteFile(tradeFilepath);
+
             deleteFile(dataFolderPath);
             new File(dataFolderPath).mkdirs();
+
             deserialize();
             errorMessage.setWrapText(true);
             errorMessage.setText(mainMenuPresenter.corruptedData());
