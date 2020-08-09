@@ -272,10 +272,10 @@ public abstract class Trade implements Serializable {
             }
         }
 
-        if(traderBItemsToTrade.size() != trade.traderAItemstoTrade.size()) return false;
-        if(!traderAItemstoTrade.isEmpty()){
-            for(Item i: traderAItemstoTrade){
-                if(!trade.getTraderAItemsToTrade().contains(i))return false;
+        if(traderBItemsToTrade.size() != trade.traderBItemsToTrade.size()) return false;
+        if(!traderBItemsToTrade.isEmpty()){
+            for(Item i: traderBItemsToTrade){
+                if(!trade.getTraderBItemsToTrade().contains(i))return false;
             }
         }
 
