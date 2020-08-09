@@ -209,7 +209,6 @@ public class MainMenuController implements Initializable {
             adminMessageGateway.writeToFile(adminMessagesFilepath, adminManager.getAdminMessages());
         }
         catch (IOException e) {
-            //TODO: print error pop up or something
             errorMessage.setText(mainMenuPresenter.savingError());
         }
     }
