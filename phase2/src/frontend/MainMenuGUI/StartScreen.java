@@ -1,5 +1,4 @@
 package frontend.MainMenuGUI;
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,6 +8,9 @@ import javafx.stage.StageStyle;
 
 public class StartScreen extends Application {
 
+    private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
+    private final String mainMenuFXMLFile = "MainMenu.fxml";
+
     /**
      *
      * @param primaryStage Initial stage of the JavaFX program
@@ -16,9 +18,9 @@ public class StartScreen extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MainMenu.fxml"));
-        primaryStage.setTitle("Trade System 2.0");
-        primaryStage.setScene(new Scene(root, 400, 300));
+        Parent root = FXMLLoader.load(getClass().getResource(mainMenuFXMLFile));
+        primaryStage.setTitle(mainMenuPresenter.programName());
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }

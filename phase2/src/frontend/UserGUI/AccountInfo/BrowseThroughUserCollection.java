@@ -1,18 +1,29 @@
 package frontend.UserGUI.AccountInfo;
 
 import entities.PermTrade;
+import exceptions.UserFrozenException;
+import frontend.GlobalInventoryGUI.MultiItemMenu;
+import frontend.TradeGUI.TradeMenuMainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import entities.Item;
 import entities.Trade;
+import javafx.stage.StageStyle;
 import use_cases.GlobalInventoryManager;
 import use_cases.GlobalWishlistManager;
 import use_cases.TradeManager;
@@ -21,6 +32,7 @@ import presenters.UserPresenter;
 
 public class BrowseThroughUserCollection implements Initializable {
 
+    // instance variables
     private List<Item> userItemCollection;
     private List<Trade> userTradeCollection;
     private String currUser;
@@ -33,6 +45,7 @@ public class BrowseThroughUserCollection implements Initializable {
     private Item selectedItem;
     private Trade selectedTrade;
 
+    // fxml stuff
     @FXML private Label systemMessage;
     @FXML private Label unconfirmedTradesPrompt;
     @FXML private Button remove;
@@ -42,6 +55,9 @@ public class BrowseThroughUserCollection implements Initializable {
     @FXML private Button exit;
     @FXML private ListView<Item> itemList;
     @FXML private ListView<Trade> tradeList;
+
+    private final String tradeMenuFXML = "/frontend/TradeGUI/TradeMenu.fxml";
+    private final String multiMenuFXML = "/frontend/GlobalInventoryGUI/MultiItemMenu.fxml";
 
     /**
      * ENUM of Collection types
@@ -123,8 +139,8 @@ public class BrowseThroughUserCollection implements Initializable {
 
     /**
      * Set up button functionality/label text
-     * @param location idk
-     * @param resources lmao idk
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -149,14 +165,18 @@ public class BrowseThroughUserCollection implements Initializable {
                 this.sendTradeRequest.setOnAction(e -> sendTradeRequest());
             }
         }
-        // set up for UNCONFIRMED TRADES/TRADE_HISTORY
+        // set up for trade history
+        else if(this.type == Type.TRADE_HISTORY) {
+            this.tradeList.getItems().addAll(this.userTradeCollection);
+        }
+        // set up for UNCONFIRMED TRADES
         else {
             // set up text
             this.unconfirmedTradesPrompt.setText(this.userPresenter.checkUnconfirmedTradesPrompt());
             this.confirm.setText(this.userPresenter.confirmMeetingPrompt());
             this.deny.setText(this.userPresenter.denyMeetingPrompt());
 
-            // set up functionality
+            // set up button functionality
             this.confirm.setOnAction(e -> confirm());
             this.deny.setOnAction(e -> deny());
 
@@ -191,7 +211,14 @@ public class BrowseThroughUserCollection implements Initializable {
                     break;
             }
             this.itemList.getItems().remove(this.selectedItem);
-            this.selectedItem = null;
+
+            // round about fix for bug where last item would not be selected
+            if(this.itemList.getItems().size() == 1) {
+                this.selectedItem = this.itemList.getItems().get(0);
+            }
+            else {
+                this.selectedItem = null;
+            }
         }
     }
 
@@ -216,7 +243,14 @@ public class BrowseThroughUserCollection implements Initializable {
                 removeTradingItemsFromWishlist(this.selectedTrade);
             }
             this.tradeList.getItems().remove(this.selectedTrade);
-            this.selectedTrade = null;
+
+            // round about fix for bug where last item would not be selected
+            if(this.tradeList.getItems().size() == 1) {
+                this.selectedTrade = this.tradeList.getItems().get(0);
+            }
+            else {
+                this.selectedTrade = null;
+            }
         }
     }
 
@@ -235,7 +269,14 @@ public class BrowseThroughUserCollection implements Initializable {
         else {
             this.tradeManager.setConfirm(this.currUser, this.selectedTrade, false);
             this.tradeList.getItems().remove(this.selectedTrade);
-            this.selectedTrade = null;
+
+            // round about fix for bug where last item would not be selected
+            if(this.tradeList.getItems().size() == 1) {
+                this.selectedTrade = this.tradeList.getItems().get(0);
+            }
+            else {
+                this.selectedTrade = null;
+            }
         }
     }
 
@@ -267,7 +308,37 @@ public class BrowseThroughUserCollection implements Initializable {
      * Send a trade request
      */
     public void sendTradeRequest() {
-        System.out.println("This button doesn't do anything yet!");
+        if(this.itemList.getItems().size() == 0) {
+            this.systemMessage.setText(this.userPresenter.isEmpty("collection"));
+        }
+        else if(this.selectedItem == null) {
+            this.systemMessage.setText(this.userPresenter.selectValidObject());
+        }
+        else {
+            try {
+                if(this.userManager.getCanTrade(this.currUser, this.tradeManager.getBorrowedTimes(this.currUser),
+                        this.tradeManager.getLendTimes(this.currUser),
+                        this.tradeManager.getIncompleteTimes(this.currUser),
+                        this.tradeManager.numberOfTradesCreatedThisWeek(this.currUser))) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource(this.multiMenuFXML));
+                    loader.setController(new MultiItemMenu(this.selectedItem, this.currUser,
+                            this.globalInventoryManager, this.userManager, this.globalWishlistManager));
+                    Parent root = loader.load();
+                    Scene newScene = new Scene(root);
+                    Stage window = new Stage();
+                    window.initStyle(StageStyle.UNDECORATED);
+                    window.initModality(Modality.APPLICATION_MODAL);
+                    window.setScene(newScene);
+                    window.show();
+                }
+            }
+            catch(IOException ex) {
+                this.systemMessage.setText("Input error while try to send trade request!");
+            }
+            catch(UserFrozenException ex) {
+                this.systemMessage.setText(this.userPresenter.userAccountFrozen());
+            }
+        }
     }
 
     /**

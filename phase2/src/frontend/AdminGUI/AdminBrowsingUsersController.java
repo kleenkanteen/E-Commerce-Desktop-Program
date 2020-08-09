@@ -16,18 +16,30 @@ import java.util.ResourceBundle;
 
 public class AdminBrowsingUsersController implements Initializable {
 
-    @FXML private TextField usernameText;
-    @FXML private TextField optionText;
-    @FXML private Button searchButton;
-    @FXML private Button lendingButton;
-    @FXML private Button freezeButton;
-    @FXML private Button exitButton;
-    @FXML private Button banButton;
-    @FXML private Button weeklyButton;
-    @FXML private Button incompleteButton;
-    @FXML private Button optionButton;
-    @FXML private Label mainLabel;
-    @FXML private Label userLabel;
+    @FXML
+    private TextField usernameText;
+    @FXML
+    private TextField optionText;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button lendingButton;
+    @FXML
+    private Button freezeButton;
+    @FXML
+    private Button exitButton;
+    @FXML
+    private Button banButton;
+    @FXML
+    private Button weeklyButton;
+    @FXML
+    private Button incompleteButton;
+    @FXML
+    private Button optionButton;
+    @FXML
+    private Label mainLabel;
+    @FXML
+    private Label userLabel;
 
     private UserManager users;
     private AdminBrowsingUsersPresenter browse;
@@ -38,8 +50,9 @@ public class AdminBrowsingUsersController implements Initializable {
 
 
     /**
-    Construct an instance, takes in an usermanager object, creates a AdminBrowsingUsersPresenter.
-    @param system usermanager instance
+     * Construct an instance, takes in an usermanager object, creates a AdminBrowsingUsersPresenter.
+     *
+     * @param system usermanager instance
      */
     public AdminBrowsingUsersController(UserManager system) {
         this.browse = new AdminBrowsingUsersPresenter();
@@ -47,6 +60,13 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @Override
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from
+     * Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location
+     *                 is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     public void initialize(URL location, ResourceBundle resources) {
         lendingButton.setVisible(false);
         freezeButton.setVisible(false);
@@ -69,9 +89,9 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @FXML
-    private void search(ActionEvent actionEvent){
+    private void search(ActionEvent actionEvent) {
         String input = usernameText.getText();
-        if (users.isValidUser(input)){
+        if (users.isValidUser(input)) {
             user = input;
             lendingButton.setVisible(true);
             freezeButton.setVisible(true);
@@ -82,11 +102,10 @@ public class AdminBrowsingUsersController implements Initializable {
             banButton.setVisible(true);
             userLabel.setText(users.getUserInfo(user));
             userLabel.setVisible(true);
-            mainLabel.setText("Choose your option below");
+            mainLabel.setText("     Choose your option below");
             mainLabel.setVisible(true);
-        }
-        else {
-            mainLabel.setText("Invalid username, try again");
+        } else {
+            mainLabel.setText("     Invalid username, try again");
             mainLabel.setVisible(true);
         }
     }
@@ -106,24 +125,24 @@ public class AdminBrowsingUsersController implements Initializable {
 
     @FXML
     private void ban(ActionEvent actionEvent) {
-        if(users.getUserIsBanned(user)){
+        if (users.getUserIsBanned(user)) {
             users.unFreezeUserAccount(user);
-        }
-        else{
+        } else {
             users.banUserAccount(user);
         }
         mainLabel.setText("User banning state has been changed");
+        userLabel.setText(users.getUserInfo(user));
     }
 
     @FXML
     private void freeze(ActionEvent actionEvent) {
-        if(users.getUserFrozenStatus(user)){
+        if (users.getUserFrozenStatus(user)) {
             users.unFreezeUserAccount(user);
-        }
-        else{
+        } else {
             users.freezeUserAccount(user);
         }
         mainLabel.setText("User freezing state has been changed");
+        userLabel.setText(users.getUserInfo(user));
     }
 
     @FXML
@@ -134,29 +153,31 @@ public class AdminBrowsingUsersController implements Initializable {
 
     @FXML
     private void optionInput(ActionEvent actionEvent) {
-        if (weeklyLimit){
-            String limit = optionText.getText();
-            users.setWeeklyTradesForOneUser(user, Integer.parseInt(limit));
-            mainLabel.setText("Weekly limit successfully changed");
-            incompleteLimit = false;
-        }
-        else if (incompleteLimit) {
-            String limit = optionText.getText();
-            users.setLimitOfIncompleteTradesForOneUser(user, Integer.parseInt(limit));
-            mainLabel.setText("Incomplete trades limit successfully changed");
-            incompleteLimit = false;
-        }
-        else if (lendingLimit){
-            String limit = optionText.getText();
-            users.setNewThresholdForOneUser(user, Integer.parseInt(limit));
-            mainLabel.setText("Threshold successfully changed");
-            lendingLimit = false;
-        }
-    }
 
-    @FXML
-    private void exit(ActionEvent actionEvent) {
-        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        window.close();
+        String limit = optionText.getText();
+        if (limit.matches("\\d+")) {
+            if (weeklyLimit) {
+                users.setWeeklyTradesForOneUser(user, Integer.parseInt(limit));
+                mainLabel.setText("Weekly limit successfully changed");
+                incompleteLimit = false;
+                userLabel.setText(users.getUserInfo(user));
+            } else if (incompleteLimit) {
+                users.setLimitOfIncompleteTradesForOneUser(user, Integer.parseInt(limit));
+                mainLabel.setText("Incomplete trades limit successfully changed");
+                incompleteLimit = false;
+                userLabel.setText(users.getUserInfo(user));
+            } else if (lendingLimit) {
+                users.setNewThresholdForOneUser(user, Integer.parseInt(limit));
+                mainLabel.setText("Threshold successfully changed");
+                lendingLimit = false;
+                userLabel.setText(users.getUserInfo(user));
+            }
+        }
+        else { mainLabel.setText("     Enter only numbers");}
     }
-}
+        @FXML
+        private void exit (ActionEvent actionEvent){
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.close();
+        }
+    }

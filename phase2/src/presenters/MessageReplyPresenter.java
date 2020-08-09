@@ -206,6 +206,7 @@ public class MessageReplyPresenter {
     /**
      * Return a string that prompts the user to make a decision to a trade request that could not be
      * confirmed at this time
+     * @param m the trade request
      * @return the string that prompts the user to make a decision to a trade request that could not be
      *      * confirmed at this time
      */

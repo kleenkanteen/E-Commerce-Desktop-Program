@@ -1,6 +1,7 @@
 package frontend.DemoUserGUI;
 
 import entities.Item;
+import frontend.PopUp.PopUp;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,33 +44,46 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     // for testing
 
+    /**
+     * Construct a new DemoUserGlobalInventoryMenu
+     * @param demoUserManager a demoUserManager object
+     * @param globalInventoryManager a globalInventoryManager
+     */
     public DemoUserGlobalInventoryMenu(DemoUserManager demoUserManager, GlobalInventoryManager globalInventoryManager) {
         this.globalInventoryManager = globalInventoryManager;
         this.demoUserManager = demoUserManager;
     }
 
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         itemName.setText(demoUserPresenter.itemName());
-        itemOwner.setText(demoUserPresenter.itemOwner());
         itemDescription.setText(demoUserPresenter.itemDescription());
         addToWishlist.setText(demoUserPresenter.addToWishlist());
         trade.setText(demoUserPresenter.sendTradeReqeust());
         exit.setText(demoUserPresenter.menuPromptExit());
 
         itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-        itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
         itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
 
-        tableView.setOnMouseClicked(e -> selected(e));
+        tableView.setOnMouseClicked(this::selected);
         //load data
         tableView.setItems(getItem());
-        addToWishlist.setOnAction(e -> addToWishlist(e));
-        exit.setOnAction(e -> exit(e));
-        trade.setOnAction(e->tradeMenu(e));
-
+        addToWishlist.setOnAction(this::addToWishlist);
+        exit.setOnAction(this::exit);
+        trade.setOnAction(this::tradeMenu);
     }
-    public void switchScene(String filename) throws IOException {
+
+    /**
+     * Switch to DemoUserTradeMenu
+     * @param filename the filename of the DemoUserTradeMenu
+     * @throws IOException
+     */
+    private void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         loader.setController(new DemoUserTradeMenu());// call trademenu
         Parent root = loader.load();
@@ -80,17 +94,27 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         window.show();
     }
 
-
+    /**
+     * get items in the global inventory
+     * @return items in global inventory as an ObservableList
+     */
     private ObservableList<Item> getItem(){
         ObservableList<Item> items = FXCollections.observableArrayList();
         List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
         for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
             items.add(i);
         }
+        if (items.size() == 0){
+            message.setText(demoUserPresenter.emptyglobalinventory());
+        }
         return items;
     }
 
-    public void selected(javafx.scene.input.MouseEvent mouseEvent) {
+    /**
+     * check if user select an item
+     * @param mouseEvent mouse click on the items in TableView
+     */
+    private void selected(javafx.scene.input.MouseEvent mouseEvent) {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null){
             message.setText(demoUserPresenter.noItemSelected());
@@ -100,7 +124,11 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         }
     }
 
-    public void addToWishlist(ActionEvent event){
+    /**
+     * add user selected items to user wish-list
+     * @param event mouse click on add to wish-list button
+     */
+    private void addToWishlist(ActionEvent event){
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(demoUserPresenter.noItemSelected());
@@ -110,7 +138,11 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     }
 
-    public void tradeMenu(ActionEvent event) {
+    /**
+     * swtich demoUser to tradeMenu
+     * @param event mouse click on trade
+     */
+    private void tradeMenu(ActionEvent event) {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(demoUserPresenter.noItemSelected());
@@ -119,12 +151,17 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
                 switchScene(this.DemoUserTradeMenuFXML);
             }
             catch (IOException ex) {
+                new PopUp(demoUserPresenter.error());
             }
         }
     }
 
+    /**
+     * exit user from global inventory menu
+     * @param event mouse click on exit button
+     */
     @FXML
-    public void exit(ActionEvent event) {
+    private void exit(ActionEvent event) {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }

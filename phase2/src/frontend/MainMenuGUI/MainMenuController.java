@@ -11,16 +11,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import javafx.scene.control.*;
 import javafx.stage.StageStyle;
-import presenters.*;
 import use_cases.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLOutput;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -177,8 +174,7 @@ public class MainMenuController implements Initializable {
             new File(dataFolderPath).mkdirs();
             deserialize();
             errorMessage.setWrapText(true);
-            errorMessage.setText("Either because your data folder was missing or your ser files were corrupted, " +
-                    "your old data was cleared.");
+            errorMessage.setText(mainMenuPresenter.corruptedData());
             return;
         }
 
@@ -212,7 +208,7 @@ public class MainMenuController implements Initializable {
         }
         catch (IOException e) {
             //TODO: print error pop up or something
-            errorMessage.setText("An error has occurred with saving.");
+            errorMessage.setText(mainMenuPresenter.savingError());
         }
     }
 

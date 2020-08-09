@@ -21,20 +21,21 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeMenuMainLendController implements Initializable {
 
-    private List<Item> itemsToTradeB;
+    private List<Item> itemsToTradeA;
     private String userA;
+    private String userB;
     private UserManager allUsers;
-    private GlobalInventoryManager globalInventoryManager;
+    //private GlobalInventoryManager globalInventoryManager;
 
     private String tradeType;
     private String placeOfMeeting;
-    private Message tradeRequest;
     private LocalDateTime tradeDateTime;
 
     @FXML private Label titleScreen;
@@ -51,14 +52,18 @@ public class TradeMenuMainLendController implements Initializable {
      * A controller for TradeMenuMainLend.fxml
      * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
      * @param allUsers is a UserManager that contains all the users in the program
-     * @param itemsToTradeB is a List that contains the items to trade from userB to userA.
+     * @param itemsToTradeA is a List that contains the items that userA have and wants to loan to userB
      * @param userA is a String that contains the current user.
+     * @param userB the person this user want to loan his items to
+     *
      */
-    public TradeMenuMainLendController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, List<Item> itemsToTradeB, String userA) {
-        this.itemsToTradeB = itemsToTradeB;
+    public TradeMenuMainLendController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, List<Item> itemsToTradeA, String userA,
+                                       String userB) {
+        this.itemsToTradeA = itemsToTradeA;
         this.userA = userA;
+        this.userB = userB;
         this.allUsers = allUsers;
-        this.globalInventoryManager = globalInventoryManager;
+        //this.globalInventoryManager = globalInventoryManager;
     }
 
     /**
@@ -105,12 +110,22 @@ public class TradeMenuMainLendController implements Initializable {
                 (timeOfTrade.getText() != null) &&
                 (!typesOfTrade.getText().equals(TradeMenu.TRADETYPE))) {
 
-            // convert LocalDate to LocalDateTime
-            LocalDate tradeDate = primaryDate.getValue();
-            String datePattern = "H:mm";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
-            LocalTime tradeTime = LocalTime.parse(timeOfTrade.getText().replaceAll("\\s+", ""), formatter);
-            tradeDateTime = tradeDate.atTime(tradeTime);
+            try {
+                // convert LocalDate to LocalDateTime
+                LocalDate tradeDate = primaryDate.getValue();
+                String datePattern = "H:mm";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(datePattern);
+                LocalTime tradeTime = LocalTime.parse(timeOfTrade.getText().replaceAll("\\s+", ""), formatter);
+                tradeDateTime = tradeDate.atTime(tradeTime);
+            } catch (DateTimeParseException ex) {
+                new PopUp(TradeMenu.WRONGFORMAT);
+                return;
+            }
+
+            if(tradeDateTime.isBefore(LocalDateTime.now())){
+                new PopUp(TradeMenu.PASTDATE);
+                return;
+            }
 
             // rest of the inputs from the user.
             placeOfMeeting = meetTrade.getText();
@@ -119,16 +134,20 @@ public class TradeMenuMainLendController implements Initializable {
             throw new IncompleteTradeException();
         }
 
-        String userB = itemsToTradeB.get(0).getName();
+        boolean perm = false;
 
         // push it into TradeRequestManager.
-        MessageBuilder messageBuilder = new MessageBuilder();
         if (tradeType.equals(TradeMenu.PERM)) {
-            tradeRequest = messageBuilder.getTradeRequest("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, new ArrayList<Item>(), true);
-        } else if (tradeType.equals(TradeMenu.TEMP)) {
-            tradeRequest = messageBuilder.getTradeRequest("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeB, new ArrayList<Item>(), false);
+            perm = true;
         }
-        allUsers.addUserMessage(userB, tradeRequest);
+
+        TradeRequestManager tradeRequest = new TradeRequestManager("User " + userA + " wants to trade with you.", userA, userA, userB, itemsToTradeA, new ArrayList<>(), perm);
+        tradeRequest.setDateAndPlaceFirst(tradeDateTime, placeOfMeeting);
+
+        allUsers.addUserMessage(userB, tradeRequest.getTradeRequest());
+
+        new PopUp(TradeMenu.SUCCESS);
+        exitProgram(actionEvent);
 
     }
 

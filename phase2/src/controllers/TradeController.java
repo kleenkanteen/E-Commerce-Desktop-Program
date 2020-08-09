@@ -30,6 +30,7 @@ public class TradeController {
     /**
      * Takes in a UserManager in order to search for userA making a trade request to userB.
      * @param usersInventory takes in a GlobalInventoryManager that contains all users that are in the system.
+     * @param usersWishlist takes in a GlobalWishlistManager that contains all users that are in the system.
      */
     public TradeController(GlobalInventoryManager usersInventory, GlobalWishlistManager usersWishlist) {
         this.usersInventory = usersInventory;
@@ -43,6 +44,7 @@ public class TradeController {
      * @param userA is a string that indicates the current trader (userA).
      * @param userB is a string that indicates the second trader (userB).
      * @return a TradeRequest if a successful trade is achieved. Otherwise, null is returned.
+     * @throws IncompleteTradeException if the trade is not successfully made
      */
     public TradeRequest runFromLoan(List<Item> itemsToTrade, String userA, String userB) throws IncompleteTradeException {
 
