@@ -5,10 +5,12 @@ Accessing index.html will allow you to view the javadocs for the whole program.
 
 The UML is available in the UML folder.
 
+** Instructions to Run Program **
 Should there be no .ser files under phase1/H_ser_file_infos, running class Main.java under phase1/src/
 will generate new .ser files. Should an input exception occur while reading these .ser files,
 deleting them and running Main.java once more will generate fresh and (hopefully) error free .ser files.
 
+** Instructions to Explore Features **
 Upon loading in, you will see 3 menu options, an option to login, another to create a new user account,
 and a final one to login under an administrator account. There are no users in the system at the moment;
 you will have to create a user account to access user functionality (your chosen username must be unique).
@@ -87,3 +89,7 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
 	[6] Return to main menu
 
 [4] Logout
+
+** Usage (and Arguments) of Design Patterns **
+
+** Assumptions and Extensions in Mind **
