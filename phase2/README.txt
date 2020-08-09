@@ -6,9 +6,20 @@ Accessing index.html will allow you to view the javadocs for the whole program.
 The UML is available in the UML folder.
 
 ** Instructions to Run Program **
-Should there be no .ser files under phase1/H_ser_file_infos, running class Main.java under phase1/src/
-will generate new .ser files. Should an input exception occur while reading these .ser files,
-deleting them and running Main.java once more will generate fresh and (hopefully) error free .ser files.
+The data folder (/phase2/data/) should either be empty or existent.
+Running StartScreen.main() should generate new .ser files for which input exception errors would not occur.
+
+Steps to use JavaFX program:
+Download  JavaFX Runtime:
+https://gluonhq.com/products/javafx/
+Unzip to a location you remember.
+(In IntelliJ) File -> Project Structure -> Project
+Here, Project SDK should be set to "1.8 java version "1.8.0_261""
+and SDK default should be set to (8 - Lambdas, type annotations etc.)
+Then, still in IntelliJ, go to File -> Project Structure -> Libraries  and add JavaFX by pointing to the lib folder of
+the JavaFX SDK you just unzipped.
+
+(need video)
 
 ** Extended Feature List from Phase 1 **
 - Admin undo unstarted trades
