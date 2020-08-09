@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import presenters.UserPresenter;
 import use_cases.*;
 
 import java.io.IOException;
@@ -132,7 +131,7 @@ public class UserMenuGUI implements Initializable {
      * @param filename the FXML file path (set as final above)
      * @throws IOException for funky input errors
      */
-    public void switchScene(String filename) throws IOException {
+    private void switchScene(String filename) throws IOException {
         // instantiate the FXMLLoader
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch (this.type) {

@@ -32,6 +32,14 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class GlobalInventoryMenuController implements Initializable {
+    @FXML private TableView<Item> tableView;
+    @FXML private TableColumn<Item, String> itemName;
+    @FXML private TableColumn<Item,String> itemOwner;
+    @FXML private TableColumn<Item, String> itemDescription;
+    @FXML private Button addToWishlist;
+    @FXML private Button trade;
+    @FXML private Button exit;
+    @FXML private Label message;
 
     private GlobalInventoryManager globalInventoryManager;
     private GlobalInventoryMenuPresenter globalInventoryMenuPresenter= new GlobalInventoryMenuPresenter();
@@ -57,15 +65,6 @@ public class GlobalInventoryMenuController implements Initializable {
         this.globalWishlistManager = globalWishlistManager;
         this.user = user;
     }
-
-    @FXML private TableView<Item> tableView;
-    @FXML private TableColumn<Item, String> itemName;
-    @FXML private TableColumn<Item,String> itemOwner;
-    @FXML private TableColumn<Item, String> itemDescription;
-    @FXML private Button addToWishlist;
-    @FXML private Button trade;
-    @FXML private Button exit;
-    @FXML private Label message;
 
     /**
      * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)

@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class DemoUserGlobalInventoryMenu implements Initializable {
-    DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
-    GlobalInventoryManager globalInventoryManager;
-    DemoUserManager demoUserManager;
-    String DemoUserTradeMenuFXML = "DemoUserTradeMenu.fxml";
+    private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
+    private GlobalInventoryManager globalInventoryManager;
+    private DemoUserManager demoUserManager;
+    private String DemoUserTradeMenuFXML = "DemoUserTradeMenu.fxml";
 
     @FXML private TableView<Item> tableView;
     @FXML private TableColumn<Item, String> itemName;
@@ -81,7 +81,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
     /**
      * Switch to DemoUserTradeMenu
      * @param filename the filename of the DemoUserTradeMenu
-     * @throws IOException
+     * @throws IOException something went wrong
      */
     private void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
@@ -102,7 +102,9 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         ObservableList<Item> items = FXCollections.observableArrayList();
         List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
         for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
-            items.add(i);
+            if (!(i == null)) {
+                items.add(i);
+            }
         }
         if (items.size() == 0){
             message.setText(demoUserPresenter.emptyglobalinventory());

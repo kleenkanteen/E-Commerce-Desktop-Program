@@ -11,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import presenters.UserPresenter;
 import use_cases.AdminManager;
 import use_cases.MessageBuilder;
 
@@ -68,7 +67,7 @@ public class NewItemMenu implements Initializable {
     /**
      * Handles the new item request sending
      */
-    public void sendNewItemRequest() {
+    private void sendNewItemRequest() {
         String itemName = this.nameInput.getText();
         String itemDescription = this.descriptionInput.getText();
         // if user input is wack
@@ -96,7 +95,7 @@ public class NewItemMenu implements Initializable {
      * Handles returning to main menu
      * @param actionEvent the ActionEvent object
      */
-    public void returnToMainMenu(ActionEvent actionEvent) {
+    private void returnToMainMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

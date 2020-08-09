@@ -6,7 +6,6 @@ import java.util.List;
 public class DemoUser extends Account {
     private List<Item> personalInventory = new ArrayList<>();
     private List<Item> personalWishlist = new ArrayList<>();
-    private List<Message> demoMessages = new ArrayList<>();
 
     /**
      * Constructs a new DemoUser account.
@@ -29,11 +28,6 @@ public class DemoUser extends Account {
      */
     public List<Item> getWishlist() { return this.personalWishlist; }
 
-    /**
-     * Get this user's list of messages
-     * @return the List of this user's messages
-     */
-    public List<Message> getMessages() {return this.demoMessages; }
 
     /**
      * Add an item to this demo user's inventory
@@ -47,11 +41,6 @@ public class DemoUser extends Account {
      */
     public void addWishlist(Item item) { this.personalWishlist.add(item); }
 
-    /**
-     * Add a message to this user's inbox
-     * @param message the message to be added
-     */
-    public void addMessage(Message message) { this.demoMessages.add(message); }
 
     /**
      * Remove an item from inventory
@@ -65,9 +54,4 @@ public class DemoUser extends Account {
      */
     public void removeWishlist(Item item) { this.personalWishlist.remove(item); }
 
-    /**
-     * Remove an item from inbox
-     * @param message the message to be removed
-     */
-    public void removeMessage(Message message) { this.demoMessages.remove(message); }
 }

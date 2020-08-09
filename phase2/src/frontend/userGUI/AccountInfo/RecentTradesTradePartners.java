@@ -8,7 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-import presenters.UserPresenter;
+import frontend.userGUI.UserPresenter;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class RecentTradesTradePartners implements Initializable {
      * Exit to AccountInfo menu
      * @param actionEvent the ActionEvent object
      */
-    public void exit(ActionEvent actionEvent) {
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

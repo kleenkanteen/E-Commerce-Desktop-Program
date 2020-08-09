@@ -1,7 +1,6 @@
 package frontend.messageReplyGUI;
 
 import entities.ReportRequest;
-import presenters.MessageReplyPresenter;
 import entities.Message;
 import use_cases.UserManager;
 

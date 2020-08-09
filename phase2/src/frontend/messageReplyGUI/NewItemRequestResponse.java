@@ -2,7 +2,6 @@ package frontend.messageReplyGUI;
 
 import entities.Item;
 import entities.NewItemRequest;
-import presenters.MessageReplyPresenter;
 import entities.Message;
 import use_cases.GlobalInventoryManager;
 import use_cases.MessageBuilder;

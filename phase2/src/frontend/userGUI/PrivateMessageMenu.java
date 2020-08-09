@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import presenters.UserPresenter;
 import use_cases.MessageBuilder;
 import use_cases.UserManager;
 
@@ -65,7 +64,7 @@ public class PrivateMessageMenu implements Initializable {
     /**
      * Sends a private message
      */
-    public void sendMessage() {
+    private void sendMessage() {
         String user = this.usernameInput.getText();
         // if either username/description not filled out
         if(this.usernameInput.getLength() == 0 || this.messageInput.getLength() == 0) {
@@ -93,7 +92,7 @@ public class PrivateMessageMenu implements Initializable {
      * Return to main menu
      * @param actionEvent the ActionEvent object
      */
-    public void returnToMenu(ActionEvent actionEvent) {
+    private void returnToMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

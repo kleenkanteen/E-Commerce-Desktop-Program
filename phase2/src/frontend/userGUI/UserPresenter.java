@@ -1,4 +1,4 @@
-package presenters;
+package frontend.userGUI;
 
 import entities.Trade;
 
@@ -26,21 +26,6 @@ public class UserPresenter {
      */
     public String promptUserToConfirmTrades() {
         return "Here are all of your unconfirmed trades. Please confirm any that are complete.\n";
-    }
-
-    /**
-     * Prompt for the main User Menu
-     */
-    public void promptUserMenu() {
-        System.out.println("What would you like to do today?" +
-                "\n[1] Access your account information." +
-                "\n[2] Browse through the global inventory." +
-                "\n[3] Loan one of your items to another user." +
-                "\n[4] Look at your message inbox." +
-                "\n[5] Add a new item to the system." +
-                "\n[6] Send admins an unfreeze request." +
-                "\n[7] Send a private message to another user. " +
-                "\n[8] Exit and log out.");
     }
 
     /**
@@ -150,16 +135,6 @@ public class UserPresenter {
      */
     public String printUserTradePartners(String tradePartner) { return tradePartner + " "; }
 
-    /**
-     * User Inventory Prompts.
-     */
-    public void userInventoryPrompts() {
-        System.out.println("What would you like to do? You can: " +
-                "\n [1] Remove this Item. " +
-                "\n [2] Go to next Item. " +
-                "\n [3] Return to previous Item. " +
-                "\n [4] Exit.");
-    }
 
     /**
      * Remove button
@@ -177,17 +152,6 @@ public class UserPresenter {
         return "Exit";
     }
 
-    /**
-     * User wishlist prompts.
-     */
-    public void userWishlistPrompts() {
-        System.out.println("What would you like to do? You can: " +
-                "\n [1] Remove this Item. " +
-                "\n [2] Go to next Item. " +
-                "\n [3] Return to previous Item. " +
-                "\n [4] Send the owner of this item a trade offer (can only ask to borrow this single item!)." +
-                "\n [5] Exit.");
-    }
 
     /**
      * Wishlist trade offer prompt
@@ -264,20 +228,6 @@ public class UserPresenter {
     }
 
     /**
-     * Prompt for the user information section of user menu.
-     */
-    public void userMenuUserInfoPrompts() {
-        System.out.println("What would you like to do with your account? " +
-                "\n[1] View your trade history." +
-                "\n[2] Set new password." +
-                "\n[3] View your three most frequent Trading Partners. " +
-                "\n[4] Your three most recent trades. " +
-                "\n[5] Your inventory. " +
-                "\n[6] Your wishlist. " +
-                "\n[7] Exit.");
-    }
-
-    /**
      * TradeHistory button
      * @return view trade history
      */
@@ -351,14 +301,6 @@ public class UserPresenter {
         return trade.toString() + "\n";
     }
 
-    /**
-     * Prompt for user options during unconfirmed trades history menu
-     */
-    public void checkUnconfirmedTradesPrompts() {
-        System.out.println("Can you confirm that this meeting happened? " +
-                "\n[1] The meeting happened. " +
-                "\n[2] The meeting did not happen.");
-    }
 
     /**
      * Unconfirmed prompt
@@ -455,15 +397,6 @@ public class UserPresenter {
         return "None of your items exists in another user's wishlist. :(\n";
     }
 
-    /**
-     * Trade History Menu prompt
-     */
-    public void userTradeHistoryPrompts() {
-        System.out.println("What would you like to see in your trade history?" +
-                "\n[1] Next trade." +
-                "\n[2] Previous trade." +
-                "\n[3] Exit");
-    }
 
     /**
      * Reached end of trades
@@ -479,19 +412,6 @@ public class UserPresenter {
      */
     public String emptyGlobalInventory() {
         return "There are no items in the global inventory! Add some of your own! :)";
-    }
-
-    /**
-     * Present prompts in loaning to other user menu
-     * @param itemName the name of the selected item
-     * @param userName the name of the other user
-     */
-    public void loanToOtherUserPrompt(String itemName, String userName) {
-        System.out.println("Your offered item: " + itemName +
-                "\nRecipient User: " + userName +
-                "\nDo you wish to finish sending this user a trade offer? " +
-                "\n[1] Yes" +
-                "\n[2] No, and take me back to the main menu.");
     }
 
     /**

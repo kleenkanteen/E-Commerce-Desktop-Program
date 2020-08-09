@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import presenters.MessageReplyPresenter;
 import use_cases.MessageBuilder;
 import use_cases.TradeRequestManager;
 import use_cases.UserManager;

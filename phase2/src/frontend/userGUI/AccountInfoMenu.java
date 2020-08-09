@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import presenters.UserPresenter;
 import use_cases.*;
 import entities.*;
 import java.io.IOException;
@@ -111,7 +110,7 @@ public class AccountInfoMenu implements Initializable {
      * @param filename the filename of the .fxml file to be loaded
      * @throws IOException for a funky input
      */
-    public void switchScene(String filename) throws IOException {
+    private void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
         switch(this.type) {
             // view trade history
@@ -154,7 +153,7 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses tradeHistory menu
      */
-    public void viewTradeHistory() {
+    private void viewTradeHistory() {
         this.userTrades = this.tradeManager.getTradeHistory(this.currUser);
         // if nothing in trade history
         if(this.userTrades.size() == 0) {
@@ -174,7 +173,7 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses new password menu
      */
-    public void setNewPassword() {
+    private void setNewPassword() {
         try {
             this.type = Type.PASSWORD;
             switchScene(this.passwordFXML);
@@ -187,7 +186,7 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses trade Partners menu
      */
-    public void viewTradePartners() {
+    private void viewTradePartners() {
         this.tradingPartners = this.tradeManager.getFrequentTradingPartners(this.currUser, 3);
         // if the first entry is null
         if(this.tradingPartners[0] == null) {
@@ -207,7 +206,7 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses recent trades menu
      */
-    public void viewRecentTrades() {
+    private void viewRecentTrades() {
         this.recentTradeHistory = this.tradeManager.getRecentTrade(this.currUser, 3);
         // if the first entry is null
         if (this.recentTradeHistory[0] == null) {
@@ -226,7 +225,7 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses viewInventory menu
      */
-    public void viewInventory() {
+    private void viewInventory() {
         this.userInventory = this.globalInventoryManager.getPersonInventory(this.currUser);
         // check to see if the inventory populated
         if(this.userInventory.size() == 0) {
@@ -247,7 +246,7 @@ public class AccountInfoMenu implements Initializable {
     /**
      * Accesses viewWishlist menu
      */
-    public void viewWishlist() {
+    private void viewWishlist() {
         // list of item ids
         List<String> userWishlistIDs = this.globalWishlistManager.getPersonWishlist(this.currUser);
         // check to see if wishlist is empty
@@ -275,7 +274,7 @@ public class AccountInfoMenu implements Initializable {
      * Returns to main Menu
      * @param actionEvent the ActionEvent object
      */
-    public void returnToMainMenu(ActionEvent actionEvent) {
+    private void returnToMainMenu(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }
