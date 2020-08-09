@@ -17,6 +17,7 @@ import java.util.ResourceBundle;
 
 public class NewPassword implements Initializable {
 
+    // fxml stuff
     @FXML private Button confirm;
     @FXML private Button cancel;
     @FXML private Label prompt1;
@@ -26,16 +27,27 @@ public class NewPassword implements Initializable {
     @FXML private PasswordField password1;
     @FXML private PasswordField password2;
 
+    // instance variables
     private UserPresenter userPresenter;
     private UserManager userManager;
     private String currUser;
 
+    /**
+     * Instantiates a NewPassword listener
+     * @param currUser the String current user
+     * @param userManager the UserManager object
+     */
     public NewPassword(String currUser, UserManager userManager) {
         this.currUser = currUser;
         this.userManager = userManager;
         this.userPresenter = new UserPresenter();
     }
 
+    /**
+     * Sets up labels/button functionality
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set text
@@ -49,6 +61,9 @@ public class NewPassword implements Initializable {
         this.cancel.setOnAction(this::exit);
     }
 
+    /**
+     * Set up new password
+     */
     public void setNewPassword() {
         this.confirmation.setVisible(false);
         if(this.password1.getLength() == 0 || this.password2.getLength() == 0) {
@@ -65,6 +80,10 @@ public class NewPassword implements Initializable {
         }
     }
 
+    /**
+     * Return to AccountInfo menu
+     * @param actionEvent the ActionEvent object
+     */
     public void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();

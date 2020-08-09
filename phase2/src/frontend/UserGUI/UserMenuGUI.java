@@ -51,7 +51,6 @@ public class UserMenuGUI implements Initializable {
     private MessageBuilder messageBuilder;
     String[] errorMessages = {" ", " ", " "};
     List<Trade> incompletes;
-    String errorMessage;
     private Type type;
 
     // FXML locations
@@ -94,20 +93,16 @@ public class UserMenuGUI implements Initializable {
      */
     enum Type {
         ACCOUNT_INFO, GLOBAL_INVENTORY, USER_MESSAGES, LOAN_MENU, NEW_ITEM, PRIVATE_MESSAGES,
-        UNCONFIRMED_TRADES, USER_STATUS_FROZEN, USER_STATUS_NOT_FROZEN, ERROR
+        UNCONFIRMED_TRADES, USER_STATUS_FROZEN, USER_STATUS_NOT_FROZEN
     }
 
     /**
      * Sets up button functionality/labels and calls getUserStatus, brings up unconfirmedTradesMenu
-     * @param location the location? idk
-     * @param resources ¯\_(ツ)_/¯
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // call getUserStatus/confirmIncompleteUserTrades here?
-        confirmIncompleteUserTrades();
-        checkUserStatus();
-
         // set button text
         this.accountInfo.setText(this.userPresenter.userMenuPromptAccountInfo());
         this.globalInventory.setText(this.userPresenter.userMenuPromptGlobalInventory());
@@ -127,6 +122,10 @@ public class UserMenuGUI implements Initializable {
         this.unfreezeRequest.setOnAction(e -> getUnfreezeRequest());
         this.privateMessage.setOnAction(e -> getPrivateMessageMenu());
         this.logout.setOnAction(this::logoff);
+
+        // call getUserStatus/confirmIncompleteUserTrades here
+        confirmIncompleteUserTrades();
+        checkUserStatus();
     }
 
     /**
@@ -181,15 +180,19 @@ public class UserMenuGUI implements Initializable {
             case USER_STATUS_NOT_FROZEN:
                 loader.setController(new UserStatusPopUp(this.errorMessages));
                 break;
-            case ERROR:
-                loader.setController(new ErrorPopUp(this.errorMessage));
         }
         // set up the scene and open up a new window
         Parent root = loader.load();
         Scene newScene= new Scene(root);
         Stage window = new Stage();
-        window.initStyle(StageStyle.UNDECORATED);
-        window.initModality(Modality.APPLICATION_MODAL);
+        // make sure the user trades/status prompt is always on top (I hope this works!)
+        if(this.type == Type.USER_STATUS_NOT_FROZEN ||
+                this.type == Type.USER_STATUS_FROZEN ||
+                this.type == Type.UNCONFIRMED_TRADES) {
+            window.setAlwaysOnTop(true);
+        }
+        // window.initStyle(StageStyle.UNDECORATED);
+        // window.initModality(Modality.APPLICATION_MODAL);
         window.setScene(newScene);
         window.show();
     }

@@ -1,6 +1,7 @@
 package frontend.UserGUI;
 
 import entities.Item;
+import frontend.TradeGUI.TradeMenuMainLendController;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import use_cases.*;
 import presenters.UserPresenter;
 
@@ -31,6 +34,7 @@ public class LoanMenu implements Initializable {
     private GlobalWishlistManager globalWishlistManager;
     private UserPresenter userPresenter;
     private GlobalInventoryManager globalInventoryManager;
+    private List<Item> userItemChoice;
 
     @FXML private Label itemPrompt;
     @FXML private Label recipientPrompt;
@@ -39,6 +43,8 @@ public class LoanMenu implements Initializable {
     @FXML private Label prompt;
     @FXML private Button confirmTrade;
     @FXML private Button denyTrade;
+
+    private final String tradeRunFromLoanFXML = "/frontend/TradeGUI/TradeMenuLend.fxml";
 
     /**
      * Instantiates a LoanMenu listener
@@ -64,14 +70,14 @@ public class LoanMenu implements Initializable {
 
     /**
      * Sets up button functionality/text
-     * @param location ¯\_(ツ)_/¯
-     * @param resources ¯\_(ツ)_/¯
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // set text
-        List<Item> userItem = setUpTradeOptions();
-        this.userItem.setText(userItem.get(0).toString());
+        this.userItemChoice = setUpTradeOptions();
+        this.userItem.setText(userItemChoice.get(0).toString());
         this.recipientUser.setText(this.itemsToLend.get(1));
         this.itemPrompt.setText(this.userPresenter.userLoanPromptOfferedItemLabel());
         this.recipientPrompt.setText(this.userPresenter.userLoanPromptRecipientLabel());
@@ -102,7 +108,21 @@ public class LoanMenu implements Initializable {
      * Brings up the trade request menu
      */
     private void sendTradeRequest() {
-        // trade controller call
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(this.tradeRunFromLoanFXML));
+            loader.setController(new TradeMenuMainLendController(this.globalInventoryManager, this.userManager,
+                    this.userItemChoice, this.currUser, this.itemsToLend.get(1)));
+            Parent root = loader.load();
+            Scene newScene= new Scene(root);
+            Stage window = new Stage();
+            window.initStyle(StageStyle.UNDECORATED);
+            window.initModality(Modality.APPLICATION_MODAL);
+            window.setScene(newScene);
+            window.show();
+        }
+        catch(IOException ex) {
+            // error message here
+        }
     }
 
     /**

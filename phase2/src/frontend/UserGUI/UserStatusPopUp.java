@@ -53,8 +53,8 @@ public class UserStatusPopUp implements Initializable {
 
     /**
      * Set button functionality/label text
-     * @param location idk
-     * @param resources idk
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
