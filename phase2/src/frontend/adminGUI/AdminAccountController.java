@@ -111,12 +111,6 @@ public class AdminAccountController implements Initializable {
      * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
      * @param resources The resources used to localize the root object, or null if the root object was not localized.
      */
-
-
-
-
-
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         changePassWordButton.setText(adminGUIPresenter.adminChangePasswordButton());

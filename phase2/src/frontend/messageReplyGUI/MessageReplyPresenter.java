@@ -1,4 +1,4 @@
-package presenters;
+package frontend.messageReplyGUI;
 
 import entities.*;
 

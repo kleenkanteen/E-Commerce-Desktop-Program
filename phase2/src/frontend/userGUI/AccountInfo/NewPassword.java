@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import use_cases.UserManager;
-import presenters.UserPresenter;
+import frontend.userGUI.UserPresenter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -63,7 +63,7 @@ public class NewPassword implements Initializable {
     /**
      * Set up new password
      */
-    public void setNewPassword() {
+    private void setNewPassword() {
         this.confirmation.setVisible(false);
         if(this.password1.getLength() == 0 || this.password2.getLength() == 0) {
             this.error.setText(this.userPresenter.invalidMessageInput());
@@ -83,7 +83,7 @@ public class NewPassword implements Initializable {
      * Return to AccountInfo menu
      * @param actionEvent the ActionEvent object
      */
-    public void exit(ActionEvent actionEvent) {
+    private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.close();
     }

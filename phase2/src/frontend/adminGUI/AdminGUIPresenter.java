@@ -3,14 +3,6 @@ package frontend.adminGUI;
 import entities.Admin;
 
 public class AdminGUIPresenter {
-    /**
-     * class constructor, it will create a new adminGUIPresenter with text that can be assigned to button, label, or
-     * textField in .fxml document.
-     */
-    AdminGUIPresenter(){
-
-    }
-    // Window
 
 
     /**

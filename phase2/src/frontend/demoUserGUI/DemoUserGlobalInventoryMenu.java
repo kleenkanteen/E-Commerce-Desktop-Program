@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class DemoUserGlobalInventoryMenu implements Initializable {
-    DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
-    GlobalInventoryManager globalInventoryManager;
-    DemoUserManager demoUserManager;
-    String DemoUserTradeMenuFXML = "DemoUserTradeMenu.fxml";
+    private DemoUserfxPresenter demoUserPresenter = new DemoUserfxPresenter();
+    private GlobalInventoryManager globalInventoryManager;
+    private DemoUserManager demoUserManager;
+    private String DemoUserTradeMenuFXML = "DemoUserTradeMenu.fxml";
 
     @FXML private TableView<Item> tableView;
     @FXML private TableColumn<Item, String> itemName;
