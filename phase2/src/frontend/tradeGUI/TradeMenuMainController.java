@@ -173,6 +173,7 @@ public class TradeMenuMainController implements Initializable {
     @FXML
     private void oneWayChoice(ActionEvent actionEvent) {
         oneOrTwoWayTrade.setText(oneWayTrade.getText());
+        itemsToTradeA = new ArrayList<>();
     }
 
     @FXML
