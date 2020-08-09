@@ -81,7 +81,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
     /**
      * Switch to DemoUserTradeMenu
      * @param filename the filename of the DemoUserTradeMenu
-     * @throws IOException
+     * @throws IOException something went wrong
      */
     private void switchScene(String filename) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(filename));
@@ -102,7 +102,9 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         ObservableList<Item> items = FXCollections.observableArrayList();
         List<String> itemids =  globalInventoryManager.getGlobalInventoryData().getItemIdCollection();
         for (Item i : globalInventoryManager.getItemsFromGI((ArrayList<String>)itemids)){
-            items.add(i);
+            if (!(i == null)) {
+                items.add(i);
+            }
         }
         if (items.size() == 0){
             message.setText(demoUserPresenter.emptyglobalinventory());
