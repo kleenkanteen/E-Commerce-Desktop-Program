@@ -86,13 +86,6 @@ public class MessageReplyPresenter {
         return "Exit";
     }
 
-    /**
-     * Return a string for skip
-     * @return the string for skip
-     */
-    public String skip(){
-        return "Skip";
-    }
 
     /**
      * Return a string for successful action
@@ -221,8 +214,8 @@ public class MessageReplyPresenter {
      * Return a string for the option to keep and skip the message
      * @return the string for the option to keep and skip the message
      */
-    public String keepAndSkip(){
-        return "Keep and Skip";
+    public String keep(){
+        return "Keep";
     }
 
     //--------------------TradeRequestEdit-----------------------//

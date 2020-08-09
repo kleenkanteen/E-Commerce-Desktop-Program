@@ -61,7 +61,7 @@ public class TradeRequestCannotConfirmGUI implements Initializable {
         title.setText(messageReplyPresenter.titleTradeRequestCannotConfirm());
         messageContent.setText(messageReplyPresenter.tradeRequestCannotConfirmPrompt(tradeRequestManager.getTradeRequest()));
         messageContent.setWrapText(true);
-        button1.setText(messageReplyPresenter.keepAndSkip());
+        button1.setText(messageReplyPresenter.keep());
         button1.setOnAction(this::exit);
         button2.setText(messageReplyPresenter.delete());
         button2.setOnAction(e -> {
