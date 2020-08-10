@@ -74,9 +74,9 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
         tableView.setOnMouseClicked(this::selected);
         //load data
         tableView.setItems(getItem());
-        addToWishlist.setOnAction(this::addToWishlist);
+        addToWishlist.setOnAction(e -> addToWishlist());
         exit.setOnAction(this::exit);
-        trade.setOnAction(this::tradeMenu);
+        trade.setOnAction(e -> tradeMenu());
     }
 
     /**
@@ -129,9 +129,8 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     /**
      * add user selected items to user wish-list
-     * @param event mouse click on add to wish-list button
      */
-    private void addToWishlist(ActionEvent event){
+    private void addToWishlist(){
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(demoUserPresenter.noItemSelected());
@@ -143,9 +142,8 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
 
     /**
      * swtich demoUser to tradeMenu
-     * @param event mouse click on trade
      */
-    private void tradeMenu(ActionEvent event) {
+    private void tradeMenu() {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(demoUserPresenter.noItemSelected());

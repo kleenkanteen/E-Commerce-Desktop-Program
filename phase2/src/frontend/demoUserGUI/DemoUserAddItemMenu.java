@@ -50,7 +50,7 @@ public class DemoUserAddItemMenu implements Initializable {
         this.cancel.setText(demoUserPresenter.Cancel());
 
         // set button function
-        this.confirm.setOnAction(this:: demoAddItem);
+        this.confirm.setOnAction(e -> demoAddItem());
         this.cancel.setOnAction(this::returnToMainMenu);
         descriptionPrompt.setWrapText(true);
         errorMessage.setWrapText(true);
@@ -59,7 +59,7 @@ public class DemoUserAddItemMenu implements Initializable {
     /**
      * Add new items to demo user's personal inventory
      */
-    private void demoAddItem(ActionEvent event){
+    private void demoAddItem(){
         Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
         demoUserManager.getUserInventory().add(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());

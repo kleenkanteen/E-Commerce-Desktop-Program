@@ -113,8 +113,8 @@ public class MultiItemMenu implements Initializable {
         loadData();
         userItem.setItems(userItems);
         tradingItem.setItems(getItem());
-        select.setOnAction(this::select);
-        remove.setOnAction(this::remove);
+        select.setOnAction(e -> select());
+        remove.setOnAction(e->remove());
 
         trade.setOnAction(e-> {
             try {
@@ -159,9 +159,8 @@ public class MultiItemMenu implements Initializable {
 
     /**
      * select item in the userItem TableView to tradingItem TableView
-     * @param event mouse click
      */
-    private void select(ActionEvent event){
+    private void select(){
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             userItem.getItems().remove(itemselected);
@@ -171,9 +170,8 @@ public class MultiItemMenu implements Initializable {
 
     /**
      * remove item in the tradingItem TableView to userItem TableView
-     * @param event mouse click
      */
-    private void remove(ActionEvent event){
+    private void remove(){
         Item itemselected = tradingItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             tradingItem.getItems().remove(itemselected);

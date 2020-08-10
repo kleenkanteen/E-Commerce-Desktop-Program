@@ -65,13 +65,13 @@ public class DemoUserMenuGUI  implements Initializable {
         privateMessage.setText(demoUserPresenter.pm());
         logout.setText(demoUserPresenter.exit());
 
-        accountInfo.setOnAction(this::getAccountInfo);
-        globalInventory.setOnAction(this::getGlobalInventory);
-        loanItem.setOnAction(this::getLoanMenu);
-        messageInbox.setOnAction(this::getInbox);
-        newItem.setOnAction(this::getNewItemMenu);
-        unfreezeRequest.setOnAction(this::getUnfreezeRequest);
-        privateMessage.setOnAction(this::getPrivateMessageMenu);
+        accountInfo.setOnAction(e -> getAccountInfo());
+        globalInventory.setOnAction(e -> getGlobalInventory());
+        loanItem.setOnAction(e->getLoanMenu());
+        messageInbox.setOnAction(e -> getInbox());
+        newItem.setOnAction(e->getNewItemMenu());
+        unfreezeRequest.setOnAction(e->getUnfreezeRequest());
+        privateMessage.setOnAction(e->getPrivateMessageMenu());
         logout.setOnAction(this::exit);
 
     }
@@ -80,10 +80,9 @@ public class DemoUserMenuGUI  implements Initializable {
 
     /**
      * switch to accountInfo menu
-     * @param event mouse click
      */
     @FXML
-    private void getAccountInfo(ActionEvent event) {
+    private void getAccountInfo() {
         try {
             this.type = Type.ACCOUNT_INFO;
             switchScene(this.accountFXML);
@@ -95,10 +94,9 @@ public class DemoUserMenuGUI  implements Initializable {
 
     /**
      * switch to globalInventoryMenu
-     * @param event mouse click
      */
     @FXML
-    private void getGlobalInventory(ActionEvent event) {
+    private void getGlobalInventory() {
         //test
         try {
             this.type = Type.GLOBAL_INVENTORY;
@@ -114,26 +112,24 @@ public class DemoUserMenuGUI  implements Initializable {
 
     /**
      * switch to loanMenu, but for demo user it prints no access on screen
-     * @param event mouse click
      */
     @FXML
-    private void getLoanMenu(ActionEvent event) {
+    private void getLoanMenu() {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
     /**
      * switch to user message inbox, but for demo user it prints no access on screen
-     * @param event mouse click
      */
     @FXML
-    private void getInbox(ActionEvent event) {
+    private void getInbox() {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
 
     // switch to the new item scene
     @FXML
-    private void getNewItemMenu(ActionEvent event) {
+    private void getNewItemMenu() {
         try {
             this.type = Type.NEW_ITEM;
             switchScene(this.newItemFXML);
@@ -145,19 +141,17 @@ public class DemoUserMenuGUI  implements Initializable {
 
     /**
      * switch to UnfreezeRequest menu, but for demo user it prints no access on screen
-     * @param event mouse click
      */
     @FXML
-    private void getUnfreezeRequest(ActionEvent event) {
+    private void getUnfreezeRequest() {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 
     /**
      * switch to PrivateMessageMenu, but for demo user it prints no access on screen
-     * @param event mouse click
      */
     @FXML
-    private void getPrivateMessageMenu(ActionEvent event) {
+    private void getPrivateMessageMenu() {
         systemMessage.setText(demoUserPresenter.noAccess());
     }
 

@@ -88,11 +88,11 @@ public class GlobalInventoryMenuController implements Initializable {
         tableView.setOnMouseClicked(this::selected);
         //load data
         tableView.setItems(getItem());
-        addToWishlist.setOnAction(this::addToWishlist);
+        addToWishlist.setOnAction(e-> addToWishlist());
         exit.setOnAction(this::exit);
         trade.setOnAction(e-> {
             try {
-                MultiItemMenu(e);
+                MultiItemMenu();
             } catch (UserFrozenException ex) {
                 new PopUp(globalInventoryMenuPresenter.frozenAcc());
             }
@@ -148,9 +148,8 @@ public class GlobalInventoryMenuController implements Initializable {
 
     /**
      * Adding items to user wish-list
-     * @param event mouse click on the Add to Wishlist button
      */
-    private void addToWishlist(ActionEvent event){
+    private void addToWishlist(){
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(globalInventoryMenuPresenter.noItemSelected());
@@ -171,10 +170,9 @@ public class GlobalInventoryMenuController implements Initializable {
 
     /**
      * Switch to MultiItemMenu for user to select multiple items
-     * @param event mouse click on trade button
      * @throws UserFrozenException user account is frozen
      */
-    private void MultiItemMenu(ActionEvent event) throws UserFrozenException {
+    private void MultiItemMenu() throws UserFrozenException {
         Item itemselected = tableView.getSelectionModel().getSelectedItem();
         if (itemselected == null) {
             message.setText(globalInventoryMenuPresenter.noItemSelected());
