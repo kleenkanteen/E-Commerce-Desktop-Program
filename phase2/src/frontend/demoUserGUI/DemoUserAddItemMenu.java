@@ -44,6 +44,7 @@ public class DemoUserAddItemMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        namePrompt.setWrapText(true);
         namePrompt.setText(demoUserPresenter.enterItemName());
         descriptionPrompt.setText(demoUserPresenter.enterItemDescription());
         this.confirm.setText(demoUserPresenter.Confirm());
@@ -52,8 +53,8 @@ public class DemoUserAddItemMenu implements Initializable {
         // set button function
         this.confirm.setOnAction(e -> demoAddItem());
         this.cancel.setOnAction(this::returnToMainMenu);
-        descriptionPrompt.setWrapText(true);
-        errorMessage.setWrapText(true);
+        descriptionPrompt.setWrapText(true);;
+
     }
 
     /**
@@ -63,6 +64,7 @@ public class DemoUserAddItemMenu implements Initializable {
         Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
         demoUserManager.addToInventory(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());
+        errorMessage.setWrapText(true);
     }
 
     /**
