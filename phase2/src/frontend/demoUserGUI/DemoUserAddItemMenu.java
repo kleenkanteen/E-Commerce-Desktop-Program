@@ -61,7 +61,7 @@ public class DemoUserAddItemMenu implements Initializable {
      */
     private void demoAddItem(){
         Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
-        demoUserManager.getUserInventory().add(item);
+        demoUserManager.addToInventory(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());
     }
 

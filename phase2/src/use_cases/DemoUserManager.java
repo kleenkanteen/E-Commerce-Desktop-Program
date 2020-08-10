@@ -43,19 +43,6 @@ public class DemoUserManager {
         this.demoUser.addWishlist(item);
     }
 
-    /**
-     * Create a new item and add it directly to the the demoUser's/Global inventory
-     * @param name the name of the item
-     * @param description the description of the item
-     * @return the newly created Item
-     */
-    public Item createNewItem(String name, String description) {
-        Item demoItem = new Item(name, this.demoName, description);
-        demoItem.setItemID(Integer.toString(this.itemID));
-        this.itemID++;
-        this.demoUser.addPersonalInventory(demoItem);
-        return demoItem;
-    }
 
     /**
      * Add an item to the user's personal inventory
@@ -65,21 +52,6 @@ public class DemoUserManager {
         this.demoUser.addPersonalInventory(item);
     }
 
-    /**
-     * Remove an item from the personal inventory
-     * @param item the item to be removed
-     */
-    public void removeFromInventory(Item item) {
-        this.demoUser.removePersonalInventory(item);
-    }
-
-    /**
-     * Remove from the wishlist
-     * @param item the item to be removed
-     */
-    public void removeFromWishlist(Item item) {
-        this.demoUser.removeWishlist(item);
-    }
 
     /**
      * Set a new password
