@@ -55,6 +55,7 @@ public class DemoUserMenuGUI  implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        systemMessage.setWrapText(true);
         accountInfo.setText(demoUserPresenter.accInfo());
         globalInventory.setText(demoUserPresenter.browse());
         loanItem.setText(demoUserPresenter.loan());

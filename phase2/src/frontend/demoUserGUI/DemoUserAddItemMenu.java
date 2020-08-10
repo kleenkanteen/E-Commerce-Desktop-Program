@@ -52,6 +52,8 @@ public class DemoUserAddItemMenu implements Initializable {
         // set button function
         this.confirm.setOnAction(this:: demoAddItem);
         this.cancel.setOnAction(this::returnToMainMenu);
+        descriptionPrompt.setWrapText(true);
+        errorMessage.setWrapText(true);
     }
 
     /**

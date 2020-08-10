@@ -33,6 +33,8 @@ public class DemoUserTradeMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        titleScreen.setWrapText(true);
+        message.setWrapText(true);
         titleScreen.setText(demoUserPresenter.trade());
         typesOfTrade.setText(demoUserPresenter.whattype());
         temporary.setText(demoUserPresenter.temp());

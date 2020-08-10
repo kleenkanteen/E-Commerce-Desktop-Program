@@ -65,6 +65,7 @@ public class DemoUserInfoMenu implements Initializable {
         this.inventory.setOnAction(e -> viewInventory());
         this.wishlist.setOnAction(e -> viewWishlist());
         exit.setOnAction(this::exit);
+        message.setWrapText(true);
     }
 
     enum Type {

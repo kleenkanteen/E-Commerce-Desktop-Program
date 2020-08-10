@@ -80,6 +80,10 @@ public class MultiItemMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        message.setWrapText(true);
+        userItemLabel.setWrapText(true);
+        tradingItemLabel.setWrapText(true);
+        title.setWrapText(true);
         userItemLabel.setText(globalInventoryMenuPresenter.userItemLabel(item));
         tradingItemLabel.setText(globalInventoryMenuPresenter.itemSelected());
         title.setText(globalInventoryMenuPresenter.selectItem(item));

@@ -61,6 +61,7 @@ public class DemoUserGlobalInventoryMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        message.setWrapText(true);
         itemName.setText(demoUserPresenter.itemName());
         itemDescription.setText(demoUserPresenter.itemDescription());
         addToWishlist.setText(demoUserPresenter.addToWishlist());
