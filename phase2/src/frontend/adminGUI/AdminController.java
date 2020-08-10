@@ -129,7 +129,7 @@ public class AdminController implements Initializable{
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminBrowsing)
         );
 
-        loader.setController(new AdminBrowsingUsersController(userManager));
+        loader.setController(new AdminBrowsingUsersController(userManager, globalInventoryManager));
 
         Parent parent = loader.load();
         Scene scene = new Scene(parent);

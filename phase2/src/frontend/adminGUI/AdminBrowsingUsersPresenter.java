@@ -71,4 +71,10 @@ public class AdminBrowsingUsersPresenter {
      */
     public String wrongFormat(){ return "Enter only numbers"; }
 
+    /**
+     * Returns a string saying deleted item has been restored
+     * @return the string
+     */
+    public String deletedItemRestored(){ return "Last deleted item has been restored"; }
+
 }

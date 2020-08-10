@@ -8,8 +8,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import use_cases.GlobalInventoryManager;
 import use_cases.UserManager;
 
 import java.net.URL;
@@ -27,12 +27,14 @@ public class AdminBrowsingUsersController implements Initializable {
     @FXML private Button weeklyButton;
     @FXML private Button incompleteButton;
     @FXML private Button optionButton;
+    @FXML private Button undoButton;
     @FXML private Label mainLabel;
     @FXML private Label userLabel;
     @FXML private Label allLabel;
 
     private UserManager users;
     private AdminBrowsingUsersPresenter browse;
+    private GlobalInventoryManager globalinventory;
     private String user = "";
     private boolean lendingLimit = false;
     private boolean weeklyLimit = false;
@@ -43,10 +45,12 @@ public class AdminBrowsingUsersController implements Initializable {
      * Construct an instance, takes in an usermanager object, creates a AdminBrowsingUsersPresenter.
      *
      * @param system usermanager instance
+     * @param globalinventory globalinventory instance
      */
-    public AdminBrowsingUsersController(UserManager system) {
+    public AdminBrowsingUsersController(UserManager system, GlobalInventoryManager globalinventory) {
         this.browse = new AdminBrowsingUsersPresenter();
         this.users = system;
+        this.globalinventory = globalinventory;
     }
 
 
@@ -61,10 +65,12 @@ public class AdminBrowsingUsersController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         allLimit = true;
         allLabel.setVisible(true);
+        undoButton.setVisible(false);
         freezeButton.setVisible(false);
         banButton.setVisible(false);
         userLabel.setVisible(false);
         mainLabel.setText("");
+        undoButton.setOnAction(this::undoDelete);
         exitButton.setOnAction(this::exit);
         lendingButton.setOnAction(this::lending);
         freezeButton.setOnAction(this::freeze);
@@ -82,6 +88,7 @@ public class AdminBrowsingUsersController implements Initializable {
             allLimit = false;
             user = input;
             allLabel.setVisible(false);
+            undoButton.setVisible(true);
             lendingButton.setVisible(true);
             freezeButton.setVisible(true);
             weeklyButton.setVisible(true);
@@ -144,8 +151,14 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @FXML
-    private void optionInput(ActionEvent actionEvent) {
+    private void undoDelete(ActionEvent actionEvent) {
+        globalinventory.undoDeleteItem(user);
+        mainLabel.setText(browse.deletedItemRestored());
+        mainLabel.setAlignment(Pos.CENTER);
+    }
 
+    @FXML
+    private void optionInput(ActionEvent actionEvent) {
         String limit = optionText.getText();
         if (limit.matches("\\d+")) {
             if (allLimit && weeklyLimit) {
