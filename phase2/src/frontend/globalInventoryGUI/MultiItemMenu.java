@@ -37,6 +37,7 @@ public class MultiItemMenu implements Initializable {
     private Item item;
     private ObservableList<Item> selectedItems = FXCollections.observableArrayList();
     private ObservableList<Item> userItems = FXCollections.observableArrayList();
+    private String trademenuFXML = "/frontend/tradeGUI/TradeMenu.fxml";
 
     /**
      * constructor for MultiItemMenu
@@ -182,13 +183,12 @@ public class MultiItemMenu implements Initializable {
      * @throws IOException something went wrong
      */
     private void tradeRequest(ActionEvent event) throws IOException {
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         for (Item i : selectedItems){
             items.add(i);
         }
         if (selectedItems.size() > 0){
             try{
-                String trademenuFXML = "/frontend/tradeGUI/TradeMenu.fxml";
                 switchScene(trademenuFXML, items, event);
             }
             catch (IOException ex) {
