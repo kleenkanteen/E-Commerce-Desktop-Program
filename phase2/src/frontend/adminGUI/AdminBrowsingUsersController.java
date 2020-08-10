@@ -70,15 +70,15 @@ public class AdminBrowsingUsersController implements Initializable {
         banButton.setVisible(false);
         userLabel.setVisible(false);
         mainLabel.setText("");
-        undoButton.setOnAction(this::undoDelete);
+        undoButton.setOnAction(e -> undoDelete());
         exitButton.setOnAction(this::exit);
-        lendingButton.setOnAction(this::lending);
-        freezeButton.setOnAction(this::freeze);
-        searchButton.setOnAction(this::search);
-        banButton.setOnAction(this::ban);
-        weeklyButton.setOnAction(this::weeklyLimit);
-        incompleteButton.setOnAction(this::incompleteLimit);
-        optionButton.setOnAction(this::optionInput);
+        lendingButton.setOnAction(e -> lending());
+        freezeButton.setOnAction(e -> freeze());
+        searchButton.setOnAction(e -> search());
+        banButton.setOnAction(e -> ban());
+        weeklyButton.setOnAction(e -> weeklyLimit());
+        incompleteButton.setOnAction(e -> incompleteLimit());
+        optionButton.setOnAction(e -> optionInput());
     }
 
     @FXML
