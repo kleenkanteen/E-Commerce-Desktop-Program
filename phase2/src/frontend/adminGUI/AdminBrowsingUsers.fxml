@@ -13,7 +13,7 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <TextField fx:id="usernameText" layoutX="209.0" layoutY="66.0" stylesheets="@../styling/cool.css" />
+      <TextField fx:id="usernameText" layoutX="209.0" layoutY="66.0" />
       <Label fx:id="mainLabel" layoutX="115.0" layoutY="111.0" prefHeight="26.0" prefWidth="373.0" text="main label" textAlignment="CENTER">
          <font>
             <Font size="17.0" />
@@ -34,7 +34,7 @@
       <Button fx:id="banButton" layoutX="329.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
       <Button fx:id="weeklyButton" layoutX="329.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
       <Button fx:id="incompleteButton" layoutX="330.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
-      <TextField fx:id="optionText" layoutX="390.0" layoutY="303.0" prefHeight="25.0" prefWidth="70.0" stylesheets="@../styling/cool.css" />
+      <TextField fx:id="optionText" layoutX="390.0" layoutY="303.0" prefHeight="25.0" prefWidth="70.0" />
       <Button fx:id="optionButton" layoutX="481.0" layoutY="301.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" stylesheets="@../styling/coolbutton.css" />
       <Label fx:id="allLabel" layoutX="330.0" layoutY="173.0" prefHeight="26.0" prefWidth="247.0" textAlignment="CENTER">
          <font>
