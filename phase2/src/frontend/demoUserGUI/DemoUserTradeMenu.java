@@ -33,15 +33,15 @@ public class DemoUserTradeMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        titleScreen.setText("Trade");
-        typesOfTrade.setText("What type of trade?");
-        temporary.setText("Temporary");
-        permanent.setText("Permanent");
-        oneOrTwoWayTrade.setText("Is it a one way or two way trade?");
-        oneWayTrade.setText("One way trade");
-        twoWayTrade.setText("Two way trade");
-        submit.setText("Submit");
-        returnToMainMenu.setText("Return to Main Menu");
+        titleScreen.setText(demoUserPresenter.trade());
+        typesOfTrade.setText(demoUserPresenter.whattype());
+        temporary.setText(demoUserPresenter.temp());
+        permanent.setText(demoUserPresenter.perm());
+        oneOrTwoWayTrade.setText(demoUserPresenter.oneOrTwo());
+        oneWayTrade.setText(demoUserPresenter.oneWay());
+        twoWayTrade.setText(demoUserPresenter.twoWay());
+        submit.setText(demoUserPresenter.submit());
+        returnToMainMenu.setText(demoUserPresenter.back());
         returnToMainMenu.setOnAction(this::exit);
         submit.setOnAction(this::demoTrade);
         permanent.setOnAction(this::permChoice);
@@ -88,7 +88,7 @@ public class DemoUserTradeMenu implements Initializable {
 
     /**
      * setup text on screen when user click on one way trade
-     * @param actionEvent
+     * @param actionEvent mouse click
      */
     @FXML
     private void oneWayChoice(ActionEvent actionEvent) {
@@ -97,7 +97,7 @@ public class DemoUserTradeMenu implements Initializable {
 
     /**
      * setup text on screen when user click on two way trade
-     * @param actionEvent
+     * @param actionEvent mouse click
      */
     @FXML
     private void twoWayChoice(ActionEvent actionEvent) {

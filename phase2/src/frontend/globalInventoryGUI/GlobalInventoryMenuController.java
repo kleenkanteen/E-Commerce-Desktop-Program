@@ -80,9 +80,9 @@ public class GlobalInventoryMenuController implements Initializable {
         trade.setText(globalInventoryMenuPresenter.sendTradeReqeust());
         exit.setText(globalInventoryMenuPresenter.menuPromptExit());
 
-        itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-        itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>("ownerName"));
-        itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+        itemName.setCellValueFactory(new PropertyValueFactory<Item, String>(globalInventoryMenuPresenter.name()));
+        itemOwner.setCellValueFactory(new PropertyValueFactory<Item, String>(globalInventoryMenuPresenter.ownerName()));
+        itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>(globalInventoryMenuPresenter.description()));
 
         tableView.setOnMouseClicked(this::selected);
         //load data

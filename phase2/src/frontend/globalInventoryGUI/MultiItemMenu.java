@@ -90,16 +90,17 @@ public class MultiItemMenu implements Initializable {
         trade.setText(globalInventoryMenuPresenter.trade());
         exit.setText(globalInventoryMenuPresenter.menuPromptExit());
 
-        itemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
-
-        itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+        itemName.setCellValueFactory(new PropertyValueFactory<Item, String>(globalInventoryMenuPresenter.name()));
+        itemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>
+                (globalInventoryMenuPresenter.description()));
 
         tradingitemName.setText(globalInventoryMenuPresenter.itemName());
 
         tradingitemDescription.setText(globalInventoryMenuPresenter.itemDescription());
-        tradingitemName.setCellValueFactory(new PropertyValueFactory<Item, String>("name"));
+        tradingitemName.setCellValueFactory(new PropertyValueFactory<Item, String>(globalInventoryMenuPresenter.name()));
 
-        tradingitemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>("description"));
+        tradingitemDescription.setCellValueFactory(new PropertyValueFactory<Item, String>
+                (globalInventoryMenuPresenter.description()));
 
         userItem.setOnMouseClicked(this::selected);
         exit.setOnAction(this::exit);
@@ -124,7 +125,7 @@ public class MultiItemMenu implements Initializable {
      */
     private void loadData(){
         List<Item> useritemlist =  globalInventoryManager.getPersonInventory(item.getOwnerName());
-        useritemlist.remove(useritemlist.indexOf(item));
+        useritemlist.remove(item);
         userItems.addAll(useritemlist);
     }
 

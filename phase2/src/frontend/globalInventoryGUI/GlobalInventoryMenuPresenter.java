@@ -177,4 +177,28 @@ public class GlobalInventoryMenuPresenter {
     public String frozenAcc(){
         return "Sorry, your account is frozen.";
     }
+
+    /**
+     * set up column name for multiItemMenu and globalInventory
+     * @return name
+     */
+    public String name(){
+        return "name";
+    }
+
+    /**
+     * set up column name for multiItemMenu and globalInventory
+     * @return description
+     */
+    public String description(){
+        return "description";
+    }
+
+    /**
+     * set up column name for globalInventory
+     * @return ownerName
+     */
+    public String ownerName(){
+        return "ownerName";
+    }
 }
