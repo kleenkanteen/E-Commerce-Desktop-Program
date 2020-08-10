@@ -63,6 +63,18 @@ public class AdminBrowsingUsersController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userLabel.setText(browse.enterUsername());
+        searchButton.setText(browse.searchText());
+        banButton.setText(browse.banUnbanText());
+        freezeButton.setText(browse.freezeText());
+        weeklyButton.setText(browse.weeklyText());
+        incompleteButton.setText(browse.incompleteText());
+        lendingButton.setText(browse.lendingText());
+        optionButton.setText(browse.enterText());
+        exitButton.setText(browse.exitText());
+        undoButton.setText(browse.undoText());
+        allLabel.setText(browse.thresholdText());
+
         allLimit = true;
         allLabel.setVisible(true);
         undoButton.setVisible(false);
