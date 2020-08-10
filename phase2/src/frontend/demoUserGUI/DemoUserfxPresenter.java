@@ -205,13 +205,6 @@ public class DemoUserfxPresenter {
         return "Item Name";
     }
 
-    /**
-     * setup TableView in globalInventory
-     * @return Item Owner
-     */
-    public String itemOwner(){
-        return "Item Owner";
-    }
 
     /**
      * setup TableView in globalInventoryMenu
