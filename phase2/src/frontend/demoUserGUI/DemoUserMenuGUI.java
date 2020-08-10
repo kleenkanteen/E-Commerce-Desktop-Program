@@ -1,5 +1,6 @@
 package frontend.demoUserGUI;
 
+import frontend.mainMenuGUI.UseCaseBuilder;
 import frontend.popUp.PopUp;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,7 +45,8 @@ public class DemoUserMenuGUI  implements Initializable {
      * @param globalInventoryManager a globalInventoryManager
      */
     public DemoUserMenuGUI(GlobalInventoryManager globalInventoryManager) {
-        this.demoUserManager = new DemoUserManager("demo", "demo");
+        UseCaseBuilder useCaseBuilder = new UseCaseBuilder();
+        this.demoUserManager = useCaseBuilder.getDemoUserManager("demo", "demo");
         this.globalInventoryManager = globalInventoryManager;
     }
 
