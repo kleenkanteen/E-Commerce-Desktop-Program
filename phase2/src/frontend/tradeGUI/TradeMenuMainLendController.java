@@ -29,7 +29,6 @@ public class TradeMenuMainLendController implements Initializable {
     private String userA;
     private String userB;
     private UserManager allUsers;
-    //private GlobalInventoryManager globalInventoryManager;
 
     private String tradeType;
     private String placeOfMeeting;
@@ -47,20 +46,18 @@ public class TradeMenuMainLendController implements Initializable {
 
     /**
      * A controller for TradeMenuMainLend.fxml
-     * @param globalInventoryManager is a GlobalInventoryManager that takes in all inventories from different users in the program.
      * @param allUsers is a UserManager that contains all the users in the program
      * @param itemsToTradeA is a List that contains the items that userA have and wants to loan to userB
      * @param userA is a String that contains the current user.
      * @param userB the person this user want to loan his items to
      *
      */
-    public TradeMenuMainLendController(GlobalInventoryManager globalInventoryManager, UserManager allUsers, List<Item> itemsToTradeA, String userA,
+    public TradeMenuMainLendController(UserManager allUsers, List<Item> itemsToTradeA, String userA,
                                        String userB) {
         this.itemsToTradeA = itemsToTradeA;
         this.userA = userA;
         this.userB = userB;
         this.allUsers = allUsers;
-        //this.globalInventoryManager = globalInventoryManager;
     }
 
     /**
@@ -102,7 +99,6 @@ public class TradeMenuMainLendController implements Initializable {
 
     @FXML
     private void submitAction(ActionEvent actionEvent) throws IncompleteTradeException {
-        TradeRequestManager tradeRequestManager;
         if ((primaryDate.getValue() != null) &&
                 (timeOfTrade.getText() != null) &&
                 (!typesOfTrade.getText().equals(TradeMenu.TRADETYPE))) {
