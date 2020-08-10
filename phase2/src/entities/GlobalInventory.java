@@ -9,6 +9,7 @@ public class GlobalInventory implements Serializable {
 
     private Map<String, Item> itemMap;
     private List<String> itemIdCollection;
+    private List<Item> removedItems;
     /**
      * Create a HashMap to store the information of item within the GlobalInventory
      * Crease an ArrayList to store all the ID that has been assigned to Item.
@@ -17,6 +18,7 @@ public class GlobalInventory implements Serializable {
      */
 
     public GlobalInventory(){
+        removedItems = new ArrayList<>();
         itemMap = new HashMap<>();
         itemIdCollection = new ArrayList<>();
     }
@@ -103,8 +105,25 @@ public class GlobalInventory implements Serializable {
      */
 
     public void removeItem(String itemID){
+        removedItems.add(itemMap.get(itemID));
         itemMap.remove(itemID);
+    }
 
+    /**
+     * Undos the last delete of an item by user
+     * @param userid The user who's last deleted item will be brought back
+     */
+    public void undoDeleteItem(String userid){
+        for (int j = removedItems.size() - 1; j >= 0; j--) {
+            if (removedItems.get(j).getOwnerName().equals(userid)){
+                Item restore = removedItems.get(j);
+                itemMap.put(restore.getOwnerName(), restore);
+                itemIdCollection.add(restore.getItemID());
+                removedItems.remove(j);
+                break;
+            }
+
+        }
     }
 
     /**

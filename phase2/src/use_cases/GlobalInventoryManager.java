@@ -106,48 +106,14 @@ public class GlobalInventoryManager implements Serializable {
         globalInventory.removeItem(itemID);
     }
 
-
-
-
-
     /**
-     * Generate an arraylist with at most 10 items sorted by key order
-     *
-     * @param pageNumber is what page the user want to see
-     * @return an arraylist with at most 10 items sorted by key order
+     * Undos the last delete of an item by user
+     * @param userid The user who's last deleted item will be brought back
      */
-
-
-    public List<Item> generatePage(int pageNumber) {
-        ArrayList<Item> itemList = new ArrayList<>();
-        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < globalInventory.getNumOfItem(); i++) {
-            itemList.add(globalInventory.getItemByIndex(i));
-
-        }
-        return itemList;
-
+    public void undoDeleteItem(String userid){
+        globalInventory.undoDeleteItem(userid);
     }
 
-    /**
-     * generate the page number of the last page in globalInventory
-     *
-     * @return an int to represent the last page in globalInventory.
-     */
-
-    public int generatePageNumber() {
-        int num = globalInventory.getNumOfItem();
-        return (int) Math.ceil((double) num / 10);
-    }
-
-        /**
-         * generate an arraylist of Item which has itemName
-         * @param itemName is the name of item the user want to search
-         * @return an arraylist of Item which the user want to search
-         */
-
-        public List<Item> searchWithItemName (String itemName){
-            return globalInventory.searchByItemName(itemName);
-        }
 
     /**
      * generate an arraylist of Item belongs to the specific owner

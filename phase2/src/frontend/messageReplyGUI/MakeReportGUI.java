@@ -17,8 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MakeReportGUI implements Initializable {
-    @FXML
-    private Label title;
+    @FXML private Label title;
     @FXML private Label messageContent;
     @FXML private Button button1;
     @FXML private Button button2;

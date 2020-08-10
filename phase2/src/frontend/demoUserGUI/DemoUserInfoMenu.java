@@ -58,13 +58,14 @@ public class DemoUserInfoMenu implements Initializable {
         this.wishlist.setText(demoUserPresenter.accountInfoPromptWishlist());
         this.exit.setText(demoUserPresenter.menuPromptExit());
 
-        tradeHistory.setOnAction(this::noAccess);
-        newPassword.setOnAction(this::noAccess);
-        tradePartners.setOnAction(this::noAccess);
-        recentTrades.setOnAction(this::noAccess);
+        tradeHistory.setOnAction(e->noAccess());
+        newPassword.setOnAction(e->noAccess());
+        tradePartners.setOnAction(e->noAccess());
+        recentTrades.setOnAction(e->noAccess());
         this.inventory.setOnAction(e -> viewInventory());
         this.wishlist.setOnAction(e -> viewWishlist());
         exit.setOnAction(this::exit);
+        message.setWrapText(true);
     }
 
     enum Type {
@@ -133,10 +134,9 @@ public class DemoUserInfoMenu implements Initializable {
 
     /**
      * prints no access on screen
-     * @param event mouse click
      */
     @FXML
-    private void noAccess(ActionEvent event){
+    private void noAccess(){
         message.setText(demoUserPresenter.noAccess());
 
     }

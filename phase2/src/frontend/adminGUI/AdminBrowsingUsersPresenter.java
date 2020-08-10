@@ -1,63 +1,146 @@
 package frontend.adminGUI;
 
 public class AdminBrowsingUsersPresenter {
-
-    /*
-    Construct an instance of AdminBrowsingUsersPresenter.
+    /**
+     * Returns a string that prompts the user to choose an option
+     * @return the string
      */
-    public AdminBrowsingUsersPresenter(){
-    }
-
-    public void enterUser(){ System.out.println("Enter the username of the user you want or press [1] to exit:"); }
-
-    public void invalidUser(){
-        System.out.println("User does not exist, try again or press [1] to exit");
+    public String optionPrompt(){
+        return "Choose your option below";
     }
 
     /**
-     * @param info - The string of info passed in
+     * Returns a string telling the user they entered and invalid username
+     * @return the string
      */
-
-    public void infoUser(String info){
-        System.out.println("\n" + info + "\n\n" + "User account info above, choose your option below: \n\n" +
-                "[1] Change lending threshold, how many times user must lend before borrowing \n" +
-                "[2] Freeze/unfreeze User \n" +
-                "[3] Ban/unban User \n" +
-                "[4] Change limit of trades per week \n" +
-                "[5] Change limit of incomplete trades \n" +
-                "[6] Return to user selection \n" +
-                "[7] Return to admin menu");
-
+    public String invalidName(){
+        return "Invalid username, try again";
     }
 
-    public void thresholdUser(){
-        System.out.println("Print the number you want to set the lending threshold to:");
+    /**
+     * Returns a string telling the user to enter the new limit somewhere
+     * @return the string
+     */
+    public String enterValuePrompt(){
+        return "Enter the new limit in bottom right";
     }
 
-    public void tradelimitUser(){
-        System.out.println("Print the number you want to set the weekly trade limit to:");
+    /**
+     * Returns a string telling the user they changed the user's banning state
+     * @return the string
+     */
+    public String banStateChangeSuccess(){
+        return "User banning state has been changed";
     }
 
-    public void incomptradeUser(){
-        System.out.println("Print the number you want to set the weekly incomplete trade limit to:");
+    /**
+     * Returns a string telling the user they changed the user's frozen state
+     * @return the string
+     */
+    public String freezeStateChangeSuccess(){
+        return "User freezing state has been changed";
     }
 
-    public void successUser(){
-        System.out.println("\nLimit successfully changed\n");
+    /**
+     * Returns a string telling the user they changed the user's weekly limit
+     * @return the string
+     */
+    public String weeklyLimitChangeSuccess(){
+        return "Weekly limit successfully changed";
     }
 
-    public void thresholdsuccessUser(){
-        System.out.println("\nThreshold successfully changed\n");
+    /**
+     * Returns a string telling the user they changed the user's incomplete trade limit
+     * @return the string
+     */
+    public String incompleteLimitChangeSuccess(){
+        return "Incomplete trades limit successfully changed";
     }
 
-    public void freezingUser(){ System.out.println("\nUser freezing state has been changed\n"); }
+    /**
+     * Returns a string telling the user they changed the user's threshold
+     * @return the string
+     */
+    public String thresholdChangeSuccess(){
+        return "Threshold successfully changed";
+    }
 
-    public void banUser(){ System.out.println("\nUser banning state has been changed\n"); }
+    /**
+     * Returns a string telling the user they entered the wrong format
+     * @return the string
+     */
+    public String wrongFormat(){ return "Enter only numbers"; }
 
-    public void error(){ System.out.println("Something went wrong"); }
+    /**
+     * Returns a string saying deleted item has been restored
+     * @return the string
+     */
+    public String deletedItemRestored(){ return "Last deleted item has been restored"; }
 
-    public void invalid(){ System.out.println("\nInvalid input try again with only numbers\n"); }
+    /**
+     * Returns a string prompting to enter username
+     * @return the string
+     */
+    public String enterUsername(){ return "Enter your username:"; }
 
-    public void invalidoption(){ System.out.println("\nInvalid option, reloading menu\n"); }
+    /**
+     * Returns a string saying Search
+     * @return the string
+     */
+    public String searchText(){ return "Search"; }
+
+    /**
+     * Returns a string for ban button
+     * @return the string
+     */
+    public String banUnbanText(){ return "Ban/unban user"; }
+
+    /**
+     * Returns a string for freeze button
+     * @return the string
+     */
+    public String freezeText(){ return "Freeze/unfreeze user"; }
+
+    /**
+     * Returns a string for incomplete trades button
+     * @return the string
+     */
+    public String incompleteText(){ return "Change limit of incomplete trades"; }
+
+    /**
+     * Returns a string for weekly trades button
+     * @return the string
+     */
+    public String weeklyText(){ return "Change weekly trade limit"; }
+
+    /**
+     * Returns a string for lending button
+     * @return the string
+     */
+    public String lendingText(){ return "Change lending threshold"; }
+
+    /**
+     * Returns a string for enter button
+     * @return the string
+     */
+    public String enterText(){ return "Enter"; }
+
+    /**
+     * Returns a string for threshold label
+     * @return the string
+     */
+    public String thresholdText(){ return "Change thresholds for all users"; }
+
+    /**
+     * Returns a string for exit button
+     * @return the string
+     */
+    public String exitText(){ return "Exit"; }
+
+    /**
+     * Returns a string for undo delete label
+     * @return the string
+     */
+    public String undoText(){ return "Undo user deleting items"; }
 
 }

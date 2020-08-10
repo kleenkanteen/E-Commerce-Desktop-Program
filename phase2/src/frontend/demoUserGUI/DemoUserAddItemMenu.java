@@ -33,7 +33,7 @@ public class DemoUserAddItemMenu implements Initializable {
      * Construct a new DemoUserAddItemMenu
      * @param demoUserManager DemoUserManager object
      */
-    DemoUserAddItemMenu(DemoUserManager demoUserManager) {
+    public DemoUserAddItemMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
@@ -44,23 +44,27 @@ public class DemoUserAddItemMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        namePrompt.setWrapText(true);
         namePrompt.setText(demoUserPresenter.enterItemName());
         descriptionPrompt.setText(demoUserPresenter.enterItemDescription());
         this.confirm.setText(demoUserPresenter.Confirm());
         this.cancel.setText(demoUserPresenter.Cancel());
 
         // set button function
-        this.confirm.setOnAction(this:: demoAddItem);
+        this.confirm.setOnAction(e -> demoAddItem());
         this.cancel.setOnAction(this::returnToMainMenu);
+        descriptionPrompt.setWrapText(true);;
+
     }
 
     /**
      * Add new items to demo user's personal inventory
      */
-    private void demoAddItem(ActionEvent event){
+    private void demoAddItem(){
         Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
-        demoUserManager.getUserInventory().add(item);
+        demoUserManager.addToInventory(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());
+        errorMessage.setWrapText(true);
     }
 
     /**

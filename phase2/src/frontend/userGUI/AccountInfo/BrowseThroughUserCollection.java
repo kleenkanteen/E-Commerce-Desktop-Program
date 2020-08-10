@@ -84,6 +84,7 @@ public class BrowseThroughUserCollection implements Initializable {
      * @param currUser the currently logged in user
      * @param tradeManager the TradeManager object
      * @param globalWishlistManager the GlobalWishlistManager object
+     * @param unconfirmedTrades list of unconfirmed trades this user have
      */
     public BrowseThroughUserCollection(String currUser, TradeManager tradeManager,
                                        GlobalWishlistManager globalWishlistManager, List<Trade> unconfirmedTrades) {

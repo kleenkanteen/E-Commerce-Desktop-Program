@@ -37,7 +37,7 @@ public class MultiItemMenu implements Initializable {
     private Item item;
     private ObservableList<Item> selectedItems = FXCollections.observableArrayList();
     private ObservableList<Item> userItems = FXCollections.observableArrayList();
-    private String trademenuFXML = "/frontend/tradeGUI/TradeMenu.fxml";
+    private String tradeMenuFXML = "/frontend/tradeGUI/TradeMenu.fxml";
 
     /**
      * constructor for MultiItemMenu
@@ -80,6 +80,10 @@ public class MultiItemMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        message.setWrapText(true);
+        userItemLabel.setWrapText(true);
+        tradingItemLabel.setWrapText(true);
+        title.setWrapText(true);
         userItemLabel.setText(globalInventoryMenuPresenter.userItemLabel(item));
         tradingItemLabel.setText(globalInventoryMenuPresenter.itemSelected());
         title.setText(globalInventoryMenuPresenter.selectItem(item));
@@ -109,8 +113,8 @@ public class MultiItemMenu implements Initializable {
         loadData();
         userItem.setItems(userItems);
         tradingItem.setItems(getItem());
-        select.setOnAction(this::select);
-        remove.setOnAction(this::remove);
+        select.setOnAction(e -> select());
+        remove.setOnAction(e->remove());
 
         trade.setOnAction(e-> {
             try {
@@ -155,9 +159,8 @@ public class MultiItemMenu implements Initializable {
 
     /**
      * select item in the userItem TableView to tradingItem TableView
-     * @param event mouse click
      */
-    private void select(ActionEvent event){
+    private void select(){
         Item itemselected = userItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             userItem.getItems().remove(itemselected);
@@ -167,9 +170,8 @@ public class MultiItemMenu implements Initializable {
 
     /**
      * remove item in the tradingItem TableView to userItem TableView
-     * @param event mouse click
      */
-    private void remove(ActionEvent event){
+    private void remove(){
         Item itemselected = tradingItem.getSelectionModel().getSelectedItem();
         if (!(itemselected == null)) {
             tradingItem.getItems().remove(itemselected);
@@ -189,7 +191,7 @@ public class MultiItemMenu implements Initializable {
         }
         if (selectedItems.size() > 0){
             try{
-                switchScene(trademenuFXML, items, event);
+                switchScene(tradeMenuFXML, items, event);
             }
             catch (IOException ex) {
                 new PopUp(globalInventoryMenuPresenter.error());

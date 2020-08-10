@@ -1,7 +1,6 @@
 package frontend.tradeGUI;
 
 import entities.Item;
-
 import exceptions.IncompleteTradeException;
 import frontend.popUp.PopUp;
 import javafx.event.ActionEvent;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeMenuMainController implements Initializable {
-    private GlobalInventoryManager globalInventoryManager = null;
+    private GlobalInventoryManager globalInventoryManager;
     private UserManager allUsers;
     private String userA;
     private List<Item> itemsToTradeB;
@@ -183,7 +182,7 @@ public class TradeMenuMainController implements Initializable {
         if (!suggestions.isEmpty()) {
             new PopUp(TradeMenu.SUGGEST + suggestions);
         }
-        MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager, allUsers);
+        MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager);
         switchScene(multiItemMenu);
         itemsToTradeA = new ArrayList<>(multiItemMenu.getItems());
     }

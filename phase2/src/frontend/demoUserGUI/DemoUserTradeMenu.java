@@ -33,6 +33,8 @@ public class DemoUserTradeMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        titleScreen.setWrapText(true);
+        message.setWrapText(true);
         titleScreen.setText(demoUserPresenter.trade());
         typesOfTrade.setText(demoUserPresenter.whattype());
         temporary.setText(demoUserPresenter.temp());
@@ -43,11 +45,11 @@ public class DemoUserTradeMenu implements Initializable {
         submit.setText(demoUserPresenter.submit());
         returnToMainMenu.setText(demoUserPresenter.back());
         returnToMainMenu.setOnAction(this::exit);
-        submit.setOnAction(this::demoTrade);
-        permanent.setOnAction(this::permChoice);
-        temporary.setOnAction(this::tempChoice);
-        oneWayTrade.setOnAction(this::oneWayChoice);
-        twoWayTrade.setOnAction(this::twoWayChoice);
+        submit.setOnAction(e->demoTrade());
+        permanent.setOnAction(e->permChoice());
+        temporary.setOnAction(e->tempChoice());
+        oneWayTrade.setOnAction(e->oneWayChoice());
+        twoWayTrade.setOnAction(e->twoWayChoice());
     }
 
     /**
@@ -62,45 +64,40 @@ public class DemoUserTradeMenu implements Initializable {
 
     /**
      * setup text on screen when user select perm trade
-     * @param actionEvent mouse click
      */
     @FXML
-    private void permChoice(ActionEvent actionEvent) {
+    private void permChoice() {
         typesOfTrade.setText(permanent.getText());
     }
 
     /**
      * setup text on screen when user select temp trade
-     * @param actionEvent mouse click
      */
     @FXML
-    private void tempChoice(ActionEvent actionEvent) {
+    private void tempChoice() {
         typesOfTrade.setText(temporary.getText());
     }
 
     /**
      * ask user to create a account to trade when user click on trade
-     * @param event mouse click
      */
-    private void demoTrade(ActionEvent event){
+    private void demoTrade(){
         message.setText(demoUserPresenter.createAcc());
     }
 
     /**
      * setup text on screen when user click on one way trade
-     * @param actionEvent mouse click
      */
     @FXML
-    private void oneWayChoice(ActionEvent actionEvent) {
+    private void oneWayChoice() {
         oneOrTwoWayTrade.setText(oneWayTrade.getText());
     }
 
     /**
      * setup text on screen when user click on two way trade
-     * @param actionEvent mouse click
      */
     @FXML
-    private void twoWayChoice(ActionEvent actionEvent) {
+    private void twoWayChoice() {
         oneOrTwoWayTrade.setText(twoWayTrade.getText());
     }
 }
