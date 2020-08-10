@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="202.0" layoutY="25.0" text="Enter the user's username:">
+      <Label fx:id="usernameLabel" layoutX="142.0" layoutY="25.0" prefHeight="26.0" prefWidth="282.0" text="user label" textAlignment="CENTER">
          <font>
             <Font size="17.0" />
          </font>
@@ -19,28 +19,28 @@
             <Font size="17.0" />
          </font>
       </Label>
-      <Button fx:id="exitButton" layoutX="280.0" layoutY="356.0" mnemonicParsing="false" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Exit">
+      <Button fx:id="exitButton" layoutX="280.0" layoutY="356.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" styleClass="a" stylesheets="@../styling/coolbutton.css">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
       <Label fx:id="userLabel" layoutX="41.0" layoutY="159.0" prefHeight="180.0" prefWidth="268.0" text="User Label" textAlignment="CENTER">
          <font>
-            <Font size="16.0" />
+            <Font size="14.0" />
          </font></Label>
-      <Button fx:id="lendingButton" layoutX="330.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" stylesheets="@../styling/coolbutton.css" text="Change lending threshold " />
-      <Button fx:id="freezeButton" layoutX="329.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Freeze/unfreeze user" />
-      <Button fx:id="searchButton" layoutX="399.0" layoutY="63.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" stylesheets="@../styling/coolbutton.css" text="Search" />
-      <Button fx:id="banButton" layoutX="329.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Ban/unban user" />
-      <Button fx:id="weeklyButton" layoutX="329.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Change weekly trade limit" />
-      <Button fx:id="incompleteButton" layoutX="330.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Change limit of incomplete trades" />
+      <Button fx:id="lendingButton" layoutX="330.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" stylesheets="@../styling/coolbutton.css" />
+      <Button fx:id="freezeButton" layoutX="329.0" layoutY="186.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
+      <Button fx:id="searchButton" layoutX="399.0" layoutY="63.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" stylesheets="@../styling/coolbutton.css" />
+      <Button fx:id="banButton" layoutX="329.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
+      <Button fx:id="weeklyButton" layoutX="329.0" layoutY="236.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
+      <Button fx:id="incompleteButton" layoutX="330.0" layoutY="211.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="247.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
       <TextField fx:id="optionText" layoutX="390.0" layoutY="303.0" prefHeight="25.0" prefWidth="70.0" stylesheets="@../styling/cool.css" />
-      <Button fx:id="optionButton" layoutX="481.0" layoutY="301.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="60.0" stylesheets="@../styling/coolbutton.css" text="Enter" />
-      <Label fx:id="allLabel" layoutX="326.0" layoutY="248.0" prefHeight="26.0" prefWidth="247.0" text="   Change thresholds for all users">
+      <Button fx:id="optionButton" layoutX="481.0" layoutY="301.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="89.0" stylesheets="@../styling/coolbutton.css" />
+      <Label fx:id="allLabel" layoutX="330.0" layoutY="173.0" prefHeight="26.0" prefWidth="247.0" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="undoButton" layoutX="26.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="222.0" styleClass="a" stylesheets="@../styling/coolbutton.css" text="Undo user deleting items" />
+      <Button fx:id="undoButton" layoutX="26.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="222.0" styleClass="a" stylesheets="@../styling/coolbutton.css" />
    </children>
 </AnchorPane>
