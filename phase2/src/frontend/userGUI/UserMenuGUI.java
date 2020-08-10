@@ -198,7 +198,7 @@ public class UserMenuGUI implements Initializable {
             switchScene(this.accountFXML);
         }
         catch (IOException ex) {
-            this.systemMessage.setText("IOException in getAccountInfo");
+            this.systemMessage.setText(this.userPresenter.ioErrorMessage());
         }
     }
 
@@ -213,7 +213,7 @@ public class UserMenuGUI implements Initializable {
                 switchScene(this.globalInventoryFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("IOException in getGlobalInventory");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
         else {
@@ -248,7 +248,7 @@ public class UserMenuGUI implements Initializable {
                         switchScene(this.loanFXML);
                     }
                     catch(IOException ex) {
-                        this.systemMessage.setText("IOException in getLoanMenu");
+                        this.systemMessage.setText(this.userPresenter.ioErrorMessage());
                     }
 
                 }
@@ -269,7 +269,7 @@ public class UserMenuGUI implements Initializable {
             switchScene(this.userMessagesFXML);
         }
         catch(IOException ex) {
-            this.systemMessage.setText("IOException in getInbox");
+            this.systemMessage.setText(this.userPresenter.ioErrorMessage());
         }
     }
 
@@ -282,7 +282,7 @@ public class UserMenuGUI implements Initializable {
             switchScene(this.newItemFXML);
         }
         catch (IOException ex) {
-            this.systemMessage.setText("IOException in getNewItemMenu");
+            this.systemMessage.setText(this.userPresenter.ioErrorMessage());
         }
     }
 
@@ -311,7 +311,7 @@ public class UserMenuGUI implements Initializable {
             switchScene(this.privateMessageFXML);
         }
         catch (IOException ex) {
-            this.systemMessage.setText("IOException in getPrivateMessageMenu");
+            this.systemMessage.setText(this.userPresenter.ioErrorMessage());
         }
     }
 
@@ -322,6 +322,7 @@ public class UserMenuGUI implements Initializable {
         boolean tooManyIncomplete = false;
         boolean tooManyBorrowVLoan = false;
         boolean tooManyTrades = false;
+
         // check to see if this user is frozen
         if (!this.userManager.getUserFrozenStatus(this.currUser)) {
             // check num of incomplete trades
@@ -358,7 +359,7 @@ public class UserMenuGUI implements Initializable {
                     switchScene(this.userStatusFXML);
                 }
                 catch(IOException ex) {
-                    this.systemMessage.setText("IOException in checkUserStatus NOT frozen if branch");
+                    this.systemMessage.setText(this.userPresenter.ioErrorMessage());
                 }
             }
         }
@@ -369,7 +370,7 @@ public class UserMenuGUI implements Initializable {
                 switchScene(this.userStatusFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("IOException in checkUserStatus FROZEN if branch");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }
@@ -386,7 +387,7 @@ public class UserMenuGUI implements Initializable {
                 switchScene(this.unconfirmedTradesFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("IOException in confirmIncompleteUserTrades");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }

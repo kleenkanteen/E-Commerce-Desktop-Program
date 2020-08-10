@@ -271,23 +271,6 @@ public class DemoUserfxPresenter {
         return "Remove";
     }
 
-
-    /**
-     * prints end of user Inventory
-     * @return Reached end of inventory.
-     */
-    public String endOfUserInventory() {
-        return "Reached end of inventory.";
-    }
-
-    /**
-     * prints end of user inventory
-     * @return Reached end of inventory
-     */
-    public String endOfUserWishlist(){
-        return "Reached end of inventory";
-    }
-
     /**
      * Prompt for item removal
      * @return Item removed
@@ -319,5 +302,79 @@ public class DemoUserfxPresenter {
     public String error(){
         return "Something went wrong, please try again";
     }
+
+
+    /**
+     * setup trade button in tradeMenu
+     * @return Trade
+     */
+    public String trade(){
+        return "Trade";
+    }
+
+    /**
+     * ask user what type of trade is this
+     * @return What type of trade?
+     */
+    public String whattype(){
+        return "What type of trade?";
+    }
+
+    /**
+     * setup Temporary selection in tradeMenu
+     * @return Temporary
+     */
+    public String temp(){
+        return "Temporary";
+    }
+
+    /**
+     * setup Permanent selection in tradeMenu
+     * @return Permanent
+     */
+    public String perm(){
+        return "Permanent";
+    }
+
+    /**
+     * ask user if its a one way trade or two way
+     * @return Is it a one way or two way trade?
+     */
+    public String oneOrTwo(){
+        return "Is it a one way or two way trade?";
+    }
+
+    /**
+     * setup one way trade selection
+     * @return One way trade
+     */
+    public String oneWay(){
+        return "One way trade";
+    }
+
+    /**
+     * setup two way trade selection
+     * @return Two way trade
+     */
+    public String twoWay(){
+        return "Two way trade";
+    }
+
+    /**
+     * setup submit button
+     * @return Submit
+     */
+    public String submit(){
+        return "Submit";
+    }
+
+    /**
+     * setup return button
+     * @return Return to Main Menu
+     */
+    public String back(){
+        return "Return to Main Menu";
+    }
+
 
 }
