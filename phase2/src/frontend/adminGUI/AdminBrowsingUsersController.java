@@ -82,7 +82,7 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @FXML
-    private void search(ActionEvent actionEvent) {
+    private void search() {
         String input = usernameText.getText();
         if (users.isValidUser(input)) {
             allLimit = false;
@@ -106,21 +106,21 @@ public class AdminBrowsingUsersController implements Initializable {
 
 
     @FXML
-    private void incompleteLimit(ActionEvent actionEvent) {
+    private void incompleteLimit() {
         mainLabel.setText(browse.enterValuePrompt());
         incompleteLimit = true;
         mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
-    private void weeklyLimit(ActionEvent actionEvent) {
+    private void weeklyLimit() {
         mainLabel.setText(browse.enterValuePrompt());
         weeklyLimit = true;
         mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
-    private void ban(ActionEvent actionEvent) {
+    private void ban() {
         if (users.getUserIsBanned(user)) {
             users.unFreezeUserAccount(user);
         } else {
@@ -132,7 +132,7 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @FXML
-    private void freeze(ActionEvent actionEvent) {
+    private void freeze() {
         if (users.getUserFrozenStatus(user)) {
             users.unFreezeUserAccount(user);
         } else {
@@ -144,21 +144,21 @@ public class AdminBrowsingUsersController implements Initializable {
     }
 
     @FXML
-    private void lending(ActionEvent actionEvent) {
+    private void lending() {
         mainLabel.setText(browse.enterValuePrompt());
         lendingLimit = true;
         mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
-    private void undoDelete(ActionEvent actionEvent) {
+    private void undoDelete() {
         globalinventory.undoDeleteItem(user);
         mainLabel.setText(browse.deletedItemRestored());
         mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
-    private void optionInput(ActionEvent actionEvent) {
+    private void optionInput() {
         String limit = optionText.getText();
         if (limit.matches("\\d+")) {
             if (allLimit && weeklyLimit) {
