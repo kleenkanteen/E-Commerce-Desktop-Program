@@ -106,6 +106,13 @@ public class GlobalInventoryManager implements Serializable {
         globalInventory.removeItem(itemID);
     }
 
+    /**
+     * Undos the last delete of an item by user
+     * @param userid The user who's last deleted item will be brought back
+     */
+    public void undoDeleteItem(String userid){
+        globalInventory.undoDeleteItem(userid);
+    }
 
 
 
