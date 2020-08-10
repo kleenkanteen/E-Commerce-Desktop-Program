@@ -91,6 +91,7 @@ public class AdminBrowsingUsersController implements Initializable {
         weeklyButton.setOnAction(e -> weeklyLimit());
         incompleteButton.setOnAction(e -> incompleteLimit());
         optionButton.setOnAction(e -> optionInput());
+        allLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
