@@ -165,7 +165,7 @@ public class AccountInfoMenu implements Initializable {
                 switchScene(this.tradeHistoryFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("Input error in viewTradeHistory");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }
@@ -179,7 +179,7 @@ public class AccountInfoMenu implements Initializable {
             switchScene(this.passwordFXML);
         }
         catch(IOException ex) {
-            this.systemMessage.setText("Input error in setNewPassword");
+            this.systemMessage.setText(this.userPresenter.ioErrorMessage());
         }
     }
 
@@ -198,7 +198,7 @@ public class AccountInfoMenu implements Initializable {
                 switchScene(this.tradePartnersFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("Input error in viewTradePartners");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }
@@ -217,7 +217,7 @@ public class AccountInfoMenu implements Initializable {
                 this.type = Type.RECENT_TRADES;
                 switchScene(this.recentTradesFXML);
             } catch (IOException ex) {
-                this.systemMessage.setText("Input error in viewRecentTrades");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }
@@ -238,7 +238,7 @@ public class AccountInfoMenu implements Initializable {
                 switchScene(this.inventoryFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("Input error in viewInventory");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }
@@ -265,7 +265,7 @@ public class AccountInfoMenu implements Initializable {
                 switchScene(this.wishlistFXML);
             }
             catch(IOException ex) {
-                this.systemMessage.setText("Input error in viewWishlist");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
         }
     }

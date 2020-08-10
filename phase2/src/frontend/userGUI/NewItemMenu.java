@@ -20,11 +20,13 @@ import java.util.ResourceBundle;
 
 public class NewItemMenu implements Initializable {
 
+    // instance variables
     private UserPresenter userPresenter;
     private AdminManager adminManager;
     private MessageBuilder messageBuilder;
     private String currUser;
 
+    // FXML stuff
     @FXML private Button confirm;
     @FXML private Button cancel;
     @FXML private Label namePrompt;
@@ -74,7 +76,7 @@ public class NewItemMenu implements Initializable {
         if(itemName.length() == 0 || itemDescription.length() == 0) {
             this.errorMessage.setVisible(true);
             this.confirmation.setVisible(false);
-            this.errorMessage.setText("Please fill out both the name and description inputs.");
+            this.errorMessage.setText(this.userPresenter.newItemMenuInputErrorPrompt());
         }
         // if user correctly filled out inputs
         else {
