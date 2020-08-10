@@ -35,12 +35,12 @@ public class MainMenuController implements Initializable {
 
     private final String loginFXMLFile = "Login.fxml";
 
-    private final String adminFilepath = "data/serializedAdmins.ser";
-    private final String userFilepath = "data/serializedUsers.ser";
-    private final String globalInventoryFilepath = "data/serializedGlobalInventory.ser";
-    private final String adminMessagesFilepath = "data/serializedAdminMessages.ser";
-    private final String globalWishlistFilepath = "data/serializedGlobalWishlist.ser";
-    private final String tradeFilepath = "data/serializedUserTrades.ser";
+    private final String adminFilePath = "data/serializedAdmins.ser";
+    private final String userFilePath = "data/serializedUsers.ser";
+    private final String globalInventoryFilePath = "data/serializedGlobalInventory.ser";
+    private final String adminMessagesFilePath = "data/serializedAdminMessages.ser";
+    private final String globalWishlistFilePath = "data/serializedGlobalWishlist.ser";
+    private final String tradeFilePath = "data/serializedUserTrades.ser";
     private final String dataFolderPath = "data/";
 
     private AdminAccountGateways adminAccountGateways;
@@ -147,33 +147,33 @@ public class MainMenuController implements Initializable {
 
             GatewayBuilder gatewayBuilder = new GatewayBuilder();
             //deserialize admins
-            adminAccountGateways = gatewayBuilder.getAdminAccountGateways(adminFilepath);
+            adminAccountGateways = gatewayBuilder.getAdminAccountGateways(adminFilePath);
 
             if (adminAccountGateways.getAdminMap().isEmpty()){
                 adminAccountGateways.beginAdminMap();
             }
             //deserialize users
-            userGateway = gatewayBuilder.getUserGateway(userFilepath);
+            userGateway = gatewayBuilder.getUserGateway(userFilePath);
 
             //deserialize global inventory
-            globalInventoryGateways = gatewayBuilder.getGlobalInventoryGateways(globalInventoryFilepath);
+            globalInventoryGateways = gatewayBuilder.getGlobalInventoryGateways(globalInventoryFilePath);
 
             //deserialize all user trades
-            userTradesGateway = gatewayBuilder.getUserTradesGateway(tradeFilepath);
+            userTradesGateway = gatewayBuilder.getUserTradesGateway(tradeFilePath);
 
             //deserialize GlobalWishlistGateway
-            globalWishlistGateway = gatewayBuilder.getGlobalWishlistGateway(globalWishlistFilepath);
+            globalWishlistGateway = gatewayBuilder.getGlobalWishlistGateway(globalWishlistFilePath);
 
             //deserialize AdminMessageGateway
-            adminMessageGateway = gatewayBuilder.getAdminMessageGateways(adminMessagesFilepath);
+            adminMessageGateway = gatewayBuilder.getAdminMessageGateways(adminMessagesFilePath);
         }
         catch(IOException | ClassNotFoundException ex) {
-            deleteFile(adminFilepath);
-            deleteFile(userFilepath);
-            deleteFile(globalInventoryFilepath);
-            deleteFile(adminMessagesFilepath);
-            deleteFile(globalWishlistFilepath);
-            deleteFile(tradeFilepath);
+            deleteFile(adminFilePath);
+            deleteFile(userFilePath);
+            deleteFile(globalInventoryFilePath);
+            deleteFile(adminMessagesFilePath);
+            deleteFile(globalWishlistFilePath);
+            deleteFile(tradeFilePath);
 
             deleteFile(dataFolderPath);
             new File(dataFolderPath).mkdirs();
@@ -205,12 +205,12 @@ public class MainMenuController implements Initializable {
     private void serialize() {
 
         try {
-            userGateway.writeToFile(userFilepath, userManager.getUserData());
+            userGateway.writeToFile(userFilePath, userManager.getUserData());
             globalInventoryGateways.writeToFile(globalInventoryManager.getGlobalInventoryData());
-            userTradesGateway.writeToFile(tradeFilepath, tradeManager.getTradeData());
-            globalWishlistGateway.writeToFile(globalWishlistFilepath, globalWishlistManager.getGlobalWishlistData());
+            userTradesGateway.writeToFile(tradeFilePath, tradeManager.getTradeData());
+            globalWishlistGateway.writeToFile(globalWishlistFilePath, globalWishlistManager.getGlobalWishlistData());
             adminAccountGateways.saveToFile(adminManager.getAdminData());
-            adminMessageGateway.writeToFile(adminMessagesFilepath, adminManager.getAdminMessages());
+            adminMessageGateway.writeToFile(adminMessagesFilePath, adminManager.getAdminMessages());
         }
         catch (IOException e) {
             errorMessage.setText(mainMenuPresenter.savingError());

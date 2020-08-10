@@ -105,9 +105,8 @@ public class GlobalInventory implements Serializable {
      */
 
     public void removeItem(String itemID){
-        removedItems.add(getItem(itemID));
+        removedItems.add(itemMap.get(itemID));
         itemMap.remove(itemID);
-
     }
 
     /**
