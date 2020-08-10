@@ -109,7 +109,7 @@ public class LoanMenu implements Initializable {
     private void sendTradeRequest() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(this.tradeRunFromLoanFXML));
-            loader.setController(new TradeMenuMainLendController(this.globalInventoryManager, this.userManager,
+            loader.setController(new TradeMenuMainLendController(this.userManager,
                     this.userItemChoice, this.currUser, this.itemsToLend.get(1)));
             Parent root = loader.load();
             Scene newScene= new Scene(root);

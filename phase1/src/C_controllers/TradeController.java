@@ -102,6 +102,7 @@ public class TradeController {
         ArrayList<Item> itemsToTradeA = new ArrayList<>();
         boolean done = false;
         do {
+            // TODO change the switch "selection" into char.
             // have a presenter that asks for perm trade or temp trade.
             this.tradeMenu.choosePermTemp();
             String selection = this.input.nextLine();
