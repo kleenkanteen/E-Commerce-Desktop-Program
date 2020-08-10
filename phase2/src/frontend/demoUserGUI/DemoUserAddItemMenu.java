@@ -33,7 +33,7 @@ public class DemoUserAddItemMenu implements Initializable {
      * Construct a new DemoUserAddItemMenu
      * @param demoUserManager DemoUserManager object
      */
-    DemoUserAddItemMenu(DemoUserManager demoUserManager) {
+    public DemoUserAddItemMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
