@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeRequestCannotConfirmGUI implements Initializable {
-    @FXML
-    private Label title;
+    @FXML private Label title;
     @FXML private Button button1;
     @FXML private Button button2;
     @FXML private Label messageContent;

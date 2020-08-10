@@ -33,7 +33,7 @@ public class DemoUserAddItemMenu implements Initializable {
      * Construct a new DemoUserAddItemMenu
      * @param demoUserManager DemoUserManager object
      */
-    DemoUserAddItemMenu(DemoUserManager demoUserManager) {
+    public DemoUserAddItemMenu(DemoUserManager demoUserManager) {
         this.demoUserManager = demoUserManager;
     }
 
@@ -61,7 +61,7 @@ public class DemoUserAddItemMenu implements Initializable {
      */
     private void demoAddItem(){
         Item item = new Item(nameInput.getText(), "Demo", descriptionInput.getText());
-        demoUserManager.getUserInventory().add(item);
+        demoUserManager.addToInventory(item);
         errorMessage.setText(demoUserPresenter.demoaddingitem());
     }
 
