@@ -183,7 +183,7 @@ public class TradeMenuMainController implements Initializable {
         if (!suggestions.isEmpty()) {
             new PopUp(TradeMenu.SUGGEST + suggestions);
         }
-        MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager, allUsers);
+        MultiTradeItemMenu multiItemMenu = new MultiTradeItemMenu(userA, globalInventoryManager);
         switchScene(multiItemMenu);
         itemsToTradeA = new ArrayList<>(multiItemMenu.getItems());
     }

@@ -19,8 +19,6 @@ and SDK default should be set to (8 - Lambdas, type annotations etc.)
 Then, still in IntelliJ, go to File -> Project Structure -> Libraries  and add JavaFX by pointing to the lib folder of
 the JavaFX SDK you just unzipped.
 
-(need video)
-
 ** Extended Feature List from Phase 1 **
 - Admin undo unstarted trades
 - Suggest trade items
@@ -107,10 +105,25 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
 	[4] Changes the max number of incomplete trades
 	[5] Return to user selection
 	[6] Return to main menu
+[4] Undo the on-going Trade of Users: searching functionality allows you to target on one specific User and open a
+    window with all on-going Trades of that User, and then Undo the Trade that cannot processed successfully.
+    First enter the UserName of a specific User, and then undo the on-going Trade of that User
 
-[4] Logout
+[5] Logout
 
 ** Usage (and Arguments) of Design Patterns **
+---------Strategy Method---------
+Class: MessageResponseFactory, all the classes that implements MessageResponse (inside frontend/messageReplyGUI
+The strategy is how to response to the a type of message
+
+
+MessageBuilder, which is not a builder or factory. The reason we did so is to encapsulate the message constructors, but
+due to the different parameters, it could not be made into a factory.
+
+---------Dependency Injection---------
+Classes: UserManager, Message
+Injecting the constructor of the Message from the UserManager
+
 
 ** Assumptions and Extensions in Mind **
 
