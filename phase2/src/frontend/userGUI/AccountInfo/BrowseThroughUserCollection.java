@@ -54,7 +54,7 @@ public class BrowseThroughUserCollection implements Initializable {
     @FXML private ListView<Item> itemList;
     @FXML private ListView<Trade> tradeList;
 
-    private final String tradeMenuFXML = "/frontend/tradeGUI/TradeMenu.fxml";
+    // file paths
     private final String multiMenuFXML = "/frontend/globalInventoryGUI/MultiItemMenu.fxml";
 
     /**
@@ -170,7 +170,7 @@ public class BrowseThroughUserCollection implements Initializable {
         // set up for UNCONFIRMED TRADES
         else {
             // set up text
-            this.unconfirmedTradesPrompt.setText(this.userPresenter.checkUnconfirmedTradesPrompt());
+            this.unconfirmedTradesPrompt.setText(this.userPresenter.promptUserToConfirmTrades());
             this.confirm.setText(this.userPresenter.confirmMeetingPrompt());
             this.deny.setText(this.userPresenter.denyMeetingPrompt());
 
@@ -209,6 +209,7 @@ public class BrowseThroughUserCollection implements Initializable {
                     break;
             }
             this.itemList.getItems().remove(this.selectedItem);
+            this.systemMessage.setText(this.userPresenter.itemRemoved());
 
             // round about fix for bug where last item would not be selected
             if(this.itemList.getItems().size() == 1) {
@@ -331,7 +332,7 @@ public class BrowseThroughUserCollection implements Initializable {
                 }
             }
             catch(IOException ex) {
-                this.systemMessage.setText("Input error while try to send trade request!");
+                this.systemMessage.setText(this.userPresenter.ioErrorMessage());
             }
             catch(UserFrozenException ex) {
                 this.systemMessage.setText(this.userPresenter.userAccountFrozen());

@@ -5,14 +5,6 @@ import entities.Trade;
 public class UserPresenter {
 
     /**
-     * If an account is frozen, print the message that a freeze request has been sent.
-     * @return freeze request sent
-     */
-    public String requestFreezeOfUser() {
-        return "A request for your account to be frozen has been sent.\n";
-    }
-
-    /**
      * Print user is frozen message.
      * @return you are frozen!
      */
@@ -81,7 +73,7 @@ public class UserPresenter {
      * @return send a private message
      */
     public String userMenuPromptPrivateMessage() {
-        return "Send a private message to another user";
+        return "Send a private message to a user";
     }
 
     /**
@@ -107,12 +99,6 @@ public class UserPresenter {
     }
 
     /**
-     * Input error prompt.
-     * @return input error
-     */
-    public String inputError() { return "Input not understood, please try again.\n"; }
-
-    /**
      * Prompt for setting a new password.
      * @return password prompt
      */
@@ -127,14 +113,6 @@ public class UserPresenter {
     public String setNewPasswordPromptSecundus() {
         return "Reenter your new password";
     }
-
-    /**
-     * Print this user's trade partner for get frequent trade partners.
-     * @param tradePartner String username of trade partner
-     * @return trade partner + " "
-     */
-    public String printUserTradePartners(String tradePartner) { return tradePartner + " "; }
-
 
     /**
      * Remove button
@@ -159,22 +137,6 @@ public class UserPresenter {
      */
     public String wishlistPromptTradeOffer() {
         return "Send a trade offer";
-    }
-
-    /**
-     * Reached end of user inventory.
-     * @return end of inventory
-     */
-    public String endOfUserInventory() {
-        return "Reached end of inventory.";
-    }
-
-    /**
-     * Reached end of user wishlist.
-     * @return end of wishlist
-     */
-    public String endOfUserWishlist() {
-        return "Reached the end of your wishlist.";
     }
 
     /**
@@ -284,25 +246,6 @@ public class UserPresenter {
     }
 
     /**
-     * Prompt for confirmation of trade request sending
-     * @param username the username of the other person invovled in the trade request
-     * @return trade request sent to user
-     */
-    public String tradeRequestSent(String username) {
-        return "Trade request sent to user " + username + "!\n";
-    }
-
-    /**
-     * Print the trade toString.
-     * @param trade the trade object to print the toString of
-     * @return trade toString
-     */
-    public String tradeToString(Trade trade) {
-        return trade.toString() + "\n";
-    }
-
-
-    /**
      * Unconfirmed prompt
      * @return can you confirm that meeting happened
      */
@@ -332,29 +275,6 @@ public class UserPresenter {
      */
     public String unconfirmedMeetingAllDone() {
         return "All unconfirmed trades addressed. You can exit now.";
-    }
-
-    /**
-     * Prompt for a successful operation in confirming incomplete user trades
-     * @param response 0 if the trade was confirmed, any other int if the trade was marked as a failure
-     * @return the system response
-     */
-    public String unconfirmedTradeSystemResponse(int response) {
-        if(response == 0) {
-            return "Trade confirmed.\n";
-        }
-        else {
-            return "Trade marked as failed.\n";
-        }
-    }
-
-    /**
-     * Return the toString of an item
-     * @param item the Item object to be printed
-     * @return the item toString
-     */
-    public String itemToString(String item) {
-        return item + "\n";
     }
 
     /**
@@ -395,15 +315,6 @@ public class UserPresenter {
      */
     public String itemNotInOtherUsersWishlist() {
         return "None of your items exists in another user's wishlist. :(\n";
-    }
-
-
-    /**
-     * Reached end of trades
-     * @return end of trades
-     */
-    public String userTradeHistoryEndOfIndex() {
-        return "Reached end of user trades";
     }
 
     /**
@@ -519,18 +430,22 @@ public class UserPresenter {
     }
 
     /**
-     * Cancel trade offer creation
-     * @return String cancel
-     */
-    public String tradeOfferCreationCancelled() {
-        return "Trade offer creation cancelled.";
-    }
-
-    /**
      * Valid entry prompt
      * @return String valid entry
      */
     public String selectValidObject() {
         return "Please select a valid entry.";
+    }
+
+    /**
+     * Inform user that an IOException has occurred
+     * @return IOException occurred
+     */
+    public String ioErrorMessage() {
+        return "IOException occurred!";
+    }
+
+    public String newItemMenuInputErrorPrompt() {
+        return "Please fill out both the name and description inputs.";
     }
 }
