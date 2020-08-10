@@ -60,6 +60,7 @@ public class TradeUndoController implements Initializable {
 
         window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 
+
         window.setScene(scene);
 
 

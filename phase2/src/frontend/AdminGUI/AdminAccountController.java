@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import use_cases.AdminManager;
 import use_cases.UserManager;
 
@@ -74,6 +75,7 @@ public class AdminAccountController implements Initializable {
         window.setMinWidth(600);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewPasswordFXML));
         loader.setController(new AdminNewPasswordController(admin, adminManager, userManager));
+        window.initStyle(StageStyle.UNDECORATED);
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
 
@@ -91,6 +93,7 @@ public class AdminAccountController implements Initializable {
         window.setMinWidth(600);
         window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(NewAdminFXML));
+        window.initStyle(StageStyle.UNDECORATED);
 
         loader.setController(new AdminNewAdminController(admin, adminManager, userManager));
 
