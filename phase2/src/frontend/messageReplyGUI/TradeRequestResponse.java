@@ -25,8 +25,8 @@ public class TradeRequestResponse implements MessageResponse {
     private GlobalInventoryManager globalInventoryManager;
     private String accountUsername;
 
-    private final String TradeRequestCannotConfirmFilepath = "TradeRequestCannotConfirm.fxml";
-    private final String TradeRequestEditFilepath = "TradeRequestEdit.fxml";
+    private final String tradeRequestCannotConfirmFilepath = "TradeRequestCannotConfirm.fxml";
+    private final String tradeRequestEditFilepath = "TradeRequestEdit.fxml";
 
     /**
      * Class constructor.
@@ -152,13 +152,13 @@ public class TradeRequestResponse implements MessageResponse {
 
     private void tradeRequestEdit(){
         //Creating the tradeRequestEdit UI
-        setNewWindow(TradeRequestEditFilepath,
+        setNewWindow(tradeRequestEditFilepath,
                 new TradeRequestEditGUI(tradeRequestManager, userManager, messageList, accountUsername));
     }
 
     private void tradeRequestCannotConfirm(){
         //Creating the tradeRequestCannotConfirm UI
-        setNewWindow(TradeRequestCannotConfirmFilepath,
+        setNewWindow(tradeRequestCannotConfirmFilepath,
                 new TradeRequestCannotConfirmGUI(tradeRequestManager, userManager, messageList));
     }
 

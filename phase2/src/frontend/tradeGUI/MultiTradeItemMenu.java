@@ -22,18 +22,13 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MultiTradeItemMenu implements Initializable {
-    private GlobalInventoryMenuPresenter globalInventoryMenuPresenter= new GlobalInventoryMenuPresenter();
+    private GlobalInventoryMenuPresenter globalInventoryMenuPresenter = new GlobalInventoryMenuPresenter();
     private String user;
     private GlobalInventoryManager globalInventoryManager;
     private ObservableList<Item> selectedItems = FXCollections.observableArrayList();
     private ObservableList<Item> userItems = FXCollections.observableArrayList();
 
-    public MultiTradeItemMenu(String user, GlobalInventoryManager globalInventoryManager) {
-        this.user = user;
-        this.globalInventoryManager = globalInventoryManager;
-    }
-
-    @FXML TableView<Item> userItem;
+    @FXML private TableView<Item> userItem;
     @FXML private TableColumn<Item, String> itemName;
     @FXML private TableColumn<Item,String> itemOwner;
     @FXML private TableColumn<Item, String> itemDescription;
@@ -51,7 +46,10 @@ public class MultiTradeItemMenu implements Initializable {
     @FXML private Label tradingItemLabel;
     @FXML private Button exit;
 
-
+    public MultiTradeItemMenu(String user, GlobalInventoryManager globalInventoryManager) {
+        this.user = user;
+        this.globalInventoryManager = globalInventoryManager;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -135,7 +133,7 @@ public class MultiTradeItemMenu implements Initializable {
     }
 
     @FXML
-    public void exit(ActionEvent event) {
+    private void exit(ActionEvent event) {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.close();
     }

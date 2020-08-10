@@ -22,7 +22,7 @@ public class PrivateMessageResponse implements  MessageResponse{
     private AdminManager adminManager;
     private String accountName;
 
-    private final String ReportCreationFilepath = "MakeReport.fxml";
+    private final String reportCreationFilepath = "MakeReport.fxml";
 
     /**
      * Class constructor.
@@ -64,7 +64,7 @@ public class PrivateMessageResponse implements  MessageResponse{
             //Create the reporting UI
             try {
                 Stage window = new Stage();
-                FXMLLoader reportLoader = new FXMLLoader(getClass().getResource(ReportCreationFilepath));
+                FXMLLoader reportLoader = new FXMLLoader(getClass().getResource(reportCreationFilepath));
                 reportLoader.setController(new MakeReportGUI(message, adminManager, accountName));
                 Parent root = reportLoader.load();
 

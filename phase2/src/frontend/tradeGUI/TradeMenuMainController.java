@@ -1,7 +1,6 @@
 package frontend.tradeGUI;
 
 import entities.Item;
-
 import exceptions.IncompleteTradeException;
 import frontend.popUp.PopUp;
 import javafx.event.ActionEvent;
@@ -28,7 +27,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class TradeMenuMainController implements Initializable {
-    private GlobalInventoryManager globalInventoryManager = null;
+    private GlobalInventoryManager globalInventoryManager;
     private UserManager allUsers;
     private String userA;
     private List<Item> itemsToTradeB;
