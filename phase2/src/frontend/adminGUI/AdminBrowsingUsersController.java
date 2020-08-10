@@ -31,6 +31,7 @@ public class AdminBrowsingUsersController implements Initializable {
     @FXML private Label mainLabel;
     @FXML private Label userLabel;
     @FXML private Label allLabel;
+    @FXML private Label usernameLabel;
 
     private UserManager users;
     private AdminBrowsingUsersPresenter browse;
@@ -74,6 +75,7 @@ public class AdminBrowsingUsersController implements Initializable {
         exitButton.setText(browse.exitText());
         undoButton.setText(browse.undoText());
         allLabel.setText(browse.thresholdText());
+        usernameLabel.setText(browse.enterUsername());
 
         allLimit = true;
         allLabel.setVisible(true);
@@ -92,6 +94,7 @@ public class AdminBrowsingUsersController implements Initializable {
         incompleteButton.setOnAction(e -> incompleteLimit());
         optionButton.setOnAction(e -> optionInput());
         allLabel.setAlignment(Pos.CENTER);
+        usernameLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
