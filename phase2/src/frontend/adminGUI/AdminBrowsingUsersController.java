@@ -3,10 +3,12 @@ package frontend.adminGUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import use_cases.UserManager;
 
@@ -27,6 +29,7 @@ public class AdminBrowsingUsersController implements Initializable {
     @FXML private Button optionButton;
     @FXML private Label mainLabel;
     @FXML private Label userLabel;
+    @FXML private Label allLabel;
 
     private UserManager users;
     private AdminBrowsingUsersPresenter browse;
@@ -34,7 +37,7 @@ public class AdminBrowsingUsersController implements Initializable {
     private boolean lendingLimit = false;
     private boolean weeklyLimit = false;
     private boolean incompleteLimit = false;
-
+    private boolean allLimit;
 
     /**
      * Construct an instance, takes in an usermanager object, creates a AdminBrowsingUsersPresenter.
@@ -56,16 +59,12 @@ public class AdminBrowsingUsersController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        lendingButton.setVisible(false);
+        allLimit = true;
+        allLabel.setVisible(true);
         freezeButton.setVisible(false);
-        weeklyButton.setVisible(false);
-        incompleteButton.setVisible(false);
-        optionButton.setVisible(false);
-        optionText.setVisible(false);
         banButton.setVisible(false);
         userLabel.setVisible(false);
-        mainLabel.setVisible(false);
-
+        mainLabel.setText("");
         exitButton.setOnAction(this::exit);
         lendingButton.setOnAction(this::lending);
         freezeButton.setOnAction(this::freeze);
@@ -80,22 +79,22 @@ public class AdminBrowsingUsersController implements Initializable {
     private void search(ActionEvent actionEvent) {
         String input = usernameText.getText();
         if (users.isValidUser(input)) {
+            allLimit = false;
             user = input;
+            allLabel.setVisible(false);
             lendingButton.setVisible(true);
             freezeButton.setVisible(true);
             weeklyButton.setVisible(true);
             incompleteButton.setVisible(true);
-            optionButton.setVisible(true);
-            optionText.setVisible(true);
             banButton.setVisible(true);
             userLabel.setText(users.getUserInfo(user));
             userLabel.setVisible(true);
             mainLabel.setText(browse.optionPrompt());
-            mainLabel.setVisible(true);
         } else {
             mainLabel.setText(browse.invalidName());
-            mainLabel.setVisible(true);
         }
+        mainLabel.setAlignment(Pos.CENTER);
+
     }
 
 
@@ -103,12 +102,14 @@ public class AdminBrowsingUsersController implements Initializable {
     private void incompleteLimit(ActionEvent actionEvent) {
         mainLabel.setText(browse.enterValuePrompt());
         incompleteLimit = true;
+        mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
     private void weeklyLimit(ActionEvent actionEvent) {
         mainLabel.setText(browse.enterValuePrompt());
         weeklyLimit = true;
+        mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
@@ -120,6 +121,7 @@ public class AdminBrowsingUsersController implements Initializable {
         }
         mainLabel.setText(browse.banStateChangeSuccess());
         userLabel.setText(users.getUserInfo(user));
+        mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
@@ -131,12 +133,14 @@ public class AdminBrowsingUsersController implements Initializable {
         }
         mainLabel.setText(browse.freezeStateChangeSuccess());
         userLabel.setText(users.getUserInfo(user));
+        mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
     private void lending(ActionEvent actionEvent) {
         mainLabel.setText(browse.enterValuePrompt());
         lendingLimit = true;
+        mainLabel.setAlignment(Pos.CENTER);
     }
 
     @FXML
@@ -144,7 +148,20 @@ public class AdminBrowsingUsersController implements Initializable {
 
         String limit = optionText.getText();
         if (limit.matches("\\d+")) {
-            if (weeklyLimit) {
+            if (allLimit && weeklyLimit) {
+                users.setWeeklyTrades(Integer.parseInt(limit));
+                mainLabel.setText(browse.weeklyLimitChangeSuccess());
+            }
+            else if (allLimit && incompleteLimit) {
+                users.setLimitOfIncompleteTrades(Integer.parseInt(limit));
+                mainLabel.setText(browse.incompleteLimitChangeSuccess());
+            }
+            else if (allLimit && lendingLimit) {
+                users.setNewThreshold(Integer.parseInt(limit));
+                mainLabel.setText(browse.incompleteLimitChangeSuccess());
+                mainLabel.setText(browse.thresholdChangeSuccess());
+            }
+            else if (weeklyLimit) {
                 users.setWeeklyTradesForOneUser(user, Integer.parseInt(limit));
                 mainLabel.setText(browse.weeklyLimitChangeSuccess());
                 incompleteLimit = false;
@@ -162,6 +179,7 @@ public class AdminBrowsingUsersController implements Initializable {
             }
         }
         else { mainLabel.setText(browse.wrongFormat());}
+        mainLabel.setAlignment(Pos.CENTER);
     }
         @FXML
         private void exit (ActionEvent actionEvent){

@@ -6,7 +6,7 @@ public class AdminBrowsingUsersPresenter {
      * @return the string
      */
     public String optionPrompt(){
-        return "     Choose your option below";
+        return "Choose your option below";
     }
 
     /**
@@ -14,7 +14,7 @@ public class AdminBrowsingUsersPresenter {
      * @return the string
      */
     public String invalidName(){
-        return "     Invalid username, try again";
+        return "Invalid username, try again";
     }
 
     /**
@@ -69,9 +69,6 @@ public class AdminBrowsingUsersPresenter {
      * Returns a string telling the user they entered the wrong format
      * @return the string
      */
-    public String wrongFormat(){
-        return "     Enter only numbers";
-    }
-
+    public String wrongFormat(){ return "Enter only numbers"; }
 
 }
