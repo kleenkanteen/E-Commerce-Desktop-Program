@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import use_cases.AdminManager;
 import use_cases.GlobalInventoryManager;
 import use_cases.TradeManager;
@@ -80,6 +81,7 @@ public class AdminController implements Initializable{
 
         loader.setController(new AdminMessageReplyGUI(adminManager,globalInventoryManager,
                 userManager, admin.getUsername()));
+        window.initStyle(StageStyle.UNDECORATED);
 
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
@@ -102,6 +104,7 @@ public class AdminController implements Initializable{
         window.setMinWidth(600);
         window.setMinHeight(400);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminAccountFXML));
+        window.initStyle(StageStyle.UNDECORATED);
         loader.setController(new AdminAccountController(admin, adminManager, userManager));
         Parent parent = loader.load();
         Scene scene = new Scene(parent);
@@ -122,6 +125,7 @@ public class AdminController implements Initializable{
         window.setTitle(adminGUIPresenter.adminBrowsingWindow());
         window.setMinHeight(400);
         window.setMinWidth(600);
+        window.initStyle(StageStyle.UNDECORATED);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(AdminBrowsing)
         );
 
@@ -143,6 +147,7 @@ public class AdminController implements Initializable{
         window.setTitle(adminGUIPresenter.adminTradeUndoSearchWindow());
         window.setMinWidth(600);
         window.setMinHeight(400);
+        window.initStyle(StageStyle.UNDECORATED);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(TradeUndoFXML));
 
         loader.setController(new TradeUndoController(tradeManager, userManager));
