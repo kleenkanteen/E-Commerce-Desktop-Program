@@ -2,15 +2,14 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class TradeRequest extends Request implements Serializable {
 
-    private String userA = ""; // username of user who initiate the trade request (borrower in one way trade)
-    private String userB = ""; // username of user who gets the trade request (lander in one way trade)
-    private List<Item> itemA = new ArrayList<>(); // userA's items
-    private List<Item> itemB = new ArrayList<>();  // userB's items
+    private String userA; // username of user who initiate the trade request (borrower in one way trade)
+    private String userB; // username of user who gets the trade request (lander in one way trade)
+    private List<Item> itemA ; // userA's items
+    private List<Item> itemB ;  // userB's items
     private boolean perm;
     private LocalDateTime date;
     private String place = "";
@@ -138,20 +137,6 @@ public class TradeRequest extends Request implements Serializable {
      */
     public void setNumberOfEditB(int numberOfEditB) {
         this.numberOfEditB = numberOfEditB;
-    }
-
-    /**
-     * Get the trading partner of the input user
-     * @param user a user
-     * @return the other user involved in the trade request
-     */
-    public String getTradePartner (String user){
-        if (user.equals(userA)){
-            return userB;
-        }
-        else{
-            return userA;
-        }
     }
 
 
