@@ -13,7 +13,7 @@ public class MainMenuPresenter {
      * @return String telling them that their information was corrupted and their data was cleared.
      */
     public String corruptedData() {
-        return "Info corrupted, data cleared.";
+        return "Because your was corrupted or manually removed, all data has been reset.";
     }
     /**
      * Text for "User Log In" if they press that Main Menu option to put on button.
