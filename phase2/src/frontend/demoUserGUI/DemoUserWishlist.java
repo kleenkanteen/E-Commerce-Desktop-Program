@@ -41,7 +41,6 @@ public class DemoUserWishlist implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        systemMessage.setWrapText(true);
         // set up exit button
         this.exit.setText(this.demoUserPresenter.menuPromptExit());
         this.exit.setOnAction(this::exit);
@@ -78,7 +77,7 @@ public class DemoUserWishlist implements Initializable {
 
     /**
      * exit demo user from their perosnal wish-list
-     * @param actionEvent
+     * @param actionEvent mouse click
      */
     private void exit(ActionEvent actionEvent) {
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
