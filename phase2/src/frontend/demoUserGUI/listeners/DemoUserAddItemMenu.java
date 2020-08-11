@@ -48,7 +48,7 @@ public class DemoUserAddItemMenu implements Initializable {
         namePrompt.setText(demoUserPresenter.enterItemName());
         descriptionPrompt.setText(demoUserPresenter.enterItemDescription());
         this.confirm.setText(demoUserPresenter.Confirm());
-        this.cancel.setText(demoUserPresenter.Cancel());
+        this.cancel.setText(demoUserPresenter.menuPromptExit());
 
         // set button function
         this.confirm.setOnAction(e -> demoAddItem());
