@@ -2,8 +2,8 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import entities.Item;
 
 public class PermTrade extends Trade implements Serializable {
 

@@ -3,7 +3,6 @@ package use_cases;
 import entities.*;
 import exceptions.*;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Map;
 import exceptions.InvalidUsernameException;
 
@@ -63,6 +62,14 @@ public class UserManager {
      */
     public void changePassword(String username, String newPassword) {
         this.allUsers.get(username).setPassword(newPassword);
+    }
+
+    /**
+     * Returns the hashmap of all users
+     * @return the hashmap of users
+     */
+    public Map<String, User> getUserData(){
+        return this.allUsers;
     }
 
     /**
@@ -182,15 +189,6 @@ public class UserManager {
     }
 
     /**
-     * Returns a user's unfrozen status
-     * @param username the user in question
-     * @return True if unfrozen, false if not
-     */
-    public boolean getUserUnfrozenStatus(String username) {
-        return this.allUsers.get(username).getIsUnfrozen();
-    }
-
-    /**
      * Returns whether or not this user is banned.
      * @param username the string username in question
      * @return True if banned, false if not
@@ -304,9 +302,5 @@ public class UserManager {
      */
     public void setNewThresholdForOneUser(String username, int newThreshold) {
         this.allUsers.get(username).setThreshold(newThreshold);
-    }
-
-    public Map<String, User> getUserData(){
-        return allUsers;
     }
 }

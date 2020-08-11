@@ -5,7 +5,6 @@ import entities.Item;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class GlobalWishlistManager implements Serializable {
 

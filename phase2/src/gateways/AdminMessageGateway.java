@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminMessageGateway {
-   List<Message> messages;
+   private List<Message> messages;
 
     /**
      * Creates a new gateway that loads in the Arraylist of Message objects in a .ser file

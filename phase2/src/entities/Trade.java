@@ -2,7 +2,6 @@ package entities;// Written by Thanusun
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Trade implements Serializable {

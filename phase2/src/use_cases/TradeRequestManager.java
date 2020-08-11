@@ -11,10 +11,10 @@ public class TradeRequestManager {
 
     /**
      * a constructor for TradeRequestManager to edit the traderequet object
-     * @param t the traderequest that is been edit
+     * @param tradeRequest the traderequest that is been edit
      */
-    public TradeRequestManager(TradeRequest t) {
-        this.tradeRequest = t;
+    public TradeRequestManager(TradeRequest tradeRequest) {
+        this.tradeRequest = tradeRequest;
     }
 
     /**
