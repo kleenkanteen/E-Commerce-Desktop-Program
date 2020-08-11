@@ -4,13 +4,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="frontend.mainMenuGUI.listeners.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frontend.mainMenuGUI.listeners.MainMenuController">
     <children>
         <VBox alignment="CENTER" layoutX="171.0" layoutY="14.0" prefHeight="319.0" prefWidth="258.0" spacing="15.0">
             <children>
-                 <Label fx:id="errorMessage" prefHeight="42.0" prefWidth="221.0" wrapText="true" stylesheets="/frontend/styling/coolbutton.css" />
+                 <Label fx:id="errorMessage" prefHeight="42.0" prefWidth="256.0" stylesheets="/frontend/styling/coolbutton.css" textAlignment="CENTER" wrapText="true" />
                 <Button fx:id="userLoginButton" mnemonicParsing="false" onAction="#userLoginButtonPressed" stylesheets="/frontend/styling/coolbutton.css" />
                 <Button fx:id="userSignUpButton" mnemonicParsing="false" onAction="#userSignUpButtonPressed" stylesheets="/frontend/styling/coolbutton.css" />
                 <Button fx:id="adminLoginButton" mnemonicParsing="false" onAction="#adminLoginButtonPressed" stylesheets="/frontend/styling/coolbutton.css" />
