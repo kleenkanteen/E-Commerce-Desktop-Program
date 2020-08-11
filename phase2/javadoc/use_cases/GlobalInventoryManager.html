@@ -48,11 +48,11 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../use_cases/DemoUserManager.html" title="class in use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../use_cases/GlobalWishlistManager.html" title="class in use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/DemoUserManager.html" title="class in p2_use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/GlobalWishlistManager.html" title="class in p2_use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?use_cases/GlobalInventoryManager.html" target="_top">Frames</a></li>
+<li><a href="../index.html?p2_use_cases/GlobalInventoryManager.html" target="_top">Frames</a></li>
 <li><a href="GlobalInventoryManager.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">use_cases</div>
+<div class="subTitle">p2_use_cases</div>
 <h2 title="Class GlobalInventoryManager" class="title">Class GlobalInventoryManager</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>use_cases.GlobalInventoryManager</li>
+<li>p2_use_cases.GlobalInventoryManager</li>
 </ul>
 </li>
 </ul>
@@ -117,7 +117,7 @@ extends java.lang.Object
 implements java.io.Serializable</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../serialized-form.html#use_cases.GlobalInventoryManager">Serialized Form</a></dd>
+<dd><a href="../serialized-form.html#p2_use_cases.GlobalInventoryManager">Serialized Form</a></dd>
 </dl>
 </li>
 </ul>
@@ -137,7 +137,7 @@ implements java.io.Serializable</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#GlobalInventoryManager-entities.GlobalInventory-">GlobalInventoryManager</a></span>(<a href="../entities/GlobalInventory.html" title="class in entities">GlobalInventory</a>&nbsp;globalInventory)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#GlobalInventoryManager-p1_entities.GlobalInventory-">GlobalInventoryManager</a></span>(<a href="../p1_entities/GlobalInventory.html" title="class in p1_entities">GlobalInventory</a>&nbsp;globalInventory)</code>
 <div class="block">construct the Use Case class to do some changes on globalinventory.</div>
 </td>
 </tr>
@@ -158,7 +158,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#addItemToHashMap-entities.Item-">addItemToHashMap</a></span>(<a href="../entities/Item.html" title="class in entities">Item</a>&nbsp;item)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#addItemToHashMap-p1_entities.Item-">addItemToHashMap</a></span>(<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&nbsp;item)</code>
 <div class="block">add the item to globalInventory with an unique Id generated automatically
  The ID generated will be assigned to the Item
  and then the that ItemID will be sent to IdCollection to record</div>
@@ -166,57 +166,57 @@ implements java.io.Serializable</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#contains-entities.Item-">contains</a></span>(<a href="../entities/Item.html" title="class in entities">Item</a>&nbsp;item)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#contains-p1_entities.Item-">contains</a></span>(<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&nbsp;item)</code>
 <div class="block">returns whether the global inventory contains an item</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#generatePage-int-">generatePage</a></span>(int&nbsp;pageNumber)</code>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#generatePage-int-">generatePage</a></span>(int&nbsp;pageNumber)</code>
 <div class="block">Generate an arraylist with at most 10 items sorted by key order</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#generatePageNumber--">generatePageNumber</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#generatePageNumber--">generatePageNumber</a></span>()</code>
 <div class="block">generate the page number of the last page in globalInventory</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../entities/GlobalInventory.html" title="class in entities">GlobalInventory</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#getGlobalInventoryData--">getGlobalInventoryData</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../p1_entities/GlobalInventory.html" title="class in p1_entities">GlobalInventory</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#getGlobalInventoryData--">getGlobalInventoryData</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../entities/Item.html" title="class in entities">Item</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#getItemFromGI-java.lang.String-">getItemFromGI</a></span>(java.lang.String&nbsp;itemID)</code>
+<td class="colFirst"><code><a href="../p1_entities/Item.html" title="class in p1_entities">Item</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#getItemFromGI-java.lang.String-">getItemFromGI</a></span>(java.lang.String&nbsp;itemID)</code>
 <div class="block">getter to get the Item from GlobalInventory with itemID.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#getItemsFromGI-java.util.ArrayList-">getItemsFromGI</a></span>(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;itemIDList)</code>&nbsp;</td>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#getItemsFromGI-java.util.ArrayList-">getItemsFromGI</a></span>(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;itemIDList)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#getPersonInventory-java.lang.String-">getPersonInventory</a></span>(java.lang.String&nbsp;ownerName)</code>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#getPersonInventory-java.lang.String-">getPersonInventory</a></span>(java.lang.String&nbsp;ownerName)</code>
 <div class="block">generate an arraylist of Item belongs to the specific owner</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#hasNoItem--">hasNoItem</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#hasNoItem--">hasNoItem</a></span>()</code>
 <div class="block">return if gI has no Item in it.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#removeItem-java.lang.String-">removeItem</a></span>(java.lang.String&nbsp;itemID)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#removeItem-java.lang.String-">removeItem</a></span>(java.lang.String&nbsp;itemID)</code>
 <div class="block">remove the item with specific itemID</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/GlobalInventoryManager.html#searchWithItemName-java.lang.String-">searchWithItemName</a></span>(java.lang.String&nbsp;itemName)</code>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/GlobalInventoryManager.html#searchWithItemName-java.lang.String-">searchWithItemName</a></span>(java.lang.String&nbsp;itemName)</code>
 <div class="block">generate an arraylist of Item which has itemName</div>
 </td>
 </tr>
@@ -242,13 +242,13 @@ implements java.io.Serializable</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="GlobalInventoryManager-entities.GlobalInventory-">
+<a name="GlobalInventoryManager-p1_entities.GlobalInventory-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>GlobalInventoryManager</h4>
-<pre>public&nbsp;GlobalInventoryManager(<a href="../entities/GlobalInventory.html" title="class in entities">GlobalInventory</a>&nbsp;globalInventory)</pre>
+<pre>public&nbsp;GlobalInventoryManager(<a href="../p1_entities/GlobalInventory.html" title="class in p1_entities">GlobalInventory</a>&nbsp;globalInventory)</pre>
 <div class="block">construct the Use Case class to do some changes on globalinventory.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -270,7 +270,7 @@ implements java.io.Serializable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getItemFromGI</h4>
-<pre>public&nbsp;<a href="../entities/Item.html" title="class in entities">Item</a>&nbsp;getItemFromGI(java.lang.String&nbsp;itemID)</pre>
+<pre>public&nbsp;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&nbsp;getItemFromGI(java.lang.String&nbsp;itemID)</pre>
 <div class="block">getter to get the Item from GlobalInventory with itemID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -286,16 +286,16 @@ implements java.io.Serializable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getItemsFromGI</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;&nbsp;getItemsFromGI(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;itemIDList)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;&nbsp;getItemsFromGI(java.util.ArrayList&lt;java.lang.String&gt;&nbsp;itemIDList)</pre>
 </li>
 </ul>
-<a name="addItemToHashMap-entities.Item-">
+<a name="addItemToHashMap-p1_entities.Item-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addItemToHashMap</h4>
-<pre>public&nbsp;void&nbsp;addItemToHashMap(<a href="../entities/Item.html" title="class in entities">Item</a>&nbsp;item)</pre>
+<pre>public&nbsp;void&nbsp;addItemToHashMap(<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&nbsp;item)</pre>
 <div class="block">add the item to globalInventory with an unique Id generated automatically
  The ID generated will be assigned to the Item
  and then the that ItemID will be sent to IdCollection to record</div>
@@ -325,7 +325,7 @@ implements java.io.Serializable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>generatePage</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;&nbsp;generatePage(int&nbsp;pageNumber)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;&nbsp;generatePage(int&nbsp;pageNumber)</pre>
 <div class="block">Generate an arraylist with at most 10 items sorted by key order</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -355,7 +355,7 @@ implements java.io.Serializable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>searchWithItemName</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;&nbsp;searchWithItemName(java.lang.String&nbsp;itemName)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;&nbsp;searchWithItemName(java.lang.String&nbsp;itemName)</pre>
 <div class="block">generate an arraylist of Item which has itemName</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -371,7 +371,7 @@ implements java.io.Serializable</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getPersonInventory</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Item.html" title="class in entities">Item</a>&gt;&nbsp;getPersonInventory(java.lang.String&nbsp;ownerName)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&gt;&nbsp;getPersonInventory(java.lang.String&nbsp;ownerName)</pre>
 <div class="block">generate an arraylist of Item belongs to the specific owner</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -381,13 +381,13 @@ implements java.io.Serializable</pre>
 </dl>
 </li>
 </ul>
-<a name="contains-entities.Item-">
+<a name="contains-p1_entities.Item-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>contains</h4>
-<pre>public&nbsp;boolean&nbsp;contains(<a href="../entities/Item.html" title="class in entities">Item</a>&nbsp;item)</pre>
+<pre>public&nbsp;boolean&nbsp;contains(<a href="../p1_entities/Item.html" title="class in p1_entities">Item</a>&nbsp;item)</pre>
 <div class="block">returns whether the global inventory contains an item</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -417,7 +417,7 @@ implements java.io.Serializable</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getGlobalInventoryData</h4>
-<pre>public&nbsp;<a href="../entities/GlobalInventory.html" title="class in entities">GlobalInventory</a>&nbsp;getGlobalInventoryData()</pre>
+<pre>public&nbsp;<a href="../p1_entities/GlobalInventory.html" title="class in p1_entities">GlobalInventory</a>&nbsp;getGlobalInventoryData()</pre>
 </li>
 </ul>
 </li>
@@ -447,11 +447,11 @@ implements java.io.Serializable</pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../use_cases/DemoUserManager.html" title="class in use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../use_cases/GlobalWishlistManager.html" title="class in use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/DemoUserManager.html" title="class in p2_use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/GlobalWishlistManager.html" title="class in p2_use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?use_cases/GlobalInventoryManager.html" target="_top">Frames</a></li>
+<li><a href="../index.html?p2_use_cases/GlobalInventoryManager.html" target="_top">Frames</a></li>
 <li><a href="GlobalInventoryManager.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">

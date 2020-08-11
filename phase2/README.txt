@@ -181,19 +181,16 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
 ---------Strategy Method---------
 
     Class: MessageResponseFactory, all the classes that implements MessageResponse
-    (inside frontend/messageReplyGUI). The strategy is how to response to the a type of message
+    (inside p3_frontend/messageReplyGUI). The strategy is how to response to the a type of message.
 
     MessageBuilder, which is not a builder or factory.
     The reason we did so is to encapsulate the message constructors, but
     due to the different parameters, it could not be made into a factory.
 
-    We did not use Factory design pattern because we didn't need the encapsulation
-    that it provided. In our code the function usually needed to know the type of object handled
-    because they had specific functions to call on them.
 
 ---------Dependency Injection---------
-Classes: UserManager, Message
-Injecting the constructor of the Message from the UserManager
+    Classes: UserManager, Message
+    Injecting the constructor of the Message from the UserManager
 
 
                                             ----------------------------

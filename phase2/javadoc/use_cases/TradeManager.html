@@ -48,11 +48,11 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../use_cases/MessageBuilder.html" title="class in use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../use_cases/TradeRequestManager.html" title="class in use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/MessageBuilder.html" title="class in p2_use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/TradeRequestManager.html" title="class in p2_use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?use_cases/TradeManager.html" target="_top">Frames</a></li>
+<li><a href="../index.html?p2_use_cases/TradeManager.html" target="_top">Frames</a></li>
 <li><a href="TradeManager.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_top">
@@ -91,7 +91,7 @@ var activeTableTab = "activeTableTab";
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">use_cases</div>
+<div class="subTitle">p2_use_cases</div>
 <h2 title="Class TradeManager" class="title">Class TradeManager</h2>
 </div>
 <div class="contentContainer">
@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>use_cases.TradeManager</li>
+<li>p2_use_cases.TradeManager</li>
 </ul>
 </li>
 </ul>
@@ -128,7 +128,7 @@ extends java.lang.Object</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#TradeManager-java.util.Map-">TradeManager</a></span>(java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&gt;&nbsp;tradeHistory)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#TradeManager-java.util.Map-">TradeManager</a></span>(java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&gt;&nbsp;tradeHistory)</code>
 <div class="block">Class constructor.</div>
 </td>
 </tr>
@@ -149,85 +149,85 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#addTrade-entities.Trade-">addTrade</a></span>(<a href="../entities/Trade.html" title="class in entities">Trade</a>&nbsp;trade)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#addTrade-p1_entities.Trade-">addTrade</a></span>(<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&nbsp;trade)</code>
 <div class="block">Adding a trade to the system</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getBorrowedTimes-java.lang.String-">getBorrowedTimes</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getBorrowedTimes-java.lang.String-">getBorrowedTimes</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Getter of the number of times a user has borrowed</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>java.lang.String[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getFrequentTradingPartners-java.lang.String-int-">getFrequentTradingPartners</a></span>(java.lang.String&nbsp;username,
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getFrequentTradingPartners-java.lang.String-int-">getFrequentTradingPartners</a></span>(java.lang.String&nbsp;username,
                           int&nbsp;n)</code>
 <div class="block">Getter of the usernames of the n most frequent trading partners of a user</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getIncompleteTimes-java.lang.String-">getIncompleteTimes</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getIncompleteTimes-java.lang.String-">getIncompleteTimes</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Return the number of incomplete trades that are in the user's trade history.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getLendTimes-java.lang.String-">getLendTimes</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getLendTimes-java.lang.String-">getLendTimes</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Getter of the number of times a user has lend</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../entities/Trade.html" title="class in entities">Trade</a>[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getRecentTrade-java.lang.String-int-">getRecentTrade</a></span>(java.lang.String&nbsp;username,
+<td class="colFirst"><code><a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getRecentTrade-java.lang.String-int-">getRecentTrade</a></span>(java.lang.String&nbsp;username,
               int&nbsp;n)</code>
 <div class="block">Getter of the n most recent trade from the trade history of a user.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getTradeData--">getTradeData</a></span>()</code>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getTradeData--">getTradeData</a></span>()</code>
 <div class="block">Getter of the data stored in thsi manager</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getTradeHistory-java.lang.String-">getTradeHistory</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getTradeHistory-java.lang.String-">getTradeHistory</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Getter of the trade history of a user.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#getUnstartTrades-java.lang.String-">getUnstartTrades</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#getUnstartTrades-java.lang.String-">getUnstartTrades</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Returns the list of all unstarted trades in a user's trade history
  Trade history is the list of trades that the user is involved in</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#numberOfTradesCreatedThisWeek-java.lang.String-">numberOfTradesCreatedThisWeek</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#numberOfTradesCreatedThisWeek-java.lang.String-">numberOfTradesCreatedThisWeek</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Returns the number of trades that are in the user's trade history that are created in this week.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#removeTrade-entities.Trade-">removeTrade</a></span>(<a href="../entities/Trade.html" title="class in entities">Trade</a>&nbsp;trade)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#removeTrade-p1_entities.Trade-">removeTrade</a></span>(<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&nbsp;trade)</code>
 <div class="block">Removing a trade from the system</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#setConfirm-java.lang.String-entities.Trade-boolean-">setConfirm</a></span>(java.lang.String&nbsp;username,
-          <a href="../entities/Trade.html" title="class in entities">Trade</a>&nbsp;trade,
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#setConfirm-java.lang.String-p1_entities.Trade-boolean-">setConfirm</a></span>(java.lang.String&nbsp;username,
+          <a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&nbsp;trade,
           boolean&nbsp;status)</code>
 <div class="block">Confirm a trades this user have in their trade history with a status they entered
  Trade history is the list of trades that the user is involved in</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../use_cases/TradeManager.html#tradesToConfirm-java.lang.String-">tradesToConfirm</a></span>(java.lang.String&nbsp;username)</code>
+<td class="colFirst"><code>java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../p2_use_cases/TradeManager.html#tradesToConfirm-java.lang.String-">tradesToConfirm</a></span>(java.lang.String&nbsp;username)</code>
 <div class="block">Getter for all the trades that are in the user's trade history that needs to be confirmed at this time.</div>
 </td>
 </tr>
@@ -259,7 +259,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TradeManager</h4>
-<pre>public&nbsp;TradeManager(java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&gt;&nbsp;tradeHistory)</pre>
+<pre>public&nbsp;TradeManager(java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&gt;&nbsp;tradeHistory)</pre>
 <div class="block">Class constructor.
  creates a TradeManager with a given HashMap of information on the trades in this system.</div>
 <dl>
@@ -282,7 +282,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getTradeHistory</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&nbsp;getTradeHistory(java.lang.String&nbsp;username)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&nbsp;getTradeHistory(java.lang.String&nbsp;username)</pre>
 <div class="block">Getter of the trade history of a user. Trade history is the list of trades that the user is involved in the order
  of recency</div>
 <dl>
@@ -299,7 +299,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getRecentTrade</h4>
-<pre>public&nbsp;<a href="../entities/Trade.html" title="class in entities">Trade</a>[]&nbsp;getRecentTrade(java.lang.String&nbsp;username,
+<pre>public&nbsp;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>[]&nbsp;getRecentTrade(java.lang.String&nbsp;username,
                               int&nbsp;n)</pre>
 <div class="block">Getter of the n most recent trade from the trade history of a user.
  Trade history is the list of trades that the user is involved in</div>
@@ -363,13 +363,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="addTrade-entities.Trade-">
+<a name="addTrade-p1_entities.Trade-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>addTrade</h4>
-<pre>public&nbsp;void&nbsp;addTrade(<a href="../entities/Trade.html" title="class in entities">Trade</a>&nbsp;trade)</pre>
+<pre>public&nbsp;void&nbsp;addTrade(<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&nbsp;trade)</pre>
 <div class="block">Adding a trade to the system</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -383,7 +383,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>tradesToConfirm</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&nbsp;tradesToConfirm(java.lang.String&nbsp;username)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&nbsp;tradesToConfirm(java.lang.String&nbsp;username)</pre>
 <div class="block">Getter for all the trades that are in the user's trade history that needs to be confirmed at this time.
  Trade history is the list of trades that the user is involved in</div>
 <dl>
@@ -428,14 +428,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="setConfirm-java.lang.String-entities.Trade-boolean-">
+<a name="setConfirm-java.lang.String-p1_entities.Trade-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setConfirm</h4>
 <pre>public&nbsp;void&nbsp;setConfirm(java.lang.String&nbsp;username,
-                       <a href="../entities/Trade.html" title="class in entities">Trade</a>&nbsp;trade,
+                       <a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&nbsp;trade,
                        boolean&nbsp;status)</pre>
 <div class="block">Confirm a trades this user have in their trade history with a status they entered
  Trade history is the list of trades that the user is involved in</div>
@@ -447,13 +447,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="removeTrade-entities.Trade-">
+<a name="removeTrade-p1_entities.Trade-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>removeTrade</h4>
-<pre>public&nbsp;void&nbsp;removeTrade(<a href="../entities/Trade.html" title="class in entities">Trade</a>&nbsp;trade)</pre>
+<pre>public&nbsp;void&nbsp;removeTrade(<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&nbsp;trade)</pre>
 <div class="block">Removing a trade from the system</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -467,7 +467,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getUnstartTrades</h4>
-<pre>public&nbsp;java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&nbsp;getUnstartTrades(java.lang.String&nbsp;username)</pre>
+<pre>public&nbsp;java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&nbsp;getUnstartTrades(java.lang.String&nbsp;username)</pre>
 <div class="block">Returns the list of all unstarted trades in a user's trade history
  Trade history is the list of trades that the user is involved in</div>
 <dl>
@@ -484,7 +484,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getTradeData</h4>
-<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../entities/Trade.html" title="class in entities">Trade</a>&gt;&gt;&nbsp;getTradeData()</pre>
+<pre>public&nbsp;java.util.Map&lt;java.lang.String,java.util.List&lt;<a href="../p1_entities/Trade.html" title="class in p1_entities">Trade</a>&gt;&gt;&nbsp;getTradeData()</pre>
 <div class="block">Getter of the data stored in thsi manager</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -519,11 +519,11 @@ extends java.lang.Object</pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../use_cases/MessageBuilder.html" title="class in use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../use_cases/TradeRequestManager.html" title="class in use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/MessageBuilder.html" title="class in p2_use_cases"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../p2_use_cases/TradeRequestManager.html" title="class in p2_use_cases"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
-<li><a href="../index.html?use_cases/TradeManager.html" target="_top">Frames</a></li>
+<li><a href="../index.html?p2_use_cases/TradeManager.html" target="_top">Frames</a></li>
 <li><a href="TradeManager.html" target="_top">No&nbsp;Frames</a></li>
 </ul>
 <ul class="navList" id="allclasses_navbar_bottom">
