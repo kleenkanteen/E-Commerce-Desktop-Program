@@ -121,8 +121,8 @@ public class MainMenuController implements Initializable {
     // code for method closeButtonIsPushed is similar to: https://www.youtube.com/watch?v=i4Fk10U7Sks
     @FXML
     private void closeButtonIsPushed(ActionEvent actionEvent) {
-        Stage s = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
-        s.close();
+        Stage stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        stage.close();
         serialize();
     }
 
