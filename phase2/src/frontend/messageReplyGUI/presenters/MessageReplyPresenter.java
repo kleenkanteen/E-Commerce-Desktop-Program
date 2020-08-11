@@ -34,7 +34,7 @@ public class MessageReplyPresenter {
 
     /**
      * Return the unqiue options they have to a system message
-     * @return the unqiue options in string
+     * @return the unique options in string
      */
     public String[] systemMessageAction(){
         String[] s = new String[1];

@@ -19,6 +19,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import use_cases.GlobalInventoryManager;
 import use_cases.GlobalWishlistManager;
 import use_cases.UserManager;
@@ -203,7 +204,7 @@ public class MultiItemMenu implements Initializable {
         loader.setController(new TradeMenuMainController(globalInventoryManager, globalWishlistManager, userManager, items, user));// call tradeParent root = loader.load();
         Scene newScene= new Scene(loader.load());
         Stage window = new Stage();
-        window.initModality(Modality.APPLICATION_MODAL);
+        window.initStyle(StageStyle.UNDECORATED);
         window.setScene(newScene);
         window.showAndWait();
         ((Stage)((Node) e.getSource()).getScene().getWindow()).close();
