@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -77,6 +78,7 @@ public class TradeMenuMainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // setting up text for GUI.
         titleScreen.setText(TradeMenu.TRADE);
+        titleScreen.setAlignment(Pos.CENTER);
         typesOfTrade.setText(TradeMenu.TRADETYPE);
         temporary.setText(TradeMenu.TEMP);
         permanent.setText(TradeMenu.PERM);
