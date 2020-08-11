@@ -5,7 +5,9 @@ Accessing index.html will allow you to view the javadocs for the whole program.
 
 The UML is available in the UML folder.
 
-Should there be no .ser files under phase1/H_ser_file_infos, running class Main.java under phase1/src/
+Open phase 1 as project to run the program.
+
+Should there be no .ser files under H_ser_file_infos, running class Main.java under src/
 will generate new .ser files. Should an input exception occur while reading these .ser files,
 deleting them and running Main.java once more will generate fresh and (hopefully) error free .ser files.
 
