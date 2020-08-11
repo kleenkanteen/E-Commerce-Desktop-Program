@@ -13,8 +13,6 @@ public class GlobalInventoryManager implements Serializable {
     // gI is the GlobalInventory we want to modify.
     private GlobalInventory globalInventory;
 
-
-
     /**
      * construct the Use Case class to do some changes on globalinventory.
      *
