@@ -20,7 +20,12 @@ public class TempTrade extends Trade implements Serializable {
      * @param startDate is a LocalDateTime that follows a specific date format.
      * @param finishDate is a LocalDateTime that indicates the end of a temporary trade.
      */
-    public TempTrade(String traderA, String traderB, List<Item> userAItemsToTrade, List<Item> userBItemsToTrade, LocalDateTime startDate, LocalDateTime finishDate) {
+    public TempTrade(String traderA,
+                     String traderB,
+                     List<Item> userAItemsToTrade,
+                     List<Item> userBItemsToTrade,
+                     LocalDateTime startDate,
+                     LocalDateTime finishDate) {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, startDate);
         this.finishDate = finishDate;
     }
