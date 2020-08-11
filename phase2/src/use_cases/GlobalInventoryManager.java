@@ -14,8 +14,6 @@ public class GlobalInventoryManager implements Serializable {
     private GlobalInventory globalInventory;
 
 
-
-
     /**
      * construct the Use Case class to do some changes on globalinventory.
      *
@@ -37,10 +35,6 @@ public class GlobalInventoryManager implements Serializable {
     }
 
 
-
-
-
-
     public List<Item> getItemsFromGI(ArrayList<String> itemIDList){
         List<Item> newList = new ArrayList<>();
         if (itemIDList.size() == 0){
@@ -51,8 +45,6 @@ public class GlobalInventoryManager implements Serializable {
         }
         return newList;
     }
-
-
 
 
     private String IdGenerator() {
@@ -78,11 +70,9 @@ public class GlobalInventoryManager implements Serializable {
     public void addItemToHashMap(Item item) {
 
         if (!item.hasID()) {
-
             globalInventory.addItem(item.getItemID(), item);
-
-
-        } else {
+        }
+        else {
 
             String itemID = IdGenerator();
 
