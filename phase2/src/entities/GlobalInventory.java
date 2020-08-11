@@ -17,6 +17,7 @@ public class GlobalInventory implements Serializable {
      * and an empty ArrayList.
      */
 
+
     public GlobalInventory(){
         removedItems = new ArrayList<>();
         itemMap = new HashMap<>();
