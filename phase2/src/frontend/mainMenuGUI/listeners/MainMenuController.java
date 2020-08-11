@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,7 +44,6 @@ public class MainMenuController implements Initializable {
     private final String globalWishlistFilePath = "data/serializedGlobalWishlist.ser";
     private final String tradeFilePath = "data/serializedUserTrades.ser";
     private final String dataFolderPath = "data/";
-
     private AdminAccountGateways adminAccountGateways;
     private UserGateway userGateway;
     private GlobalInventoryGateways globalInventoryGateways;
@@ -138,6 +138,7 @@ public class MainMenuController implements Initializable {
         adminLoginButton.setText(mainMenuPresenter.adminLoginOption());
         demoLoginButton.setText(mainMenuPresenter.demoLoginOption());
         exitButton.setText(mainMenuPresenter.exitOption());
+        errorMessage.setAlignment(Pos.CENTER);;
 
         deserialize();
         serialize();
