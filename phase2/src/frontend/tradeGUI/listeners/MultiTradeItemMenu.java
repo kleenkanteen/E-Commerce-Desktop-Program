@@ -47,11 +47,23 @@ public class MultiTradeItemMenu implements Initializable {
     @FXML private Label tradingItemLabel;
     @FXML private Button exit;
 
+    /**
+     * A constructor that is used to allow the given user to select whatever items
+     * userB has. Note: globalInventoryManager allows access to userB's inventory; therefore,
+     * this variable should not be empty.
+     * @param user is a String that represents the current trading user.
+     * @param globalInventoryManager is a GlobalInventoryManager that contains all inventory information.
+     */
     public MultiTradeItemMenu(String user, GlobalInventoryManager globalInventoryManager) {
         this.user = user;
         this.globalInventoryManager = globalInventoryManager;
     }
 
+    /**
+     * Called to initialize a controller after its root element has been completely processed. (Java doc from Initializable)
+     * @param location The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resources The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         userItemLabel.setText(TradeMenu.inventoryPrompt(user));
@@ -87,14 +99,18 @@ public class MultiTradeItemMenu implements Initializable {
 
 
     private void loadData(){
-        List<Item> useritemlist =  globalInventoryManager.getPersonInventory(user);
-        userItems.addAll(useritemlist);
+        List<Item> userItemList =  globalInventoryManager.getPersonInventory(user);
+        userItems.addAll(userItemList);
     }
 
     private ObservableList<Item> getItem(){
         return selectedItems;
     }
 
+    /**
+     * A getter to return the items that were selected by the user.
+     * @return an ArrayList of items the user selected.
+     */
     public List<Item> getItems(){
         return new ArrayList<>(getItem());
     }
