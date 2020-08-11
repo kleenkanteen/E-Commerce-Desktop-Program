@@ -41,7 +41,7 @@ public class UseCaseBuilder {
     }
     /**
      * builds the GlobalWishlistManager use case
-     * @param globalWishlist
+     * @param globalWishlist list of all items in the global wishlist
      * @return GlobalWishlistManager use case
      */
     public GlobalWishlistManager getGlobalWishlistManager(GlobalWishlist globalWishlist){
