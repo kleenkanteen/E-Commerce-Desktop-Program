@@ -41,17 +41,4 @@ public class DemoUser extends Account {
      */
     public void addWishlist(Item item) { this.personalWishlist.add(item); }
 
-
-    /**
-     * Remove an item from inventory
-     * @param item the item to be removed
-     */
-    public void removePersonalInventory(Item item) { this.personalInventory.remove(item); }
-
-    /**
-     * Remove an item from the wishlist
-     * @param item the item to be removed
-     */
-    public void removeWishlist(Item item) { this.personalWishlist.remove(item); }
-
 }
