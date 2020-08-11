@@ -1,4 +1,4 @@
-import p3_frontend.mainMenuGUI.presenters.MainMenuPresenter;
+import frontend.mainMenuGUI.presenters.MainMenuPresenter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 public class StartScreen extends Application {
 
     private MainMenuPresenter mainMenuPresenter = new MainMenuPresenter();
-    private final String mainMenuFXMLFile = "/p3_frontend/mainMenuGUI/fxml_files/MainMenu.fxml";
+    private final String mainMenuFXMLFile = "/frontend/mainMenuGUI/fxml_files/MainMenu.fxml";
 
     /**
      *
