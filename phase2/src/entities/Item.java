@@ -9,9 +9,6 @@ public class Item implements Serializable {
     private final String name;
     private String ownerName;
 
-
-
-
     /**
      * constructor to create a new Item
      * @param description is the String that the user sets to describe the Item condition
@@ -25,17 +22,6 @@ public class Item implements Serializable {
         this.description = description;
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * set the new ownerName to the items that have been traded

@@ -7,7 +7,6 @@ import java.io.*;
 
 public class GlobalInventoryGateways implements Serializable{
     private String filePath;
-    private GlobalInventoryManager gIManager;
     private GlobalInventory globalInventory;
 
     /**
@@ -30,7 +29,6 @@ public class GlobalInventoryGateways implements Serializable{
             globalInventory = new GlobalInventory();
 
         }
-        gIManager = new GlobalInventoryManager(globalInventory);
     }
 
     /**

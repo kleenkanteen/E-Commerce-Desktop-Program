@@ -39,15 +39,15 @@ public class TradeManager {
      * Getter of the n most recent trade from the trade history of a user.
      * Trade history is the list of trades that the user is involved in
      * @param username the username of the user
-     * @param n the amount of recent trade. If n is 3, the 3 most recent trade will be returned
+     * @param num the amount of recent trade. If n is 3, the 3 most recent trade will be returned
      * @return the n most recent trade from the trade history of this user
      */
-    public Trade[] getRecentTrade(String username, int n) {
+    public Trade[] getRecentTrade(String username, int num) {
         List<Trade> tradeHistory = getTradeHistory(username);
         //getting the n most recent trades
         int size = tradeHistory.size();
-        Trade[] trades = new Trade[n];
-        for(int i = 0; i<n; i++){
+        Trade[] trades = new Trade[num];
+        for(int i = 0; i<num; i++){
             if(size < i+1) break;
             trades[i] = tradeHistory.get(size - i - 1);
         }
@@ -85,15 +85,15 @@ public class TradeManager {
     /**
      * Getter of the usernames of the n most frequent trading partners of a user
      * @param username the user's username
-     * @param n the amount of most frequent trading partners. If n is 3, the 3 frequent trading
+     * @param num the amount of most frequent trading partners. If n is 3, the 3 frequent trading
      *          partners of a user will be returned
      * @return the username of the n most frequent trading partners
      */
-    public String[] getFrequentTradingPartners(String username, int n) {
+    public String[] getFrequentTradingPartners(String username, int num) {
         List<Trade> l = getTradeHistory(username);
         TreeMap<Integer, ArrayList<String>> counter = new TreeMap<>();
         ArrayList<String> partners = new ArrayList<>();
-        String[] tradingPartners = new String[n];
+        String[] tradingPartners = new String[num];
         //Getting the list of username of the trading partners
         for(Trade t: l){
             String partner = t.tradingPartner(username);
@@ -117,20 +117,18 @@ public class TradeManager {
         for(Integer key: keys){
             ArrayList<String> p = counter.get(key);
             for(int i = 0; i< p.size(); i++){
-                for(int j=0; j<n; j++){
+                for(int j=0; j<num; j++){
                     if(tradingPartners[j] == (null)){
                         tradingPartners[j] = p.get(i);
                         break;
                     }
                     if(tradingPartners[j].equals(p.get(i)))break;
                 }
-                if(tradingPartners[n-1] != (null))return tradingPartners;
+                if(tradingPartners[num-1] != (null))return tradingPartners;
             }
-            if(tradingPartners[n-1]!=(null))return tradingPartners;
+            if(tradingPartners[num-1]!=(null))return tradingPartners;
         }
-
         return tradingPartners;
-
     }
     private int count(List<String> list, String item){
         //counting the number of times a username occured in the list

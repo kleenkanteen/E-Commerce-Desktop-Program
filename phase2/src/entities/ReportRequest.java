@@ -29,14 +29,6 @@ public class ReportRequest extends Request implements Serializable {
     }
 
     /**
-     * Getter of the content being reported
-     * @return the content being reported
-     */
-    public String getContentReported(){
-        return contentReported;
-    }
-
-    /**
      * Getter of the person's username who is reporting the other message
      * @return the person's username who is reporting the other message
      */

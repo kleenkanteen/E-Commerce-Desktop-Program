@@ -59,14 +59,6 @@ public class User extends Account implements Serializable{
     }
 
     /**
-     * Getter for if the User is unfrozen
-     * @return whether the User is unfrozen
-     */
-    public boolean getIsUnfrozen(){
-        return status.equals(Status.UNFROZEN);
-    }
-
-    /**
      * Getter for if the User is banned
      * @return whether the User is banned
      */
@@ -110,14 +102,6 @@ public class User extends Account implements Serializable{
      */
     public void addMessages(Message message){
         messages.add(message);
-    }
-
-    /**
-     * Remove a message from the list of messages to this account
-     * @param message the message to be removed
-     */
-    public void removeMessages(Message message){
-        messages.remove(message);
     }
 
     /**

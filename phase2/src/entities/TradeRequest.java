@@ -141,21 +141,6 @@ public class TradeRequest extends Request implements Serializable {
     }
 
     /**
-     * Get the trading partner of the input user
-     * @param user a user
-     * @return the other user involved in the trade request
-     */
-    public String getTradePartner (String user){
-        if (user.equals(userA)){
-            return userB;
-        }
-        else{
-            return userA;
-        }
-    }
-
-
-    /**
      * Returns a string representation of the message
      * @return the content and trade request of the message in a string representation
      */
