@@ -117,11 +117,11 @@ public class TradeRequestResponse implements MessageResponse {
         //Removing the items from the GI/personal inventory
         List<Item> list = new ArrayList<>(trade.getTraderAItemsToTrade());
         for(Item i:list) {
-            globalInventoryManager.removeItem(i.getItemID());
+            globalInventoryManager.removeItemOnly(i.getItemID());
         }
         list = new ArrayList<>(trade.getTraderBItemsToTrade());
         for(Item i:list) {
-            globalInventoryManager.removeItem(i.getItemID());
+            globalInventoryManager.removeItemOnly(i.getItemID());
         }
 
         //Telling the user their action is done successfully

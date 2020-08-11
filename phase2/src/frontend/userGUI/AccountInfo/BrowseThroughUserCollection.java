@@ -202,7 +202,7 @@ public class BrowseThroughUserCollection implements Initializable {
             switch(this.type) {
                 // remove from global inventory and reset this instance's local list
                 case INVENTORY:
-                    this.globalInventoryManager.removeItem(this.selectedItem.getItemID());
+                    this.globalInventoryManager.removeItemAndAddToGarbageBin(this.selectedItem.getItemID());
                     break;
                 // remove from global wishlist and reset this instance's local list
                 case WISHLIST:

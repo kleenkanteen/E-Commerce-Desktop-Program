@@ -155,39 +155,6 @@ public class GlobalInventoryManager implements Serializable {
 
     }
 
-//    public ArrayList<Item> generatePage(int pageNumber, String userName) {
-//        ArrayList<Item> lst = new ArrayList<>();
-//
-//        for (int i = 0; i < gI.getNumOfItem(); i++) {
-//            if (!gI.getItemByIndex(i).getOwnerName().equals(userName)) {
-//                lst.add(gI.getItemByIndex(i));
-//            }
-//        }
-//        ArrayList<Item> itemList = new ArrayList<>();
-//        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < lst.size(); i++) {
-//            itemList.add(lst.get(i));
-//
-//        }
-//        return itemList;
-//
-//    }
-//
-//    /**
-//     * generate the page number of the last page in globalInventory
-//     *
-//     * @return an int to represent the last page in globalInventory.
-//     */
-//
-//    public int generatePageNumber(String userName) {
-//        ArrayList<Item> lst = new ArrayList<>();
-//        for (int i = 0; i < gI.getNumOfItem(); i++) {
-//            if (!gI.getItemByIndex(i).getOwnerName().equals(userName)) {
-//                lst.add(gI.getItemByIndex(i));
-//            }
-//        }
-//        int num = lst.size();
-//        return (int) Math.ceil((double) num / 10);
-//    }
 
     public GlobalInventory getGlobalInventoryData(){
         return globalInventory;
