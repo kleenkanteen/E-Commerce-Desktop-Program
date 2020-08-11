@@ -24,23 +24,6 @@ public class GlobalInventory implements Serializable {
         itemIdCollection = new ArrayList<>();
     }
 
-//    /**
-//     * return the hashmap that stores the Items in global inventory
-//     * @return hashmap of items stored in global inventory
-//     */
-//
-//    public HashMap<String, Item> getItemMap() {
-//        return itemMap;
-//    }
-
-//    /**
-//     * modify the hashmap that stores the Items in global inventory with hashmap passed in.
-//     */
-//    public void setItemMap(HashMap<String, Item> itemMap) {
-//        this.itemMap = itemMap;
-//    }
-
-
     /**
      * Add ItemID to ItemIdCollection
      * @param itemID is the unique id each item has.
