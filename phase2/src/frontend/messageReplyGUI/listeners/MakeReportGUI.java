@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import use_cases.AdminManager;
@@ -22,7 +23,7 @@ public class MakeReportGUI implements Initializable {
     @FXML private Label messageContent;
     @FXML private Button button1;
     @FXML private Button button2;
-    @FXML private TextField userInput;
+    @FXML private TextArea userInput;
 
     private MessageReplyPresenter messageReplyPresenter = new MessageReplyPresenter();
     private Message message;
