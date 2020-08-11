@@ -282,7 +282,7 @@ public class TradeManager {
     }
 
     /**
-     * Getter of the data stored in thsi manager
+     * Getter of the data stored in this manager
      * @return the data stored in this manager
      */
     public Map<String, List<Trade>> getTradeData(){
