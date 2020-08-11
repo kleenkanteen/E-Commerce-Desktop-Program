@@ -192,6 +192,14 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
                                             ----------------------------
 
 
+** Program Demo **
+
+    Enter any username and password to log into the program demo instantly. You do not need
+    to create an account. The program demo account has limited functionality.
+
+                                            ----------------------------
+
+
 ** Usage (and Arguments) of Design Patterns **
 
 ---------Strategy Method---------
