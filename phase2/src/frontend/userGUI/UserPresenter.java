@@ -1,7 +1,5 @@
 package frontend.userGUI;
 
-import entities.Trade;
-
 public class UserPresenter {
 
     /**
@@ -246,14 +244,6 @@ public class UserPresenter {
     }
 
     /**
-     * Unconfirmed prompt
-     * @return can you confirm that meeting happened
-     */
-    public String checkUnconfirmedTradesPrompt() {
-        return "Can you confirm that this meeting happened?";
-    }
-
-    /**
      * Confirm prompt
      * @return the meeting happened
      */
@@ -445,6 +435,10 @@ public class UserPresenter {
         return "IOException occurred!";
     }
 
+    /**
+     * Error prompt for not filling out both text inputs
+     * @return Please fill out both the name and description inputs.
+     */
     public String newItemMenuInputErrorPrompt() {
         return "Please fill out both the name and description inputs.";
     }

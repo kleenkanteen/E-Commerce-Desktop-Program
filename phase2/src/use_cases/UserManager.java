@@ -66,6 +66,14 @@ public class UserManager {
     }
 
     /**
+     * Returns the hashmap of all users
+     * @return the hashmap of users
+     */
+    public Map<String, User> getUserData(){
+        return this.allUsers;
+    }
+
+    /**
      * Checks to see if this username exists in the system of users and that the username is greater than 3 characters.
      * @param username The username to check
      * @return Returns true if the user does exist in the system and is greater than/equal to 3 characters
@@ -295,9 +303,5 @@ public class UserManager {
      */
     public void setNewThresholdForOneUser(String username, int newThreshold) {
         this.allUsers.get(username).setThreshold(newThreshold);
-    }
-
-    public Map<String, User> getUserData(){
-        return allUsers;
     }
 }
