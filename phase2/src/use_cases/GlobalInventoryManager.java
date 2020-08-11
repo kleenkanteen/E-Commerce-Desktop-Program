@@ -102,8 +102,8 @@ public class GlobalInventoryManager implements Serializable {
      * @param itemID is the itemID of the item we want to remove
      */
 
-    public void removeItem(String itemID) {
-        globalInventory.removeItem(itemID);
+    public void removeItemAndAddToGarbageBin(String itemID) {
+        globalInventory.removeItemAndAddToGarbageBin(itemID);
     }
 
     /**
@@ -141,9 +141,6 @@ public class GlobalInventoryManager implements Serializable {
     public boolean contains(Item item) {
         return globalInventory.containsKey(item.getItemID());
     }
-
-
-
 
 
     /**
