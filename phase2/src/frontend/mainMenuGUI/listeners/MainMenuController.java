@@ -91,6 +91,7 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     private void userSignUpButtonPressed() throws IOException {
+        errorMessage.setText(mainMenuPresenter.stringReset());
         goToOtherScene(loginFXMLFile, SelectedOption.USER_SIGNUP);
     }
 
@@ -100,6 +101,7 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     private void adminLoginButtonPressed() throws IOException {
+        errorMessage.setText(mainMenuPresenter.stringReset());
         goToOtherScene(loginFXMLFile, SelectedOption.ADMIN_LOGIN);
     }
     /**
@@ -108,6 +110,7 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     private void programDemoButtonPressed() throws IOException {
+        errorMessage.setText(mainMenuPresenter.stringReset());
         goToOtherScene(loginFXMLFile,SelectedOption.DEMO_LOGIN);
     }
 

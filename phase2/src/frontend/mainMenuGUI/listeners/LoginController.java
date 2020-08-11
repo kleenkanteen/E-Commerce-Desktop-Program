@@ -43,7 +43,7 @@ public class LoginController implements Initializable {
     private final String userMenuGUIFile = "/frontend/userGUI/fxml_files/UserMenuGUI.fxml";
     private final String adminMenuGUIFile = "/frontend/adminGUI/fxml_files/AdminMenu.fxml";
     private final String demoMenuGUIFile = "/frontend/demoUserGUI/fxml_files/DemoUserMenu.fxml";
-    private final String bannedUserMenuGUIFile = "/frontend/bannedUserGUI/fxml_files/BannedUserMenuGUI.fxml";
+    private final String bannedUserMenuGUIFile = "/frontend/bannedUserGUI/BannedUserMenuGUI.fxml";
 
     private enum OpenMenu {
         USER_MENU, ADMIN_MENU, BANNED_USER_MENU, DEMO_MENU
