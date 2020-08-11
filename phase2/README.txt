@@ -42,10 +42,10 @@ or through closing through the taskbar
     We are 6 people also so the prof said we can do 3 optional type 2 features and 1 unique type 3 feature.
 
     * All mandatory Type 1 features
-    - Undo features: Admin undo trades before meetup, undo deleted items.
+    - Undo features: Admin undo trades before first meetup date, undo deleted items from user inventory.
     - Suggest trade items
     - Demo user
-    - Adjust all threshold values
+    - Adjust all threshold values as the program run
     - New status: Banned
 
     * 3 optional type 2 features
@@ -106,6 +106,7 @@ User Account:
     sent to your account will be viewed here.
     You will be able to edit any trade offers through this menu, and you will be warned if you have met the maximum
     number of trades, and if you continue to edit, the offer will be deleted.
+    You can also view and report private messages
 
 [5] Add a new item to the system:
 
@@ -117,7 +118,12 @@ User Account:
     If your account is frozen by an administrator, this menu option will send the
     administrators a request to unfreeze your account.
 
-[7] Exit.
+[7] Sending a private message to another user
+
+    Will allow you to enter in a username and the message content you want to sent. If the your exist the message will
+    be sent to that user's message inbox
+
+[8] Exit.
 
     Should you confirm a meeting/transaction, and log back in after the meeting was supposed to occur,
     the system will automatically prompt you to confirm whether or not this meeting
@@ -170,15 +176,16 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
 
     You have the ability to do the following:
 	- Change lending (number of borrows v. loans) threshold
+	- banning/unbanning a user
 	- Freeze/unfreeze a user
 	- Change maximum number of trades per week
 	- Changes the max number of incomplete trades
     - In the bottom left you can also undo and restore user's deleted items
+    - restoring the last item that user deleted from their inventory
 
 
 [4] Undo the on-going Trade of Users: Allows you to search one user and open a window with all on-going Trades
-    of that User before the meetup date.
-
+    of that User before the first meetup date.
 
 [5] Logout
 
@@ -190,16 +197,25 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
 ---------Strategy Method---------
 
     Class: MessageResponseFactory, all the classes that implements MessageResponse
-    (inside p3_frontend/messageReplyGUI). The strategy is how to response to the a type of message.
+    (inside frontend/messageReplyGUI).
 
-    MessageBuilder, which is not a builder or factory.
-    The reason we did so is to encapsulate the message constructors, but
-    due to the different parameters, it could not be made into a factory.
+    The strategy is how to response to the a type of message. The reason for this is to better re use the same GUI for
+    all types of messages and to encapsulate the constructors of the MessageResponses and the type of MessageResponses used
+    This will make it very easy to add a new type of Message or another MessageResponse in the future.
 
 
 ---------Dependency Injection---------
-    Classes: UserManager, Message
-    Injecting the constructor of the Message from the UserManager
+    Classes: UserManager, Message and it's subclasses
+    (UserManager inside usecase)
+    Injecting the constructor of the Message from the UserManager. The reason is that we wanted to loosen of the
+    UserManager with the Message classes
+
+
+---------Other Notes---------
+    MessageBuilder, is not a builder or factory.
+
+    The reason we did so is to encapsulate the message constructors, but
+    due to the different parameters, it could not be made into a factory.
 
 
                                             ----------------------------
@@ -218,6 +234,12 @@ Upon logging in as an ADMINISTRATOR, you will see a menu of options
     enum classes for account statuses, so you can just add
     the string of the new account type if you want.
     So our code is  open for extension, closed to modification.
+
+    We also assume that in the future there could be new types of users, user status and message types. So
+    by using inheritance or interfaces we made it easy to add new types in the future.
+    Right now it looks
+    like there is a parallel hierarchy between the message response and messages, when there are new types of messages such
+    as private message with attachments they will probably re use the same message response as private messages.
 
                                             ----------------------------
 
