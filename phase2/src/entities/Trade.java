@@ -252,8 +252,8 @@ public abstract class Trade implements Serializable {
         else info = "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA: " + getTraderA() +
                     "\nTraderB: " + getTraderB() +
-                    "\n" + getTraderA()+ " confirmed to trade with: " + itema +
-                    "\n" + getTraderB()+ " confirmed to trade with: " + itemb +
+                    "\n" + getTraderA()+ " confirmed to trade with: " + itema.substring(0, itema.length() - 2) +
+                    "\n" + getTraderB()+ " confirmed to trade with: " + itemb.substring(0, itemb.length() - 2) +
                     "\nThe Trade has been made on: " + getStartDate();
 
         return info;
