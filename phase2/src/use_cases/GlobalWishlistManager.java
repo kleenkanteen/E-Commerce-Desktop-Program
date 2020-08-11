@@ -8,15 +8,15 @@ import java.util.List;
 
 public class GlobalWishlistManager implements Serializable {
 
-     // gW is the GlobalWishlist we want to modify.
-    private GlobalWishlist gW;
+     // globalWishlist is the GlobalWishlist we want to modify.
+    private GlobalWishlist globalWishlist;
 
     /**
      * constructor for the class
-     * @param gW - The globalwishlist it takes in
+     * @param globalWishlist - The globalwishlist it takes in
      */
-    public GlobalWishlistManager(GlobalWishlist gW) {
-        this.gW = gW;
+    public GlobalWishlistManager(GlobalWishlist globalWishlist) {
+        this.globalWishlist = globalWishlist;
     }
 
     /**
@@ -25,7 +25,7 @@ public class GlobalWishlistManager implements Serializable {
      * @return Whether or not anyone wants the item
      */
     public boolean isItemWanted(String itemid){
-        return gW.isItemWanted(itemid);
+        return globalWishlist.isItemWanted(itemid);
     }
 
     /**
@@ -35,7 +35,7 @@ public class GlobalWishlistManager implements Serializable {
      */
 
     public void addWish(String itemid, String userid) {
-        gW.addWish(itemid, userid);
+        globalWishlist.addWish(itemid, userid);
     }
 
 
@@ -47,7 +47,7 @@ public class GlobalWishlistManager implements Serializable {
      */
 
     public void removeWish(String itemid, String userid) {
-        gW.removeWish(itemid, userid);
+        globalWishlist.removeWish(itemid, userid);
     }
 
 
@@ -58,7 +58,7 @@ public class GlobalWishlistManager implements Serializable {
      */
 
     public void removeItem(String itemid) {
-        gW.removeItem(itemid);
+        globalWishlist.removeItem(itemid);
     }
 
     /**
@@ -72,9 +72,9 @@ public class GlobalWishlistManager implements Serializable {
         List<String> interested = new ArrayList<>();
         for (Item allItem : allItems) {
             String currentItemid = allItem.getItemID();
-            if (gW.isItemWanted(currentItemid)) {
+            if (globalWishlist.isItemWanted(currentItemid)) {
                 interested.add(currentItemid);
-                interested.add(gW.getFirstInterestedUser(currentItemid));
+                interested.add(globalWishlist.getFirstInterestedUser(currentItemid));
                 return interested;
             }
         }
@@ -88,11 +88,11 @@ public class GlobalWishlistManager implements Serializable {
      * @return arraylist of their wishlist
      */
     public List<String> getPersonWishlist(String userid){
-        return gW.getPersonWishlist(userid);
+        return globalWishlist.getPersonWishlist(userid);
     }
 
     public GlobalWishlist getGlobalWishlistData(){
-        return gW;
+        return globalWishlist;
     }
 
     /**
@@ -103,7 +103,7 @@ public class GlobalWishlistManager implements Serializable {
      * @return list of itemids of all the items that userB wants
      */
     public List<String> getInterestedItems(List<Item> allItems, String userB){
-        return gW.getInterestedItems(allItems, userB);
+        return globalWishlist.getInterestedItems(allItems, userB);
     }
 
 }
