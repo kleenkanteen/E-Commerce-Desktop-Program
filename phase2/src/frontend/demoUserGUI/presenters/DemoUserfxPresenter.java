@@ -112,7 +112,7 @@ public class DemoUserfxPresenter {
      * @return String confirm
      */
     public String Confirm() {
-        return "Confirm.";
+        return "Confirm";
     }
 
     /**
