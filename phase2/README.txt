@@ -10,20 +10,29 @@ The UML is available in the UML folder.
 
 
 ** Instructions to Run Program **
-The data folder (/phase2/data/) should either be empty or existent. If there are any .ser files, delete them manually,
-without safe search.
-Running StartScreen.main() should generate new .ser files for which any errors will not occur.
+
+VIDEO: https://www.youtube.com/watch?v=ubOZN-V_8oo
 
 Steps to use JavaFX program:
-Download  JavaFX Runtime. Scroll down and download the installer for your operating system.:
+[1] Download  JavaFX Runtime. Scroll down and download the installer for your operating system.:
 https://gluonhq.com/products/javafx/
-Unzip to a location you remember.
-(In IntelliJ) File -> Project Structure -> Project
-Here, Project SDK should be set to "1.8 java version "1.8.0_261""
-and SDK default should be set to (8 - Lambdas, type annotations etc.)
-Then, still in IntelliJ, go to File -> Project Structure -> Libraries and click on plus sign to
- add JavaFX by pointing to the lib folder of
-the JavaFX SDK you just unzipped.
+[2] Unzip to a location you remember.
+[3] Pull our Phase 2 project on Markus, open /phase2/.
+
+[4] (In IntelliJ) File -> Project Structure -> Project
+[4.1] Project SDK should be set to "1.8 java version "1.8.0_261""
+[4.2] SDK default should be set to (8 - Lambdas, type annotations etc.)
+[5] Go to File -> Project Structure -> Libraries
+[6] Click on plus sign to add JavaFX by pointing to the lib folder of the JavaFX SDK you just unzipped.
+
+The data folder (/phase2/data/) should either be empty or existent. If there are any .ser files, delete them manually, without safe search.
+Running StartScreen.main() should generate new .ser files for which any errors will not occur.
+
+Be in /phase2/ of the project before running the program.
+
+Run StartScreen.main() to run the program.
+When exiting the program, please use the provided Exit button rather than exiting through Task Manager
+or through closing through the taskbar
 
 
                                             ----------------------------
