@@ -161,21 +161,21 @@ public class TradeRequest extends Request implements Serializable {
         if (itemA.isEmpty()){
             info =  "TraderA (Borrower): " + getUserA() +
                     "\nTraderB: " + getUserB() +
-                    "\nItem from B: " + itemb +
+                    "\nItem from B: " + itemb.substring(0, itemb.length() - 2) +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
         }
         else if (itemB.isEmpty()){
             info = "TraderA: " + getUserA() +
                     "\nTraderB (Borrower): " + getUserB() +
-                    "\nItem from A: " +itema +
+                    "\nItem from A: " +itema.substring(0, itema.length() - 2) +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
         }
         else info = "TraderA: " + getUserA() +
                     "\nTraderB: " + getUserB() +
-                    "\nItem from A: " + itema +
-                    "\nItem from B: " + itemb +
+                    "\nItem from A: " + itema.substring(0, itema.length() - 2) +
+                    "\nItem from B: " + itemb.substring(0, itemb.length() - 2) +
                     "\nPlace: " + getPlace() +
                     "\nDate: " + getDate().toString();
 
