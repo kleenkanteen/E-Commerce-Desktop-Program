@@ -52,17 +52,6 @@ public class GlobalWishlistManager implements Serializable {
 
 
     /**
-     * Return all userids that wants the item
-     * Make sure you ALWAYS call isItemWanted() before calling this
-     * @param itemid - id of first user that wants the item
-     * @return - arraylist of all users who want this item
-     */
-    public List<String> getAllInterestedUsers(String itemid){
-        return gW.getAllInterestedUsers(itemid);
-    }
-
-
-    /**
      * Remove itemid key from globalwishlist
      * Make sure you ALWAYS call isItemWanted() before calling this else will error
      * @param itemid - id of item that you want removed
