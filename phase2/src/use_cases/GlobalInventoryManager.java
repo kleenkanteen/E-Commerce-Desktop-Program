@@ -97,7 +97,7 @@ public class GlobalInventoryManager implements Serializable {
 
 
     /**
-     * remove the item with specific itemID
+     * remove the item with specific itemID and adds item to garbage bin
      *
      * @param itemID is the itemID of the item we want to remove
      */
@@ -112,6 +112,16 @@ public class GlobalInventoryManager implements Serializable {
      */
     public void undoDeleteItem(String userid){
         globalInventory.undoDeleteItem(userid);
+    }
+
+    /**
+     * Remove item with specific itemID
+     * @param itemID is the key for itemMap.
+
+     */
+
+    public void removeItemOnly(String itemID){
+        globalInventory.removeItemOnly(itemID);
     }
 
 

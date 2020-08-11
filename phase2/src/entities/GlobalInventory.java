@@ -99,13 +99,23 @@ public class GlobalInventory implements Serializable {
     }
 
     /**
-     * Remove item with specific itemID
+     * Remove item with specific itemID and add to removedItems
      * @param itemID is the key for itemMap.
 
      */
 
     public void removeItem(String itemID){
         removedItems.add(itemMap.get(itemID));
+        itemMap.remove(itemID);
+    }
+
+    /**
+     * Remove item with specific itemID
+     * @param itemID is the key for itemMap.
+
+     */
+
+    public void removeItemOnly(String itemID){
         itemMap.remove(itemID);
     }
 
