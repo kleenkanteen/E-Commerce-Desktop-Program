@@ -21,10 +21,20 @@ public class TradeMenu {
     public final static String INVENTORY_PROMPT = "Please select from your items the items you want to trade";
     public final static String SELECT_ITEM = "Items selected";
 
+    /**
+     * Presenter for inventory of a given username
+     * @param username a String that represents a username.
+     * @return a String that uses username for a presenter.
+     */
     public static String inventoryPrompt(String username){
         return username + "'s inventory";
     }
 
+    /**
+     * Presenter for selecting items.
+     * @param itemName a string that represents an item that is selected.
+     * @return a string that presents the items selected.
+     */
     public static String itemSelected(String itemName){
         return itemName +" is selected";
     }

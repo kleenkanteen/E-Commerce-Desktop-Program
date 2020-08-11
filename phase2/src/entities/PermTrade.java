@@ -1,4 +1,4 @@
-package entities;// Written by Thanusun
+package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -21,7 +21,11 @@ public class PermTrade extends Trade implements Serializable {
      * @param startDate is a LocalDateTime that follows a start date of a trade.
      *                  Note: this can be used for invoicing once a trade is completed.
      */
-    public PermTrade(String traderA, String traderB, List<entities.Item> userAItemsToTrade, List<Item> userBItemsToTrade, LocalDateTime startDate) {
+    public PermTrade(String traderA,
+                     String traderB,
+                     List<Item> userAItemsToTrade,
+                     List<Item> userBItemsToTrade,
+                     LocalDateTime startDate) {
         super(traderA, traderB, userAItemsToTrade, userBItemsToTrade, startDate);
     }
 
