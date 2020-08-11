@@ -80,7 +80,8 @@ public class MainMenuController implements Initializable {
      */
     @FXML
     private void userLoginButtonPressed () throws IOException {
-        goToOtherScene(loginFXMLFile, SelectedOption.USER_LOGIN); //change to enum
+        errorMessage.setText(mainMenuPresenter.stringReset());
+        goToOtherScene(loginFXMLFile, SelectedOption.USER_LOGIN);
     }
 
     /**
