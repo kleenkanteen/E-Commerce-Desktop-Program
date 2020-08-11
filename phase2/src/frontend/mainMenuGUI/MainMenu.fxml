@@ -8,9 +8,9 @@
             prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="frontend.mainMenuGUI.MainMenuController">
     <children>
-        <VBox alignment="CENTER" layoutX="219.0" layoutY="87.0" prefHeight="200.0" prefWidth="163.0" spacing="15.0">
+        <VBox alignment="CENTER" layoutX="171.0" layoutY="14.0" prefHeight="319.0" prefWidth="258.0" spacing="15.0">
             <children>
-                 <Label fx:id="errorMessage" wrapText="true" />
+                 <Label fx:id="errorMessage" prefHeight="42.0" prefWidth="221.0" wrapText="true" />
                 <Button fx:id="userLoginButton" mnemonicParsing="false" onAction="#userLoginButtonPressed" />
                 <Button fx:id="userSignUpButton" mnemonicParsing="false" onAction="#userSignUpButtonPressed" />
                 <Button fx:id="adminLoginButton" mnemonicParsing="false" onAction="#adminLoginButtonPressed" />

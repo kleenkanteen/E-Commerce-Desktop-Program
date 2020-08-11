@@ -17,6 +17,7 @@ public class GlobalInventory implements Serializable {
      * and an empty ArrayList.
      */
 
+
     public GlobalInventory(){
         removedItems = new ArrayList<>();
         itemMap = new HashMap<>();
@@ -116,7 +117,6 @@ public class GlobalInventory implements Serializable {
             if (removedItems.get(j).getOwnerName().equals(userid)){
                 Item restore = removedItems.get(j);
                 itemMap.put(restore.getItemID(), restore);
-                itemIdCollection.add(restore.getItemID());
                 removedItems.remove(restore);
                 break;
             }
