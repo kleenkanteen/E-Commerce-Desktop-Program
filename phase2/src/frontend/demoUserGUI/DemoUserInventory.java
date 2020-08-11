@@ -40,7 +40,6 @@ public class DemoUserInventory implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        systemMessage.setWrapText(true);
         // set up exit button
         this.exit.setText(this.demoUserPresenter.menuPromptExit());
         this.exit.setOnAction(this::exit);

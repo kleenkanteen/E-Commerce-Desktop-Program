@@ -73,7 +73,6 @@ public class GlobalInventoryMenuController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        message.setWrapText(true);
         itemName.setText(globalInventoryMenuPresenter.itemName());
         itemOwner.setText(globalInventoryMenuPresenter.itemOwner());
         itemDescription.setText(globalInventoryMenuPresenter.itemDescription());

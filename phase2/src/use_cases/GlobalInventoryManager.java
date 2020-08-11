@@ -15,7 +15,6 @@ public class GlobalInventoryManager implements Serializable {
 
 
 
-
     /**
      * construct the Use Case class to do some changes on globalinventory.
      *
@@ -37,10 +36,6 @@ public class GlobalInventoryManager implements Serializable {
     }
 
 
-
-
-
-
     public List<Item> getItemsFromGI(ArrayList<String> itemIDList){
         List<Item> newList = new ArrayList<>();
         if (itemIDList.size() == 0){
@@ -51,8 +46,6 @@ public class GlobalInventoryManager implements Serializable {
         }
         return newList;
     }
-
-
 
 
     private String IdGenerator() {
@@ -78,11 +71,9 @@ public class GlobalInventoryManager implements Serializable {
     public void addItemToHashMap(Item item) {
 
         if (!item.hasID()) {
-
             globalInventory.addItem(item.getItemID(), item);
-
-
-        } else {
+        }
+        else {
 
             String itemID = IdGenerator();
 
@@ -97,13 +88,13 @@ public class GlobalInventoryManager implements Serializable {
 
 
     /**
-     * remove the item with specific itemID
+     * remove the item with specific itemID and adds item to garbage bin
      *
      * @param itemID is the itemID of the item we want to remove
      */
 
-    public void removeItem(String itemID) {
-        globalInventory.removeItem(itemID);
+    public void removeItemAndAddToGarbageBin(String itemID) {
+        globalInventory.removeItemAndAddToGarbageBin(itemID);
     }
 
     /**
@@ -112,6 +103,16 @@ public class GlobalInventoryManager implements Serializable {
      */
     public void undoDeleteItem(String userid){
         globalInventory.undoDeleteItem(userid);
+    }
+
+    /**
+     * Remove item with specific itemID
+     * @param itemID is the key for itemMap.
+
+     */
+
+    public void removeItemOnly(String itemID){
+        globalInventory.removeItemOnly(itemID);
     }
 
 
@@ -133,9 +134,6 @@ public class GlobalInventoryManager implements Serializable {
     }
 
 
-
-
-
     /**
      * return if gI has no Item in it.
      *
@@ -148,39 +146,6 @@ public class GlobalInventoryManager implements Serializable {
 
     }
 
-//    public ArrayList<Item> generatePage(int pageNumber, String userName) {
-//        ArrayList<Item> lst = new ArrayList<>();
-//
-//        for (int i = 0; i < gI.getNumOfItem(); i++) {
-//            if (!gI.getItemByIndex(i).getOwnerName().equals(userName)) {
-//                lst.add(gI.getItemByIndex(i));
-//            }
-//        }
-//        ArrayList<Item> itemList = new ArrayList<>();
-//        for (int i = (pageNumber - 1) * 10; i < pageNumber * 10 && i < lst.size(); i++) {
-//            itemList.add(lst.get(i));
-//
-//        }
-//        return itemList;
-//
-//    }
-//
-//    /**
-//     * generate the page number of the last page in globalInventory
-//     *
-//     * @return an int to represent the last page in globalInventory.
-//     */
-//
-//    public int generatePageNumber(String userName) {
-//        ArrayList<Item> lst = new ArrayList<>();
-//        for (int i = 0; i < gI.getNumOfItem(); i++) {
-//            if (!gI.getItemByIndex(i).getOwnerName().equals(userName)) {
-//                lst.add(gI.getItemByIndex(i));
-//            }
-//        }
-//        int num = lst.size();
-//        return (int) Math.ceil((double) num / 10);
-//    }
 
     public GlobalInventory getGlobalInventoryData(){
         return globalInventory;

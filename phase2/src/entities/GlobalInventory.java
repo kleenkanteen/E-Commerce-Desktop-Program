@@ -17,6 +17,7 @@ public class GlobalInventory implements Serializable {
      * and an empty ArrayList.
      */
 
+
     public GlobalInventory(){
         removedItems = new ArrayList<>();
         itemMap = new HashMap<>();
@@ -77,18 +78,6 @@ public class GlobalInventory implements Serializable {
     }
 
     /**
-     * Getter of the Item by the index with the order of key stored in itemMap
-     * @param index is the index follows the order of keys stored in itemMap
-     * @return the Item referred by index been called
-     */
-
-    public Item getItemByIndex(int index){
-        Set<String> keys = itemMap.keySet();
-        String i = new ArrayList<>(keys).get(index);
-        return itemMap.get(i);
-    }
-
-    /**
      * Setter of Item in GlobalInventory with itemID as key and Item as what key refers to
      * @param itemID is the key for itemMap
      * @param item is what itemID refers to in itemMap
@@ -99,13 +88,23 @@ public class GlobalInventory implements Serializable {
     }
 
     /**
+     * Remove item with specific itemID and add to removedItems
+     * @param itemID is the key for itemMap.
+
+     */
+
+    public void removeItemAndAddToGarbageBin(String itemID){
+        removedItems.add(itemMap.get(itemID));
+        itemMap.remove(itemID);
+    }
+
+    /**
      * Remove item with specific itemID
      * @param itemID is the key for itemMap.
 
      */
 
-    public void removeItem(String itemID){
-        removedItems.add(itemMap.get(itemID));
+    public void removeItemOnly(String itemID){
         itemMap.remove(itemID);
     }
 
@@ -117,22 +116,13 @@ public class GlobalInventory implements Serializable {
         for (int j = removedItems.size() - 1; j >= 0; j--) {
             if (removedItems.get(j).getOwnerName().equals(userid)){
                 Item restore = removedItems.get(j);
-                itemMap.put(restore.getOwnerName(), restore);
+                itemMap.put(restore.getItemID(), restore);
                 itemIdCollection.add(restore.getItemID());
-                removedItems.remove(j);
+                removedItems.remove(restore);
                 break;
             }
 
         }
-    }
-
-    /**
-     * getter of the number of Item that in the global inventory.
-     * @return the number of Item that exists in itemMap
-     */
-
-    public int getNumOfItem(){
-        return itemMap.size();
     }
 
     /**
@@ -142,25 +132,6 @@ public class GlobalInventory implements Serializable {
 
     public boolean containsKey(String itemID){
         return itemMap.containsKey(itemID);
-    }
-
-
-    /**
-     * method for the situation if the user wants to search a specific type of item.
-     * @param itemName is the item name the user wants to search in GlobalInventory
-     * @return an arraylist of Item with the Name the User searches
-     */
-
-    public List<Item> searchByItemName(String itemName){
-        ArrayList<Item> result = new ArrayList<>();
-        for (int i = 0; i < itemMap.size(); i++){
-            Set<String> keys = itemMap.keySet();
-            String f = new ArrayList<>(keys).get(i);
-            if (itemMap.get(f).getName().equals(itemName)){
-                result.add(itemMap.get(f));
-            }
-        }
-        return result;
     }
 
     /**
@@ -180,10 +151,6 @@ public class GlobalInventory implements Serializable {
         }
         return personalInventory;
     }
-
-
-
-
 
 
     /**
@@ -210,7 +177,5 @@ public class GlobalInventory implements Serializable {
     public boolean isEmpty(){
         return itemMap.size() == 0;
     }
-
-
 
 }
