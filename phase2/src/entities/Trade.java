@@ -239,14 +239,14 @@ public abstract class Trade implements Serializable {
             info =  "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA: " + getTraderA() +
                     "\nTraderB (Borrower): " + getTraderB() +
-                    "\nItem from TraderA: " + itema+
+                    "\nItem from TraderA: " + itema.substring(0, itema.length() - 2)+
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else if (traderAItemstoTrade.isEmpty()){
             info = "The Trade is generated on " + getCreationDate() + "\n" +
                     "TraderA (Borrower): " + getTraderA() +
                     "\nTraderB: " + getTraderB() +
-                    "\nItem from TraderB: " + itemb+
+                    "\nItem from TraderB: " + itemb.substring(0, itemb.length() - 2) +
                     "\nThe Trade has been made on: " + getStartDate();
         }
         else info = "The Trade is generated on " + getCreationDate() + "\n" +
