@@ -80,10 +80,6 @@ public class MultiItemMenu implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        message.setWrapText(true);
-        userItemLabel.setWrapText(true);
-        tradingItemLabel.setWrapText(true);
-        title.setWrapText(true);
         userItemLabel.setText(globalInventoryMenuPresenter.userItemLabel(item));
         tradingItemLabel.setText(globalInventoryMenuPresenter.itemSelected());
         title.setText(globalInventoryMenuPresenter.selectItem(item));
@@ -116,13 +112,7 @@ public class MultiItemMenu implements Initializable {
         select.setOnAction(e -> select());
         remove.setOnAction(e->remove());
 
-        trade.setOnAction(e-> {
-            try {
-                tradeRequest(e);
-            } catch (IOException ex) {
-                new PopUp(globalInventoryMenuPresenter.frozenAcc());
-            }
-        });
+        trade.setOnAction(this::tradeRequest);
     }
 
     /**
@@ -182,9 +172,8 @@ public class MultiItemMenu implements Initializable {
     /**
      * switch scene to tradeMenu when user click on trade button
      * @param event mouse click
-     * @throws IOException something went wrong
      */
-    private void tradeRequest(ActionEvent event) throws IOException {
+    private void tradeRequest(ActionEvent event) {
         List<Item> items = new ArrayList<>();
         for (Item i : selectedItems){
             items.add(i);

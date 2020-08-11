@@ -9,13 +9,6 @@ public class MainMenuPresenter {
         System.out.println("Exiting you from the program");
     }
     /**
-     *Tells the user that there is an issue in reading their files
-     */
-    public void inputError(){
-        System.out.println("An error has occurred with your input");
-    }
-
-    /**
      * Tells user that their stored data files were corrupted and that they were cleared.
      * @return String telling them that their information was corrupted and their data was cleared.
      */
