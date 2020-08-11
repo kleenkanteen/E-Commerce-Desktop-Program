@@ -19,12 +19,12 @@ public class MainMenu {
     public void run() {
         MainMenuPresenter mm = new MainMenuPresenter();
 
-        String serializedAdmins = "phase1/H_ser_file_infos/serializedAdmins.ser";
-        String serializedUsers = "phase1/H_ser_file_infos/serializedUsers.ser";
-        String serializedGlobalInventory = "phase1/H_ser_file_infos/serializedGlobalInventory.ser";
-        String serializedAdminMessages = "phase1/H_ser_file_infos/serializedAdminMessages.ser";
-        String serializedGlobalWishlist = "phase1/H_ser_file_infos/serializedGlobalWishlist.ser";
-        String serializedUserTrades = "phase1/H_ser_file_infos/serializedUserTrades.ser";
+        String serializedAdmins = "H_ser_file_infos/serializedAdmins.ser";
+        String serializedUsers = "H_ser_file_infos/serializedUsers.ser";
+        String serializedGlobalInventory = "H_ser_file_infos/serializedGlobalInventory.ser";
+        String serializedAdminMessages = "H_ser_file_infos/serializedAdminMessages.ser";
+        String serializedGlobalWishlist = "H_ser_file_infos/serializedGlobalWishlist.ser";
+        String serializedUserTrades = "H_ser_file_infos/serializedUserTrades.ser";
 
         AdminAccountGateways ag;
         UserGateway ug;
