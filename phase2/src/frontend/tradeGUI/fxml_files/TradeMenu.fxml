@@ -23,7 +23,7 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </TextField>
-            <MenuButton fx:id="typesOfTrade" mnemonicParsing="false">
+            <MenuButton fx:id="typesOfTrade" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" >
               <items>
                 <MenuItem fx:id="permanent" mnemonicParsing="false" />
                 <MenuItem fx:id="temporary" mnemonicParsing="false" />
@@ -32,7 +32,7 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </MenuButton>
-            <MenuButton fx:id="oneOrTwoWayTrade" mnemonicParsing="false">
+            <MenuButton fx:id="oneOrTwoWayTrade" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" >
               <items>
                 <MenuItem fx:id="oneWayTrade" mnemonicParsing="false" />
                 <MenuItem fx:id="twoWayTrade" mnemonicParsing="false" />
@@ -41,12 +41,12 @@
                   <Insets top="10.0" />
                </VBox.margin>
             </MenuButton>
-            <Button fx:id="submit" mnemonicParsing="false">
+            <Button fx:id="submit" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" >
                <VBox.margin>
                   <Insets top="15.0" />
                </VBox.margin>
             </Button>
-            <Button fx:id="returnToMainMenu" mnemonicParsing="false">
+            <Button fx:id="returnToMainMenu" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" >
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

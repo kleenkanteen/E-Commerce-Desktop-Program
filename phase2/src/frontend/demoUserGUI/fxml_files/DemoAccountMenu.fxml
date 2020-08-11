@@ -14,49 +14,49 @@
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Label>
-        <Button fx:id="tradeHistory" mnemonicParsing="false" prefWidth="300.0">
+        <Button fx:id="tradeHistory" mnemonicParsing="false" prefWidth="300.0" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Button>
-        <Button fx:id="newPassword" mnemonicParsing="false" prefWidth="300.0">
+        <Button fx:id="newPassword" mnemonicParsing="false" prefWidth="300.0" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Button>
-        <Button fx:id="tradePartners" mnemonicParsing="false" prefWidth="300.0">
+        <Button fx:id="tradePartners" mnemonicParsing="false" prefWidth="300.0" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Button>
-        <Button fx:id="recentTrades" mnemonicParsing="false" prefWidth="300.0">
+        <Button fx:id="recentTrades" mnemonicParsing="false" prefWidth="300.0" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Button>
-        <Button fx:id="inventory" mnemonicParsing="false" prefWidth="300.0">
+        <Button fx:id="inventory" mnemonicParsing="false" prefWidth="300.0" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Button>
-        <Button fx:id="wishlist" mnemonicParsing="false" prefWidth="300.0">
+        <Button fx:id="wishlist" mnemonicParsing="false" prefWidth="300.0" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </padding></Button>
-        <Button fx:id="exit" mnemonicParsing="false">
+        <Button fx:id="exit" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" >
             <VBox.margin>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
             </VBox.margin>

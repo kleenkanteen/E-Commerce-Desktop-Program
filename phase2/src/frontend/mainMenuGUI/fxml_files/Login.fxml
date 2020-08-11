@@ -11,8 +11,8 @@
             <Label fx:id="errorMessage" />
             <TextField fx:id="username" promptText="Username" />
             <PasswordField fx:id="password" promptText="Password" />
-            <Button fx:id="loginButton" mnemonicParsing="false" />
-            <Button fx:id="exitButton" mnemonicParsing="false" />
+            <Button fx:id="loginButton" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" />
+            <Button fx:id="exitButton" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" />
          </children>
          <padding>
             <Insets top="5.0" />

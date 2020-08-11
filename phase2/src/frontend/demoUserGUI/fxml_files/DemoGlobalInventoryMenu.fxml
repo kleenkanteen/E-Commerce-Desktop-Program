@@ -15,9 +15,9 @@
             <TableColumn fx:id="itemDescription" prefWidth="245.0" />
         </columns>
       </TableView>
-       <Button fx:id="addToWishlist" layoutX="100.0" layoutY="332.0" mnemonicParsing="false" />
-       <Button fx:id="trade" layoutX="239.0" layoutY="332.0" mnemonicParsing="false" />
-       <Button fx:id="exit" layoutX="413.0" layoutY="332.0" mnemonicParsing="false" />
+       <Button fx:id="addToWishlist" layoutX="100.0" layoutY="332.0" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" />
+       <Button fx:id="trade" layoutX="239.0" layoutY="332.0" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" />
+       <Button fx:id="exit" layoutX="413.0" layoutY="332.0" mnemonicParsing="false" stylesheets="/frontend/styling/coolbutton.css" />
       <Label fx:id="message" layoutX="137.0" layoutY="294.0" prefHeight="32.0" prefWidth="327.0" />
    </children>
 </AnchorPane>
