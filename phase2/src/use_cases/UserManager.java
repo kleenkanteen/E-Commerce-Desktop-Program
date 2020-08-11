@@ -182,15 +182,6 @@ public class UserManager {
     }
 
     /**
-     * Returns a user's unfrozen status
-     * @param username the user in question
-     * @return True if unfrozen, false if not
-     */
-    public boolean getUserUnfrozenStatus(String username) {
-        return this.allUsers.get(username).getIsUnfrozen();
-    }
-
-    /**
      * Returns whether or not this user is banned.
      * @param username the string username in question
      * @return True if banned, false if not
