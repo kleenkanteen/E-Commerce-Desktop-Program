@@ -8,8 +8,6 @@ import java.util.List;
 public class DemoUserManager {
 
     private DemoUser demoUser;
-    private String demoName;
-    private int itemID;
 
     /**
      * Constructs a new DemoUserManager and stores an instance of DemoUser as an instance variable
@@ -18,8 +16,6 @@ public class DemoUserManager {
      */
     public DemoUserManager(String username, String password) {
         this.demoUser = new DemoUser(username, password);
-        this.demoName = username;
-        this.itemID = 0;
     }
 
 
