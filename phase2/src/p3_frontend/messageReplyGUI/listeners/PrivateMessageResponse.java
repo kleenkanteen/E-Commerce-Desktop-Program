@@ -23,7 +23,7 @@ public class PrivateMessageResponse implements MessageResponse {
     private AdminManager adminManager;
     private String accountName;
 
-    private final String reportCreationFilepath = "MakeReport.fxml";
+    private final String reportCreationFilepath = "/p3_frontend/messageReplyGUI/fxml_files/MakeReport.fxml";
 
     /**
      * Class constructor.
