@@ -117,7 +117,6 @@ public class GlobalInventory implements Serializable {
             if (removedItems.get(j).getOwnerName().equals(userid)){
                 Item restore = removedItems.get(j);
                 itemMap.put(restore.getItemID(), restore);
-                itemIdCollection.add(restore.getItemID());
                 removedItems.remove(restore);
                 break;
             }
