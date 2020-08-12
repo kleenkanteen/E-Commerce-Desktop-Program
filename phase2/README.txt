@@ -45,11 +45,11 @@ or through closing through the taskbar
     - Undo features: Admin undo trades before first meetup date, undo deleted items from user inventory.
     - Suggest trade items
     - Demo user
-    - Adjust all threshold values as the program run
-    - New status: Banned
+    - Adjust all threshold values when admin is browsing users
+    - New account status: Banned
 
     * 3 optional type 2 features
-    - Extending the trade type: adding more items to a single trade
+    - Extending the trade type: adding multiple items to a single trade
     - GUI (counts as 2 features)
 
     * 1 unique type 3 feature
