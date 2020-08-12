@@ -61,13 +61,18 @@ or through closing through the taskbar
 
 ** Instructions to Explore Features **
     Upon loading in, you will see 3 menu options:
+
     - option to login
-    - option to create a new user account
-    - option to login under an administrator account. There are no users in the system at the moment.
+
+    - option to create a new user account. There are no users in the system at the moment.
       You will have to create a user account to access user functionality.
+
+    - option to login to a administrator account.
+        - An admin account already exists in the system. Username: admin, pass: admin.
+        Login under this account to access admin functionality.
+
     - option to login as a demo user to explore the program. you can directly click login in the login page
-     An admin account already exists in the system. Username: admin, pass: admin.
-     Login under this account to access admin functionality.
+
 
 
                                             ----------------------------
