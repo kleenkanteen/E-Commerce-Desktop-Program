@@ -344,7 +344,7 @@ public class UserPresenter {
      * @return confirm text
      */
     public String userLoanPromptConfirm() {
-        return "Confirm.";
+        return "Confirm";
     }
 
     /**

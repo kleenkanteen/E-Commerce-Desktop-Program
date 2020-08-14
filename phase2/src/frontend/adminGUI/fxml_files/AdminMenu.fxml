@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox layoutX="133.0" layoutY="81.0" prefHeight="238.0" prefWidth="313.0" spacing="10.0">
          <children>
-            <Label text="GO Admin! Choose your options below" textAlignment="CENTER" textFill="#7772ba">
+            <Label prefHeight="21.0" prefWidth="280.0" text="            Choose your options below" textAlignment="CENTER">
                <font>
                   <Font size="15.0" />
                </font>
